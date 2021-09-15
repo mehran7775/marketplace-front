@@ -1,7 +1,8 @@
 export default {
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
-        title: 'shop',
+        titleTemplate: 'مارکت پلیس-فروشگاه ساز رایگان-%s',
+        title: 'مارکت پلیس-فروشگاه ساز رایگان',
         meta: [{
                 charset: 'utf-8'
             },
@@ -15,6 +16,10 @@ export default {
                 content: ''
             },
             {
+                hid: 'google-site-verification',
+                name: 'google-site-verification',
+                content: 'wzWhJaqpQniEGJwWeIMISdhq0AnDmqeTZ-tDFBpBB6Q'
+            }, {
                 name: 'format-detection',
                 content: 'telephone=no'
             }
@@ -23,7 +28,12 @@ export default {
             rel: 'icon',
             type: 'image/x-icon',
             href: '/favicon.ico'
-        }]
+        }],
+        script: [{
+            src: "https://www.google-analytics.com/analytics.js",
+            async: true,
+            crossorigin: "anonymous"
+        }, ],
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
@@ -37,15 +47,16 @@ export default {
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
-    components: {
-        dirs: [
-            '~/components',
-            '~/components/atoms',
-            '~/components/layouts',
-            '~/components/molecules',
-            '~/components/templates',
-        ]
-    },
+    // components: {
+    //     dirs: [
+    //         '~/components',
+    //         '~/components/atoms',
+    //         '~/components/layouts',
+    //         '~/components/molecules',
+    //         '~/components/templates',
+    //     ]
+    // },
+     components: true,
 
     // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
     buildModules: [
@@ -83,14 +94,14 @@ export default {
 
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
     axios: {
-        baseURL: process.env.BASE_URL || 'http://localhost:8000',
-        withCredentials: false,
-        headers: {
-            common: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-        }
+        // baseURL: process.env.BASE_URL || 'http://localhost:8000',
+        // withCredentials: false,
+        // headers: {
+        //     common: {
+        //         'Content-Type': 'application/json',
+        //         'Accept': 'application/json',
+        //     },
+        // }
     },
 
     // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -102,13 +113,13 @@ export default {
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {},
 
-    publicRuntimeConfig: {
-        baseURL: process.env.BASE_URL || 'http://localhost:8000',
-    },
+    // publicRuntimeConfig: {
+    //     baseURL: process.env.BASE_URL || 'http://localhost:8000',
+    // },
 
-    privateRuntimeConfig: {
-        apiSecret: process.env.API_SECRET,
-    },
+    // privateRuntimeConfig: {
+    //     apiSecret: process.env.API_SECRET,
+    // },
     loading: {
         color: 'blue',
         height: '2px'

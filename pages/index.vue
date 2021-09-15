@@ -1,14 +1,22 @@
 <template>
-    <div>
-
+  <div id="body">
+    <div id="lables">
+      <div class="lables">
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
 import { tr } from "@/services/lang";
 
 export default {
-  layouts: 'default',
+  layout: "default",
+  head() {
+    return {
+      title: "صفحه اصلی",
+    };
+  },
   computed: {
     lang() {
       return tr();
@@ -16,3 +24,6 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+</style>

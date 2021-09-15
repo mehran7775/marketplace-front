@@ -1,9 +1,7 @@
 <template>
-    <div>
-        <div>admin</div>
-        <div>
-            <Nuxt/>
-        </div>
+    <div class="lable">
+        <div class="title">برچسب</div>
+
     </div>
 </template>
 

@@ -3,6 +3,8 @@ export const fa = {
         submit: 'ارسال',
         delete: 'حذف',
         home_page: 'صفحه اصلی',
+        add:'افزودن',
+        detail:'جزئیات'
     },
     label: {
         info: 'اطلاع',
@@ -10,6 +12,7 @@ export const fa = {
         no_icon: 'بدون آیکن',
         test: 'تست',
     },
+    price:'تومان',
     validation: {},
     error: {},
     message: {},

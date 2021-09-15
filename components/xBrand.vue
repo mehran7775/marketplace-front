@@ -17,10 +17,10 @@
     padding: 10px 15px;
     background-color: whitesmoke;
     border-radius: 100%;
-    border:3px solid aqua ;
+    border:3px solid $success ;
 
     svg{
-        font-size: 26px;
+        font-size: 1.5rem;
     }
 }
 </style>
