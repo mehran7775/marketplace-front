@@ -1,5 +1,5 @@
 <template>
-  <div id="item" @mouseover="is_hover = true" @mouseleave="is_hover = false">
+  <div id="item" @mouseover="item_hover()" @mouseleave="is_hover = false">
     <h3>کفش مردانه</h3>
     <nuxt-link to="/f">
       <img src="/images/apple-iphone-12-r1.jpg" alt="تصویر محصول" />
@@ -53,6 +53,13 @@ export default {
       is_hover: false,
     };
   },
+  methods:{
+      item_hover(){
+          if(window.innerWidth > 768){
+              this.is_hover = true
+          }
+      }
+  }
 };
 </script>
 
