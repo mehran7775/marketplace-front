@@ -1,9 +1,7 @@
 <template>
   <div id="item" @mouseover="is_hover = true" @mouseleave="is_hover = false">
+    <h3>کفش مردانه</h3>
     <nuxt-link to="/f">
-      <h6>
-        <b>کفش مردانه</b>
-      </h6>
       <img src="/images/apple-iphone-12-r1.jpg" alt="تصویر محصول" />
     </nuxt-link>
     <div id="box_hover">
@@ -26,7 +24,11 @@
 
 <script>
 import { tr } from "@/services/lang";
+import xButton from "@/components/xButton.vue";
 export default {
+  components: {
+    xButton,
+  },
   props: {
     title: {
       type: String,
@@ -56,15 +58,18 @@ export default {
 
 <style lang="scss" scoped>
 #item {
-  //   min-width: 250px;
   max-width: 260px;
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
   text-align: center;
-  padding: 15px 30px 10px 30px;
   border: 1px solid $border_success;
   transition: border linear 0.2s;
+  background-color: $white;
+  padding: 10px 0;
+  @include medium {
+    padding: 15px 30px 10px 30px;
+    border-radius: 10px;
+  }
   a {
     display: block;
     color: inherit;
@@ -72,6 +77,11 @@ export default {
       max-width: 160px;
       max-height: 120px;
       margin: 1.3rem 1rem;
+      @include mx_medium {
+        max-width: 80px;
+        max-height: 70px;
+        margin: 1rem 0.3rem;
+      }
     }
   }
   a:hover {
@@ -79,6 +89,7 @@ export default {
   }
   #box_hover {
     height: 45px;
+    margin: auto;
     #price {
       color: $success;
     }
@@ -86,5 +97,6 @@ export default {
 }
 #item:hover {
   border: 1px solid $success;
+  cursor: grab;
 }
 </style>

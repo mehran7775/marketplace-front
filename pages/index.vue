@@ -1,7 +1,12 @@
 <template>
-  <div id="body">
+  <div id="body" class="w-100">
     <div id="lables">
-      <div class="lables">
+      <div class="lables mb-4">
+          <x-lables>
+              <!-- <template slot="advertise">
+
+              </template> -->
+          </x-lables>
       </div>
     </div>
   </div>
@@ -9,9 +14,9 @@
 
 <script>
 import { tr } from "@/services/lang";
-
+import xLables from "@/components/molecules/xLables";
 export default {
-  layout: "default",
+  layout: "index",
   head() {
     return {
       title: "صفحه اصلی",
@@ -22,8 +27,17 @@ export default {
       return tr();
     },
   },
+  components: {
+    xLables
+  },
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+#lables{
+    padding:0;
+    @include mx_medium {
+        padding: 0.2rem;
+    }
+}
 </style>
