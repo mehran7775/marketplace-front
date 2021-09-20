@@ -29,22 +29,22 @@ export default {
   mounted() {
     this.$store.dispatch("users/test");
   },
-  async asyncData({ error }) {
-    try {
-      this.$store.dispatch("products/get_products");
-    } catch (e) {
-      if (e.response) {
-        error({
-          statusCode: e.response.status,
-        });
-      } else {
-        error({
-          statusCode: "",
-          message: "خطا در ارتباط",
-        });
-      }
-    }
-  },
+//   async asyncData({ error }) {
+//     try {
+//       this.$store.dispatch("products/get_products");
+//     } catch (e) {
+//       if (e.response) {
+//         error({
+//           statusCode: e.response.status,
+//         });
+//       } else {
+//         error({
+//           statusCode: "",
+//           message: "خطا در ارتباط",
+//         });
+//       }
+//     }
+//   },
 };
 </script>
 

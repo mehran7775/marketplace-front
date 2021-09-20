@@ -42,6 +42,10 @@ export default {
       type: [Number, String],
       default: 0,
     },
+    mt: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     lang() {
@@ -53,13 +57,13 @@ export default {
       is_hover: false,
     };
   },
-  methods:{
-      item_hover(){
-          if(window.innerWidth > 768){
-              this.is_hover = true
-          }
+  methods: {
+    item_hover() {
+      if (window.innerWidth > 768) {
+        this.is_hover = true;
       }
-  }
+    },
+  },
 };
 </script>
 
@@ -77,6 +81,10 @@ export default {
     padding: 15px 30px 10px 30px;
     border-radius: 10px;
   }
+  @include mx_medium {
+      width: 100%;
+  }
+
   a {
     display: block;
     color: inherit;

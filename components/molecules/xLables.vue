@@ -8,7 +8,7 @@
       </h5>
     </div>
     <div id="carousel" class="mt-4">
-      <div class="carousel-wrapper">
+      <div class="carousel-wrapper d-none d-md-block">
         <client-only>
           <carousel :per-page="per_page" v-bind="options">
             <slide v-for="i in 10" :key="i" class="img-wrapper">
@@ -16,6 +16,19 @@
             </slide>
           </carousel>
         </client-only>
+      </div>
+      <div>
+        <div class="d-md-none">
+          <div class="container-fluid">
+            <div class="row">
+              <div v-for="i in 10" :key="i" class="col-4">
+                <div class="row">
+                  <x-item></x-item>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <slot name="advertise"> </slot>
@@ -85,7 +98,7 @@ export default {
     // margin:min(0.05rem, 0.2%);
     @include medium {
       //   margin: 0 0.2rem;
-      margin:min(0.05rem, 0.05%);
+      margin: min(0.05rem, 0.05%);
     }
   }
 }
