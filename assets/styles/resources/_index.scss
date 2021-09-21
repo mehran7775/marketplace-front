@@ -5,7 +5,9 @@
 body {
     direction: rtl;
     box-sizing: border-box;
-    background-color: whitesmoke;
+    #__nuxt{
+        background-color: whitesmoke;
+    }
      h1 {
          font-size: 1.1rem;
      }
