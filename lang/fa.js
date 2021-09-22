@@ -4,7 +4,8 @@ export const fa = {
         delete: 'حذف',
         home_page: 'صفحه اصلی',
         add: 'افزودن',
-        detail: 'جزئیات'
+        detail: 'جزئیات',
+        buy:'خرید'
     },
     label: {
         info: 'اطلاع',

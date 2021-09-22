@@ -1,6 +1,6 @@
 <template>
   <nuxt-link to="/" id="brand">
-    <fa icon="home" :title="lang.svg.home"></fa>
+    <fa icon="home" title="فروشگاه من"></fa>
   </nuxt-link>
 </template>
 

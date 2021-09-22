@@ -6,12 +6,15 @@
     </nuxt-link>
     <div id="box_hover">
       <div v-if="is_hover" class="d-flex">
-        <x-button
+        <Xbutton
+          :on_click="detail_item"
           variant="outline-success"
           :text="lang.btn.detail"
           class="text"
-        ></x-button>
-        <x-button variant="success" :text="lang.btn.add"></x-button>
+        ></Xbutton>
+        <Xbutton variant="success" :text="lang.btn.add"
+         :on_click="add_item"
+        ></Xbutton>
       </div>
       <div v-if="!is_hover" id="price">
         <strong>
@@ -24,11 +27,7 @@
 
 <script>
 import { tr } from "@/services/lang";
-import xButton from "@/components/xButton.vue";
 export default {
-  components: {
-    xButton,
-  },
   props: {
     title: {
       type: String,
@@ -63,6 +62,12 @@ export default {
         this.is_hover = true;
       }
     },
+    detail_item() {
+      console.log("detail item");
+    },
+    add_item(){
+        console.log("add item");
+    }
   },
 };
 </script>
@@ -82,7 +87,7 @@ export default {
     border-radius: 10px;
   }
   @include mx_medium {
-      width: 100%;
+    width: 100%;
   }
 
   a {

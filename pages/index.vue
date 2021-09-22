@@ -2,15 +2,16 @@
   <div id="body" class="w-100">
     <div id="lables">
       <div class="lables mb-4">
-        <x-lables> </x-lables>
+        <LazyMoleculesXlables v-if="true" :products="'products'"> </LazyMoleculesXlables>
+        <p v-else>محصولی وجود ندارد</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import EventService from "@/services/EventService";
 import { tr } from "@/services/lang";
-import xLables from "@/components/molecules/xLables";
 export default {
   layout: "index",
   head() {
@@ -23,19 +24,24 @@ export default {
       return tr();
     },
   },
-  components: {
-    xLables,
-  },
-  mounted() {
-    this.$store.dispatch("users/test");
-  },
 //   async asyncData({ error }) {
 //     try {
-//       this.$store.dispatch("products/get_products");
+//       const { data } = await EventService.getProducts();
+//       if (data.length > 0) {
+//         return {
+//           products: data,
+//         };
+//       }else{
+//           return{
+//               products:null
+//           }
+//       }
 //     } catch (e) {
+//       console.log(e);
 //       if (e.response) {
 //         error({
 //           statusCode: e.response.status,
+//           message: e.response.message,
 //         });
 //       } else {
 //         error({
@@ -52,7 +58,7 @@ export default {
 #lables {
   padding: 0;
   @include mx_medium {
-    padding: 0.2rem;
+    padding: 0.05rem;
   }
 }
 </style>

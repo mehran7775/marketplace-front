@@ -1,6 +1,7 @@
 import EventService from "@/services/EventService";
 import Vuex from 'vuex'
 import users from "~/store/modules/users";
+import products from "~/store/modules/products";
 
 
 const createStore = () => {
@@ -8,7 +9,8 @@ const createStore = () => {
         state: {},
         mutations: {},
         modules: {
-            users
+            users,
+            products
         }
     })
 }
