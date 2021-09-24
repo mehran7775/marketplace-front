@@ -3,72 +3,65 @@ import Vue from 'vue'
 const state = () => ({
 
 })
+const getters = {
+
+};
 
 const mutations = {
-
+   
 }
 
 const actions = {
-    // async get_products() {
-    //     try {
-    //         const {
-    //             data
-    //         } = await EventService.getProducts()
-    //         console.log(data)
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // },
-    // async getProduct() {
-    //     try {
-    //         const {
-    //                data
-    //         } = await EventService.getProducts()
-    //         console.log(data)
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-    async addProductToCart() {
+    async addProductToCart({ commit,dispatch,getters }, product) {
         try {
             const res = await EventService.checkExistProduct()
-            console.log('th')
             if (res.status === 200) {
-                this.$bvToast.toast('محصول به سبد خرید اضاف شد', {
-                    title: `افزودن به سبد خرید`,
-                    variant: 'success',
-                    toaster: 'b-toaster-top-center',
-                    solid: true
-                    //  autoHideDelay: 5000,
-                })
+                let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+                if (cart.length > 0) {
+                    if (cart.some(el => el.id == product.id)) {
+                        const p = cart.find(({ id }) => id === product.id)
+                        p.counter++
+                    } else {
+                        const newObj = {
+                            id: product.id,
+                            counter: 1
+                        }
+                        cart.push(newObj)
+                    }
+                } else {
+                    const newObj = {
+                        id: product.id,
+                        counter: 1
+                    }
+                    cart.push(newObj)
+                }
+                localStorage.setItem('cartItems', JSON.stringify(cart))
+                console.log(JSON.parse(localStorage.getItem('cartItems')))
+                this.$store.commit('OPEN_TOAST',{
+                    title:'افزودن به سبد خرید',
+                    msg:'محصول به سبد خرید اضاف شد',
+                    variant:'success'
+                },{ root: true })
             }
         } catch (e) {
             if (e.response) {
-                this.$bvToast.toast('محصول در حاظر تمام شده است', {
-                    title: `افزودن به سبد خرید`,
-                    variant: 'danger',
-                    toaster: 'b-toaster-top-center',
-                    solid: true
-                    //  autoHideDelay: 5000,
-                })
+                commit('OPEN_TOAST',{
+                    title:'',
+                    msg:'محصول در حاظر تمام شده است',
+                    variant:'danger'
+                },{ root: true })
             } else {
-            //    Vue.prototype.$toast = toast
-                this._vm.$bvToast.toast('خطایی در ارتباط با سرور اتفاق افتاده است', {
-                    title: ``,
-                    variant: 'danger',
-                    toaster: 'b-toaster-top-center',
-                    solid: true
-                    //  autoHideDelay: 5000,
-                })
+                commit('OPEN_TOAST',{
+                    title:'',
+                    msg:'خطایی در ارتباط با سرور اتفاق افتاده است',
+                    variant:'danger',
+                    vm:this
+                },{ root: true })
             }
-
         }
     },
 };
 
-const getters = {
-
-};
 
 export default {
     namespaced: true,

@@ -78,11 +78,11 @@ body {
             font-size: 1.25rem;
         }
 
-        p,
-        span,
-        strong {
-            font-size: 1.1rem;
-        }
+        // p,
+        // span,
+        // strong {
+        //     font-size: 1.1rem;
+        // }
     }
 
     @include xlarge {
@@ -94,10 +94,13 @@ body {
           font-size: 1.25rem;
       }
 
-      p,
-      span,
-      strong {
-          font-size: 1.1em;
-      }
+    //   p,
+    //   span,
+    //   strong {
+    //       font-size: 1.1rem;
+    //   }
+    }
+    .b-toaster{
+        text-align: right;
     }
 }

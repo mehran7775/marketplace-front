@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link to="/" id="brand">
+  <nuxt-link to="/" class="brand">
     <fa icon="home" title="فروشگاه من"></fa>
   </nuxt-link>
 </template>
@@ -16,13 +16,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#brand {
+.brand {
   width: max-content;
   height: max-content;
   padding: 10px 15px;
   background-color: whitesmoke;
   border-radius: 100%;
-  border: 3px solid $success;
+  border: 2px solid $border_success;
 
   svg {
     font-size: 1.5rem;

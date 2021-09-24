@@ -24,7 +24,7 @@
         class="d-flex align-items-center justify-content-center"
         id="setting_index"
       >
-        <nuxt-link to="/basket"> <Xbasket class="mx-1"></Xbasket></nuxt-link>
+        <nuxt-link to="/cart"> <Xbasket class="mx-1"></Xbasket></nuxt-link>
         <nuxt-link to="/settings">
           <span
             ><fa icon="cog" class="fa-lg mx-1" :title="lang.svg.settings"></fa

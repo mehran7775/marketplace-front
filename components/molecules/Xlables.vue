@@ -1,5 +1,5 @@
 <template>
-  <div id="lable">
+  <div class="w-100">
     <div v-if="products" class="lable">
       <div class="title text-right pt-4 pr-5 d-none d-md-block">
         <h5>
@@ -8,7 +8,7 @@
           </label>
         </h5>
       </div>
-      <div id="carousel" class="mt-4">
+      <div class="mt-4">
         <div class="carousel-wrapper d-none d-md-block">
           <client-only>
             <carousel :per-page="per_page" v-bind="options">
@@ -33,9 +33,6 @@
         </div>
       </div>
     </div>
-    <!-- <div v-else class="p-5 text-center">
-      <p id="empty">محصولی وجود ندارد</p>
-    </div> -->
   </div>
 </template>
 

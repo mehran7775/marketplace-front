@@ -1,6 +1,6 @@
 <template>
-  <div id="search">
-    <input type="search" placeholder="جستوجو کنید ..." />
+  <div class="search">
+    <input type="search" placeholder="جستو جو کنید ..." />
     <fa icon="search" :title="lang.svg.search" class="fa-lg ml-2 mr-4"></fa>
   </div>
 </template>
@@ -17,13 +17,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#search {
+.search {
   width: max-content;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: whitesmoke;
-  border: 2px solid rgb(190, 190, 190);
+  // border: 1px solid rgb(155, 151, 151);
+  border: 1px solid $border_half_success;
   border-radius: 10px;
   padding: 10px;
   input {
@@ -42,5 +43,8 @@ export default {
     color: black;
     cursor: pointer;
   }
+}
+.search:focus-within,.search:hover{
+  border-color: $border_success;
 }
 </style>

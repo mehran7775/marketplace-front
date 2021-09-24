@@ -32,7 +32,7 @@
              <Xbutton
               class="px-3"
               :text="lang.btn.buy"
-              :on_click="buy_item"
+              :on_click="add_item"
             ></Xbutton>
           </div>
         </div>
@@ -50,6 +50,18 @@
 import { tr } from "@/services/lang";
 export default {
   layout: "index",
+  head() {
+    return {
+      title: "صفحه تک محصول",
+      meta:[
+        {
+          hid:'description',
+          name:'description',
+          content:'محصول x این ویژگی ها را دارد'
+        }
+      ]
+    };
+  },
   //   async asyncData({ error, route }) {
   //     try {
   //       const res = await EventService.getProduct(route.params.id);
@@ -92,10 +104,12 @@ export default {
       per_page: 1,
     };
   },
+  mounted(){
+    
+  },
   methods: {
-    buy_item() {
-    //   this.$store.dispatch("products/addProductToCart");
-      this.$store.dispatch("products/addProductToCart");
+    add_item() {
+      this.$store.dispatch("products/addProductToCart",{id:5,name:'kafsh'});
     },
   },
 };

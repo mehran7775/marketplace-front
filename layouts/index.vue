@@ -6,7 +6,7 @@
          <!-- <LazyMoleculesXheader /> -->
          <MoleculesXheader></MoleculesXheader>
         </div>
-        <div class="row">
+        <div class="row pb-5">
           <Nuxt />
         </div>
       </div>
@@ -14,7 +14,7 @@
     <div id="setting_index2" class="d-block d-md-none">
       <div id="bottom_menu">
         <div class="bottom_menu">
-          <nuxt-link to="/basket">
+          <nuxt-link to="/cart">
             <Xbasket class="mx-1 d-flex"></Xbasket>
           </nuxt-link>
         </div>

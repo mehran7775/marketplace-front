@@ -1,7 +1,7 @@
 <template>
   <div id="item" @mouseover="item_hover()" @mouseleave="is_hover = false">
     <h3>کفش مردانه</h3>
-    <nuxt-link to="/f">
+    <nuxt-link :to="`products/${554}`">
       <img src="/images/apple-iphone-12-r1.jpg" alt="تصویر محصول" />
     </nuxt-link>
     <div id="box_hover">
@@ -16,7 +16,7 @@
          :on_click="add_item"
         ></Xbutton>
       </div>
-      <div v-if="!is_hover" id="price">
+      <div v-if="!is_hover" class="price">
         <strong>
           <span v-text="lang.price"></span>
         </strong>
@@ -24,7 +24,7 @@
     </div>
   </div>
 </template>
-
+~/components/Xbutton.vue
 <script>
 import { tr } from "@/services/lang";
 export default {
@@ -63,10 +63,10 @@ export default {
       }
     },
     detail_item() {
-      console.log("detail item");
+     this.$router.push(`products/${554}`)
     },
     add_item(){
-        console.log("add item");
+        this.$store.dispatch("products/addProductToCart",{id:1});
     }
   },
 };
@@ -78,7 +78,7 @@ export default {
   display: flex;
   flex-direction: column;
   text-align: center;
-  border: 1px solid $border_success;
+  border: 1px solid $border_half_success;
   transition: border linear 0.2s;
   background-color: $white;
   padding: 10px 0;
@@ -110,13 +110,13 @@ export default {
   #box_hover {
     height: 45px;
     margin: auto;
-    #price {
+    .price {
       color: $success;
     }
   }
 }
-#item:hover {
-  border: 1px solid $success;
+#item:hover,#item:focus-within {
+  border: 1px solid $border_success;
   cursor: grab;
 }
 </style>
