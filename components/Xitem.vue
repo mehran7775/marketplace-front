@@ -66,7 +66,7 @@ export default {
      this.$router.push(`products/${554}`)
     },
     add_item(){
-        this.$store.dispatch("products/addProductToCart",{id:1});
+        this.$store.dispatch("products/addProductToCart",{id:4,name:'کت',price:100000});
     }
   },
 };

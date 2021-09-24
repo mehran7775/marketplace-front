@@ -109,7 +109,7 @@ export default {
   },
   methods: {
     add_item() {
-      this.$store.dispatch("products/addProductToCart",{id:5,name:'kafsh'});
+      this.$store.dispatch("products/addProductToCart",{id:1,name:'پیراهن',price:200000});
     },
   },
 };
