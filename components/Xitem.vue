@@ -13,7 +13,7 @@
           class="text"
         ></Xbutton>
         <Xbutton variant="success" :text="lang.btn.add"
-         :on_click="add_item"
+         :on_click="() => {$router.push('/u')}"
         ></Xbutton>
       </div>
       <div v-if="!is_hover" class="price">
@@ -66,7 +66,7 @@ export default {
      this.$router.push(`products/${554}`)
     },
     add_item(){
-        this.$store.dispatch("products/addProductToCart",{id:4,name:'کت',price:100000});
+        this.$store.dispatch("products/addProductToCart",{id:4,name:'کت',price:100000,img:''});
     }
   },
 };

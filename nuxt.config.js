@@ -45,9 +45,10 @@ export default {
     plugins: [
         // '~/plugins/axios',
         {
-            src: './plugins/vue-carousel.js',
+            src: '~/plugins/vue-carousel.js',
             mode: 'client'
-        }
+        },
+        '~/plugins/veevalidate'
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -107,19 +108,25 @@ export default {
         }
     },
     // Build Configuration: https://go.nuxtjs.dev/config-build
-    build: {},
+    build: {
+        transpile: ["vee-validate/dist/rules"],
+        /*
+         ** You can extend webpack config here
+         */
+        extend(config, ctx) {}
+    },
 
     publicRuntimeConfig: {
 
         baseURL: process.env.BASE_URL || 'http://127.0.0.1:8000',
-       
+
     },
 
     privateRuntimeConfig: {
         apiSecret: process.env.API_SECRET,
         axios: {
-            baseURL: process.env.BASE_URL  || 'http://127.0.0.1:8000',
-          }
+            baseURL: process.env.BASE_URL || 'http://127.0.0.1:8000',
+        }
     },
     loading: {
         color: '#00c1a4',

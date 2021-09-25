@@ -105,11 +105,11 @@ export default {
     };
   },
   mounted(){
-    
+
   },
   methods: {
     add_item() {
-      this.$store.dispatch("products/addProductToCart",{id:1,name:'پیراهن',price:200000});
+      this.$store.dispatch("products/addProductToCart",{id:1,name:'پیراهن',price:200000,img:''});
     },
   },
 };

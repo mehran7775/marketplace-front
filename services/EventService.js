@@ -22,6 +22,9 @@ export default {
     },
     checkExistProduct(id) {
         return apiClient.post('/check-product-exist', id, null)
+    },
+    select_way_payment(payload){
+        return apiClient.post(`/select`)
     }
 
 }
