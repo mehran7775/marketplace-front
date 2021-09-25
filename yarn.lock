@@ -9525,7 +9525,7 @@ vary@^1.1.2, vary@~1.1.2:
 
 vee-validate@^3.4.13:
   version "3.4.13"
-  resolved "https://registry.npmjs.org/vee-validate/-/vee-validate-3.4.13.tgz#886ffe90778edde9c2f0c3ad94bfab3fe8079f31"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-3.4.13.tgz#886ffe90778edde9c2f0c3ad94bfab3fe8079f31"
   integrity sha512-ONnyRixpd0/JOGLuN8dlxFwLoT5FGq5ti1w4rx/zFZWaJZ1EefhfAbXkQvLwLhjU6izkfHyITXojW/7InOU3Tw==
 
 vendors@^1.0.0:

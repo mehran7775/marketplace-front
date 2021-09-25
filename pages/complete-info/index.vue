@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-10 m-auto col-md-12">
+      <div class="col-10 m-auto col-md-7">
         <div class="row pt-5">
           <h1>تکمیل اطلاعات</h1>
         </div>
@@ -14,9 +14,9 @@
               <div class="form-group px-3 pt-3">
                 <!-- <ValidationProvider rules="required|alpha" v-slot="{ errors }"> -->
                 <div class="row">
-                  <div class="col-12 col-md-6">
+                  <div class="col-12">
                     <div class="row">
-                      <div class="d-flex w-100 justify-content-around">
+                      <div class="d-flex w-100 justify-content-between">
                         <div class="naming">
                           <input
                             class="form-control"
@@ -40,9 +40,9 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-12 col-md-6 mt-2 mt-md-0">
+                  <div class="col-12 mt-2">
                     <div class="row">
-                      <div class="emailing">
+                      <div class="w-100">
                         <input
                           class="form-control"
                           type="email"
@@ -56,9 +56,24 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-12 col-md-6 mt-2">
+                  <div class="col-12 mt-2">
                     <div class="row">
-                      <div class="d-flex w-100 justify-content-around">
+                      <div class="w-100">
+                        <input
+                          class="form-control"
+                          type="text"
+                          id="phone"
+                          name="phone"
+                          ref="phone"
+                          placeholder="موبایل"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 mt-2">
+                    <div class="row">
+                      <div class="d-flex w-100 justify-content-between">
                         <div class="naming">
                           <input
                             class="form-control"
@@ -82,25 +97,9 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-12 col-md-6 mt-2">
+                  <div class="col-12 mt-2">
                     <div class="row">
-                      <div class="phoning">
-                        <input
-                          class="form-control"
-                          type="text"
-                          id="phone"
-                          name="phone"
-                          ref="phone"
-                          placeholder="موبایل"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 col-md-6 mt-2">
-                    <div class="row">
-                      <div class="addressing">
+                      <div class="w-100">
                         <input
                           class="form-control"
                           type="text"
@@ -113,8 +112,11 @@
                     </div>
                   </div>
                 </div>
-                <div class="row mt-2 p-0 pr-md-1">
-                  <hr class="dash" />
+                <!-- <div class="row">
+                 
+                </div> -->
+                <div class="row mt-2">
+                  <hr class="dash w-100" />
                 </div>
                 <!-- <button v-b-modal.modal-prevent-closing>Open Modal</button> -->
                 <div class="row">
@@ -145,7 +147,8 @@
                   class="mr-4"
                   type="radio"
                   name="getway"
-                  value="pardakhtyari-pay"
+                  value="pardakhtyari_pay"
+                  ref="pardakhtyari_pay"
                   checked
                 />
                 <span class="mr-3">درگاه پرداخت یاری پی استار</span>
@@ -158,6 +161,7 @@
                   type="radio"
                   name="getway"
                   value="cart-to-cart-pay"
+                  ref="cart_to_cart_pay"
                 />
                 <span class="mr-3">درگاه کارت به کارت پی استار</span>
               </div>
@@ -169,6 +173,7 @@
                   type="radio"
                   name="getway"
                   value="direct-pay"
+                  ref="direct_pay"
                 />
                 <span class="mr-3">درگاه مستقیم پی استار</span>
               </div>
@@ -236,10 +241,23 @@ export default {
         store_id: "eroxr",
         products: items_second,
       };
-      this.$bvModal.show('modal-prevent-closing')
-    //   this.$store.dispatch("payment/select_way_payment", [data_user, items_end]);
+      this.$bvModal.show("modal-prevent-closing");
+      //   this.$store.dispatch("payment/select_way_payment", [data_user, items_end]);
     },
-    do_payment() {},
+    do_payment() {
+      // console.log(this.$refs.pardakhtyari_pay.checked)
+      let getway = "";
+      if (this.$refs.pardakhtyari_pay.checked) {
+        getway = this.$refs.pardakhtyari_pay.value;
+      } else if (this.$refs.cart_to_cart_pay.checked) {
+        getway = this.$refs.cart_to_cart_pay.value;
+      } else if (this.$refs.direct_pay.checked) {
+        getway = this.$refs.direct_pay.value;
+      }else{
+        getway="null"
+      }
+      console.log(getway)
+    },
   },
 };
 </script>
@@ -251,24 +269,8 @@ h1 {
 .naming {
   width: 48%;
 }
-.emailing,
-.phoning {
-  width: 98%;
-  margin: auto;
-  @include medium {
-    width: calc(100%-0.5rem);
-    margin-right: 0.5rem;
-  }
-}
-.addressing {
-  width: 98%;
-  margin-right: auto;
-  margin-left: auto;
-}
+
 .dash {
-  width: 99%;
-  margin-right: auto;
-  margin-left: auto;
   border-top: 1px dashed $success;
 }
 .getways {
