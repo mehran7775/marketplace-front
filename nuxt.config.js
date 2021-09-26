@@ -43,23 +43,15 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
-        '~/plugins/axios',
+        // '~/plugins/axios',
         {
-            src: './plugins/vue-carousel.js',
+            src: '~/plugins/vue-carousel.js',
             mode: 'client'
-        }
+        },
+        '~/plugins/veevalidate'
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
-    // components: {
-    //     dirs: [
-    //         '~/components',
-    //         '~/components/atoms',
-    //         '~/components/layouts',
-    //         '~/components/molecules',
-    //         '~/components/templates',
-    //     ]
-    // },
     components: true,
 
     // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
@@ -98,14 +90,15 @@ export default {
 
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
     axios: {
-        // baseURL: process.env.BASE_URL || 'http://localhost:8000',
-        // withCredentials: false,
-        // headers: {
-        //     common: {
-        //         'Content-Type': 'application/json',
-        //         'Accept': 'application/json',
-        //     },
-        // }
+        baseURL: process.env.BASE_URL || 'http://127.0.0.1:8000',
+        // browserBaseURL: process.env.API_URL_BROWSER || 'http://127.0.0.1:8000',
+        withCredentials: false,
+        headers: {
+            common: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        }
     },
 
     // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -115,17 +108,28 @@ export default {
         }
     },
     // Build Configuration: https://go.nuxtjs.dev/config-build
-    build: {},
+    build: {
+        transpile: ["vee-validate/dist/rules"],
+        /*
+         ** You can extend webpack config here
+         */
+        extend(config, ctx) {}
+    },
 
-    // publicRuntimeConfig: {
-    //     baseURL: process.env.BASE_URL || 'http://localhost:8000',
-    // },
+    publicRuntimeConfig: {
 
-    // privateRuntimeConfig: {
-    //     apiSecret: process.env.API_SECRET,
-    // },
+        baseURL: process.env.BASE_URL || 'http://127.0.0.1:8000',
+
+    },
+
+    privateRuntimeConfig: {
+        apiSecret: process.env.API_SECRET,
+        axios: {
+            baseURL: process.env.BASE_URL || 'http://127.0.0.1:8000',
+        }
+    },
     loading: {
-        color: 'blue',
+        color: '#00c1a4',
         height: '2px'
     },
 }

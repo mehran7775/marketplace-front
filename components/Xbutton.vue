@@ -5,7 +5,7 @@
     @click="on_click"
   >
     <div class="row mx-1">
-      <div v-if="text != ''"  class="px-1">
+      <div v-if="text != ''"  class="px-2">
           <span v-text="text"></span>
       </div>
       <div v-if="icon != ''" class="px-1">
@@ -44,6 +44,7 @@ export default {
 
 <style scoped lang="scss">
 button {
+    border-radius: 3rem;
   svg {
     color: $svg_color;
   }

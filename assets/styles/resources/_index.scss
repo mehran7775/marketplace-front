@@ -5,36 +5,39 @@
 body {
     direction: rtl;
     box-sizing: border-box;
-    #__nuxt{
+
+    #__nuxt {
         background-color: whitesmoke;
     }
-     h1 {
-         font-size: 1.1rem;
-     }
 
-     h3 {
-         font-size: 0.95rem;
-     }
+    h1 {
+        font-size: 1.1rem;
+    }
 
-     p,
-     span,
-     strong {
-         font-size: 0.8rem;
-     }
+    h3 {
+        font-size: 0.95rem;
+    }
+
+    p,
+    span,
+    strong {
+        font-size: 0.8rem;
+    }
+
     @include xsmall {
-       h1 {
-           font-size: 1.1rem;
-       }
+        h1 {
+            font-size: 1.1rem;
+        }
 
-       h3 {
-           font-size: 0.95rem;
-       }
+        h3 {
+            font-size: 0.95rem;
+        }
 
-       p,
-       span,
-       strong {
-           font-size: 0.8rem;
-       }
+        p,
+        span,
+        strong {
+            font-size: 0.8rem;
+        }
     }
 
     @include small {
@@ -78,26 +81,50 @@ body {
             font-size: 1.25rem;
         }
 
-        p,
-        span,
-        strong {
-            font-size: 1.1rem;
-        }
+        // p,
+        // span,
+        // strong {
+        //     font-size: 1.1rem;
+        // }
     }
 
     @include xlarge {
-      h1 {
-          font-size: 1.4rem;
-      }
+        h1 {
+            font-size: 1.4rem;
+        }
 
-      h3 {
-          font-size: 1.25rem;
-      }
+        h3 {
+            font-size: 1.25rem;
+        }
 
-      p,
-      span,
-      strong {
-          font-size: 1.1em;
-      }
+        //   p,
+        //   span,
+        //   strong {
+        //       font-size: 1.1rem;
+        //   }
+    }
+
+    .b-toaster {
+        text-align: right;
+    }
+
+    .modal-content {
+        padding: 20px;
+        direction: rtl;
+        text-align: right;
+
+        .modal-header {
+            .modal-title {
+                color: $success;
+            }
+
+            .close {
+                margin: 0;
+                padding: 0;
+            }
+        }
+        .modal-footer{
+            display: none;
+        }
     }
 }
