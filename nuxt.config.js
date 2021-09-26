@@ -90,7 +90,8 @@ export default {
 
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
     axios: {
-        baseURL: process.env.BASE_URL || 'http://127.0.0.1:8000',
+        // baseURL: process.env.BASE_URL || 'http://127.0.0.1:8000',
+        baseURL: process.env.BASE_URL || 'https://coreshop.paystar.ir/api',
         // browserBaseURL: process.env.API_URL_BROWSER || 'http://127.0.0.1:8000',
         withCredentials: false,
         headers: {
@@ -125,6 +126,7 @@ export default {
     privateRuntimeConfig: {
         apiSecret: process.env.API_SECRET,
         axios: {
+            // baseURL: process.env.BASE_URL || 'http://127.0.0.1:8000',
             baseURL: process.env.BASE_URL || 'http://127.0.0.1:8000',
         }
     },

@@ -2,7 +2,8 @@
   <div id="body" class="w-100">
     <div id="lables">
       <div class="lables mb-4">
-        <LazyMoleculesXlables v-if="true" :products="'products'"> </LazyMoleculesXlables>
+        <LazyMoleculesXlables v-if="true" :products="'products'">
+        </LazyMoleculesXlables>
         <p v-else>محصولی وجود ندارد</p>
       </div>
     </div>
@@ -24,7 +25,7 @@ export default {
       return tr();
     },
   },
-  mounted(){
+  mounted() {
     // localStorage.setItem('cartItems',JSON.stringify([
     //   {
     //     id:1,
@@ -51,34 +52,34 @@ export default {
     //     count:3
     //   },
     // ]))
-  }
-//   async asyncData({ error }) {
-//     try {
-//       const { data } = await EventService.getProducts();
-//       if (data.length > 0) {
-//         return {
-//           products: data,
-//         };
-//       }else{
-//           return{
-//               products:null
-//           }
-//       }
-//     } catch (e) {
-//       console.log(e);
-//       if (e.response) {
-//         error({
-//           statusCode: e.response.status,
-//           message: e.response.message,
-//         });
-//       } else {
-//         error({
-//           statusCode: "",
-//           message: "خطا در ارتباط",
-//         });
-//       }
-//     }
-//   },
+  },
+  //   async asyncData({ error }) {
+  //     try {
+  //       const { data } = await EventService.getProducts();
+  //       if (data.length > 0) {
+  //         return {
+  //           products: data,
+  //         };
+  //       }else{
+  //           return{
+  //               products:null
+  //           }
+  //       }
+  //     } catch (e) {
+  //       console.log(e);
+  //       if (e.response) {
+  //         error({
+  //           statusCode: e.response.status,
+  //           message: e.response.message,
+  //         });
+  //       } else {
+  //         error({
+  //           statusCode: "",
+  //           message: "خطا در ارتباط",
+  //         });
+  //       }
+  //     }
+  //   },
 };
 </script>
 
