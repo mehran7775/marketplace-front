@@ -7,13 +7,13 @@
     <div id="box_hover">
       <div v-if="is_hover" class="d-flex">
         <Xbutton
-          :on_click="detail_item"
+          :on_click="() => {$router.push(`products/${554}`)}"
           variant="outline-success"
           :text="lang.btn.detail"
           class="text"
         ></Xbutton>
         <Xbutton variant="success" :text="lang.btn.add"
-         :on_click="() => {$router.push('/u')}"
+         :on_click="add_item"
         ></Xbutton>
       </div>
       <div v-if="!is_hover" class="price">

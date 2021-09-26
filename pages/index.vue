@@ -24,6 +24,34 @@ export default {
       return tr();
     },
   },
+  mounted(){
+    // localStorage.setItem('cartItems',JSON.stringify([
+    //   {
+    //     id:1,
+    //     name:'کفش',
+    //     price:380000,
+    //     count:1
+    //   },
+    //   {
+    //     id:2,
+    //     name:'تیشرت',
+    //     price:200000,
+    //     count:2
+    //   },
+    //   {
+    //     id:3,
+    //     name:'شلوار',
+    //     price:250000,
+    //     count:1
+    //   },
+    //   {
+    //     id:4,
+    //     name:'کلاه',
+    //     price:250000,
+    //     count:3
+    //   },
+    // ]))
+  }
 //   async asyncData({ error }) {
 //     try {
 //       const { data } = await EventService.getProducts();
