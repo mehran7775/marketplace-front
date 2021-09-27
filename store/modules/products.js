@@ -1,4 +1,3 @@
-import EventService from "~/services/EventService";
 import Vue from 'vue'
 const state = () => ({
 
@@ -14,7 +13,7 @@ const mutations = {
 const actions = {
     async addProductToCart({ commit, dispatch, getters }, product) {
         try {
-            const res = await EventService.checkExistProduct()
+            const res = await this.$axios.post('/check-product-exist', id, null)
             if (res.status === 200) {
                 let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
                 if (cart.length > 0) {

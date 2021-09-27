@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  layout: "empty",
+  layout: "index",
   props: {
     error: {
       type: Object,

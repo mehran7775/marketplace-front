@@ -89,17 +89,17 @@ export default {
     },
 
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
-    axios: {
-        // baseURL: process.env.BASE_URL || 'http://127.0.0.1:8000',
-        baseURL: process.env.BASE_URL || 'https://coreshop.paystar.ir/api',
-        // browserBaseURL: process.env.API_URL_BROWSER || 'http://127.0.0.1:8000',
-        withCredentials: false,
-        headers: {
-            common: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-        }
+
+    axios:{
+          baseURL: process.env.BASE_URL || 'https://coreshop.paystar.ir/api',
+              browserBaseURL: process.env.BROWSER_BASE_URL || 'https://coreshop.paystar.ir/api',
+              withCredentials: false,
+              headers: {
+                  common: {
+                      'Content-Type': 'application/json',
+                      'Accept': 'application/json',
+                  },
+              }
     },
 
     // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -118,17 +118,16 @@ export default {
     },
 
     publicRuntimeConfig: {
-
-        baseURL: process.env.BASE_URL || 'http://127.0.0.1:8000',
-
+        axios: {
+            browserBaseURL: process.env.BROWSER_BASE_URL || 'https://coreshop.paystar.ir/api'
+        },
     },
 
     privateRuntimeConfig: {
-        apiSecret: process.env.API_SECRET,
         axios: {
-            // baseURL: process.env.BASE_URL || 'http://127.0.0.1:8000',
-            baseURL: process.env.BASE_URL || 'http://127.0.0.1:8000',
-        }
+            baseURL: process.env.BASE_URL || 'https://coreshop.paystar.ir/api',
+        },
+        // apiSecret: process.env.API_SECRET,
     },
     loading: {
         color: '#00c1a4',

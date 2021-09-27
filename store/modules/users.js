@@ -1,4 +1,3 @@
-import EventService from "@/services/EventService";
 
 const state = () => ({
     users: []

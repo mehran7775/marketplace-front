@@ -1,30 +1,20 @@
-// import axios from '~/plugins/axios'
-import axios from 'axios'
+// import axios from '@/plugins/axios'
 
-const apiClient = axios.create({
-    baseURL: process.env.BASE_URL || 'http://localhost:8000',
-    withCredentials: false,
-    headers: {
-        common: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-    }
-})
+// export default {
+//     getCurrentUser(id) {
+//         return apiClient.get(`/user/current`)
+//     },
+//     getProducts() {
+//         return axios.get(`/products`)
+//     },
+//     getProduct(id) {
+//         return axios.get(`/products/${id}`)
+//     },
+//     checkExistProduct(id) {
+//         return axios.post('/check-product-exist', id, null)
+//     },
+//     select_way_payment(payload) {
+//         return axios.post(`/select`)
+//     }
 
-export default {
-
-    getProducts() {
-        return apiClient.get(`/products`)
-    },
-    getProduct(id) {
-        return apiClient.get(`/products/${id}`)
-    },
-    checkExistProduct(id) {
-        return apiClient.post('/check-product-exist', id, null)
-    },
-    select_way_payment(payload){
-        return apiClient.post(`/select`)
-    }
-
-}
+// }

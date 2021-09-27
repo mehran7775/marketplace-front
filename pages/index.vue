@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import EventService from "@/services/EventService";
 import { tr } from "@/services/lang";
 export default {
   layout: "index",
@@ -53,9 +52,9 @@ export default {
     //   },
     // ]))
   },
-  //   async asyncData({ error }) {
+  //   async asyncData({ error,$axios }) {
   //     try {
-  //       const { data } = await EventService.getProducts();
+  //       const { data } = await $axios.$get('/products')
   //       if (data.length > 0) {
   //         return {
   //           products: data,

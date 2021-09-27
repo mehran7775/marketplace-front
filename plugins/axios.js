@@ -1,6 +1,22 @@
-// import axios from 'axios'
+export default function ({
+    $axios,
+    store,
+    redirect
+}) {
+    // $axios.onRequest(config => {
+    //     config.headers.common = {
+    //         'Content-Type': 'application/json',
+    //         'Accept': 'application/json'
+    //     }
+    //     // if (store.state.authToken) {
+    //     //     config.headers.common['Authorization'] = store.state.authToken
+    //     // }
+    // })
+    // $axios.onError(error => {
+    //     const code = parseInt(error.response && error.response.status)
+    //     if (code === 401) {
+    //         redirect('/')
+    //     }
+    // })
 
-// export default axios.create({
-//     baseURL: process.env.BASE_URL || 'http://localhost:8000',
-//     baseURL:'http://localhost:8000',
-// })
+}

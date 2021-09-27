@@ -1,4 +1,3 @@
-import EventService from "@/services/EventService";
 import Vuex from 'vuex'
 import state from '@/store/state'
 import getters from '@/store/getters'
