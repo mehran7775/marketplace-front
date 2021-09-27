@@ -64,7 +64,7 @@ export default {
   },
   //   async asyncData({ error, route,$axios }) {
   //     try {
-  //       const res = await $axios.$get(`/products/${route.params.id}`);
+  //       const res =return await $axios.$get(`/products/${route.params.id}`);
   //       if ((res.status === 200) & res.data) {
   //         return {
   //           product: res.data,

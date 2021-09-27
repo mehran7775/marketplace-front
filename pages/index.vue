@@ -54,7 +54,7 @@ export default {
   },
   //   async asyncData({ error,$axios }) {
   //     try {
-  //       const { data } = await $axios.$get('/products')
+  //       const { data } = return await $axios.$get('/products')
   //       if (data.length > 0) {
   //         return {
   //           products: data,

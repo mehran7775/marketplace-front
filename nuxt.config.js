@@ -43,7 +43,7 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
-        // '~/plugins/axios',
+        '~/plugins/axios',
         {
             src: '~/plugins/vue-carousel.js',
             mode: 'client'
@@ -88,20 +88,6 @@ export default {
         icons: true,
     },
 
-    // Axios module configuration: https://go.nuxtjs.dev/config-axios
-
-    axios:{
-          baseURL: process.env.BASE_URL || 'https://coreshop.paystar.ir/api',
-              browserBaseURL: process.env.BROWSER_BASE_URL || 'https://coreshop.paystar.ir/api',
-              withCredentials: false,
-              headers: {
-                  common: {
-                      'Content-Type': 'application/json',
-                      'Accept': 'application/json',
-                  },
-              }
-    },
-
     // PWA module configuration: https://go.nuxtjs.dev/pwa
     pwa: {
         manifest: {
@@ -114,7 +100,15 @@ export default {
         /*
          ** You can extend webpack config here
          */
-        extend(config, ctx) {}
+    },
+
+    // Axios module configuration: https://go.nuxtjs.dev/config-axios
+
+    axios: {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
     },
 
     publicRuntimeConfig: {
@@ -122,7 +116,6 @@ export default {
             browserBaseURL: process.env.BROWSER_BASE_URL || 'https://coreshop.paystar.ir/api'
         },
     },
-
     privateRuntimeConfig: {
         axios: {
             baseURL: process.env.BASE_URL || 'https://coreshop.paystar.ir/api',

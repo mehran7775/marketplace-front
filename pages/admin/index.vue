@@ -3,19 +3,20 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   layout: "admin",
-  async asyncData ({ $axios, error }) {
+  async asyncData(context) {
     try {
-      $axios
-        .$get("/user/current5")
-        .then((res) => {
-          console.log("re", res);
-        });
+       await context.$axios.get("/user/current",{
+             headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
+       });
     } catch (e) {
-      error({
-        statusCode: 500,
+      console.log("eee");
+      context.error({
+        statusCode: 401,
         message: "rtfhb",
       });
     }
