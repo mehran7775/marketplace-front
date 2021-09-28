@@ -5,22 +5,18 @@
 <script>
 export default {
   layout: "admin",
-  async asyncData(context) {
-    try {
-       await context.$axios.get("/user/current",{
-             headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        }
-       });
-    } catch (e) {
-      console.log("eee");
-      context.error({
-        statusCode: 401,
-        message: "rtfhb",
-      });
-    }
-  },
+  // async asyncData(context) {
+  //   try {
+  //     context.$axios.setHeader('Authorization', '123')
+  //      await context.$axios.get("/user/current");
+  //   } catch (e) {
+  //     console.log("eee",e);
+  //     context.error({
+  //       statusCode: 401,
+  //       message: "rtfhb",
+  //     });
+  //   }
+  // },
 };
 </script>
 

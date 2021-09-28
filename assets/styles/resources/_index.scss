@@ -1,6 +1,6 @@
-@import './variables/index';
-@import './functions/index';
-@import './mixins/index';
+@import "./variables/index";
+@import "./functions/index";
+@import "./mixins/index";
 
 body {
     direction: rtl;
@@ -8,23 +8,7 @@ body {
 
     #__nuxt {
         background-color: whitesmoke;
-    }
 
-    h1 {
-        font-size: 1.1rem;
-    }
-
-    h3 {
-        font-size: 0.95rem;
-    }
-
-    p,
-    span,
-    strong {
-        font-size: 0.8rem;
-    }
-
-    @include xsmall {
         h1 {
             font-size: 1.1rem;
         }
@@ -38,93 +22,118 @@ body {
         strong {
             font-size: 0.8rem;
         }
-    }
-
-    @include small {
-        h1 {
-            font-size: 1.2rem;
+        .cursor_pointer{
+            cursor: pointer;
         }
-
-        h3 {
-            font-size: 1.15rem;
-        }
-
-        p,
-        span,
-        strong {
-            font-size: 0.9rem;
-        }
-    }
-
-    @include medium {
-        h1 {
-            font-size: 1.3rem;
-        }
-
-        h3 {
-            font-size: 1.15rem;
-        }
-
-        p,
-        span,
-        strong {
-            font-size: 1rem;
-        }
-    }
-
-    @include large {
-        h1 {
-            font-size: 1.4rem;
-        }
-
-        h3 {
-            font-size: 1.25rem;
-        }
-
-        // p,
-        // span,
-        // strong {
-        //     font-size: 1.1rem;
-        // }
-    }
-
-    @include xlarge {
-        h1 {
-            font-size: 1.4rem;
-        }
-
-        h3 {
-            font-size: 1.25rem;
-        }
-
-        //   p,
-        //   span,
-        //   strong {
-        //       font-size: 1.1rem;
-        //   }
-    }
-
-    .b-toaster {
-        text-align: right;
-    }
-
-    .modal-content {
-        padding: 20px;
-        direction: rtl;
-        text-align: right;
-
-        .modal-header {
-            .modal-title {
-                color: $success;
+        @include xsmall {
+            h1 {
+                font-size: 1.1rem;
             }
 
-            .close {
-                margin: 0;
-                padding: 0;
+            h3 {
+                font-size: 0.95rem;
+            }
+
+            p,
+            span,
+            strong {
+                font-size: 0.8rem;
             }
         }
-        .modal-footer{
-            display: none;
+
+        @include small {
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            h3 {
+                font-size: 1.15rem;
+            }
+
+            p,
+            span,
+            strong {
+                font-size: 0.9rem;
+            }
+        }
+
+        @include medium {
+            h1 {
+                font-size: 1.3rem;
+            }
+
+            h3 {
+                font-size: 1.15rem;
+            }
+
+            p,
+            span,
+            strong {
+                font-size: 1rem;
+            }
+        }
+
+        @include large {
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+            }
+
+            // p,
+            // span,
+            // strong {
+            //     font-size: 1.1rem;
+            // }
+        }
+
+        @include xlarge {
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+            }
+
+            //   p,
+            //   span,
+            //   strong {
+            //       font-size: 1.1rem;
+            //   }
+        }
+
+        .b-toaster {
+            text-align: right;
+        }
+
+        .modal-content {
+            padding: 20px;
+            direction: rtl;
+            text-align: right;
+
+            .modal-header {
+                .modal-title {
+                    color: $success;
+                }
+
+                .close {
+                    margin: 0;
+                    padding: 0;
+                }
+            }
+            .modal-footer {
+                display: none;
+            }
+        }
+        ////////////////------------------------------------ admin panel--------------------------------------///////////
+
+        #panel_admin {
+            background-color: $bac_dark_color;
+
+            color: white;
         }
     }
 }
