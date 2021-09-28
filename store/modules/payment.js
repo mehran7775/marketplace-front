@@ -13,12 +13,16 @@ const mutations = {
 const actions = {
     async select_way_payment({commit},payload){
         try{
-             await this.$axios.post('/select')
+             await this.$axios.post('/order/create').then(res =>{
+                 //res.order_id
+            
+             })
         }catch(e){
             console.log(e)
         }
     }
 };
+
 
 
 export default {

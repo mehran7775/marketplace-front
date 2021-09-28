@@ -5,7 +5,11 @@
         <div class="product w-100" dir="ltr">
           <client-only>
             <carousel :per-page="per_page" v-bind="options">
-              <slide v-for="thumbnail in product.thumbnails" :key="thumbnail" class="img-wrapper">
+              <slide
+                v-for="thumbnail in product.thumbnails"
+                :key="thumbnail"
+                class="img-wrapper"
+              >
                 <img :src="thumbnail" />
               </slide>
             </carousel>
@@ -29,7 +33,7 @@
               <span class="mx-1" v-text="product.price"></span>
               <span>تومان</span>
             </span>
-             <Xbutton
+            <Xbutton
               class="px-3"
               :text="lang.btn.buy"
               :on_click="add_item"
@@ -53,42 +57,42 @@ export default {
   head() {
     return {
       title: "صفحه تک محصول",
-      meta:[
+      meta: [
         {
-          hid:'description',
-          name:'description',
-          content:'محصول x این ویژگی ها را دارد'
-        }
-      ]
+          hid: "description",
+          name: "description",
+          content: "محصول x این ویژگی ها را دارد",
+        },
+      ],
     };
   },
-    async asyncData({ error, route,$axios }) {
-      try {
-        const res =await $axios.$get(`/products/${route.params.products_id}`);
-        if ((res.status === 200) & res.data) {
-          return {
-            product: res.data,
-          };
-        } else {
-          return {
-            product: null,
-          };
-        }
-      } catch (e) {
-        console.log(e);
-        if (e.response) {
-          error({
-            statusCode: e.response.status,
-            message: e.response.message,
-          });
-        } else {
-          error({
-            statusCode: "",
-            message: "خطا در ارتباط",
-          });
-        }
+  async asyncData({ error, route, $axios }) {
+    try {
+      const res = await $axios.$get(`/products/${route.params.products_id}`);
+      if ((res.status === 200) & res.data) {
+        return {
+          product: res.data,
+        };
+      } else {
+        return {
+          product: null,
+        };
       }
-    },
+    } catch (e) {
+      console.log(e);
+      if (e.response) {
+        error({
+          statusCode: e.response.status,
+          message: e.response.message,
+        });
+      } else {
+        error({
+          statusCode: "",
+          message: "خطا در ارتباط",
+        });
+      }
+    }
+  },
   computed: {
     lang() {
       return tr();
@@ -104,12 +108,15 @@ export default {
       per_page: 1,
     };
   },
-  mounted(){
-
-  },
+  mounted() {},
   methods: {
     add_item() {
-      this.$store.dispatch("products/addProductToCart",{id:1,name:'پیراهن',price:200000,img:''});
+      this.$store.dispatch("products/addProductToCart", {
+        id: 1,
+        name: "پیراهن",
+        price: 200000,
+        img: "",
+      });
     },
   },
 };

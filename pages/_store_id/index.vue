@@ -27,12 +27,13 @@ export default {
   },
   async asyncData({ $axios, route }) {
     try {
-      const{data}=await $axios.get(`/store/${route.params.user_id}`)
-      const {data2}=await $axios.get(`/store/${route.params.user_id}/products`)
+      const{data}=await $axios.get(`/store/${route.params.store_id}`)
+      const {data2}=await $axios.get(`/store/${route.params.store_id}/products`)
       return{
         logo:data.logo,
         fa_name:data.fa_name,
-        products:data2
+        products:data2,
+        getways:data.getways
       }
     } catch (e) {
       console.log(e)

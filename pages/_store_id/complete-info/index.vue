@@ -222,11 +222,13 @@ export default {
   methods: {
     select_way_payment() {
       const data_user = {
-        fname: this.$refs.fname.value,
-        lname: this.$refs.lname.value,
+        name: this.$refs.fname.value + " " + this.$refs.lname.value,
         email: this.$refs.email.value,
-        province: this.$refs.province.value,
-        city: this.$refs.city.value,
+        address: {
+          province: this.$refs.province.value,
+          city: this.$refs.city.value,
+          address:this.$refs.address.value
+        },
         phone: this.$refs.phone.value,
       };
       const items = JSON.parse(localStorage.getItem("cartItems"));
@@ -238,7 +240,7 @@ export default {
         });
       });
       const items_end = {
-        store_id: "eroxr",
+        store: this.$route.params.store_id,
         products: items_second,
       };
       this.$bvModal.show("modal-prevent-closing");
@@ -253,10 +255,10 @@ export default {
         getway = this.$refs.cart_to_cart_pay.value;
       } else if (this.$refs.direct_pay.checked) {
         getway = this.$refs.direct_pay.value;
-      }else{
-        getway="null"
+      } else {
+        getway = "null";
       }
-      console.log(getway)
+      console.log(getway);
     },
   },
 };
