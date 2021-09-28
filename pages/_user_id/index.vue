@@ -1,10 +1,11 @@
 <template>
   <div id="body" class="w-100">
+      {{ $route.params.user_id }}
     <div id="lables">
       <div class="lables mb-4">
-        <LazyMoleculesXlables v-if="true" :products="'products'">
-        </LazyMoleculesXlables>
-        <p v-else>محصولی وجود ندارد</p>
+        <!-- <LazyMoleculesXlables v-if="products.length" :products="'products'">
+        </LazyMoleculesXlables> -->
+        <!-- <p v-else>محصولی وجود ندارد</p> -->
       </div>
     </div>
   </div>
@@ -23,6 +24,19 @@ export default {
     lang() {
       return tr();
     },
+  },
+  async asyncData({ $axios, route }) {
+    try {
+      const{data}=await $axios.get(`/store/${route.params.user_id}`)
+      const {data2}=await $axios.get(`/store/${route.params.user_id}/products`)
+      return{
+        logo:data.logo,
+        fa_name:data.fa_name,
+        products:data2
+      }
+    } catch (e) {
+      console.log(e)
+    }
   },
   mounted() {
     // localStorage.setItem('cartItems',JSON.stringify([

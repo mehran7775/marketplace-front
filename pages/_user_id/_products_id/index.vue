@@ -5,8 +5,8 @@
         <div class="product w-100" dir="ltr">
           <client-only>
             <carousel :per-page="per_page" v-bind="options">
-              <slide v-for="i in 3" :key="i" class="img-wrapper">
-                <img src="/images/apple-iphone-12-r1.jpg" />
+              <slide v-for="thumbnail in product.thumbnails" :key="thumbnail" class="img-wrapper">
+                <img :src="thumbnail" />
               </slide>
             </carousel>
           </client-only>
@@ -15,8 +15,8 @@
       <div class="col-12">
         <div class="row flex-sm-column text-right px-5" id="detail_product">
           <div class="column">
-            <h1 v-text="'کفش مردانه'" class="display-5"></h1>
-            <p class="pt-1">
+            <h1 v-text="product.title" class="display-5"></h1>
+            <p class="pt-1" v-text="product.description">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
               molestiae ut quaerat praesentium. Commodi ad veritatis in minus
               repudiandae qui hic. Inventore aliquam odit rem dolores eveniet
@@ -26,7 +26,7 @@
           <div class="buy_cost w-100 text-center mt-2">
             <span id="price">
               <span>قیمت:</span>
-              <span class="mx-1" v-text="7000"></span>
+              <span class="mx-1" v-text="product.price"></span>
               <span>تومان</span>
             </span>
              <Xbutton
@@ -62,33 +62,33 @@ export default {
       ]
     };
   },
-  //   async asyncData({ error, route,$axios }) {
-  //     try {
-  //       const res =return await $axios.$get(`/products/${route.params.id}`);
-  //       if ((res.status === 200) & res.data) {
-  //         return {
-  //           product: res.data,
-  //         };
-  //       } else {
-  //         return {
-  //           product: null,
-  //         };
-  //       }
-  //     } catch (e) {
-  //       console.log(e);
-  //       if (e.response) {
-  //         error({
-  //           statusCode: e.response.status,
-  //           message: e.response.message,
-  //         });
-  //       } else {
-  //         error({
-  //           statusCode: "",
-  //           message: "خطا در ارتباط",
-  //         });
-  //       }
-  //     }
-  //   },
+    async asyncData({ error, route,$axios }) {
+      try {
+        const res =await $axios.$get(`/products/${route.params.products_id}`);
+        if ((res.status === 200) & res.data) {
+          return {
+            product: res.data,
+          };
+        } else {
+          return {
+            product: null,
+          };
+        }
+      } catch (e) {
+        console.log(e);
+        if (e.response) {
+          error({
+            statusCode: e.response.status,
+            message: e.response.message,
+          });
+        } else {
+          error({
+            statusCode: "",
+            message: "خطا در ارتباط",
+          });
+        }
+      }
+    },
   computed: {
     lang() {
       return tr();
