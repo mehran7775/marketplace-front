@@ -1,0 +1,32 @@
+{
+  "Xbasket": {
+    "description": "Auto imported from components/Xbasket.vue"
+  },
+  "Xbrand": {
+    "description": "Auto imported from components/Xbrand.vue"
+  },
+  "Xbutton": {
+    "description": "Auto imported from components/Xbutton.vue"
+  },
+  "Xform": {
+    "description": "Auto imported from components/Xform.vue"
+  },
+  "Xitem": {
+    "description": "Auto imported from components/Xitem.vue"
+  },
+  "Xsearch": {
+    "description": "Auto imported from components/Xsearch.vue"
+  },
+  "MoleculesXheader": {
+    "description": "Auto imported from components/molecules/Xheader.vue"
+  },
+  "MoleculesXlables": {
+    "description": "Auto imported from components/molecules/Xlables.vue"
+  },
+  "MoleculesXmodal": {
+    "description": "Auto imported from components/molecules/Xmodal.vue"
+  },
+  "MoleculesXsidebarBottom": {
+    "description": "Auto imported from components/molecules/XsidebarBottom.vue"
+  }
+}
