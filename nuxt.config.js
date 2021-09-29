@@ -113,7 +113,8 @@ export default {
 
     publicRuntimeConfig: {
         axios: {
-            browserBaseURL: process.env.BROWSER_BASE_URL || 'https://coreshop.paystar.ir/api'
+            baseURL: process.env.BASE_URL || 'https://coreshop.paystar.ir/api'
+            // browserBaseURL: process.env.BROWSER_BASE_URL || 'https://coreshop.paystar.ir/api'
         },
     },
     privateRuntimeConfig: {
