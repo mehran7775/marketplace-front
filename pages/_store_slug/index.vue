@@ -33,7 +33,7 @@ export default {
         products: data,
       };
     } catch (e) {
-      console.log(,e)
+      console.log(e)
       if (e.response) {
         error({
           statusCode: e.response.status,
