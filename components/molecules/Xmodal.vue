@@ -5,7 +5,7 @@
     centered
     id="modal-prevent-closing"
     ref="modal"
-    title="انتخاب روش پرداخت"
+    :title="title"
   >
     <slot name="content-modal"> </slot>
   </b-modal>
@@ -19,6 +19,11 @@ export default {
       nameState: null,
       submittedNames: [],
     };
+  },
+  props:{
+    title:{
+      type:String
+    }
   },
   methods: {},
 };

@@ -138,47 +138,22 @@
       </div>
     </div>
     <template>
-      <MoleculesXmodal>
+      <MoleculesXmodal title="انتخاب روش پرداخت">
         <template #content-modal>
           <div class="row">
-            <div class="col-12">
+            <div v-for="getway in getways" :key="getway.id" class="col-12">
               <div class="getways">
                 <input
                   class="mr-4"
                   type="radio"
-                  name="getway"
-                  value="pardakhtyari_pay"
-                  ref="pardakhtyari_pay"
+                  :name="'getway' + getway.id"
+                  :value="'getway' + getway.id"
+                  :ref="'getway' + getway.id"
                   checked
                 />
-                <span class="mr-3">درگاه پرداخت یاری پی استار</span>
+                <span class="mr-3" v-text="getway.title"></span>
               </div>
             </div>
-            <div class="col-12">
-              <div class="getways">
-                <input
-                  class="mr-4"
-                  type="radio"
-                  name="getway"
-                  value="cart-to-cart-pay"
-                  ref="cart_to_cart_pay"
-                />
-                <span class="mr-3">درگاه کارت به کارت پی استار</span>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="getways">
-                <input
-                  class="mr-4"
-                  type="radio"
-                  name="getway"
-                  value="direct-pay"
-                  ref="direct_pay"
-                />
-                <span class="mr-3">درگاه مستقیم پی استار</span>
-              </div>
-            </div>
-
             <div class="col-12 text-center">
               <Xbutton
                 :on_click="do_payment"
@@ -220,14 +195,14 @@ export default {
     ValidationProvider,
   },
   methods: {
-    select_way_payment() {
+    async select_way_payment() {
       const data_user = {
         name: this.$refs.fname.value + " " + this.$refs.lname.value,
         email: this.$refs.email.value,
         address: {
           province: this.$refs.province.value,
           city: this.$refs.city.value,
-          address:this.$refs.address.value
+          address: this.$refs.address.value,
         },
         phone: this.$refs.phone.value,
       };
@@ -240,25 +215,35 @@ export default {
         });
       });
       const items_end = {
-        store: this.$route.params.store_id,
+        store_id: this.$store.state.users.id,
         products: items_second,
       };
-      this.$bvModal.show("modal-prevent-closing");
-      //   this.$store.dispatch("payment/select_way_payment", [data_user, items_end]);
+    // this.$bvModal.show('modal-prevent-closing')
+      await this.$store.dispatch("payments/select_way_payment", {
+        data_user,
+        items_end,
+      });
     },
     do_payment() {
-      // console.log(this.$refs.pardakhtyari_pay.checked)
-      let getway = "";
-      if (this.$refs.pardakhtyari_pay.checked) {
-        getway = this.$refs.pardakhtyari_pay.value;
-      } else if (this.$refs.cart_to_cart_pay.checked) {
-        getway = this.$refs.cart_to_cart_pay.value;
-      } else if (this.$refs.direct_pay.checked) {
-        getway = this.$refs.direct_pay.value;
+      let getway = null;
+      if (this.$refs.getway1.checked) {
+        getway = 1;
+      } else if (this.$refs.getway2.checked) {
+        getway = 2;
+      } else if (this.$refs.getway3.checked) {
+        getway = 3;
       } else {
         getway = "null";
       }
-      console.log(getway);
+
+      this.$store.dispatch('payment/do_payment',{
+        'getway_id':getway
+      })
+    },
+  },
+  computed: {
+    getways() {
+      this.$store.state.payments.getways;
     },
   },
 };

@@ -3,8 +3,8 @@
     <div class="row mb-4">
       <div class="col">
         <div class="row">
-         <!-- <LazyMoleculesXheader /> -->
-         <MoleculesXheader></MoleculesXheader>
+          <!-- <LazyMoleculesXheader /> -->
+          <MoleculesXheader :logo="logo" :fa_name="fa_name"></MoleculesXheader>
         </div>
         <div class="row pb-5">
           <Nuxt />
@@ -104,6 +104,29 @@ export default {
     lang() {
       return tr();
     },
+  },
+  async fetch({ $axios, route, error }) {
+    try {
+      const { data } = await $axios.get(`/store/${route.params.store_slug}`);
+      this.$store.commit('payments/SET_GETWAYS',data.getways);
+      this.$store.commit('users/SET_ID',data.id);
+      return {
+        logo: data.logo,
+        fa_name: data.fa_name,
+      };
+    } catch (e) {
+      if (e.response) {
+        error({
+          statusCode: e.response.status,
+          message: e.response.message,
+        });
+      } else {
+        error({
+          statusCode: "",
+          message: "خطا در ارتباط",
+        });
+      }
+    }
   },
 };
 </script>

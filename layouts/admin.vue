@@ -2,7 +2,7 @@
   <div class="container-fluid" id="panel_admin">
     <div class="row">
       <div class="col">
-        <div class="row bg-warning">
+        <div class="row">
           <header>
             <div class="bars_aside d-md-none" @click="toggle_aside">
               <fa icon="bars" size="2x"></fa>

@@ -5,6 +5,7 @@ import mutations from '@/store/mutations'
 import actions from '@/store/actions'
 import users from "~/store/modules/users";
 import products from "~/store/modules/products";
+import payments from "~/store/modules/payments";
 
 
 const createStore = () => {
@@ -15,7 +16,8 @@ const createStore = () => {
         actions,
         modules: {
             users,
-            products
+            products,
+            payments
         }
     })
 }

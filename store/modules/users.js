@@ -1,12 +1,11 @@
 
 const state = () => ({
-    users: []
 });
 
 
 const mutations = {
-    setUsers(state, users) {
-        state.users = users;
+    SET_ID(state,payload){
+        this.$set(state,'id',payload)
     }
 };
 

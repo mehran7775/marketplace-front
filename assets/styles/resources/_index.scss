@@ -6,6 +6,29 @@ body {
     direction: rtl;
     box-sizing: border-box;
 
+    .b-toaster {
+        text-align: right;
+    }
+
+    .modal-content {
+        padding: 20px;
+        direction: rtl;
+        text-align: right;
+
+        .modal-header {
+            .modal-title {
+                color: $success;
+            }
+
+            .close {
+                margin: 0;
+                padding: 0;
+            }
+        }
+        .modal-footer {
+            display: none;
+        }
+    }
     #__nuxt {
         background-color: whitesmoke;
 
@@ -22,7 +45,7 @@ body {
         strong {
             font-size: 0.8rem;
         }
-        .cursor_pointer{
+        .cursor_pointer {
             cursor: pointer;
         }
         @include xsmall {
@@ -103,30 +126,6 @@ body {
             //   strong {
             //       font-size: 1.1rem;
             //   }
-        }
-
-        .b-toaster {
-            text-align: right;
-        }
-
-        .modal-content {
-            padding: 20px;
-            direction: rtl;
-            text-align: right;
-
-            .modal-header {
-                .modal-title {
-                    color: $success;
-                }
-
-                .close {
-                    margin: 0;
-                    padding: 0;
-                }
-            }
-            .modal-footer {
-                display: none;
-            }
         }
         ////////////////------------------------------------ admin panel--------------------------------------///////////
 
