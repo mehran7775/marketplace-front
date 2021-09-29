@@ -195,7 +195,7 @@ export default {
     ValidationProvider,
   },
   methods: {
-    async select_way_payment() {
+    select_way_payment() {
       const data_user = {
         name: this.$refs.fname.value + " " + this.$refs.lname.value,
         email: this.$refs.email.value,
@@ -218,8 +218,8 @@ export default {
         store_id: this.$store.state.users.id,
         products: items_second,
       };
-    // this.$bvModal.show('modal-prevent-closing')
-      await this.$store.dispatch("payments/select_way_payment", {
+      // this.$bvModal.show('modal-prevent-closing')
+      this.$store.dispatch("payments/select_way_payment", {
         data_user,
         items_end,
       });
@@ -236,9 +236,9 @@ export default {
         getway = "null";
       }
 
-      this.$store.dispatch('payment/do_payment',{
-        'getway_id':getway
-      })
+      this.$store.dispatch("payment/do_payment", {
+        getway_id: getway,
+      });
     },
   },
   computed: {

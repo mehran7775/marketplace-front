@@ -3,9 +3,9 @@
     {{ $route.params.user_id }}
     <div id="lables">
       <div class="lables mb-4">
-        <!-- <LazyMoleculesXlables v-if="true" :products="'products'">
+        <LazyMoleculesXlables v-if="products.length" :products="'products'">
         </LazyMoleculesXlables>
-        <p v-else>محصولی وجود ندارد</p> -->
+        <p v-else>محصولی وجود ندارد</p>
       </div>
     </div>
   </div>
@@ -25,57 +25,36 @@ export default {
       return tr();
     },
   },
-  // async asyncData({ $axios, route, error }) {
-  //   try {
-  //     const { data2 } = await $axios.get(
-  //       `/store/${route.params.store_slug}/products`
-  //     );
-  //     return {
-  //       products: data2,
-  //     };
-  //   } catch (e) {
-  //     console.log(e)
-  //     if (e.response) {
-  //       error({
-  //         statusCode: e.response.status,
-  //         message: e.response.message,
-  //       });
-  //     } else {
-  //       error({
-  //         statusCode: "",
-  //         message: "خطا در ارتباط",
-  //       });
-  //     }
-  //   }
-  // },
+  async asyncData({ $axios, route, error }) {
+    try {
+      const { data2 } = await $axios.get(
+        `/store/${route.params.store_slug}/products`,{
+          headers:{
+              'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }
+        }
+      );
+      return {
+        products: data2,
+      };
+    } catch (e) {
+      console.log(e)
+      if (e.response) {
+        error({
+          statusCode: e.response.status,
+          message: e.response.message,
+        });
+      } else {
+        error({
+          statusCode: "",
+          message: "خطا در ارتباط",
+        });
+      }
+    }
+  },
   mounted() {
-    console.log('tt',this.$store.state.users)
-    // localStorage.setItem('cartItems',JSON.stringify([
-    //   {
-    //     id:1,
-    //     name:'کفش',
-    //     price:380000,
-    //     count:1
-    //   },
-    //   {
-    //     id:2,
-    //     name:'تیشرت',
-    //     price:200000,
-    //     count:2
-    //   },
-    //   {
-    //     id:3,
-    //     name:'شلوار',
-    //     price:250000,
-    //     count:1
-    //   },
-    //   {
-    //     id:4,
-    //     name:'کلاه',
-    //     price:250000,
-    //     count:3
-    //   },
-    // ]))
+
   },
 };
 </script>
