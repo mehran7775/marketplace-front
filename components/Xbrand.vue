@@ -1,12 +1,17 @@
 <template>
-  <nuxt-link to="/" class="brand">
-    <fa icon="home" title="فروشگاه من"></fa>
+  <nuxt-link :to="`/${$route.params.store_slug}`" class="brand">
+    <img :src="logo ? logo : '/icon.png'" width="24" height="24" alt="تصویر لوگو">
   </nuxt-link>
 </template>
 
 <script>
 import { tr } from "@/services/lang";
 export default {
+  props:{
+    logo:{
+      type:String
+    }
+  },
   computed: {
     lang() {
       return tr();

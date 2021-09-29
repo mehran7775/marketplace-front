@@ -8,13 +8,18 @@ const getters = {
 const mutations = {
     SET_GETWAYS(store, payload) {
         this.$set(store, 'getways', payload)
+    },
+    SET_ORDER_ID(store, payload) {
+        this.$set(store, 'order_id', payload)
     }
+
 }
 
 const actions = {
     async select_way_payment({ commit }, payload) {
         try {
-            await this.$axios.post('/order/create', payload)
+            const { data } = await this.$axios.post('/order/create', payload)
+            this.$store.commit('SET_ORDER_ID', data.order_id)
             $nuxt.$bvModal.show('modal-prevent-closing')
         } catch (e) {
             console.log(e)
@@ -26,9 +31,9 @@ const actions = {
 
         }
     },
-    do_payment(payload) {
+    do_payment({ commit, state }, payload) {
         try {
-            this.$axios.post(`pay/order/${payload}`)
+            this.$axios.post(`pay/order/${state.order_id}`, payload)
         } catch (e) {
             console.log(e)
         }

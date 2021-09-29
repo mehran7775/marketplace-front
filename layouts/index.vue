@@ -3,7 +3,6 @@
     <div class="row mb-4">
       <div class="col">
         <div class="row">
-          <!-- <LazyMoleculesXheader /> -->
           <MoleculesXheader :logo="logo" :fa_name="fa_name"></MoleculesXheader>
         </div>
         <div class="row pb-5">
@@ -11,37 +10,7 @@
         </div>
       </div>
     </div>
-    <div id="setting_index2" class="d-block d-md-none">
-      <div id="bottom_menu">
-        <div class="bottom_menu">
-          <nuxt-link to="/cart">
-            <Xbasket class="mx-1 d-flex"></Xbasket>
-          </nuxt-link>
-        </div>
-        <div class="bottom_menu">
-          <nuxt-link to="/">
-            <span
-              ><fa
-                icon="home"
-                class="mx-1 icom_bto_menu"
-                :title="lang.svg.home"
-              ></fa
-            ></span>
-          </nuxt-link>
-        </div>
-        <div class="bottom_menu">
-          <nuxt-link to="/settings">
-            <span
-              ><fa
-                icon="cog"
-                class="mx-1 icom_bto_menu"
-                :title="lang.svg.settings"
-              ></fa
-            ></span>
-          </nuxt-link>
-        </div>
-      </div>
-    </div>
+    <MoleculesXsidebarBottom></MoleculesXsidebarBottom>
   </div>
 </template>
 
@@ -104,6 +73,9 @@ export default {
     lang() {
       return tr();
     },
+  },
+  created(){
+    console.log('eg')
   },
   async fetch({ $axios, route, error }) {
     try {

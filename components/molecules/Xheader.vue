@@ -1,10 +1,10 @@
 <template>
   <header class="d-flex flex-column-reverse d-md-flex flex-md-row">
     <div class="d-flex align-items-center" id="brand_index">
-      <Xbrand></Xbrand>
+      <Xbrand :logo="logo"></Xbrand>
       <div class="text-right">
         <div id="name_brand">
-          <h1 class="mr-4">فروشگاه من</h1>
+          <h1 class="mr-4" v-text="fa_name"></h1>
         </div>
         <div class="d-md-none mt-3 mr-4">
           <fa icon="envelope"></fa>
@@ -12,7 +12,7 @@
         </div>
         <div class="d-md-none mr-4">
           <fa icon="map-marker"></fa>
-          <span>ادرس خیابان محمدعلی کلی</span>
+          <span>آدرس ...</span>
         </div>
       </div>
     </div>
@@ -24,16 +24,17 @@
         class="d-flex align-items-center justify-content-center"
         id="setting_index"
       >
-        <nuxt-link to="/cart"> <Xbasket class="mx-1"></Xbasket></nuxt-link>
-        <nuxt-link to="/settings">
+        <nuxt-link :to="`/${$route.params.store_slug}/cart`"> <Xbasket class="mx-1"></Xbasket></nuxt-link>
+        <nuxt-link :to="`/${$route.params.store_slug}/settings`">
           <span
             ><fa icon="cog" class="fa-lg mx-1" :title="lang.svg.settings"></fa
           ></span>
         </nuxt-link>
-        <nuxt-link to="/">
+        <nuxt-link :to="`/${$route.params.store_slug}`">
           <span
-            ><fa icon="home" class="fa-lg mx-1" :title="lang.svg.home"></fa
-          ></span>
+            >
+           <fa icon="home" size="lg"></fa>
+          </span>
         </nuxt-link>
       </div>
     </div>
@@ -43,10 +44,19 @@
 <script>
 import { tr } from "@/services/lang";
 export default {
+  props:{
+      logo:{
+        type:String
+      },
+      fa_name:{
+        type:String
+      }
+  },
     computed: {
     lang() {
       return tr();
     },
+
   },
 };
 </script>

@@ -40,7 +40,7 @@ export default {
       };
     } catch (e) {
       console.log(e)
-      if (e.response) {
+      if ('rrg',e.response) {
         error({
           statusCode: e.response.status,
           message: e.response.message,

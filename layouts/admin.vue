@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col">
         <div class="row">
-          <header>
-            <div class="bars_aside d-md-none" @click="toggle_aside">
+          <header>header
+            <div class="bars_aside d-md-none text-white" @click="toggle_aside">
               <fa icon="bars" size="2x"></fa>
             </div>
           </header>
