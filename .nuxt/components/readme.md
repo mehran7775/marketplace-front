@@ -12,6 +12,7 @@ You can directly use them in pages and other components without the need to impo
 - `<Xform>` | `<xform>` (components/Xform.vue)
 - `<Xitem>` | `<xitem>` (components/Xitem.vue)
 - `<Xsearch>` | `<xsearch>` (components/Xsearch.vue)
+- `<MoleculesXcardStore>` | `<molecules-xcard-store>` (components/molecules/XcardStore.vue)
 - `<MoleculesXheader>` | `<molecules-xheader>` (components/molecules/Xheader.vue)
 - `<MoleculesXlables>` | `<molecules-xlables>` (components/molecules/Xlables.vue)
 - `<MoleculesXmodal>` | `<molecules-xmodal>` (components/molecules/Xmodal.vue)

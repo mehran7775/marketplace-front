@@ -1,5 +1,12 @@
 [
   {
+    "name": "test",
+    "path": "/test",
+    "component": "E:\\\\Projects\\\\store-front\\\\market-place-front\\\\pages\\\\test\\\\index.vue",
+    "chunkName": "pages/test/index",
+    "_name": "_418a16c4"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "E:\\\\Projects\\\\store-front\\\\market-place-front\\\\pages\\\\index.vue",

@@ -17,6 +17,9 @@
   "Xsearch": {
     "description": "Auto imported from components/Xsearch.vue"
   },
+  "MoleculesXcardStore": {
+    "description": "Auto imported from components/molecules/XcardStore.vue"
+  },
   "MoleculesXheader": {
     "description": "Auto imported from components/molecules/Xheader.vue"
   },
