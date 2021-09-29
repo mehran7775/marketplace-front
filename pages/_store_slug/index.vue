@@ -27,20 +27,14 @@ export default {
   },
   async asyncData({ $axios, route, error }) {
     try {
-      const { data2 } = await $axios.get(
-        `/store/${route.params.store_slug}/products`,{
-          headers:{
-              'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          }
-        }
-      );
+      const { data } = await $axios.get(
+        `/store/${route.params.store_slug}/products`);
       return {
-        products: data2,
+        products: data,
       };
     } catch (e) {
-      console.log(e)
-      if ('rrg',e.response) {
+      console.log(,e)
+      if (e.response) {
         error({
           statusCode: e.response.status,
           message: e.response.message,

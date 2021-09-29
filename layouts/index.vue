@@ -74,9 +74,6 @@ export default {
       return tr();
     },
   },
-  created(){
-    console.log('eg')
-  },
   async fetch({ $axios, route, error }) {
     try {
       const { data } = await $axios.get(`/store/${route.params.store_slug}`);
