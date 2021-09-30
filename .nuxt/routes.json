@@ -2,57 +2,57 @@
   {
     "name": "test",
     "path": "/test",
-    "component": "E:\\\\Projects\\\\store-front\\\\market-place-front\\\\pages\\\\test\\\\index.vue",
+    "component": "F:\\\\web-development\\\\paystar\\\\shop\\\\market-place-front\\\\pages\\\\test\\\\index.vue",
     "chunkName": "pages/test/index",
-    "_name": "_418a16c4"
+    "_name": "_46eacfbe"
   },
   {
     "name": "index",
     "path": "/",
-    "component": "E:\\\\Projects\\\\store-front\\\\market-place-front\\\\pages\\\\index.vue",
+    "component": "F:\\\\web-development\\\\paystar\\\\shop\\\\market-place-front\\\\pages\\\\index.vue",
     "chunkName": "pages/index",
-    "_name": "_784fa070"
+    "_name": "_296b58e0"
   },
   {
     "name": "store_slug",
     "path": "/:store_slug",
-    "component": "E:\\\\Projects\\\\store-front\\\\market-place-front\\\\pages\\\\_store_slug\\\\index.vue",
+    "component": "F:\\\\web-development\\\\paystar\\\\shop\\\\market-place-front\\\\pages\\\\_store_slug\\\\index.vue",
     "chunkName": "pages/_store_slug/index",
-    "_name": "_56960688"
+    "_name": "_50a344c8"
   },
   {
     "name": "store_slug-admin",
     "path": "/:store_slug/admin",
-    "component": "E:\\\\Projects\\\\store-front\\\\market-place-front\\\\pages\\\\_store_slug\\\\admin\\\\index.vue",
+    "component": "F:\\\\web-development\\\\paystar\\\\shop\\\\market-place-front\\\\pages\\\\_store_slug\\\\admin\\\\index.vue",
     "chunkName": "pages/_store_slug/admin/index",
-    "_name": "_09251cae"
+    "_name": "_97a1566e"
   },
   {
     "name": "store_slug-cart",
     "path": "/:store_slug/cart",
-    "component": "E:\\\\Projects\\\\store-front\\\\market-place-front\\\\pages\\\\_store_slug\\\\cart\\\\index.vue",
+    "component": "F:\\\\web-development\\\\paystar\\\\shop\\\\market-place-front\\\\pages\\\\_store_slug\\\\cart\\\\index.vue",
     "chunkName": "pages/_store_slug/cart/index",
-    "_name": "_c00ea6c8"
+    "_name": "_63dde57c"
   },
   {
     "name": "store_slug-complete-info",
     "path": "/:store_slug/complete-info",
-    "component": "E:\\\\Projects\\\\store-front\\\\market-place-front\\\\pages\\\\_store_slug\\\\complete-info\\\\index.vue",
+    "component": "F:\\\\web-development\\\\paystar\\\\shop\\\\market-place-front\\\\pages\\\\_store_slug\\\\complete-info\\\\index.vue",
     "chunkName": "pages/_store_slug/complete-info/index",
-    "_name": "_5d042056"
+    "_name": "_087e3914"
   },
   {
     "name": "store_slug-test",
     "path": "/:store_slug/test",
-    "component": "E:\\\\Projects\\\\store-front\\\\market-place-front\\\\pages\\\\_store_slug\\\\test\\\\index.vue",
+    "component": "F:\\\\web-development\\\\paystar\\\\shop\\\\market-place-front\\\\pages\\\\_store_slug\\\\test\\\\index.vue",
     "chunkName": "pages/_store_slug/test/index",
-    "_name": "_0d84e7ea"
+    "_name": "_5d2bbe6c"
   },
   {
     "name": "store_slug-products_id",
     "path": "/:store_slug/:products_id",
-    "component": "E:\\\\Projects\\\\store-front\\\\market-place-front\\\\pages\\\\_store_slug\\\\_products_id\\\\index.vue",
+    "component": "F:\\\\web-development\\\\paystar\\\\shop\\\\market-place-front\\\\pages\\\\_store_slug\\\\_products_id\\\\index.vue",
     "chunkName": "pages/_store_slug/_products_id/index",
-    "_name": "_adf81d76"
+    "_name": "_6c124a25"
   }
 ]

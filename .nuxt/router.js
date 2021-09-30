@@ -4,14 +4,14 @@ import { normalizeURL, decode } from 'ufo'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _418a16c4 = () => interopDefault(import('..\\pages\\test\\index.vue' /* webpackChunkName: "pages/test/index" */))
-const _784fa070 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
-const _56960688 = () => interopDefault(import('..\\pages\\_store_slug\\index.vue' /* webpackChunkName: "pages/_store_slug/index" */))
-const _09251cae = () => interopDefault(import('..\\pages\\_store_slug\\admin\\index.vue' /* webpackChunkName: "pages/_store_slug/admin/index" */))
-const _c00ea6c8 = () => interopDefault(import('..\\pages\\_store_slug\\cart\\index.vue' /* webpackChunkName: "pages/_store_slug/cart/index" */))
-const _5d042056 = () => interopDefault(import('..\\pages\\_store_slug\\complete-info\\index.vue' /* webpackChunkName: "pages/_store_slug/complete-info/index" */))
-const _0d84e7ea = () => interopDefault(import('..\\pages\\_store_slug\\test\\index.vue' /* webpackChunkName: "pages/_store_slug/test/index" */))
-const _adf81d76 = () => interopDefault(import('..\\pages\\_store_slug\\_products_id\\index.vue' /* webpackChunkName: "pages/_store_slug/_products_id/index" */))
+const _46eacfbe = () => interopDefault(import('..\\pages\\test\\index.vue' /* webpackChunkName: "pages/test/index" */))
+const _296b58e0 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
+const _50a344c8 = () => interopDefault(import('..\\pages\\_store_slug\\index.vue' /* webpackChunkName: "pages/_store_slug/index" */))
+const _97a1566e = () => interopDefault(import('..\\pages\\_store_slug\\admin\\index.vue' /* webpackChunkName: "pages/_store_slug/admin/index" */))
+const _63dde57c = () => interopDefault(import('..\\pages\\_store_slug\\cart\\index.vue' /* webpackChunkName: "pages/_store_slug/cart/index" */))
+const _087e3914 = () => interopDefault(import('..\\pages\\_store_slug\\complete-info\\index.vue' /* webpackChunkName: "pages/_store_slug/complete-info/index" */))
+const _5d2bbe6c = () => interopDefault(import('..\\pages\\_store_slug\\test\\index.vue' /* webpackChunkName: "pages/_store_slug/test/index" */))
+const _6c124a25 = () => interopDefault(import('..\\pages\\_store_slug\\_products_id\\index.vue' /* webpackChunkName: "pages/_store_slug/_products_id/index" */))
 
 const emptyFn = () => {}
 
@@ -26,35 +26,35 @@ export const routerOptions = {
 
   routes: [{
     path: "/test",
-    component: _418a16c4,
+    component: _46eacfbe,
     name: "test"
   }, {
     path: "/",
-    component: _784fa070,
+    component: _296b58e0,
     name: "index"
   }, {
     path: "/:store_slug",
-    component: _56960688,
+    component: _50a344c8,
     name: "store_slug"
   }, {
     path: "/:store_slug/admin",
-    component: _09251cae,
+    component: _97a1566e,
     name: "store_slug-admin"
   }, {
     path: "/:store_slug/cart",
-    component: _c00ea6c8,
+    component: _63dde57c,
     name: "store_slug-cart"
   }, {
     path: "/:store_slug/complete-info",
-    component: _5d042056,
+    component: _087e3914,
     name: "store_slug-complete-info"
   }, {
     path: "/:store_slug/test",
-    component: _0d84e7ea,
+    component: _5d2bbe6c,
     name: "store_slug-test"
   }, {
     path: "/:store_slug/:products_id",
-    component: _adf81d76,
+    component: _6c124a25,
     name: "store_slug-products_id"
   }],
 
