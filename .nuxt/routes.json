@@ -49,6 +49,13 @@
     "_name": "_5d2bbe6c"
   },
   {
+    "name": "store_slug-admin-create_store",
+    "path": "/:store_slug/admin/create_store",
+    "component": "F:\\\\web-development\\\\paystar\\\\shop\\\\market-place-front\\\\pages\\\\_store_slug\\\\admin\\\\create_store\\\\index.vue",
+    "chunkName": "pages/_store_slug/admin/create_store/index",
+    "_name": "_1e2fe06b"
+  },
+  {
     "name": "store_slug-products_id",
     "path": "/:store_slug/:products_id",
     "component": "F:\\\\web-development\\\\paystar\\\\shop\\\\market-place-front\\\\pages\\\\_store_slug\\\\_products_id\\\\index.vue",

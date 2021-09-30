@@ -11,6 +11,7 @@ const _97a1566e = () => interopDefault(import('..\\pages\\_store_slug\\admin\\in
 const _63dde57c = () => interopDefault(import('..\\pages\\_store_slug\\cart\\index.vue' /* webpackChunkName: "pages/_store_slug/cart/index" */))
 const _087e3914 = () => interopDefault(import('..\\pages\\_store_slug\\complete-info\\index.vue' /* webpackChunkName: "pages/_store_slug/complete-info/index" */))
 const _5d2bbe6c = () => interopDefault(import('..\\pages\\_store_slug\\test\\index.vue' /* webpackChunkName: "pages/_store_slug/test/index" */))
+const _1e2fe06b = () => interopDefault(import('..\\pages\\_store_slug\\admin\\create_store\\index.vue' /* webpackChunkName: "pages/_store_slug/admin/create_store/index" */))
 const _6c124a25 = () => interopDefault(import('..\\pages\\_store_slug\\_products_id\\index.vue' /* webpackChunkName: "pages/_store_slug/_products_id/index" */))
 
 const emptyFn = () => {}
@@ -52,6 +53,10 @@ export const routerOptions = {
     path: "/:store_slug/test",
     component: _5d2bbe6c,
     name: "store_slug-test"
+  }, {
+    path: "/:store_slug/admin/create_store",
+    component: _1e2fe06b,
+    name: "store_slug-admin-create_store"
   }, {
     path: "/:store_slug/:products_id",
     component: _6c124a25,

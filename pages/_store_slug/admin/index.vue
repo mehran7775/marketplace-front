@@ -1,5 +1,9 @@
 <template>
-  <div>index body</div>
+  <div class="col">
+    <div class="row">
+        index body
+    </div>
+  </div>
 </template>
 
 <script>
