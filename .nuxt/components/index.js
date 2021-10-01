@@ -5,9 +5,12 @@ export { default as Xform } from '../..\\components\\Xform.vue'
 export { default as Xitem } from '../..\\components\\Xitem.vue'
 export { default as Xsearch } from '../..\\components\\Xsearch.vue'
 export { default as MoleculesXcardStore } from '../..\\components\\molecules\\XcardStore.vue'
+export { default as MoleculesXgetway } from '../..\\components\\molecules\\Xgetway.vue'
 export { default as MoleculesXheader } from '../..\\components\\molecules\\Xheader.vue'
+export { default as MoleculesXinfoSend } from '../..\\components\\molecules\\XinfoSend.vue'
 export { default as MoleculesXlables } from '../..\\components\\molecules\\Xlables.vue'
 export { default as MoleculesXmodal } from '../..\\components\\molecules\\Xmodal.vue'
+export { default as MoleculesXrecordGetway } from '../..\\components\\molecules\\XrecordGetway.vue'
 export { default as MoleculesXsidebarBottom } from '../..\\components\\molecules\\XsidebarBottom.vue'
 
 // nuxt/nuxt.js#8607

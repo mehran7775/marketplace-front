@@ -31,14 +31,14 @@
                 <div id="menu_sidebar">
                   <ul>
                     <li><nuxt-link to="#">فروشگاه ها</nuxt-link></li>
-                    <li><nuxt-link to="#">قالقفال</nuxt-link></li>
-                    <li><nuxt-link to="#">فقاقف</nuxt-link></li>
+                    <li><nuxt-link to="#">درگاه پرداخت</nuxt-link></li>
+                    <li><nuxt-link to="#">سفارشات</nuxt-link></li>
                   </ul>
                 </div>
               </div>
             </div>
           </div>
-          <div class="body_admin bg-info">
+          <div class="body_admin">
             <Nuxt />
           </div>
         </div>
@@ -131,6 +131,7 @@ export default {
   }
 
   .body_admin {
+      background-color: $bac_dark_color3;
     width: calc(100% - 260px);
     @include mx_medium {
       width: 100%;
