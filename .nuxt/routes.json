@@ -1,5 +1,12 @@
 [
   {
+    "name": "test",
+    "path": "/test",
+    "component": "E:\\\\Projects\\\\store-front\\\\market-place-front\\\\pages\\\\test\\\\index.vue",
+    "chunkName": "pages/test/index",
+    "_name": "_418a16c4"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "E:\\\\Projects\\\\store-front\\\\market-place-front\\\\pages\\\\index.vue",
@@ -40,6 +47,13 @@
     "component": "E:\\\\Projects\\\\store-front\\\\market-place-front\\\\pages\\\\_store_slug\\\\test\\\\index.vue",
     "chunkName": "pages/_store_slug/test/index",
     "_name": "_0d84e7ea"
+  },
+  {
+    "name": "store_slug-admin-create_store",
+    "path": "/:store_slug/admin/create_store",
+    "component": "E:\\\\Projects\\\\store-front\\\\market-place-front\\\\pages\\\\_store_slug\\\\admin\\\\create_store\\\\index.vue",
+    "chunkName": "pages/_store_slug/admin/create_store/index",
+    "_name": "_feec156a"
   },
   {
     "name": "store_slug-products_id",

@@ -1,5 +1,9 @@
 <template>
-  <div>index body</div>
+  <div class="col">
+    <div class="row">
+        index body
+    </div>
+  </div>
 </template>
 
 <script>
@@ -8,7 +12,7 @@ export default {
   // async asyncData(context) {
   //   try {
   //     context.$axios.setHeader('Authorization', '123')
-  //      await context.$axios.get("/user/current");
+  //      await context.$axios.get("");
   //   } catch (e) {
   //     console.log("eee",e);
   //     context.error({
