@@ -48,7 +48,8 @@ export default {
             src: '~/plugins/vue-carousel.js',
             mode: 'client'
         },
-        '~/plugins/veevalidate'
+        '~/plugins/veevalidate',
+        '~/plugins/roles'
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -111,6 +112,7 @@ export default {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'Authorization' : 'Bearer ' + 'WPBOWUxTKfr06kk3DOLrK26uaDGnWlzqKeZSoAnJQc2qq6fYi9RJS69ucF96'
         }
     },
 
