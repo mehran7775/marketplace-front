@@ -54,6 +54,8 @@ export default {
           closes: "20:00",
         },
       },
+      logo: "",
+      fa_name: "",
     };
   },
   head() {
@@ -74,29 +76,34 @@ export default {
       return tr();
     },
   },
-  async fetch({ $axios, route, error }) {
+  created() {
     try {
-      const { data } = await $axios.get(`/store/${route.params.store_slug}`);
-      this.$store.commit('payments/SET_GETWAYS',data.getways);
-      this.$store.commit('users/SET_ID',data.id);
-      return {
-        logo: data.logo,
-        fa_name: data.fa_name,
-      };
+      const { data } =this.$axios.get(
+        `/store/${this.$route.params.store_slug}`
+      );
+      this.$store.commit("payments/SET_GETWAYS", data.getways);
+      this.$store.commit("users/SET_ID", data.id);
+      this.logo = data.logo;
+      this.fa_name = data.fa_name;
     } catch (e) {
+       console.log('eeeee',e);
       if (e.response) {
-        error({
-          statusCode: e.response.status,
-          message: e.response.message,
-        });
+        // this.$store.commit("OPEN_TOAST", {
+        //   title: "",
+        //   msg: "خطا در دریافت اطلاعات",
+        //   variant: "danger",
+        // });
       } else {
-        error({
-          statusCode: "",
-          message: "خطا در ارتباط",
-        });
+        // this.$store.commit("OPEN_TOAST", {
+        //   title: "",
+        //   msg: "خطا در ارتباط ",
+        //   variant: "danger",
+        // });
       }
     }
   },
+
+  // async fetch({ $axios, route, error }) {},
 };
 </script>
 

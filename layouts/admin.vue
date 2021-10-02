@@ -3,7 +3,8 @@
     <div class="row">
       <div class="col">
         <div class="row">
-          <header>header
+          <header>
+            header
             <div class="bars_aside d-md-none text-white" @click="toggle_aside">
               <fa icon="bars" size="2x"></fa>
             </div>
@@ -30,9 +31,18 @@
                 </div>
                 <div id="menu_sidebar">
                   <ul>
-                    <li><nuxt-link :to="`/${$route.params.store_slug}/admin/create_store`">فروشگاه ها</nuxt-link></li>
-                    <li><nuxt-link to="#">درگاه پرداخت</nuxt-link></li>
-                    <li><nuxt-link to="#">سفارشات</nuxt-link></li>
+                    <li>
+                      <nuxt-link
+                        :to="`/${$route.params.store_slug}/admin/create_store`"
+                        >فروشگاه ها</nuxt-link
+                      >
+                    </li>
+                    <li>
+                      <nuxt-link to="#">درگاه پرداخت</nuxt-link>
+                    </li>
+                    <li>
+                      <nuxt-link to="#">سفارشات</nuxt-link>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -80,9 +90,12 @@ export default {
 
 <style scoped lang="scss">
 #panel_admin {
-  .bars_aside{
+  header {
+    min-height: 50px;
+  }
+  .bars_aside {
     color: $bac_dark_color;
-    margin:1rem ;
+    margin: 1rem;
     cursor: pointer;
   }
   .aside {
@@ -131,7 +144,7 @@ export default {
   }
 
   .body_admin {
-      background-color: $bac_dark_color3;
+    background-color: $bac_dark_color3;
     width: calc(100% - 260px);
     @include mx_medium {
       width: 100%;

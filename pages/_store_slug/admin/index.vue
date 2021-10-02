@@ -1,7 +1,20 @@
 <template>
   <div class="col">
+    <div class="row justify-content-between p-4">
+      <div>
+        <span class="display-2 font-weight-bold">فروشگاه های من</span>
+      </div>
+      <div>
+        <Xbutton variant="success" class="px-4" text="فروشگاه جدید"></Xbutton>
+      </div>
+    </div>
     <div class="row">
-        index body
+      <div v-if="stores.length> 0">
+        {{stores}}
+      </div>
+      <div v-else>
+        {{message}}
+      </div>
     </div>
   </div>
 </template>
@@ -9,18 +22,21 @@
 <script>
 export default {
   layout: "admin",
-  // async asyncData(context) {
-  //   try {
-  //     context.$axios.setHeader('Authorization', '123')
-  //      await context.$axios.get("");
-  //   } catch (e) {
-  //     console.log("eee",e);
-  //     context.error({
-  //       statusCode: 401,
-  //       message: "rtfhb",
-  //     });
-  //   }
-  // },
+  created() {
+      this.$store.dispatch("stores/get_stores")
+  },
+  computed:{
+    stores(){
+      if(this.$store.state.stores){
+        return this.$store.state.stores
+      }
+    },
+    message(){
+       if(this.$store.state.message){
+        return this.$store.state.message
+      }
+    }
+  }
 };
 </script>
 
