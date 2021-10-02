@@ -30,7 +30,7 @@
                 </div>
                 <div id="menu_sidebar">
                   <ul>
-                    <li><nuxt-link to="#">فروشگاه ها</nuxt-link></li>
+                    <li><nuxt-link :to="`/${$route.params.store_slug}/admin/create_store`">فروشگاه ها</nuxt-link></li>
                     <li><nuxt-link to="#">درگاه پرداخت</nuxt-link></li>
                     <li><nuxt-link to="#">سفارشات</nuxt-link></li>
                   </ul>

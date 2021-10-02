@@ -11,8 +11,17 @@
   "Xform": {
     "description": "Auto imported from components/Xform.vue"
   },
+  "Xgetway": {
+    "description": "Auto imported from components/Xgetway.vue"
+  },
+  "XinfoSend": {
+    "description": "Auto imported from components/XinfoSend.vue"
+  },
   "Xitem": {
     "description": "Auto imported from components/Xitem.vue"
+  },
+  "XrecordGetway": {
+    "description": "Auto imported from components/XrecordGetway.vue"
   },
   "Xsearch": {
     "description": "Auto imported from components/Xsearch.vue"
@@ -20,23 +29,14 @@
   "MoleculesXcardStore": {
     "description": "Auto imported from components/molecules/XcardStore.vue"
   },
-  "MoleculesXgetway": {
-    "description": "Auto imported from components/molecules/Xgetway.vue"
-  },
   "MoleculesXheader": {
     "description": "Auto imported from components/molecules/Xheader.vue"
-  },
-  "MoleculesXinfoSend": {
-    "description": "Auto imported from components/molecules/XinfoSend.vue"
   },
   "MoleculesXlables": {
     "description": "Auto imported from components/molecules/Xlables.vue"
   },
   "MoleculesXmodal": {
     "description": "Auto imported from components/molecules/Xmodal.vue"
-  },
-  "MoleculesXrecordGetway": {
-    "description": "Auto imported from components/molecules/XrecordGetway.vue"
   },
   "MoleculesXsidebarBottom": {
     "description": "Auto imported from components/molecules/XsidebarBottom.vue"
