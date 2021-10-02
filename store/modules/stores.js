@@ -1,5 +1,5 @@
 const state = () => ({
-    data
+
 })
 const getters = {
 
@@ -15,13 +15,15 @@ const mutations = {
 }
 
 const actions = {
+    get_store_index(){
 
+    },
     async get_stores({ commit, state }) {
         try {
             // const res = await this.$axios.get("/store");
             // if (res.data.length > 0) {
             //     commit('SET_STORES', res.data)
-            // } 
+            // }
             // else if(res.data.length <=0) {
             //     commit('SET_STORES', [])
             //     commit('SET_MESSAGE', res.message)

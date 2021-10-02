@@ -16,6 +16,7 @@
 
 <script>
 import { tr } from "@/services/lang";
+import axios from "~/plugins/axios";
 export default {
   data() {
     return {
@@ -76,34 +77,19 @@ export default {
       return tr();
     },
   },
-  created() {
+  async fetch() {
     try {
-      const { data } =this.$axios.get(
+      const res = await this.$axios.get(
         `/store/${this.$route.params.store_slug}`
       );
-      this.$store.commit("payments/SET_GETWAYS", data.getways);
-      this.$store.commit("users/SET_ID", data.id);
-      this.logo = data.logo;
-      this.fa_name = data.fa_name;
+      this.$store.commit("payments/SET_GETWAYS", res.data.getways);
+      this.$store.commit("users/SET_ID", res.data.id);
+      this.logo = res.data.logo;
+      this.fa_name = res.data.fa_name;
     } catch (e) {
-       console.log('eeeee',e);
-      if (e.response) {
-        // this.$store.commit("OPEN_TOAST", {
-        //   title: "",
-        //   msg: "خطا در دریافت اطلاعات",
-        //   variant: "danger",
-        // });
-      } else {
-        // this.$store.commit("OPEN_TOAST", {
-        //   title: "",
-        //   msg: "خطا در ارتباط ",
-        //   variant: "danger",
-        // });
-      }
+      console.log("e", e);
     }
   },
-
-  // async fetch({ $axios, route, error }) {},
 };
 </script>
 
