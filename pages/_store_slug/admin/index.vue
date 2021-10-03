@@ -9,18 +9,6 @@
 <script>
 export default {
   layout: "admin",
-  // async asyncData(context) {
-  //   try {
-  //     context.$axios.setHeader('Authorization', '123')
-  //      await context.$axios.get("");
-  //   } catch (e) {
-  //     console.log("eee",e);
-  //     context.error({
-  //       statusCode: 401,
-  //       message: "rtfhb",
-  //     });
-  //   }
-  // },
 };
 </script>
 
