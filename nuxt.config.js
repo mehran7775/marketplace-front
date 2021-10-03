@@ -112,7 +112,7 @@ export default {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization' : 'Bearer ' + 'WPBOWUxTKfr06kk3DOLrK26uaDGnWlzqKeZSoAnJQc2qq6fYi9RJS69ucF96'
+            'Authorization' : 'Bearer ' + '0SfPsStfboggvLOMnCNzZrlTRqeHIzc3qfScdWbE95W1aA1EIzK52TCAnwFO'
         }
     },
 

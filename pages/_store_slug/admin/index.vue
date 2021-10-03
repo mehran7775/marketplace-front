@@ -4,15 +4,15 @@
       <div>
         <span class="display-2 font-weight-bold">فروشگاه های من</span>
       </div>
-      <div>
+      <nuxt-link v-if="$can('manage','create-store')"  :to="`/${$route.params.store_slug}/admin/create_store`">
         <Xbutton variant="success" class="px-4" text="فروشگاه جدید"></Xbutton>
-      </div>
+      </nuxt-link>
     </div>
     <div class="row">
-      <div v-if="stores.length> 0">
+      <div v-if="stores" class="text-center w-100">
         {{stores}}
       </div>
-      <div v-else>
+      <div v-else class="text-center w-100">
         {{message}}
       </div>
     </div>
@@ -27,13 +27,13 @@ export default {
   },
   computed:{
     stores(){
-      if(this.$store.state.stores){
-        return this.$store.state.stores
+      if(this.$store.state.stores.stores){
+        return this.$store.state.stores.stores
       }
     },
     message(){
-       if(this.$store.state.message){
-        return this.$store.state.message
+       if(this.$store.state.stores.message){
+        return this.$store.state.stores.message
       }
     }
   }

@@ -4,10 +4,13 @@
       <div class="col">
         <div class="row">
           <header>
-            header
             <div class="bars_aside d-md-none text-white" @click="toggle_aside">
               <fa icon="bars" size="2x"></fa>
             </div>
+            <div class="mr-5">
+              <img width="130" height="70" src="/images/logo.svg" alt="برند" />
+            </div>
+            <div></div>
           </header>
         </div>
         <div class="row">
@@ -22,7 +25,7 @@
                 <div class="profile text-center pt-4">
                   <b-avatar
                     class="m-auto"
-                    src="https://placekitten.com/300/300"
+                    src="/icon.png"
                     size="7rem"
                   ></b-avatar>
                   <div class="py-3">
@@ -33,15 +36,18 @@
                   <ul>
                     <li>
                       <nuxt-link
-                        :to="`/${$route.params.store_slug}/admin/create_store`"
+                        :to="`/${$route.params.store_slug}/admin`"
                         >فروشگاه ها</nuxt-link
                       >
                     </li>
-                    <li>
+                    <li v-if="stores">
                       <nuxt-link to="#">درگاه پرداخت</nuxt-link>
                     </li>
-                    <li>
+                    <li v-if="stores">
                       <nuxt-link to="#">سفارشات</nuxt-link>
+                    </li>
+                    <li>
+                      <nuxt-link :to="`/${$route.params.store_slug}/admin/products`">محصولات</nuxt-link>
                     </li>
                   </ul>
                 </div>
@@ -85,6 +91,13 @@ export default {
       }
     },
   },
+  computed: {
+    stores() {
+      if (this.$store.state.stores.stores) {
+        return this.$store.state.stores.stores;
+      }
+    },
+  },
 };
 </script>
 
@@ -92,6 +105,9 @@ export default {
 #panel_admin {
   header {
     min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
   }
   .bars_aside {
     color: $bac_dark_color;

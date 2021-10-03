@@ -7,29 +7,45 @@ const getters = {
 
 const mutations = {
     SET_STORES(state, payload) {
-        this.$set(state, 'stores', payload)
+        this._vm.$set(state, 'stores', payload)
     },
     SET_MESSAGE(state, payload) {
-        this.$set(state, 'message', payload)
+        this._vm.$set(state, 'message', payload)
     }
 }
 
 const actions = {
-    get_store_index(){
+    get_store_index() {
 
     },
     async get_stores({ commit, state }) {
         try {
-            // const res = await this.$axios.get("/store");
-            // if (res.data.length > 0) {
-            //     commit('SET_STORES', res.data)
-            // }
-            // else if(res.data.length <=0) {
-            //     commit('SET_STORES', [])
-            //     commit('SET_MESSAGE', res.message)
-            // }
+            const res = await this.$axios.get("/store")
+            if (res.data.data.total > 0) {
+                commit('SET_STORES', res.data.data.data)
+            }
+            else if(res.data) {
+                console.log(res.data.message)
+                commit('SET_MESSAGE', res.data.message)
+            }
         } catch (e) {
+
             console.log(e)
+            if (e.response) {
+                commit('OPEN_TOAST', {
+                    msg: e.response.message,
+                    tite: 'دریافت فروشگاه ها',
+                    variant: 'danger'
+                },{ root: true })
+            }
+            else {
+                commit('OPEN_TOAST', {
+                    msg: 'خطا در ارتباط',
+                    tite: 'دریافت فروشگاه ها',
+                    variant: 'danger'
+                }, { root: true })
+            }
+
         }
     }
 };
