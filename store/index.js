@@ -4,6 +4,7 @@ import getters from '@/store/getters'
 import mutations from '@/store/mutations'
 import actions from '@/store/actions'
 import users from "~/store/modules/users";
+import stores from "~/store/modules/stores"
 import products from "~/store/modules/products";
 import payments from "~/store/modules/payments";
 
@@ -17,7 +18,8 @@ const createStore = () => {
         modules: {
             users,
             products,
-            payments
+            payments,
+            stores
         }
     })
 }

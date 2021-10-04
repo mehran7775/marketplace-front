@@ -16,6 +16,7 @@
 
 <script>
 import { tr } from "@/services/lang";
+import axios from "~/plugins/axios";
 export default {
   data() {
     return {
@@ -54,6 +55,8 @@ export default {
           closes: "20:00",
         },
       },
+      logo: "",
+      fa_name: "",
     };
   },
   head() {
@@ -74,27 +77,17 @@ export default {
       return tr();
     },
   },
-  async fetch({ $axios, route, error }) {
+  async fetch() {
     try {
-      const { data } = await $axios.get(`/store/${route.params.store_slug}`);
-      this.$store.commit('payments/SET_GETWAYS',data.getways);
-      this.$store.commit('users/SET_ID',data.id);
-      return {
-        logo: data.logo,
-        fa_name: data.fa_name,
-      };
+      const res = await this.$axios.get(
+        `/store/${this.$route.params.store_slug}`
+      );
+      this.$store.commit("payments/SET_GETWAYS", res.data.getways);
+      this.$store.commit("users/SET_ID", res.data.id);
+      this.logo = res.data.logo;
+      this.fa_name = res.data.fa_name;
     } catch (e) {
-      if (e.response) {
-        error({
-          statusCode: e.response.status,
-          message: e.response.message,
-        });
-      } else {
-        error({
-          statusCode: "",
-          message: "خطا در ارتباط",
-        });
-      }
+      console.log("e", e);
     }
   },
 };
