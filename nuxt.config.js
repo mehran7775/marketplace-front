@@ -1,37 +1,61 @@
 export default {
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
-        title: 'shop',
-        meta: [
-            { charset: 'utf-8' },
-            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: '' },
-            { name: 'format-detection', content: 'telephone=no' }
+        titleTemplate: 'مارکت پلیس-فروشگاه ساز رایگان-%s',
+        title: 'مارکت پلیس-فروشگاه ساز رایگان',
+        meta: [{
+                charset: 'utf-8'
+            },
+            {
+                name: 'viewport',
+                content: 'width=device-width, initial-scale=1'
+            },
+            {
+                hid: 'description',
+                name: 'description',
+                content: ''
+            },
+            {
+                hid: 'google-site-verification',
+                name: 'google-site-verification',
+                content: 'wzWhJaqpQniEGJwWeIMISdhq0AnDmqeTZ-tDFBpBB6Q'
+            }, {
+                name: 'format-detection',
+                content: 'telephone=no'
+            }
         ],
-        link: [
-            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-        ]
+        link: [{
+            rel: 'icon',
+            type: 'image/x-icon',
+            href: '/favicon.ico'
+        }],
+        script: [{
+            src: "https://www.google-analytics.com/analytics.js",
+            async: true,
+            crossorigin: "anonymous"
+        }, ],
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
-        '@/assets/styles/main.scss',
+        //'@/assets/styles/main.scss',
+        '@/assets/styles/bootstrap.css',
+        '@/assets/styles/style.css'
     ],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
+        '~/plugins/axios',
+        {
+            src: '~/plugins/vue-carousel.js',
+            mode: 'client'
+        },
+        '~/plugins/veevalidate',
+        '~/plugins/roles'
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
-    components: {
-        dirs: [
-            '~/components',
-            '~/components/atoms',
-            '~/components/layouts',
-            '~/components/molecules',
-            '~/components/templates',
-        ]
-    },
+    components: true,
 
     // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
     buildModules: [
@@ -67,25 +91,47 @@ export default {
         icons: true,
     },
 
-    // Axios module configuration: https://go.nuxtjs.dev/config-axios
-    axios: {},
-
     // PWA module configuration: https://go.nuxtjs.dev/pwa
     pwa: {
         manifest: {
             lang: 'en'
         }
     },
-
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {
+        transpile: ["vee-validate/dist/rules"],
+        babel: {
+            compact: true,
+           },
+        /*
+         ** You can extend webpack config here
+         */
+    },
+
+    // Axios module configuration: https://go.nuxtjs.dev/config-axios
+
+    axios: {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization' : 'Bearer ' + '1rW5rwCk9YMRIKYcgnlXumZE7YsOaTVrsc8Dc8ZLJNGEixL5QrUyFyET0V6l'
+        }
     },
 
     publicRuntimeConfig: {
-        baseURL: process.env.BASE_URL || 'http://localhost:8000',
+        axios: {
+            baseURL: process.env.BASE_URL || 'https://coreshop.paystar.ir/api'
+            // browserBaseURL: process.env.BROWSER_BASE_URL || 'https://coreshop.paystar.ir/api'
+        },
     },
-
     privateRuntimeConfig: {
-        apiSecret: process.env.API_SECRET,
+        axios: {
+            baseURL: process.env.BASE_URL || 'https://coreshop.paystar.ir/api',
+        },
+        // apiSecret: process.env.API_SECRET,
+    },
+    loading: {
+        color: '#00c1a4',
+        height: '2px'
     },
 }

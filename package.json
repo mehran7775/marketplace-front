@@ -11,12 +11,15 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.36",
+        "@casl/ability": "3.2.0",
+        "@casl/vue": "0.5.1",
         "@nuxtjs/axios": "^5.13.6",
         "@nuxtjs/pwa": "^3.3.5",
         "bootstrap": "^4.6.0",
         "bootstrap-vue": "^2.21.2",
         "core-js": "^3.15.1",
-        "nuxt": "^2.15.7"
+        "nuxt": "^2.15.7",
+        "vee-validate": "^3.4.13"
     },
     "devDependencies": {
         "@fortawesome/free-brands-svg-icons": "^5.15.4",
@@ -30,6 +33,7 @@
         "jest": "^27.0.5",
         "sass": "^1.39.2",
         "sass-loader": "10",
+        "vue-carousel": "0.18.0",
         "vue-jest": "^3.0.4"
     }
 }
