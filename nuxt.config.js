@@ -84,7 +84,8 @@ export default {
         // https://go.nuxtjs.dev/pwa
         '@nuxtjs/pwa',
         '@nuxtjs/axios',
-        '@nuxtjs/auth-next'
+        '@nuxtjs/auth-next',
+        "cookie-universal-nuxt"
     ],
 
     bootstrapVue: {
@@ -135,42 +136,20 @@ export default {
         color: '#00c1a4',
         height: '2px'
     },
-    // auth: {
-    //     strategies: {
-    //         local: {
-    //             token: {
-    //                 property: 'data.api.token'
-    //             },
-    //             endpoints: {
-    //                 login: {
-    //                     url: '/customer/login',
-    //                     method: 'post',
-    //                 },
-    //                 // logout: false,
-    //                 logout: {
-    //                     url: '/logout/',
-    //                     method: 'post'
-    //                 },
-    //                 // user: {
-    //                 //     url: '/customer/login',
-    //                 //     method: 'get',
-    //                 //     user: 'user'
-    //                 // }
-    //             },
-    //         }
-    //     }
-    // },
     auth: {
         strategies: {
             'laravelJWT': {
                 // provider: 'laravel/jwt',
-                  url: 'https://coreshop.paystar.ir',
+                url: 'https://coreshop.paystar.ir/api',
                 endpoints: {
                     login: {
-                        url: '/api/customer/login',
+                        url: '/customer/login',
                         method: 'post',
                     },
-                    user:false
+                    user: {
+                        url: '/customer/current',
+                        method: 'get'
+                    }
                 },
                 token: {
                     property: 'data.api.token',

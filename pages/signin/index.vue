@@ -44,26 +44,21 @@ export default {
   methods: {
     async do_login() {
       try {
-        await this.$auth
-          .loginWith("laravelJWT", {
-            data: {
-              outh_param: this.auth_path,
-              password: this.password,
-              login_with_verification_code: false,
-            },
-          })
-          .then((res) => {
-            this.$bvToast.toast("شما با موفقیت لاگین شدید", {
-              title: "ورود",
-              variant: "success",
-              toaster: "b-toaster-top-center",
-              solid: true,
-              //  autoHideDelay: 10000,
-            });
-          });
+        const { data } = await this.$axios.post("/customer/login", {
+          auth_path: this.auth_path,
+          password: this.password,
+          login_with_verification_code: false,
+        });
+        this.$cookies.set("token", data.api.token);
+        this.$bvToast.toast("شما با موفقیت لاگین شدید", {
+          title: "ورود",
+          variant: "success",
+          toaster: "b-toaster-top-center",
+          solid: true,
+          //  autoHideDelay: 10000,
+        });
       } catch (e) {
-        console.log(e);
-        this.$bvToast.toast("خطایی در مورد اتفاق افتاده است", {
+        this.$bvToast.toast(e, response.data.message, {
           title: "ورود",
           variant: "danger",
           toaster: "b-toaster-top-center",
