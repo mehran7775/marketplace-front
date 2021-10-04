@@ -8,7 +8,7 @@ Vue.use(abilitiesPlugin, ability)
 export default async function ({$axios}) {
     let res = await $axios.get('user/current')
     let permissions = []
-    for (let permission in res.data.data.permissions) {
+    /*or (let permission in res.data.data.permissions) {
         permissions.push(
             {
                 "subject": res.data.data.permissions[permission].slug,
@@ -18,6 +18,16 @@ export default async function ({$axios}) {
             }
         )
     }
-    ability.update(permissions)
+    for (let role in res.data.data.roles) {
+        permissions.push(
+            {
+                "subject": res.data.data.roles[role].slug,
+                "actions": [
+                    "manage"
+                ]
+            }
+        )
+    }
+    ability.update(permissions)*/
 
 }

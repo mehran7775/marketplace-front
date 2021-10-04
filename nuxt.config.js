@@ -38,7 +38,9 @@ export default {
 
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
-        '@/assets/styles/main.scss',
+        //'@/assets/styles/main.scss',
+        '@/assets/styles/bootstrap.css',
+        '@/assets/styles/style.css'
     ],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -112,7 +114,7 @@ export default {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization' : 'Bearer ' + 'WPBOWUxTKfr06kk3DOLrK26uaDGnWlzqKeZSoAnJQc2qq6fYi9RJS69ucF96'
+            'Authorization' : 'Bearer ' + '1rW5rwCk9YMRIKYcgnlXumZE7YsOaTVrsc8Dc8ZLJNGEixL5QrUyFyET0V6l'
         }
     },
 

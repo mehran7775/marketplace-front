@@ -5,7 +5,7 @@ import ClientOnly from 'vue-client-only'
 import NoSsr from 'vue-no-ssr'
 import { createRouter } from './router.js'
 import NuxtChild from './components/nuxt-child.js'
-import NuxtError from '..\\layouts\\error.vue'
+import NuxtError from '../layouts/error.vue'
 import Nuxt from './components/nuxt.js'
 import App from './App.js'
 import { setContext, getLocation, getRouteData, normalizeError } from './utils'
@@ -13,16 +13,17 @@ import { createStore } from './store.js'
 
 /* Plugins */
 
-import nuxt_plugin_plugin_1aa02bfa from 'nuxt_plugin_plugin_1aa02bfa' // Source: .\\components\\plugin.js (mode: 'all')
-import nuxt_plugin_bootstrapvue_765ae2d5 from 'nuxt_plugin_bootstrapvue_765ae2d5' // Source: .\\bootstrap-vue.js (mode: 'all')
-import nuxt_plugin_workbox_79046e42 from 'nuxt_plugin_workbox_79046e42' // Source: .\\workbox.js (mode: 'client')
-import nuxt_plugin_metaplugin_634600c2 from 'nuxt_plugin_metaplugin_634600c2' // Source: .\\pwa\\meta.plugin.js (mode: 'all')
-import nuxt_plugin_iconplugin_67eda636 from 'nuxt_plugin_iconplugin_67eda636' // Source: .\\pwa\\icon.plugin.js (mode: 'all')
-import nuxt_plugin_axios_4a0c0aa6 from 'nuxt_plugin_axios_4a0c0aa6' // Source: .\\axios.js (mode: 'all')
-import nuxt_plugin_fontawesome_6e466d30 from 'nuxt_plugin_fontawesome_6e466d30' // Source: .\\fontawesome.js (mode: 'all')
-import nuxt_plugin_axios_3566aa80 from 'nuxt_plugin_axios_3566aa80' // Source: ..\\plugins\\axios (mode: 'all')
-import nuxt_plugin_vuecarousel_e4202ecc from 'nuxt_plugin_vuecarousel_e4202ecc' // Source: ..\\plugins\\vue-carousel.js (mode: 'client')
-import nuxt_plugin_veevalidate_246dad14 from 'nuxt_plugin_veevalidate_246dad14' // Source: ..\\plugins\\veevalidate (mode: 'all')
+import nuxt_plugin_plugin_e569cf58 from 'nuxt_plugin_plugin_e569cf58' // Source: ./components/plugin.js (mode: 'all')
+import nuxt_plugin_bootstrapvue_7aedf599 from 'nuxt_plugin_bootstrapvue_7aedf599' // Source: ./bootstrap-vue.js (mode: 'all')
+import nuxt_plugin_workbox_3a0437f4 from 'nuxt_plugin_workbox_3a0437f4' // Source: ./workbox.js (mode: 'client')
+import nuxt_plugin_metaplugin_786475ce from 'nuxt_plugin_metaplugin_786475ce' // Source: ./pwa/meta.plugin.js (mode: 'all')
+import nuxt_plugin_iconplugin_6f152ae6 from 'nuxt_plugin_iconplugin_6f152ae6' // Source: ./pwa/icon.plugin.js (mode: 'all')
+import nuxt_plugin_axios_669fbd2c from 'nuxt_plugin_axios_669fbd2c' // Source: ./axios.js (mode: 'all')
+import nuxt_plugin_fontawesome_09ddbd2c from 'nuxt_plugin_fontawesome_09ddbd2c' // Source: ./fontawesome.js (mode: 'all')
+import nuxt_plugin_axios_3566aa80 from 'nuxt_plugin_axios_3566aa80' // Source: ../plugins/axios (mode: 'all')
+import nuxt_plugin_vuecarousel_e4202ecc from 'nuxt_plugin_vuecarousel_e4202ecc' // Source: ../plugins/vue-carousel.js (mode: 'client')
+import nuxt_plugin_veevalidate_246dad14 from 'nuxt_plugin_veevalidate_246dad14' // Source: ../plugins/veevalidate (mode: 'all')
+import nuxt_plugin_roles_338fa5f2 from 'nuxt_plugin_roles_338fa5f2' // Source: ../plugins/roles (mode: 'all')
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -90,7 +91,7 @@ async function createApp(ssrContext, config = {}) {
   // here we inject the router and store to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.
   const app = {
-    head: {"titleTemplate":"مارکت پلیس-فروشگاه ساز رایگان-%s","title":"مارکت پلیس-فروشگاه ساز رایگان","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":""},{"hid":"google-site-verification","name":"google-site-verification","content":"wzWhJaqpQniEGJwWeIMISdhq0AnDmqeTZ-tDFBpBB6Q"},{"name":"format-detection","content":"telephone=no"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"}],"script":[{"src":"https:\u002F\u002Fwww.google-analytics.com\u002Fanalytics.js","async":true,"crossorigin":"anonymous"}],"style":[]},
+    head: {"titleTemplate":"مارکت پلیس-فروشگاه ساز رایگان-%s","title":"مارکت پلیس-فروشگاه ساز رایگان","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":""},{"hid":"google-site-verification","name":"google-site-verification","content":"wzWhJaqpQniEGJwWeIMISdhq0AnDmqeTZ-tDFBpBB6Q"},{"name":"format-detection","content":"telephone=no"},{"hid":"charset","charset":"utf-8"},{"hid":"mobile-web-app-capable","name":"mobile-web-app-capable","content":"yes"},{"hid":"apple-mobile-web-app-title","name":"apple-mobile-web-app-title","content":"shop"},{"hid":"og:type","name":"og:type","property":"og:type","content":"website"},{"hid":"og:title","name":"og:title","property":"og:title","content":"shop"},{"hid":"og:site_name","name":"og:site_name","property":"og:site_name","content":"shop"},{"hid":"og:description","name":"og:description","property":"og:description","content":"## Build Setup"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"},{"hid":"shortcut-icon","rel":"shortcut icon","href":"\u002F_nuxt\u002Ficons\u002Ficon_64x64.e3e9fb.png"},{"hid":"apple-touch-icon","rel":"apple-touch-icon","href":"\u002F_nuxt\u002Ficons\u002Ficon_512x512.e3e9fb.png","sizes":"512x512"},{"rel":"manifest","href":"\u002F_nuxt\u002Fmanifest.3e971d3a.json","hid":"manifest"}],"script":[{"src":"https:\u002F\u002Fwww.google-analytics.com\u002Fanalytics.js","async":true,"crossorigin":"anonymous"}],"style":[],"htmlAttrs":{"lang":"en"}},
 
     store,
     router,
@@ -219,32 +220,32 @@ async function createApp(ssrContext, config = {}) {
   }
   // Plugin execution
 
-  if (typeof nuxt_plugin_plugin_1aa02bfa === 'function') {
-    await nuxt_plugin_plugin_1aa02bfa(app.context, inject)
+  if (typeof nuxt_plugin_plugin_e569cf58 === 'function') {
+    await nuxt_plugin_plugin_e569cf58(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_bootstrapvue_765ae2d5 === 'function') {
-    await nuxt_plugin_bootstrapvue_765ae2d5(app.context, inject)
+  if (typeof nuxt_plugin_bootstrapvue_7aedf599 === 'function') {
+    await nuxt_plugin_bootstrapvue_7aedf599(app.context, inject)
   }
 
-  if (process.client && typeof nuxt_plugin_workbox_79046e42 === 'function') {
-    await nuxt_plugin_workbox_79046e42(app.context, inject)
+  if (process.client && typeof nuxt_plugin_workbox_3a0437f4 === 'function') {
+    await nuxt_plugin_workbox_3a0437f4(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_metaplugin_634600c2 === 'function') {
-    await nuxt_plugin_metaplugin_634600c2(app.context, inject)
+  if (typeof nuxt_plugin_metaplugin_786475ce === 'function') {
+    await nuxt_plugin_metaplugin_786475ce(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_iconplugin_67eda636 === 'function') {
-    await nuxt_plugin_iconplugin_67eda636(app.context, inject)
+  if (typeof nuxt_plugin_iconplugin_6f152ae6 === 'function') {
+    await nuxt_plugin_iconplugin_6f152ae6(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_axios_4a0c0aa6 === 'function') {
-    await nuxt_plugin_axios_4a0c0aa6(app.context, inject)
+  if (typeof nuxt_plugin_axios_669fbd2c === 'function') {
+    await nuxt_plugin_axios_669fbd2c(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_fontawesome_6e466d30 === 'function') {
-    await nuxt_plugin_fontawesome_6e466d30(app.context, inject)
+  if (typeof nuxt_plugin_fontawesome_09ddbd2c === 'function') {
+    await nuxt_plugin_fontawesome_09ddbd2c(app.context, inject)
   }
 
   if (typeof nuxt_plugin_axios_3566aa80 === 'function') {
@@ -257,6 +258,10 @@ async function createApp(ssrContext, config = {}) {
 
   if (typeof nuxt_plugin_veevalidate_246dad14 === 'function') {
     await nuxt_plugin_veevalidate_246dad14(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_roles_338fa5f2 === 'function') {
+    await nuxt_plugin_roles_338fa5f2(app.context, inject)
   }
 
   // Lock enablePreview in context

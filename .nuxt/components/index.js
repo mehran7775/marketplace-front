@@ -1,13 +1,16 @@
-export const Xbasket = () => import('../..\\components\\Xbasket.vue' /* webpackChunkName: "components/xbasket" */).then(c => wrapFunctional(c.default || c))
-export const Xbrand = () => import('../..\\components\\Xbrand.vue' /* webpackChunkName: "components/xbrand" */).then(c => wrapFunctional(c.default || c))
-export const Xbutton = () => import('../..\\components\\Xbutton.vue' /* webpackChunkName: "components/xbutton" */).then(c => wrapFunctional(c.default || c))
-export const Xform = () => import('../..\\components\\Xform.vue' /* webpackChunkName: "components/xform" */).then(c => wrapFunctional(c.default || c))
-export const Xitem = () => import('../..\\components\\Xitem.vue' /* webpackChunkName: "components/xitem" */).then(c => wrapFunctional(c.default || c))
-export const Xsearch = () => import('../..\\components\\Xsearch.vue' /* webpackChunkName: "components/xsearch" */).then(c => wrapFunctional(c.default || c))
-export const MoleculesXheader = () => import('../..\\components\\molecules\\Xheader.vue' /* webpackChunkName: "components/molecules-xheader" */).then(c => wrapFunctional(c.default || c))
-export const MoleculesXlables = () => import('../..\\components\\molecules\\Xlables.vue' /* webpackChunkName: "components/molecules-xlables" */).then(c => wrapFunctional(c.default || c))
-export const MoleculesXmodal = () => import('../..\\components\\molecules\\Xmodal.vue' /* webpackChunkName: "components/molecules-xmodal" */).then(c => wrapFunctional(c.default || c))
-export const MoleculesXsidebarBottom = () => import('../..\\components\\molecules\\XsidebarBottom.vue' /* webpackChunkName: "components/molecules-xsidebar-bottom" */).then(c => wrapFunctional(c.default || c))
+export { default as Xbasket } from '../../components/Xbasket.vue'
+export { default as Xbrand } from '../../components/Xbrand.vue'
+export { default as Xbutton } from '../../components/Xbutton.vue'
+export { default as Xform } from '../../components/Xform.vue'
+export { default as Xitem } from '../../components/Xitem.vue'
+export { default as Xsearch } from '../../components/Xsearch.vue'
+export { default as UsersChangeAccess } from '../../components/users/change-access.vue'
+export { default as MoleculesXheader } from '../../components/molecules/Xheader.vue'
+export { default as MoleculesXlables } from '../../components/molecules/Xlables.vue'
+export { default as MoleculesXmodal } from '../../components/molecules/Xmodal.vue'
+export { default as MoleculesXsidebarBottom } from '../../components/molecules/XsidebarBottom.vue'
+export { default as MainAside } from '../../components/main/aside.js'
+export { default as MainHeader } from '../../components/main/header.vue'
 
 // nuxt/nuxt.js#8607
 function wrapFunctional(options) {

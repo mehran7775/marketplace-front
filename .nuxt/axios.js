@@ -165,7 +165,8 @@ export default (ctx, inject) => {
     "put": {},
     "patch": {},
     "Content-Type": "application/json",
-    "Accept": "application/json"
+    "Accept": "application/json",
+    "Authorization": "Bearer 1rW5rwCk9YMRIKYcgnlXumZE7YsOaTVrsc8Dc8ZLJNGEixL5QrUyFyET0V6l"
 }
 
   const axiosOptions = {
