@@ -73,6 +73,7 @@ export default {
     window.addEventListener("resize", this.onResize);
   },
   created() {
+    // this.$cookies.set("locale", "mehran");
     // console.log('cookie',this.$auth.$storage.getCookies('auth._token.laravelJWT'))
   },
   methods: {
