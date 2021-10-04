@@ -2,19 +2,22 @@ import Vue from 'vue'
 import { decode, parsePath, withoutBase, withoutTrailingSlash, normalizeURL } from 'ufo'
 
 import { getMatchedComponentsInstances, getChildrenComponentInstancesUsingFetch, promisify, globalHandleError, urlJoin, sanitizeComponent } from './utils'
-import NuxtError from '..\\layouts\\error.vue'
+import NuxtError from '../layouts/error.vue'
 import NuxtLoading from './components/nuxt-loading.vue'
 import NuxtBuildIndicator from './components/nuxt-build-indicator'
 
-import '..\\node_modules\\@fortawesome\\fontawesome-svg-core\\styles.css'
+import '../node_modules/@fortawesome/fontawesome-svg-core/styles.css'
 
-import '..\\assets\\styles\\main.scss'
+import '../assets/styles/bootstrap.css'
 
-import _77068119 from '..\\layouts\\admin.vue'
-import _777ba69c from '..\\layouts\\index.vue'
+import '../assets/styles/style.css'
+
+import _77068119 from '../layouts/admin.vue'
+import _777ba69c from '../layouts/index.vue'
+import _4596c14a from '../layouts/main-content.vue'
 import _6f6c098b from './layouts/default.vue'
 
-const layouts = { "_admin": sanitizeComponent(_77068119),"_index": sanitizeComponent(_777ba69c),"_default": sanitizeComponent(_6f6c098b) }
+const layouts = { "_admin": sanitizeComponent(_77068119),"_index": sanitizeComponent(_777ba69c),"_main-content": sanitizeComponent(_4596c14a),"_default": sanitizeComponent(_6f6c098b) }
 
 export default {
   render (h, props) {

@@ -26,8 +26,8 @@
   "Xsearch": {
     "description": "Auto imported from components/Xsearch.vue"
   },
-  "MoleculesXcardStore": {
-    "description": "Auto imported from components/molecules/XcardStore.vue"
+  "UsersChangeAccess": {
+    "description": "Auto imported from components/users/change-access.vue"
   },
   "MoleculesXheader": {
     "description": "Auto imported from components/molecules/Xheader.vue"
@@ -40,5 +40,11 @@
   },
   "MoleculesXsidebarBottom": {
     "description": "Auto imported from components/molecules/XsidebarBottom.vue"
+  },
+  "MainAside": {
+    "description": "Auto imported from components/main/aside.js"
+  },
+  "MainHeader": {
+    "description": "Auto imported from components/main/header.vue"
   }
 }

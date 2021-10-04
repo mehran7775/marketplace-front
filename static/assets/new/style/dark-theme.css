@@ -1,0 +1,294 @@
+body {
+  background: #444 !important;
+  color: #fff !important;
+}
+
+li {
+  color: #aaa !important;
+}
+
+.bg-white {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+.btn-outline-info {
+  color: #d8af58 !important;
+  border-color: #d8af58 !important;
+}
+
+.btn-outline-info:hover {
+  color: #fff !important;
+  background-color: #d8af58 !important;
+  border-color: #d8af58 !important;
+}
+
+.btn-outline-secondary {
+  color: #58c9d8 !important;
+  border-color: #58c9d8 !important;
+}
+
+.btn-outline-secondary:hover {
+  color: #fff !important;
+  background-color: #58c9d8 !important;
+  border-color: #58c9d8 !important;
+}
+
+.btn-info {
+  background-color: #d8af58 !important;
+  border-color: #d8af58 !important;
+}
+
+#sidebar_menu a:hover {
+  color: #fff !important;
+}
+
+.bg-bank {
+  background-color: #fff !important;
+}
+
+.apexcharts-tooltip {
+  color: #000 !important;
+}
+
+.text-white-in-dark-mode {
+  color: #fff !important;
+}
+
+.label.label-light-success {
+  color: #32fff5 !important;
+  background-color: #2a6663 !important;
+}
+
+.label.label-light-danger {
+  color: #ff5869 !important;
+  background-color: #4b3e3f !important;
+}
+
+.label.label-light-warning {
+  color: #ffcd6a !important;
+  background-color: #686358 !important;
+}
+
+.label.label-light-secondary {
+  color: #c6c6c6 !important;
+  background-color: #4c4d50 !important;
+}
+
+.label.label-light-primary {
+  color: #2bebf5 !important;
+  background-color: #5a6f70 !important;
+}
+
+.label.label-light-info {
+  color: #a6a6c6 !important;
+  background-color: #4d4e5e !important;
+}
+
+.label.label-light-dark {
+  color: black !important;
+  background-color: white !important;
+}
+
+td {
+  color: #dedede !important;
+}
+
+.page_title {
+  color: #dedede !important;
+}
+
+.modal-content {
+  border: solid 2px #ffcd6a;
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+#big_qr img {
+  width: 470px !important;
+}
+
+.btn.btn-icon.btn-sm:hover {
+  background-color: transparent !important;
+}
+
+.nav-link.active {
+  background-color: #1dc9b7 !important;
+  color: #ffffff !important;
+  border-color: #1dc9b7 !important;
+}
+
+.nav-link {
+  background-color: #444 !important;
+  color: #ffffff !important;
+}
+
+.vpd-body, .vpd-time {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+.nav-item {
+  margin-bottom: 1px !important;
+}
+
+.timeline-content {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+.timeline-content span {
+  color: #dedede !important;
+}
+
+.timeline-content span.text-danger {
+  color: #fe0202 !important;
+}
+
+.timeline-content span.text-success {
+  color: #00c1a4 !important;
+}
+
+.transaction-detail .text-muted {
+  color: #dedede !important;
+}
+
+#app_aside .btn-outline-secondary span {
+  color: #58c9d8 !important;
+}
+
+#app_aside .btn-outline-secondary:hover span {
+  color: #fff !important;
+}
+
+table > tbody > tr:not(:last-child) > td {
+  border-bottom:1px solid #444 !important;
+}
+
+.form-check label {
+  color: #dedede !important;
+}
+
+hr.sidebar_hr {
+  border-top: 1px solid #444 !important;
+  width: inherit !important;
+}
+
+hr.custom_hr {
+  border-top: 1px solid #444 !important;
+}
+
+input:not([type="submit"]), textarea, .dropdown-menu, .form-control {
+  background-color: #444 !important;
+  color: #dedede !important;
+  border-color: #333 !important;
+}
+
+.dropdown-menu {
+  border-radius: 10px !important;
+}
+
+.dropdown-toggle:not(.app-dropdown-action-button) {
+  background-color: #444 !important;
+  color: #dedede !important;
+  border-color: #444 !important;
+}
+
+.dropdown-item:hover {
+  background-color: #444 !important;
+  border: 1px #fff solid !important;
+  border-radius: 15px !important;
+}
+
+.dropdown-item.selected {
+  background-color: #444 !important;
+}
+
+.dropdown-item:hover .text, .dropdown-item.selected .text {
+  color: #fff !important;
+}
+
+.dropdown-item:not(.selected) .text {
+  color: #999 !important;
+}
+
+.dropdown-menu a.dropdown-item {
+  color: #fff !important;
+}
+
+.filter-option-inner-inner {
+  color: #dedede !important;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #dedede !important;
+  opacity: 1 !important; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #dedede !important;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #dedede !important;
+}
+
+.bs-searchbox input {
+  border-color: #dedede !important;
+}
+
+.modal-body {
+  background-color: #222 !important;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 1px #333 !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #00bea5 !important;
+  outline: 1px solid #00bea5 !important;
+}
+
+.timeline.timeline-4 .timeline-items .timeline-item .timeline-content {
+  background-color: #222 !important;
+}
+
+.apexcharts-menu-item {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+.apexcharts-menu-item:not(:last-child) {
+  border-bottom: 1px solid #dedede !important;
+}
+
+.apexcharts-menu-icon svg {
+  fill: #fff !important;
+}
+
+.apexcharts-menu-icon:hover svg {
+  fill: #dedede !important;
+}
+
+/* ------mehran */
+.key_info_namad {
+  border-left: 1px solid #fff;
+}
+.shaodow_panel_namad{
+  box-shadow:none;
+  border:none;
+}
+.info_user {
+  border-radius: 5px;
+  border: 1px solid #272727;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+}
+
+#dashboard-data-select {
+  border-color: #fff !important;
+  cursor: pointer !important;
+}
