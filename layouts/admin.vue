@@ -4,6 +4,7 @@
       <div class="col">
         <div class="row">
           <header>
+            header
             <div class="bars_aside d-md-none text-white" @click="toggle_aside">
               <fa icon="bars" size="2x"></fa>
             </div>
@@ -70,6 +71,9 @@ export default {
       this.onResize();
     });
     window.addEventListener("resize", this.onResize);
+  },
+  created() {
+    // console.log('cookie',this.$auth.$storage.getCookies('auth._token.laravelJWT'))
   },
   methods: {
     toggle_aside() {

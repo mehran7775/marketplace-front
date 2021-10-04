@@ -28,12 +28,13 @@ export default {
   async asyncData({ $axios, route, error }) {
     try {
       const { data } = await $axios.get(
-        `/store/${route.params.store_slug}/products`);
+        `/store/${route.params.store_slug}/products`
+      );
       return {
         products: data,
       };
     } catch (e) {
-      console.log(e)
+      console.log(e);
       if (e.response) {
         error({
           statusCode: e.response.status,
@@ -48,7 +49,7 @@ export default {
     }
   },
   mounted() {
-
+    
   },
 };
 </script>

@@ -10,9 +10,10 @@
         "test": "jest"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^1.2.36",
         "@casl/ability": "3.2.0",
         "@casl/vue": "0.5.1",
+        "@fortawesome/fontawesome-svg-core": "^1.2.36",
+        "@nuxtjs/auth-next": "5.0.0-1624817847.21691f1",
         "@nuxtjs/axios": "^5.13.6",
         "@nuxtjs/pwa": "^3.3.5",
         "bootstrap": "^4.6.0",
