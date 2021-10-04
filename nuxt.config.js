@@ -4,25 +4,25 @@ export default {
         titleTemplate: 'مارکت پلیس-فروشگاه ساز رایگان-%s',
         title: 'مارکت پلیس-فروشگاه ساز رایگان',
         meta: [{
-                charset: 'utf-8'
-            },
-            {
-                name: 'viewport',
-                content: 'width=device-width, initial-scale=1'
-            },
-            {
-                hid: 'description',
-                name: 'description',
-                content: ''
-            },
-            {
-                hid: 'google-site-verification',
-                name: 'google-site-verification',
-                content: 'wzWhJaqpQniEGJwWeIMISdhq0AnDmqeTZ-tDFBpBB6Q'
-            }, {
-                name: 'format-detection',
-                content: 'telephone=no'
-            }
+            charset: 'utf-8'
+        },
+        {
+            name: 'viewport',
+            content: 'width=device-width, initial-scale=1'
+        },
+        {
+            hid: 'description',
+            name: 'description',
+            content: ''
+        },
+        {
+            hid: 'google-site-verification',
+            name: 'google-site-verification',
+            content: 'wzWhJaqpQniEGJwWeIMISdhq0AnDmqeTZ-tDFBpBB6Q'
+        }, {
+            name: 'format-detection',
+            content: 'telephone=no'
+        }
         ],
         link: [{
             rel: 'icon',
@@ -33,7 +33,7 @@ export default {
             src: "https://www.google-analytics.com/analytics.js",
             async: true,
             crossorigin: "anonymous"
-        }, ],
+        },],
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
@@ -81,6 +81,8 @@ export default {
         '@nuxtjs/axios',
         // https://go.nuxtjs.dev/pwa
         '@nuxtjs/pwa',
+        '@nuxtjs/axios',
+        '@nuxtjs/auth-next'
     ],
 
     bootstrapVue: {
@@ -100,19 +102,18 @@ export default {
         transpile: ["vee-validate/dist/rules"],
         babel: {
             compact: true,
-           },
+        },
         /*
          ** You can extend webpack config here
          */
     },
-
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
 
     axios: {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization' : 'Bearer ' + 'WPBOWUxTKfr06kk3DOLrK26uaDGnWlzqKeZSoAnJQc2qq6fYi9RJS69ucF96'
+            'Authorization': 'Bearer ' + 'WPBOWUxTKfr06kk3DOLrK26uaDGnWlzqKeZSoAnJQc2qq6fYi9RJS69ucF96'
         }
     },
 
@@ -132,4 +133,51 @@ export default {
         color: '#00c1a4',
         height: '2px'
     },
+    // auth: {
+    //     strategies: {
+    //         local: {
+    //             token: {
+    //                 property: 'data.api.token'
+    //             },
+    //             endpoints: {
+    //                 login: {
+    //                     url: '/customer/login',
+    //                     method: 'post',
+    //                 },
+    //                 // logout: false,
+    //                 logout: {
+    //                     url: '/logout/',
+    //                     method: 'post'
+    //                 },
+    //                 // user: {
+    //                 //     url: '/customer/login',
+    //                 //     method: 'get',
+    //                 //     user: 'user'
+    //                 // }
+    //             },
+    //         }
+    //     }
+    // },
+    auth: {
+        strategies: {
+            'laravelJWT': {
+                // provider: 'laravel/jwt',
+                  url: 'https://coreshop.paystar.ir',
+                endpoints: {
+                    login: {
+                        url: '/api/customer/login',
+                        method: 'post',
+                    },
+                    user:false
+                },
+                token: {
+                    property: 'data.api.token',
+                    // maxAge: 60 * 60
+                },
+                //   refreshToken: {
+                //     maxAge: 20160 * 60
+                //   },
+            },
+        }
+    }
 }
