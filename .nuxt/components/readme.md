@@ -6,6 +6,7 @@ You can directly use them in pages and other components without the need to impo
 
 **Tip:** If a component is conditionally rendered with `v-if` and is big, it is better to use `Lazy` or `lazy-` prefix to lazy load.
 
+- `<Pagination>` | `<pagination>` (components/pagination.vue)
 - `<Xbasket>` | `<xbasket>` (components/Xbasket.vue)
 - `<Xbrand>` | `<xbrand>` (components/Xbrand.vue)
 - `<Xbutton>` | `<xbutton>` (components/Xbutton.vue)
@@ -15,10 +16,12 @@ You can directly use them in pages and other components without the need to impo
 - `<Xitem>` | `<xitem>` (components/Xitem.vue)
 - `<XrecordGetway>` | `<xrecord-getway>` (components/XrecordGetway.vue)
 - `<Xsearch>` | `<xsearch>` (components/Xsearch.vue)
-- `<UsersChangeAccess>` | `<users-change-access>` (components/users/change-access.vue)
+- `<MainAside>` | `<main-aside>` (components/main/aside.js)
+- `<MainHeader>` | `<main-header>` (components/main/header.vue)
+- `<MainPageTitle>` | `<main-page-title>` (components/main/pageTitle.vue)
+- `<MoleculesXcardStore>` | `<molecules-xcard-store>` (components/molecules/XcardStore.vue)
 - `<MoleculesXheader>` | `<molecules-xheader>` (components/molecules/Xheader.vue)
 - `<MoleculesXlables>` | `<molecules-xlables>` (components/molecules/Xlables.vue)
 - `<MoleculesXmodal>` | `<molecules-xmodal>` (components/molecules/Xmodal.vue)
 - `<MoleculesXsidebarBottom>` | `<molecules-xsidebar-bottom>` (components/molecules/XsidebarBottom.vue)
-- `<MainAside>` | `<main-aside>` (components/main/aside.js)
-- `<MainHeader>` | `<main-header>` (components/main/header.vue)
+- `<UsersChangeAccess>` | `<users-change-access>` (components/users/change-access.vue)

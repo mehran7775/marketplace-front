@@ -1,114 +1,247 @@
 [
   {
+    "name": "seller",
+    "path": "/seller",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\seller\\\\index.vue",
+    "chunkName": "pages/seller/index",
+    "_name": "_1b6d9933"
+  },
+  {
+    "name": "signin",
+    "path": "/signin",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\signin\\\\index.vue",
+    "chunkName": "pages/signin/index",
+    "_name": "_3f6d1530"
+  },
+  {
+    "name": "signup",
+    "path": "/signup",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\signup\\\\index.vue",
+    "chunkName": "pages/signup/index",
+    "_name": "_7cf4adfa"
+  },
+  {
+    "name": "test",
+    "path": "/test",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\test\\\\index.vue",
+    "chunkName": "pages/test/index",
+    "_name": "_069e7440"
+  },
+  {
     "name": "admin-customers",
     "path": "/admin/customers",
-    "component": "/Users/apple/Desktop/Work/Paystar/shop-front/market-place-front/pages/admin/customers/index.vue",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\admin\\\\customers\\\\index.vue",
     "chunkName": "pages/admin/customers/index",
-    "_name": "_334bf88c"
+    "_name": "_4bf5b22c"
   },
   {
     "name": "admin-gateways",
     "path": "/admin/gateways",
-    "component": "/Users/apple/Desktop/Work/Paystar/shop-front/market-place-front/pages/admin/gateways/index.vue",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\admin\\\\gateways\\\\index.vue",
     "chunkName": "pages/admin/gateways/index",
-    "_name": "_36a64980"
+    "_name": "_11f45f44"
+  },
+  {
+    "name": "admin-orders",
+    "path": "/admin/orders",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\admin\\\\orders\\\\index.vue",
+    "chunkName": "pages/admin/orders/index",
+    "_name": "_02ba30e4"
   },
   {
     "name": "admin-ports",
     "path": "/admin/ports",
-    "component": "/Users/apple/Desktop/Work/Paystar/shop-front/market-place-front/pages/admin/ports/index.vue",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\admin\\\\ports\\\\index.vue",
     "chunkName": "pages/admin/ports/index",
-    "_name": "_f11de792"
+    "_name": "_78b3e1cf"
+  },
+  {
+    "name": "admin-stores",
+    "path": "/admin/stores",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\admin\\\\stores\\\\index.vue",
+    "chunkName": "pages/admin/stores/index",
+    "_name": "_3c7794a1"
   },
   {
     "name": "admin-users",
     "path": "/admin/users",
-    "component": "/Users/apple/Desktop/Work/Paystar/shop-front/market-place-front/pages/admin/users/index.vue",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\admin\\\\users\\\\index.vue",
     "chunkName": "pages/admin/users/index",
-    "_name": "_b7b2b2a6"
+    "_name": "_1a9cd3ce"
+  },
+  {
+    "name": "seller-stores",
+    "path": "/seller/stores",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\seller\\\\stores\\\\index.vue",
+    "chunkName": "pages/seller/stores/index",
+    "_name": "_48b49dc1"
   },
   {
     "name": "admin-gateways-add",
     "path": "/admin/gateways/add",
-    "component": "/Users/apple/Desktop/Work/Paystar/shop-front/market-place-front/pages/admin/gateways/add.vue",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\admin\\\\gateways\\\\add.vue",
     "chunkName": "pages/admin/gateways/add",
-    "_name": "_417ce90f"
+    "_name": "_d7c4c3da"
   },
   {
     "name": "admin-ports-add",
     "path": "/admin/ports/add",
-    "component": "/Users/apple/Desktop/Work/Paystar/shop-front/market-place-front/pages/admin/ports/add.vue",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\admin\\\\ports\\\\add.vue",
     "chunkName": "pages/admin/ports/add",
-    "_name": "_4ab6ebc6"
+    "_name": "_3962475e"
+  },
+  {
+    "name": "admin-stores-add",
+    "path": "/admin/stores/add",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\admin\\\\stores\\\\add.vue",
+    "chunkName": "pages/admin/stores/add",
+    "_name": "_8c8ef2a0"
+  },
+  {
+    "name": "seller-stores-create",
+    "path": "/seller/stores/create",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\seller\\\\stores\\\\create\\\\index.vue",
+    "chunkName": "pages/seller/stores/create/index",
+    "_name": "_66d53676"
   },
   {
     "name": "admin-customers-id-find",
     "path": "/admin/customers/:id/find",
-    "component": "/Users/apple/Desktop/Work/Paystar/shop-front/market-place-front/pages/admin/customers/_id/find.vue",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\admin\\\\customers\\\\_id\\\\find.vue",
     "chunkName": "pages/admin/customers/_id/find",
-    "_name": "_c4657d94"
+    "_name": "_5f8ec166"
+  },
+  {
+    "name": "admin-gateways-id-find",
+    "path": "/admin/gateways/:id/find",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\admin\\\\gateways\\\\_id\\\\find.vue",
+    "chunkName": "pages/admin/gateways/_id/find",
+    "_name": "_2329ff36"
+  },
+  {
+    "name": "admin-stores-id-find",
+    "path": "/admin/stores/:id/find",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\admin\\\\stores\\\\_id\\\\find.vue",
+    "chunkName": "pages/admin/stores/_id/find",
+    "_name": "_0f6a3f42"
   },
   {
     "name": "admin-users-id-find",
     "path": "/admin/users/:id/find",
-    "component": "/Users/apple/Desktop/Work/Paystar/shop-front/market-place-front/pages/admin/users/_id/find.vue",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\admin\\\\users\\\\_id\\\\find.vue",
     "chunkName": "pages/admin/users/_id/find",
-    "_name": "_72d8553a"
+    "_name": "_2d56c4ba"
+  },
+  {
+    "name": "seller-token",
+    "path": "/seller/:token",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\seller\\\\_token.vue",
+    "chunkName": "pages/seller/_token",
+    "_name": "_4fe5b62e"
   },
   {
     "name": "index",
     "path": "/",
-    "component": "/Users/apple/Desktop/Work/Paystar/shop-front/market-place-front/pages/index.vue",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\index.vue",
     "chunkName": "pages/index",
-    "_name": "_791ac898"
+    "_name": "_5ca7fcdc"
   },
   {
     "name": "store_slug",
     "path": "/:store_slug",
-    "component": "/Users/apple/Desktop/Work/Paystar/shop-front/market-place-front/pages/_store_slug/index.vue",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\_store_slug\\\\index.vue",
     "chunkName": "pages/_store_slug/index",
-    "_name": "_1907244d"
+    "_name": "_cc99fa4c"
   },
   {
     "name": "store_slug-admin",
     "path": "/:store_slug/admin",
-    "component": "/Users/apple/Desktop/Work/Paystar/shop-front/market-place-front/pages/_store_slug/admin/index.vue",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\_store_slug\\\\admin\\\\index.vue",
     "chunkName": "pages/_store_slug/admin/index",
-    "_name": "_64161f4d"
+    "_name": "_9fc0246a"
   },
   {
     "name": "store_slug-cart",
     "path": "/:store_slug/cart",
-    "component": "/Users/apple/Desktop/Work/Paystar/shop-front/market-place-front/pages/_store_slug/cart/index.vue",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\_store_slug\\\\cart\\\\index.vue",
     "chunkName": "pages/_store_slug/cart/index",
-    "_name": "_2caaa390"
+    "_name": "_7255b78c"
   },
   {
     "name": "store_slug-complete-info",
     "path": "/:store_slug/complete-info",
-    "component": "/Users/apple/Desktop/Work/Paystar/shop-front/market-place-front/pages/_store_slug/complete-info/index.vue",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\_store_slug\\\\complete-info\\\\index.vue",
     "chunkName": "pages/_store_slug/complete-info/index",
-    "_name": "_205df400"
+    "_name": "_16915a78"
   },
   {
     "name": "store_slug-test",
     "path": "/:store_slug/test",
-    "component": "/Users/apple/Desktop/Work/Paystar/shop-front/market-place-front/pages/_store_slug/test/index.vue",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\_store_slug\\\\test\\\\index.vue",
     "chunkName": "pages/_store_slug/test/index",
-    "_name": "_a9ba5dac"
+    "_name": "_34615f88"
   },
   {
-    "name": "store_slug-admin-create_store",
-    "path": "/:store_slug/admin/create_store",
-    "component": "E:\\\\Projects\\\\store-front\\\\market-place-front\\\\pages\\\\_store_slug\\\\admin\\\\create_store\\\\index.vue",
-    "chunkName": "pages/_store_slug/admin/create_store/index",
-    "_name": "_feec156a"
+    "name": "store_slug-admin-orders",
+    "path": "/:store_slug/admin/orders",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\_store_slug\\\\admin\\\\orders\\\\index.vue",
+    "chunkName": "pages/_store_slug/admin/orders/index",
+    "_name": "_4aa02d46"
+  },
+  {
+    "name": "store_slug-admin-products",
+    "path": "/:store_slug/admin/products",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\_store_slug\\\\admin\\\\products\\\\index.vue",
+    "chunkName": "pages/_store_slug/admin/products/index",
+    "_name": "_e21215b2"
+  },
+  {
+    "name": "store_slug-admin-products-create",
+    "path": "/:store_slug/admin/products/create",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\_store_slug\\\\admin\\\\products\\\\create.vue",
+    "chunkName": "pages/_store_slug/admin/products/create",
+    "_name": "_779bfa77"
+  },
+  {
+    "name": "store_slug-admin-setting-gateway",
+    "path": "/:store_slug/admin/setting/gateway",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\_store_slug\\\\admin\\\\setting\\\\gateway.vue",
+    "chunkName": "pages/_store_slug/admin/setting/gateway",
+    "_name": "_1420ad0b"
+  },
+  {
+    "name": "store_slug-admin-setting-shipping",
+    "path": "/:store_slug/admin/setting/shipping",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\_store_slug\\\\admin\\\\setting\\\\shipping.vue",
+    "chunkName": "pages/_store_slug/admin/setting/shipping",
+    "_name": "_7e9958f7"
+  },
+  {
+    "name": "store_slug-admin-setting-store",
+    "path": "/:store_slug/admin/setting/store",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\_store_slug\\\\admin\\\\setting\\\\store.vue",
+    "chunkName": "pages/_store_slug/admin/setting/store",
+    "_name": "_20a288e8"
+  },
+  {
+    "name": "store_slug-admin-orders-id-find",
+    "path": "/:store_slug/admin/orders/:id/find",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\_store_slug\\\\admin\\\\orders\\\\_id\\\\find.vue",
+    "chunkName": "pages/_store_slug/admin/orders/_id/find",
+    "_name": "_309bfd67"
+  },
+  {
+    "name": "store_slug-admin-products-id-find",
+    "path": "/:store_slug/admin/products/:id/find",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\_store_slug\\\\admin\\\\products\\\\_id\\\\find.vue",
+    "chunkName": "pages/_store_slug/admin/products/_id/find",
+    "_name": "_5a99ecc8"
   },
   {
     "name": "store_slug-products_id",
     "path": "/:store_slug/:products_id",
-    "component": "/Users/apple/Desktop/Work/Paystar/shop-front/market-place-front/pages/_store_slug/_products_id/index.vue",
+    "component": "D:\\\\Codes\\\\market-place-front\\\\pages\\\\_store_slug\\\\_products_id\\\\index.vue",
     "chunkName": "pages/_store_slug/_products_id/index",
-    "_name": "_7927316f"
+    "_name": "_f4942a3a"
   }
 ]

@@ -42,19 +42,22 @@ export default function (ctx, inject) {
   // Register strategies
   // laravelJWT
   $auth.registerStrategy('laravelJWT', new LaravelJWTScheme($auth, {
-  "url": "https://coreshop.paystar.ir",
+  "url": "https://coreshop.paystar.ir/api",
   "endpoints": {
     "login": {
       "url": "https://coreshop.paystar.ir/api/customer/login",
       "method": "post"
     },
     "refresh": {
-      "url": "https://coreshop.paystar.ir/api/auth/refresh"
+      "url": "https://coreshop.paystar.ir/api/api/auth/refresh"
     },
     "logout": {
-      "url": "https://coreshop.paystar.ir/api/auth/logout"
+      "url": "https://coreshop.paystar.ir/api/api/auth/logout"
     },
-    "user": false
+    "user": {
+      "url": "https://coreshop.paystar.ir/api/customer/current",
+      "method": "get"
+    }
   },
   "token": {
     "property": "data.api.token",
