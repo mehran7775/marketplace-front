@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import api from '@/services/api'
 const state = () => ({
 
 })
@@ -11,10 +11,10 @@ const mutations = {
 }
 
 const actions = {
-    async addProductToCart({ commit, dispatch, getters }, product) {
+    addProductToCart({ commit, dispatch, getters }, product) {
         try {
-            const res = await this.$axios.post('/check-product-exist', id, null)
-            if (res.status === 200) {
+            //const res = await api.post('check-product-exist')
+            if (true) {
                 let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
                 if (cart.length > 0) {
                     if (cart.some(el => el.id == product.id)) {

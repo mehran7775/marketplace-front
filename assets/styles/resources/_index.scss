@@ -8,6 +8,17 @@ body {
 
     .b-toaster {
         text-align: right;
+
+        .toast-header {
+            justify-content: space-between;
+            .close {
+                width: 24px;
+                margin-left: 1px !important;
+                float: left;
+                text-align: left;
+            }
+        }
+
     }
 
     .modal-content {
@@ -25,10 +36,12 @@ body {
                 padding: 0;
             }
         }
+
         .modal-footer {
             display: none;
         }
     }
+
     #__nuxt {
         background-color: whitesmoke;
 
@@ -45,9 +58,11 @@ body {
         strong {
             font-size: 0.8rem;
         }
+
         .cursor_pointer {
             cursor: pointer;
         }
+
         @include xsmall {
             h1 {
                 font-size: 1.1rem;
@@ -127,11 +142,11 @@ body {
             //       font-size: 1.1rem;
             //   }
         }
+
         ////////////////------------------------------------ admin panel--------------------------------------///////////
 
         #panel_admin {
             background-color: $bac_dark_color;
-
             color: white;
         }
     }

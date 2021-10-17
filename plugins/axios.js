@@ -1,4 +1,4 @@
-export default function ({
+/*export default function ({
     $axios,
     store,
     redirect
@@ -7,6 +7,7 @@ export default function ({
         config.headers.common = {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
+
         }
         // if (store.state.authToken) {
         //     config.headers.common['Authorization'] = store.state.authToken
@@ -20,3 +21,4 @@ export default function ({
     // })
 
 }
+*/

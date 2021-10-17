@@ -25,7 +25,7 @@ const actions = {
             console.log(e)
             commit('OPEN_TOAST', {
                 title: 'ثبت سفارش',
-                msg: 'خطایی در ثبت اردر اتفاق افتاده است',
+                msg: 'خطایی در ثبت سفارش اتفاق افتاده است',
                 variant: 'danger'
             }, { root: true })
 

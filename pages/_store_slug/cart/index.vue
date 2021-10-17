@@ -71,11 +71,14 @@
                 ><span class="while-price pr-1">تومان</span>
               </div>
               <div class="col-12 col-md-6 text-center continue-buy">
-                <Xbutton
+                <!--<Xbutton
                   class="px-5"
                   text="ادامه خرید"
                   :on_click="continue_buy"
-                ></Xbutton>
+                ></Xbutton>-->
+                  <nuxt-link :to="'/' + $route.params.store_slug + '/complete-info'" class="btn btn-success">
+                      ادامه خرید
+                  </nuxt-link>
               </div>
             </div>
           </div>
@@ -135,9 +138,9 @@ export default {
     compute_end_price(whole) {
       return whole + this.taxation - this.discount;
     },
-    continue_buy() {
+    /*continue_buy() {
       this.$router.push({ name: "complete-info" });
-    },
+    },*/
   },
 };
 </script>

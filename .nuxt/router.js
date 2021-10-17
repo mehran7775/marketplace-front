@@ -88,6 +88,10 @@ export const routerOptions = {
     component: _a9ba5dac,
     name: "store_slug-test"
   }, {
+    path: "/:store_slug/admin/create_store",
+    component: _feec156a,
+    name: "store_slug-admin-create_store"
+  }, {
     path: "/:store_slug/:products_id",
     component: _7927316f,
     name: "store_slug-products_id"

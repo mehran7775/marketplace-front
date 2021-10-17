@@ -17,20 +17,30 @@
 
     </div>
 
-    <h5 class="mt-3 text-dark text-center text-white-in-dark-mode">
-      <span>حقیقی</span>
+    <h5 class="mt-3 text-dark text-center text-white-in-dark-mode" v-if="user">
+      <span>{{user.first_name + ' ' + user.last_name}}</span>
     </h5>
 
     <hr class="sidebar_hr">
 
     <div class="mt-4" id="sidebar_menu">
       <ul class="list-unstyled">
-        <li v-for="(item, index) in menu" :key="index" :class="item.url == $route.fullPath ? 'sidebar_active_item sidebar_item' : 'sidebar_item'">
-          <router-link :to="item.url">
-            <span v-html="item.icon"></span>
-            <span class="pr-2">{{ item.title }}</span>
-          </router-link>
-        </li>
+          <template>
+              <li v-if="!item.in_store && ($can('manage' , item.manager) || !item.manager)" v-for="(item, index) in menu" :key="index" :class="item.url == $route.fullPath ? 'sidebar_active_item sidebar_item' : 'sidebar_item'">
+                  <nuxt-link :to="(item.in_store) ? ('/' + $route.params.store_slug + item.url) : (item.url)">
+                      <span v-html="item.icon"></span>
+                      <span class="pr-2">{{ item.title }}</span>
+                  </nuxt-link>
+              </li>
+          </template>
+          <template v-if="$route.params.store_slug">
+              <li v-if="item.in_store && ($can('manage' , item.manager) || !item.manager)" v-for="(item, index) in menu" :key="index" :class="'/' + $route.params.store_slug + item.url == $route.fullPath ? 'sidebar_active_item sidebar_item' : 'sidebar_item'">
+                  <nuxt-link :to="'/' + $route.params.store_slug + item.url">
+                      <span v-html="item.icon"></span>
+                      <span class="pr-2">{{ item.title }}</span>
+                  </nuxt-link>
+              </li>
+          </template>
       </ul>
     </div>
     <div class="mt-auto mx-3">
@@ -59,15 +69,21 @@
 
 <script>
 import aside_menu from "@/components/main/aside.js";
+import api from "~/services/api";
 
 export default {
   data() {
     return {
-      menu: aside_menu
+      menu: aside_menu,
+        user : null
     }
   },
-  methods: {
-  },
+    created() {
+        api.get('user/current', this.$cookies.get('token'))
+            .then(res => {
+                this.user = res.data.data
+            })
+    }
 }
 </script>
 

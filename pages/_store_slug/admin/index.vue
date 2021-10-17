@@ -1,24 +1,14 @@
 <template>
-  <div>index body</div>
+<div></div>
 </template>
 
 <script>
 export default {
-  layout: "admin",
-  // async asyncData(context) {
-  //   try {
-  //     context.$axios.setHeader('Authorization', '123')
-  //      await context.$axios.get("/user/current");
-  //   } catch (e) {
-  //     console.log("eee",e);
-  //     context.error({
-  //       statusCode: 401,
-  //       message: "rtfhb",
-  //     });
-  //   }
-  // },
-};
+    name: "index",
+    layout : "main-content"
+}
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+
 </style>

@@ -4,25 +4,25 @@ export default {
         titleTemplate: 'مارکت پلیس-فروشگاه ساز رایگان-%s',
         title: 'مارکت پلیس-فروشگاه ساز رایگان',
         meta: [{
-                charset: 'utf-8'
-            },
-            {
-                name: 'viewport',
-                content: 'width=device-width, initial-scale=1'
-            },
-            {
-                hid: 'description',
-                name: 'description',
-                content: ''
-            },
-            {
-                hid: 'google-site-verification',
-                name: 'google-site-verification',
-                content: 'wzWhJaqpQniEGJwWeIMISdhq0AnDmqeTZ-tDFBpBB6Q'
-            }, {
-                name: 'format-detection',
-                content: 'telephone=no'
-            }
+            charset: 'utf-8'
+        },
+        {
+            name: 'viewport',
+            content: 'width=device-width, initial-scale=1'
+        },
+        {
+            hid: 'description',
+            name: 'description',
+            content: ''
+        },
+        {
+            hid: 'google-site-verification',
+            name: 'google-site-verification',
+            content: 'wzWhJaqpQniEGJwWeIMISdhq0AnDmqeTZ-tDFBpBB6Q'
+        }, {
+            name: 'format-detection',
+            content: 'telephone=no'
+        }
         ],
         link: [{
             rel: 'icon',
@@ -33,7 +33,7 @@ export default {
             src: "https://www.google-analytics.com/analytics.js",
             async: true,
             crossorigin: "anonymous"
-        }, ],
+        },],
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
@@ -45,7 +45,7 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
-        '~/plugins/axios',
+        //'~/plugins/axios',
         {
             src: '~/plugins/vue-carousel.js',
             mode: 'client'
@@ -83,6 +83,9 @@ export default {
         '@nuxtjs/axios',
         // https://go.nuxtjs.dev/pwa
         '@nuxtjs/pwa',
+        '@nuxtjs/axios',
+        '@nuxtjs/auth-next',
+        "cookie-universal-nuxt"
     ],
 
     bootstrapVue: {
@@ -102,19 +105,18 @@ export default {
         transpile: ["vee-validate/dist/rules"],
         babel: {
             compact: true,
-           },
+        },
         /*
          ** You can extend webpack config here
          */
     },
-
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
 
     axios: {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization' : 'Bearer ' + '1rW5rwCk9YMRIKYcgnlXumZE7YsOaTVrsc8Dc8ZLJNGEixL5QrUyFyET0V6l'
+            //'Authorization' : 'Bearer ' + '1rW5rwCk9YMRIKYcgnlXumZE7YsOaTVrsc8Dc8ZLJNGEixL5QrUyFyET0V6l'
         }
     },
 
@@ -134,4 +136,29 @@ export default {
         color: '#00c1a4',
         height: '2px'
     },
+    auth: {
+        strategies: {
+            'laravelJWT': {
+                // provider: 'laravel/jwt',
+                url: 'https://coreshop.paystar.ir/api',
+                endpoints: {
+                    login: {
+                        url: '/customer/login',
+                        method: 'post',
+                    },
+                    user: {
+                        url: '/customer/current',
+                        method: 'get'
+                    }
+                },
+                token: {
+                    property: 'data.api.token',
+                    // maxAge: 60 * 60
+                },
+                //   refreshToken: {
+                //     maxAge: 20160 * 60
+                //   },
+            },
+        }
+    }
 }

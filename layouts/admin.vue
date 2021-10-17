@@ -3,10 +3,15 @@
     <div class="row">
       <div class="col">
         <div class="row">
-          <header>header
+          <header>
+            header
             <div class="bars_aside d-md-none text-white" @click="toggle_aside">
               <fa icon="bars" size="2x"></fa>
             </div>
+            <div class="mr-5">
+              <img width="130" height="70" src="/images/logo.svg" alt="برند" />
+            </div>
+            <div></div>
           </header>
         </div>
         <div class="row">
@@ -21,7 +26,7 @@
                 <div class="profile text-center pt-4">
                   <b-avatar
                     class="m-auto"
-                    src="https://placekitten.com/300/300"
+                    src="/icon.png"
                     size="7rem"
                   ></b-avatar>
                   <div class="py-3">
@@ -39,7 +44,7 @@
               </div>
             </div>
           </div>
-          <div class="body_admin bg-info">
+          <div class="body_admin">
             <Nuxt />
           </div>
         </div>
@@ -55,6 +60,10 @@ export default {
       this.onResize();
     });
     window.addEventListener("resize", this.onResize);
+  },
+  created() {
+    // this.$cookies.set("locale", "mehran");
+    // console.log('cookie',this.$auth.$storage.getCookies('auth._token.laravelJWT'))
   },
   methods: {
     toggle_aside() {
@@ -76,14 +85,27 @@ export default {
       }
     },
   },
+  computed: {
+    stores() {
+      if (this.$store.state.stores.stores) {
+        return this.$store.state.stores.stores;
+      }
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
 #panel_admin {
-  .bars_aside{
+  header {
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .bars_aside {
     color: $bac_dark_color;
-    margin:1rem ;
+    margin: 1rem;
     cursor: pointer;
   }
   .aside {
@@ -132,6 +154,7 @@ export default {
   }
 
   .body_admin {
+    background-color: $bac_dark_color3;
     width: calc(100% - 260px);
     @include mx_medium {
       width: 100%;

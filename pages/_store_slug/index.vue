@@ -3,9 +3,8 @@
     {{ $route.params.user_id }}
     <div id="lables">
       <div class="lables mb-4">
-        <LazyMoleculesXlables v-if="products.length" :products="'products'">
+        <LazyMoleculesXlables :products="products.data">
         </LazyMoleculesXlables>
-        <p v-else>محصولی وجود ندارد</p>
       </div>
     </div>
   </div>
@@ -28,12 +27,13 @@ export default {
   async asyncData({ $axios, route, error }) {
     try {
       const { data } = await $axios.get(
-        `/store/${route.params.store_slug}/products`);
+        `/store/${route.params.store_slug}/products`
+      );
       return {
         products: data,
       };
     } catch (e) {
-      console.log(e)
+      console.log(e);
       if (e.response) {
         error({
           statusCode: e.response.status,

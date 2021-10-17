@@ -11,8 +11,17 @@
   "Xform": {
     "description": "Auto imported from components/Xform.vue"
   },
+  "Xgetway": {
+    "description": "Auto imported from components/Xgetway.vue"
+  },
+  "XinfoSend": {
+    "description": "Auto imported from components/XinfoSend.vue"
+  },
   "Xitem": {
     "description": "Auto imported from components/Xitem.vue"
+  },
+  "XrecordGetway": {
+    "description": "Auto imported from components/XrecordGetway.vue"
   },
   "Xsearch": {
     "description": "Auto imported from components/Xsearch.vue"
