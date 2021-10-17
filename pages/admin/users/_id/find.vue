@@ -75,6 +75,7 @@
 <script>
 import UserTypes from "~/constants/UserTypes";
 import ChangeAccess from "~/components/users/change-access";
+import api from "~/services/api";
 export default {
     name: "find",
     components: {ChangeAccess},
@@ -86,7 +87,7 @@ export default {
         }
     },
     async mounted() {
-        let res = await this.$axios.get('user/find/' + this.$route.params.id)
+        let res = await api.get('user/find/' + this.$route.params.id,this.$cookies.get('token'))
         this.user = res.data.data
     }
 

@@ -1,13 +1,13 @@
 <template>
-  <div id="item" @mouseover="item_hover()" @mouseleave="is_hover = false">
-    <h3>کفش مردانه</h3>
-    <nuxt-link :to="`products/${554}`">
-      <img src="/images/apple-iphone-12-r1.jpg" alt="تصویر محصول" />
+  <div v-if="product" id="item" @mouseover="item_hover()" @mouseleave="is_hover = false">
+    <h3>{{product.title}}</h3>
+    <nuxt-link :to="'/' + $route.params.store_slug + '/' + product.id">
+      <img :src="product.thumbnail" alt="تصویر محصول" />
     </nuxt-link>
     <div id="box_hover">
       <div v-if="is_hover" class="d-flex">
         <Xbutton
-          :on_click="() => {$router.push(`products/${554}`)}"
+          :on_click="() => {$router.push(product.id)}"
           variant="outline-success"
           :text="lang.btn.detail"
           class="text"
@@ -24,28 +24,10 @@
     </div>
   </div>
 </template>
-~/components/Xbutton.vue
 <script>
 import { tr } from "@/services/lang";
 export default {
-  props: {
-    title: {
-      type: String,
-      default: "",
-    },
-    image: {
-      type: String,
-      default: "",
-    },
-    price: {
-      type: [Number, String],
-      default: 0,
-    },
-    mt: {
-      type: Boolean,
-      default: false,
-    },
-  },
+  props : ['product'],
   computed: {
     lang() {
       return tr();

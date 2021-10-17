@@ -45,7 +45,7 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
-        '~/plugins/axios',
+        //'~/plugins/axios',
         {
             src: '~/plugins/vue-carousel.js',
             mode: 'client'
@@ -116,7 +116,7 @@ export default {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization' : 'Bearer ' + '1rW5rwCk9YMRIKYcgnlXumZE7YsOaTVrsc8Dc8ZLJNGEixL5QrUyFyET0V6l'
+            //'Authorization' : 'Bearer ' + '1rW5rwCk9YMRIKYcgnlXumZE7YsOaTVrsc8Dc8ZLJNGEixL5QrUyFyET0V6l'
         }
     },
 

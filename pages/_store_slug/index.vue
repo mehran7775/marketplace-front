@@ -3,9 +3,8 @@
     {{ $route.params.user_id }}
     <div id="lables">
       <div class="lables mb-4">
-        <LazyMoleculesXlables v-if="products.length" :products="'products'">
+        <LazyMoleculesXlables :products="products.data">
         </LazyMoleculesXlables>
-        <p v-else>محصولی وجود ندارد</p>
       </div>
     </div>
   </div>
@@ -49,7 +48,7 @@ export default {
     }
   },
   mounted() {
-    
+
   },
 };
 </script>

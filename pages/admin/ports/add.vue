@@ -1,6 +1,9 @@
 <template>
     <div class="row">
         <div class="col-12 p-5 mt-5">
+            <div class="alert alert-danger" role="alert" v-if="message">
+                {{message}}
+            </div>
             <div class="card">
                 <div class="card-body">
                     <b-form @submit="onSubmit">
@@ -28,6 +31,7 @@
 <script>
 import PortTypes from "~/constants/PortTypes";
 import PortStatus from "~/constants/PortStatus";
+import api from "~/services/api";
 
 export default {
     name: "add",
@@ -35,6 +39,7 @@ export default {
     data() {
         return {
             PortTypes,
+            message : null,
             PortStatus,
             form: {
                 payment_company: 'paystar',
@@ -44,14 +49,13 @@ export default {
         }
     },
     methods: {
-        async onSubmit(event) {
-            try {
+        onSubmit(event) {
                 event.preventDefault()
-                let res = await this.$axios.post('gateway/port/create', this.form)
-                alert(res.data.message)
-            } catch (e) {
-                alert(e.message)
-            }
+                api.post('gateway/port/create', this.form).then(response => {
+                       this.message =  response.data.message
+                    }).catch(({response}) => {
+                    this.message = response.data.message
+                })
         },
     }
 }

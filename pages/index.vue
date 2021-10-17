@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  layout: "admin",
+  layout: "main-content",
   created() {
     // this.$auth
     //   .loginWith("laravelJWT", {

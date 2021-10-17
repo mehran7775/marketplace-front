@@ -113,7 +113,7 @@
                   </div>
                 </div>
                 <!-- <div class="row">
-                 
+
                 </div> -->
                 <div class="row mt-2">
                   <hr class="dash w-100" />
@@ -131,6 +131,14 @@
                   <!-- <span>{{ errors[0] }}</span> -->
                 </div>
                 <!-- </ValidationProvider> -->
+
+                  <form ref="PayForm" method="post" :action="'https://coreshop.paystar.ir/api/pay/order/' + order_id">
+                      <input name="gateway_id" value="3rdqp"/>
+                  </form>
+
+
+
+
               </div>
             </template>
           </Xform>
@@ -170,6 +178,7 @@
 
 <script>
 import { ValidationProvider } from "vee-validate";
+import api from "~/services/api";
 export default {
   layout: "index",
   head() {
@@ -189,6 +198,8 @@ export default {
       form: {
         fname: "",
       },
+      store : null,
+      order_id : 'eroxr'
     };
   },
   components: {
@@ -215,14 +226,28 @@ export default {
         });
       });
       const items_end = {
-        store_id: this.$store.state.users.id,
+        //store_id: this.$store.state.users.id
+        store_id: this.store.id,
         products: items_second,
       };
+
       // this.$bvModal.show('modal-prevent-closing')
-      this.$store.dispatch("payments/select_way_payment", {
-        data_user,
-        items_end,
-      });
+      /*this.$store.dispatch("payments/select_way_payment", {
+        address : data_user.address,
+        products :items_end.products,
+        store_id : items_end.store_id
+      });*/
+        this.$refs.PayForm.submit()
+      /* this.$axios.post('/order/create',{
+           address : data_user.address,
+           products :items_end.products,
+           store_id : items_end.store_id
+       }).then(res => {
+           if (res.data.data.order_id){
+               this.order_id = res.data.data.order_id
+              this.$refs.PayForm.submit()
+           }
+       })*/
     },
     do_payment() {
       let getway = null;
@@ -240,12 +265,21 @@ export default {
         getway_id: getway,
       });
     },
+      getStore(){
+        api.get(`store/${this.$route.params.store_slug}`)
+          .then(res => {
+             this.store = res.data.data
+          })
+      }
   },
   computed: {
     getways() {
       this.$store.state.payments.getways;
     },
   },
+    mounted() {
+      this.getStore()
+    }
 };
 </script>
 

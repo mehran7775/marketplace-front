@@ -1,10 +1,6 @@
 <template>
     <div>
-        <page-title title_text="محصولات" icon="product">
-            <nuxt-link to="products/create" class="btn btn-success shadow-sm mx-2 px-4 py-2"
-                       style="border-radius: 20px; border-color: #bbb;">
-                <span class="pr-2">ثبت محصول جدید</span>
-            </nuxt-link>
+        <page-title title_text="سفارشات" icon="product">
         </page-title>
         <div class="bg-white shadow-sm p-3 my-3" style="border-radius: 10px;">
             <div class="row">
@@ -17,34 +13,34 @@
                     </select>
                 </div>-->
                 <div class="col-sm my-2">
-                    <div class="form-group my-0">
-                        <datePicker
-                            color="#00c1a4"
-                            format="YYYY-MM-DD HH:mm:ss"
-                            display-format="dddd jDD jMMMM jYYYY HH:mm"
-                            input-class="form-control"
-                            name="filter_from_date"
-                            placeholder="از تاریخ"
-                            clearable
-                            v-model="filter_from_date"
-                            type="datetime"/>
+                    <!--   <div class="form-group my-0">
+                           <datePicker
+                               color="#00c1a4"
+                               format="YYYY-MM-DD HH:mm:ss"
+                               display-format="dddd jDD jMMMM jYYYY HH:mm"
+                               input-class="form-control"
+                               name="filter_from_date"
+                               placeholder="از تاریخ"
+                               clearable
+                               v-model="filter_from_date"
+                               type="datetime"/>
 
-                    </div>
-                </div>
+                       </div>-->
+                   </div>
                 <div class="col-sm my-2">
-                    <div class="form-group my-0">
-                        <datePicker
-                            color="#00c1a4"
-                            format="YYYY-MM-DD HH:mm:ss"
-                            display-format="dddd jDD jMMMM jYYYY HH:mm"
-                            input-class="form-control"
-                            name="filter_from_date"
-                            placeholder="تا تاریخ"
-                            clearable
-                            v-model="filter_to_date"
-                            type="datetime"/>
-                    </div>
-                </div>
+                    <!-- <div class="form-group my-0">
+                         <datePicker
+                             color="#00c1a4"
+                             format="YYYY-MM-DD HH:mm:ss"
+                             display-format="dddd jDD jMMMM jYYYY HH:mm"
+                             input-class="form-control"
+                             name="filter_from_date"
+                             placeholder="تا تاریخ"
+                             clearable
+                             v-model="filter_to_date"
+                             type="datetime"/>
+                     </div>-->
+                 </div>
                 <div class="col-sm my-2">
                     <div>
                         <button :class="query ? 'btn btn-success mr-2' : 'btn btn-success btn-block'" style="border-radius: 10px;"
@@ -156,7 +152,7 @@ export default {
         },
     },
     async created() {
-        let res = await api.get('product/' + this.$route.params.store_slug + '?perpage=' + this.per_page,this.$cookies.get('token'))
+        let res = await api.get('order' + '?perpage=' + this.per_page,this.$cookies.get('token'))
         this.products = res.data.data
     }
 }

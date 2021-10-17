@@ -12,8 +12,8 @@
         <div class="carousel-wrapper d-none d-md-block">
           <client-only>
             <carousel :per-page="per_page" v-bind="options">
-              <slide v-for="i in 10" :key="i" class="img-wrapper">
-                <Xitem></Xitem>
+              <slide v-for="product in products.data"  class="img-wrapper">
+                <Xitem :product="product"></Xitem>
               </slide>
             </carousel>
           </client-only>
@@ -22,7 +22,7 @@
           <div class="d-md-none">
             <div class="container-fluid">
               <div class="row">
-                <div v-for="i in 10" :key="i" class="col-4">
+                <div v-for="i in products" :key="i" class="col-4">
                   <div class="row">
                     <Xitem></Xitem>
                   </div>
