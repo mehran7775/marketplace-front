@@ -16,7 +16,6 @@
 
 <script>
 import { tr } from "@/services/lang";
-import axios from "~/plugins/axios";
 export default {
   data() {
     return {
@@ -57,6 +56,7 @@ export default {
       },
       logo: "",
       fa_name: "",
+      
     };
   },
   head() {
@@ -77,17 +77,18 @@ export default {
       return tr();
     },
   },
-  async fetch() {
+   async fetch() {
     try {
-      const res = await this.$axios.get(
+      const res= await this.$axios.get(
         `/store/${this.$route.params.store_slug}`
-      );
+      )
       this.$store.commit("payments/SET_GETWAYS", res.data.getways);
-      this.$store.commit("users/SET_ID", res.data.id);
+      this.$store.commit("stores/SET_ID", res.data.id);
       this.logo = res.data.logo;
       this.fa_name = res.data.fa_name;
     } catch (e) {
-      console.log("e", e);
+
+      console.log(e.response)
     }
   },
 };

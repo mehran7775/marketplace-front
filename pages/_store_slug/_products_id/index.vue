@@ -1,6 +1,6 @@
 <template>
   <div id="product" class="container pt-2 pb-5">
-    <div class="row" v-if="true">
+    <div class="row" v-if="product">
       <div class="col-12 mx-auto my-5 p-5 bg-white">
         <div class="product w-100" dir="ltr">
           <client-only>
@@ -21,10 +21,6 @@
           <div class="column">
             <h1 v-text="product.title" class="display-5"></h1>
             <p class="pt-1" v-text="product.description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-              molestiae ut quaerat praesentium. Commodi ad veritatis in minus
-              repudiandae qui hic. Inventore aliquam odit rem dolores eveniet
-              nisi porro? Aliquam.
             </p>
           </div>
           <div class="buy_cost w-100 text-center mt-2">
@@ -44,7 +40,7 @@
     </div>
     <div v-else class="row">
       <div class="col-6 m-auto text-center p-5">
-        <span>محصول پیدا نشد</span>
+        <span class="font-weight-bold">محصول پیدا نشد</span>
       </div>
     </div>
   </div>
@@ -79,7 +75,6 @@ export default {
         };
       }
     } catch (e) {
-      console.log(e);
       if (e.response) {
         error({
           statusCode: e.response.status,
@@ -100,7 +95,6 @@ export default {
   },
   data() {
     return {
-      product: null,
       options: {
         loop: false,
         paginationEnabled: true,
@@ -108,14 +102,13 @@ export default {
       per_page: 1,
     };
   },
-  mounted() {},
   methods: {
     add_item() {
       this.$store.dispatch("products/addProductToCart", {
-        id: 1,
-        name: "پیراهن",
-        price: 200000,
-        img: "",
+        id:this.product.id,
+        name: this.product.title,
+        price: this.product.price,
+        img: this.product.thumbnails[0],
       });
     },
   },

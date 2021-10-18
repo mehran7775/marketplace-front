@@ -136,7 +136,7 @@ export default {
       return whole + this.taxation - this.discount;
     },
     continue_buy() {
-      this.$router.push({ name: "complete-info" });
+      this.$router.push(`complete-info`);
     },
   },
 };

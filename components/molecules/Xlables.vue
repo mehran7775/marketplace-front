@@ -1,30 +1,29 @@
 <template>
   <div class="w-100">
     <div v-if="products" class="lable">
-      <div class="title text-right pt-4 pr-5 d-none d-md-block">
-        <h5>
+      <!-- <div class="title text-right pt-4 pr-5 d-none d-md-block">
+        <h6>
           <label>
             <b>برچسب</b>
           </label>
-        </h5>
-      </div>
+        </h6>
+      </div> -->
       <div class="mt-4">
         <div class="carousel-wrapper d-none d-md-block">
-          <client-only>
-            <carousel :per-page="per_page" v-bind="options">
-              <slide v-for="i in 10" :key="i" class="img-wrapper">
-                <Xitem></Xitem>
+            <carousel :per-page="per_page" v-bind="options"
+            >
+              <slide v-for="product in products" :key="product.id" class="img-wrapper">
+                <Xitem :title="product.title" :image="product.thumbnail" :price="product.price" :id="product.id"></Xitem>
               </slide>
             </carousel>
-          </client-only>
         </div>
         <div>
           <div class="d-md-none">
             <div class="container-fluid">
               <div class="row">
-                <div v-for="i in 10" :key="i" class="col-4">
+                <div v-for="product in products" :key="product.id" class="col-4">
                   <div class="row">
-                    <Xitem></Xitem>
+                    <Xitem :title="product.title" :image="product.thumbnail" :price="product.price" :id="product.id"></Xitem>
                   </div>
                 </div>
               </div>
@@ -44,7 +43,7 @@ export default {
     return {
       options: {
         loop: true,
-        paginationEnabled: false,
+        paginationEnabled: false
       },
       per_page: 3,
     };
@@ -55,7 +54,6 @@ export default {
     });
     window.addEventListener("resize", this.onResize);
   },
-  computed: {},
   methods: {
     onResize() {
       if (window.innerWidth > 340) {
@@ -86,7 +84,9 @@ export default {
   .carousel-wrapper {
     cursor: grab;
     direction: ltr;
-
+    .VueCarousel-inner {
+      flex-direction: row-reverse !important;
+    }
     text-align: center;
     @include medium {
       padding: 20px 0 40px 20px;

@@ -20,7 +20,6 @@ body {
         }
 
     }
-
     .modal-content {
         padding: 20px;
         direction: rtl;
@@ -44,13 +43,9 @@ body {
 
     #__nuxt {
         background-color: whitesmoke;
-
+        
         h1 {
             font-size: 1.1rem;
-        }
-
-        h3 {
-            font-size: 0.95rem;
         }
 
         p,
@@ -64,13 +59,6 @@ body {
         }
 
         @include xsmall {
-            h1 {
-                font-size: 1.1rem;
-            }
-
-            h3 {
-                font-size: 0.95rem;
-            }
 
             p,
             span,
@@ -80,14 +68,6 @@ body {
         }
 
         @include small {
-            h1 {
-                font-size: 1.2rem;
-            }
-
-            h3 {
-                font-size: 1.15rem;
-            }
-
             p,
             span,
             strong {
@@ -96,14 +76,6 @@ body {
         }
 
         @include medium {
-            h1 {
-                font-size: 1.3rem;
-            }
-
-            h3 {
-                font-size: 1.15rem;
-            }
-
             p,
             span,
             strong {
@@ -112,35 +84,11 @@ body {
         }
 
         @include large {
-            h1 {
-                font-size: 1.4rem;
-            }
 
-            h3 {
-                font-size: 1.25rem;
-            }
-
-            // p,
-            // span,
-            // strong {
-            //     font-size: 1.1rem;
-            // }
+           
         }
 
         @include xlarge {
-            h1 {
-                font-size: 1.4rem;
-            }
-
-            h3 {
-                font-size: 1.25rem;
-            }
-
-            //   p,
-            //   span,
-            //   strong {
-            //       font-size: 1.1rem;
-            //   }
         }
 
         ////////////////------------------------------------ admin panel--------------------------------------///////////

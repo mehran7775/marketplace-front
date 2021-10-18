@@ -3,8 +3,8 @@
     {{ $route.params.user_id }}
     <div id="lables">
       <div class="lables mb-4">
-        <LazyMoleculesXlables v-if="products.length" :products="'products'">
-        </LazyMoleculesXlables>
+        <MoleculesXlables v-if="products" :products="products">
+        </MoleculesXlables>
         <p v-else>محصولی وجود ندارد</p>
       </div>
     </div>
@@ -31,10 +31,9 @@ export default {
         `/store/${route.params.store_slug}/products`
       );
       return {
-        products: data,
+        products: data.data.data
       };
     } catch (e) {
-      console.log(e);
       if (e.response) {
         error({
           statusCode: e.response.status,
@@ -60,5 +59,8 @@ export default {
   @include mx_medium {
     padding: 0.05rem;
   }
+}
+.modal-footer{
+  display: none;
 }
 </style>

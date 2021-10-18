@@ -1,13 +1,13 @@
 <template>
   <div id="item" @mouseover="item_hover()" @mouseleave="is_hover = false">
-    <h3>کفش مردانه</h3>
-    <nuxt-link :to="`products/${554}`">
-      <img src="/images/apple-iphone-12-r1.jpg" alt="تصویر محصول" />
+    <h3 v-text="title" class="font-weight-bold">کفش مردانه</h3>
+    <nuxt-link :to="`${$route.params.store_slug}/${id}`">
+      <img :src="image" alt="تصویر محصول" />
     </nuxt-link>
     <div id="box_hover">
       <div v-if="is_hover" class="d-flex">
         <Xbutton
-          :on_click="() => {$router.push(`products/${554}`)}"
+          :on_click="() => {$router.push(`${$route.params.store_slug}/${id}`)}"
           variant="outline-success"
           :text="lang.btn.detail"
           class="text"
@@ -17,6 +17,8 @@
         ></Xbutton>
       </div>
       <div v-if="!is_hover" class="price">
+        <span class="font-weight-bold">قیمت:</span>
+        <span v-text="price"></span>
         <strong>
           <span v-text="lang.price"></span>
         </strong>
@@ -24,7 +26,6 @@
     </div>
   </div>
 </template>
-~/components/Xbutton.vue
 <script>
 import { tr } from "@/services/lang";
 export default {
@@ -38,7 +39,11 @@ export default {
       default: "",
     },
     price: {
-      type: [Number, String],
+      type:String,
+      default: 0,
+    },
+    id:{
+      type: String,
       default: 0,
     },
     mt: {
@@ -62,11 +67,8 @@ export default {
         this.is_hover = true;
       }
     },
-    detail_item() {
-     this.$router.push(`products/${554}`)
-    },
     add_item(){
-        this.$store.dispatch("products/addProductToCart",{id:4,name:'کت',price:100000,img:''});
+        this.$store.dispatch("products/addProductToCart",{id:this.id,name:this.title,price:this.price,img:this.image})
     }
   },
 };
@@ -94,8 +96,8 @@ export default {
     display: block;
     color: inherit;
     img {
-      max-width: 160px;
-      max-height: 120px;
+      width: 160px;
+      height: 120px;
       margin: 1.3rem 1rem;
       @include mx_medium {
         max-width: 80px;

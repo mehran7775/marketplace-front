@@ -4,7 +4,7 @@
       <Xbrand :logo="logo"></Xbrand>
       <div class="text-right">
         <div id="name_brand">
-          <h1 class="mr-4" v-text="fa_name"></h1>
+          <h1 class="mr-4" v-text="fa_name ? fa_name : 'فروشگاه من'"></h1>
         </div>
         <div class="d-md-none mt-3 mr-4">
           <fa icon="envelope"></fa>
@@ -52,12 +52,14 @@ export default {
         type:String
       }
   },
-    computed: {
+  computed: {
     lang() {
       return tr();
     },
-
   },
+  created(){
+    console.log('boooogh',this.logo,this.fa_name)
+  }
 };
 </script>
 

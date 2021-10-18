@@ -70,7 +70,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="col-12 mt-2">
                     <div class="row">
                       <div class="d-flex w-100 justify-content-between">
@@ -215,14 +214,15 @@ export default {
         });
       });
       const items_end = {
-        store_id: this.$store.state.users.id,
+        store_id: this.$store.state.stores.id,
         products: items_second,
       };
-      // this.$bvModal.show('modal-prevent-closing')
-      this.$store.dispatch("payments/select_way_payment", {
-        data_user,
-        items_end,
-      });
+      console.log(items_end,data_user)
+      this.$bvModal.show('modal-prevent-closing2')
+      // this.$store.dispatch("payments/select_way_payment", {
+      //   data_user,
+      //   items_end,
+      // });
     },
     do_payment() {
       let getway = null;

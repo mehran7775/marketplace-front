@@ -6,8 +6,8 @@ export const ability = new Ability()
 Vue.use(abilitiesPlugin, ability)
 
 export default async function ({$axios}) {
-    let res = await $axios.get('user/current')
-    let permissions = []
+    // let res = await $axios.get('user/current')
+    // let permissions = []
     /*or (let permission in res.data.data.permissions) {
         permissions.push(
             {
