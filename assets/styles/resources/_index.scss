@@ -3,9 +3,6 @@
 @import "./mixins/index";
 
 body {
-    direction: rtl;
-    box-sizing: border-box;
-
     .b-toaster {
         text-align: right;
 
@@ -42,45 +39,21 @@ body {
     }
 
     #__nuxt {
-        background-color: whitesmoke;
-        
-        h1 {
-            font-size: 1.1rem;
-        }
-
-        p,
-        span,
-        strong {
-            font-size: 0.8rem;
-        }
-
         .cursor_pointer {
             cursor: pointer;
         }
 
         @include xsmall {
 
-            p,
-            span,
-            strong {
-                font-size: 0.8rem;
-            }
+           
         }
 
         @include small {
-            p,
-            span,
-            strong {
-                font-size: 0.9rem;
-            }
+         
         }
 
         @include medium {
-            p,
-            span,
-            strong {
-                font-size: 1rem;
-            }
+         
         }
 
         @include large {
@@ -90,12 +63,6 @@ body {
 
         @include xlarge {
         }
-
-        ////////////////------------------------------------ admin panel--------------------------------------///////////
-
-        #panel_admin {
-            background-color: $bac_dark_color;
-            color: white;
-        }
+       
     }
 }
