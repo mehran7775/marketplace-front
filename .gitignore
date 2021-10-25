@@ -6,6 +6,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
 # Runtime data
 pids
 *.pid
@@ -63,6 +64,12 @@ typings/
 
 # next.js build output
 .next
+
+# nuxt.js build output
+.nuxt
+
+# Nuxt generate
+dist
 
 # vuepress build output
 .vuepress/dist

@@ -1,13 +1,13 @@
 <template>
-  <div v-if="product" id="item" @mouseover="item_hover()" @mouseleave="is_hover = false">
-    <h3>{{product.title}}</h3>
-    <nuxt-link :to="'/' + $route.params.store_slug + '/' + product.id">
-      <img :src="product.thumbnail" alt="تصویر محصول" />
+  <div id="item" @mouseover="item_hover()" @mouseleave="is_hover = false">
+    <h5 v-text="title" class="font-weight-bold">کفش مردانه</h5>
+    <nuxt-link :to="`${$route.params.store_slug}/${id}`" class="d-flex align-items-center justify-content-center">
+      <img :src="image" alt="تصویر محصول" />
     </nuxt-link>
     <div id="box_hover">
       <div v-if="is_hover" class="d-flex">
         <Xbutton
-          :on_click="() => {$router.push(product.id)}"
+          :on_click="() => {$router.push(`${$route.params.store_slug}/${id}`)}"
           variant="outline-success"
           :text="lang.btn.detail"
           class="text"
@@ -17,6 +17,8 @@
         ></Xbutton>
       </div>
       <div v-if="!is_hover" class="price">
+        <span class="font-weight-bold">قیمت:</span>
+        <span v-text="price"></span>
         <strong>
           <span v-text="lang.price"></span>
         </strong>
@@ -27,7 +29,28 @@
 <script>
 import { tr } from "@/services/lang";
 export default {
-  props : ['product'],
+  props: {
+    title: {
+      type: String,
+      default: "",
+    },
+    image: {
+      type: String,
+      default: "",
+    },
+    price: {
+      type:String,
+      default: 0,
+    },
+    id:{
+      type: String,
+      default: 0,
+    },
+    mt: {
+      type: Boolean,
+      default: false,
+    },
+  },
   computed: {
     lang() {
       return tr();
@@ -44,11 +67,8 @@ export default {
         this.is_hover = true;
       }
     },
-    detail_item() {
-     this.$router.push(`products/${554}`)
-    },
     add_item(){
-        this.$store.dispatch("products/addProductToCart",{id:4,name:'کت',price:100000,img:''});
+        this.$store.dispatch("products/addProductToCart",{id:this.id,name:this.title,price:this.price,img:this.image})
     }
   },
 };
@@ -75,13 +95,16 @@ export default {
   a {
     display: block;
     color: inherit;
+    padding: 10px;
+    max-width: 240px;
+    height: 120px;
+  
     img {
-      max-width: 160px;
-      max-height: 120px;
-      margin: 1.3rem 1rem;
+      max-width: 100%;
+      max-height: 100%;
       @include mx_medium {
-        max-width: 80px;
-        max-height: 70px;
+        // max-width: 80px;
+        // max-height: 70px;
         margin: 1rem 0.3rem;
       }
     }

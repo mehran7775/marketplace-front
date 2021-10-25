@@ -3,7 +3,7 @@
     dir="rtl"
     class="text-right"
     centered
-    id="modal-prevent-closing"
+    id="modal-prevent-closing2"
     ref="modal"
     :title="title"
   >

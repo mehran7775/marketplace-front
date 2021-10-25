@@ -138,9 +138,9 @@ export default {
     compute_end_price(whole) {
       return whole + this.taxation - this.discount;
     },
-    /*continue_buy() {
-      this.$router.push({ name: "complete-info" });
-    },*/
+    continue_buy() {
+      this.$router.push(`complete-info`);
+    },
   },
 };
 </script>

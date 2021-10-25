@@ -1,5 +1,20 @@
-@import './resources/index';
-@import './fonts';
-@import 'bootstrap/scss/bootstrap.scss';
-@import 'bootstrap-vue/src/index.scss';
+.modal-content {
+    padding: 20px;
+    direction: rtl;
+    text-align: right;
 
+    .modal-header {
+        .modal-title {
+            color: $success;
+        }
+
+        .close {
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    .modal-footer {
+        display: none!important;
+    }
+}

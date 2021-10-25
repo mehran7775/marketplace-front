@@ -4,11 +4,10 @@
     redirect
 }) {
     $axios.onRequest(config => {
-        config.headers.common = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-
-        }
+        // config.headers.common = {
+        //     'Content-Type': 'application/json',
+        //     'Accept': 'application/json'
+        // }
         // if (store.state.authToken) {
         //     config.headers.common['Authorization'] = store.state.authToken
         // }

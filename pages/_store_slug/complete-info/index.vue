@@ -70,7 +70,6 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="col-12 mt-2">
                     <div class="row">
                       <div class="d-flex w-100 justify-content-between">
@@ -154,7 +153,7 @@
                 <input
                   class="mr-4"
                   type="radio"
-                  :name="'getway' + getway.id"
+                  name="getway"
                   :value="'getway' + getway.id"
                   :ref="'getway' + getway.id"
                   checked
@@ -193,15 +192,6 @@ export default {
       // ]
     };
   },
-  data() {
-    return {
-      form: {
-        fname: "",
-      },
-      store : null,
-      order_id : 'eroxr'
-    };
-  },
   components: {
     ValidationProvider,
   },
@@ -226,28 +216,10 @@ export default {
         });
       });
       const items_end = {
-        //store_id: this.$store.state.users.id
-        store_id: this.store.id,
+        store_id: this.$store.state.stores.id,
         products: items_second,
       };
-
-      // this.$bvModal.show('modal-prevent-closing')
-      /*this.$store.dispatch("payments/select_way_payment", {
-        address : data_user.address,
-        products :items_end.products,
-        store_id : items_end.store_id
-      });*/
-        this.$refs.PayForm.submit()
-      /* this.$axios.post('/order/create',{
-           address : data_user.address,
-           products :items_end.products,
-           store_id : items_end.store_id
-       }).then(res => {
-           if (res.data.data.order_id){
-               this.order_id = res.data.data.order_id
-              this.$refs.PayForm.submit()
-           }
-       })*/
+      this.$store.dispatch('payments/select_way_payment',items_end)
     },
     do_payment() {
       let getway = null;
@@ -261,7 +233,7 @@ export default {
         getway = "null";
       }
 
-      this.$store.dispatch("payment/do_payment", {
+      this.$store.dispatch("payments/do_payment", {
         getway_id: getway,
       });
     },
@@ -272,9 +244,12 @@ export default {
           })
       }
   },
+  created(){
+    console.log(this.$store.state.payments)
+  },
   computed: {
     getways() {
-      this.$store.state.payments.getways;
+      return this.$store.state.payments.getways
     },
   },
     mounted() {
