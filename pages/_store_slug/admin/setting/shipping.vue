@@ -18,13 +18,13 @@
             </b-form-row>
             <b-form-row>
                 <b-col col="sm">
-                    <b-form-group label="زمان ارسال شهر خود (دقیقه)">
+                    <b-form-group label="زمان ارسال شهر خود (روز)">
                         <b-form-input type="number"
                                       v-model="store.shipping_setting.own_city_delivery_time"></b-form-input>
                     </b-form-group>
                 </b-col>
                 <b-col col="sm">
-                    <b-form-group label="زمان ارسال سایر شهر ها (دقیقه)">
+                    <b-form-group label="زمان ارسال سایر شهر ها (روز)">
                         <b-form-input type="number"
                                       v-model="store.shipping_setting.other_cities_delivery_time"></b-form-input>
                     </b-form-group>

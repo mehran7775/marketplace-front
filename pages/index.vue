@@ -1,25 +1,22 @@
 <template>
-  <div>admin body</div>
+    <div>صفحه اول</div>
 </template>
 
 <script>
 export default {
-  layout: "main-content",
-  created() {
-    // this.$auth
-    //   .loginWith("laravelJWT", {
-    //     data: {
-    //       outh_param: "09154078169",
-    //       password: "771375",
-    //       login_with_verification_code: false,
-    //     },
-    //   })
-    //   .then(res =>{
-    //        console.log("reees", res)
-    //   })
-    //   .catch(e => {
-    //     console.log("eee", e.response);
-    //   });
-  },
+    async created() {
+        try {
+            const {data} = await this.$axios.get("/user/current", {
+                headers: {
+                    'Authorization': "Bearer " + this.$cookies.get('token')
+                },
+            });
+            if (data.status === "ok") {
+                this.$router.push('/seller/stores')
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    },
 };
 </script>

@@ -146,4 +146,5 @@ export default {
 #create_product .custom-file-label::after {
     display: none;
 }
+
 </style>

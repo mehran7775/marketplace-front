@@ -73,7 +73,7 @@
                         placeholder="لوگو" class="form-control"
                         v-model="formData.logo"></b-form-file>
 
-                    <b-link class="btn btn-link" target="_blank" :href="'https://coreshop.paystar.ir/storage/'  + formData.logo">دانلود لوگو</b-link>
+                    <b-link class="btn btn-link" target="_blank" :href="formData.logo">دانلود لوگو</b-link>
 
                     <div class="m-auto pt-2 pr-2">
                         <div class="w-100 text-right">
