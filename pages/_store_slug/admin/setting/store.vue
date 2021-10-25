@@ -38,14 +38,15 @@
                     />
                 </div>
                 <div class="col-4 col-md-4 my-2">
-                    <input
+                    <select
                         type="text"
                         class="form-control"
-                        id="privance"
-                        ref="privance"
                         placeholder="استان"
                         v-model="formData.province"
-                    />
+                    >
+                        <option :value="null">انتخاب استان</option>
+                        <option :key="item.key" v-for="item in provinces" :value="item.id">{{item.value}}</option>
+                    </select>
                 </div>
                 <div class="col-4 col-md-4 my-2">
                     <input
@@ -134,12 +135,14 @@
 <script>
 import api from "~/services/api";
 import PageTitle from "~/components/main/pageTitle";
+import {provinces} from "~/constants/Provinces";
 
 export default {
     components: {PageTitle},
     layout: "main-content",
     data() {
         return {
+            provinces,
             store: {},
             formData: {
                 fa_name: null,

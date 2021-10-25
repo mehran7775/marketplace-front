@@ -99,14 +99,15 @@
                                             </textarea>
                                         </div>
                                         <div class="col-4 col-md-4 my-2">
-                                            <input
+                                            <select
                                                 type="text"
                                                 class="form-control"
-                                                id="privance"
-                                                ref="privance"
                                                 placeholder="استان"
                                                 v-model="formData.province"
-                                            />
+                                            >
+                                                <option :value="null">انتخاب استان</option>
+                                                <option :key="item.key" v-for="item in provinces" :value="item.id">{{item.value}}</option>
+                                            </select>
                                             <small v-if="validation_errors.province" class="text-danger px-2">تکمیل این
                                                 فیلد الزامی است.</small>
                                         </div>
@@ -243,19 +244,19 @@
                                                 v-model="formData.other_cities_delivery_time"
                                             />
                                         </div>
-                                        <div class="col-4 col-md-4 my-2">
+                                        <!--<div class="col-4 col-md-4 my-2 d-none">
                                             <select class="form-control" v-model="formData.own_city_payment_method">
                                                 <option :value="null">
                                                     شیوه پرداخت شهر خود
                                                 </option>
-                                                <option value="0">
+                                                <option selected value="0">
                                                     آنلاین
                                                 </option>
                                                 <option value="1">
                                                     در محل
-                                                </option>
+                                                </option>-
                                             </select>
-                                        </div>
+                                        </div>-->
                                         <div class="col-4 col-md-4 my-2">
                                             <input
                                                 type="number"
@@ -276,19 +277,19 @@
                                                 v-model="formData.other_cities_shipping_cost"
                                             />
                                         </div>
-                                        <div class="col-4 my-2">
+                                        <!--<div class="col-4 my-2">
                                             <select class="form-control" v-model="formData.other_cities_payment_method">
                                                 <option :value="null">
                                                     شیوه پرداخت سایر شهرها
                                                 </option>
-                                                <option value="0">
+                                                <option selected value="0">
                                                     آنلاین
                                                 </option>
                                                 <option value="1">
                                                     در محل
                                                 </option>
                                             </select>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center px-3 mt-4">
@@ -376,11 +377,12 @@ import api from "~/services/api";
 import PageTitle from "~/components/main/pageTitle";
 import GatewayTypes from "~/constants/GatewayTypes";
 import PortTypes from "~/constants/PortTypes";
-
+import {provinces} from '~/constants/Provinces'
 export default {
     layout: "main-content",
     data() {
         return {
+            provinces,
             GatewayTypes,
             PortTypes,
             active_component: "recordgetway",
@@ -412,8 +414,8 @@ export default {
                 other_cities_delivery_time: null,
                 own_city_shipping_cost: null,
                 other_cities_shipping_cost: null,
-                own_city_payment_method: null,
-                other_cities_payment_method: null,
+                own_city_payment_method: 0,
+                other_cities_payment_method: 0,
                 gateways: []
             },
             validation_errors: {
