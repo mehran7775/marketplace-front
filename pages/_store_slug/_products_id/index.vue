@@ -4,13 +4,15 @@
       <div class="col-12 mx-auto my-5 p-5 bg-white">
         <div class="product w-100" dir="ltr">
           <client-only>
-            <carousel :per-page="per_page" v-bind="options">
+            <carousel :per-page="per_page" v-bind="options"
+              dir="rtl"
+            >
               <slide
                 v-for="thumbnail in product.thumbnails"
                 :key="thumbnail"
                 class="img-wrapper"
               >
-                <img :src="'https://coreshop.paystar.ir/storage/' + thumbnail" />
+                <img :src="thumbnail" />
               </slide>
             </carousel>
           </client-only>
@@ -64,8 +66,9 @@ export default {
   },
   async asyncData({ error, route, $axios }) {
     try {
-      const res = await $axios.get('product/' + route.params.store_slug + '/' + route.params.products_id);
+      const res = await $axios.get('/product/' + route.params.store_slug + '/' + route.params.products_id);
       if (res.data) {
+        console.log(res)
         return {
           product: res.data.data,
         };
