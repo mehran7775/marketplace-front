@@ -6,9 +6,6 @@ const state = () => ({
 
 const mutations = {
    
-    // TRIGGER_LOGIN(){
-    //     console.log('f')
-    // }
 };
 
 const actions = {

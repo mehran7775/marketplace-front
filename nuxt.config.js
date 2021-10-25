@@ -38,7 +38,7 @@ export default {
 
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
-        // '@/assets/styles/main.scss',
+        '@/assets/styles/main.scss',
         '@/assets/styles/bootstrap.css',
         '@/assets/styles/style.css'
     ],
@@ -85,7 +85,8 @@ export default {
         '@nuxtjs/pwa',
         '@nuxtjs/axios',
         '@nuxtjs/auth-next',
-        "cookie-universal-nuxt"
+        "cookie-universal-nuxt",
+        "vue-toastification/nuxt",
     ],
 
     bootstrapVue: {

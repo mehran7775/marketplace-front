@@ -1,32 +1,39 @@
-const state = () => ({
-
-})
+const state = {
+    getways:[
+        {
+            id:1,
+            title:'پرداخت پی استار1'
+        },
+        {
+            id:2,
+            title:'پرداخت پی استار1'
+        },
+    ]
+}
 const getters = {
 
 };
 
 const mutations = {
-    SET_GETWAYS(store, payload) {
+    set_getways(store, payload) {
         this.$set(store, 'getways', payload)
     },
-    SET_ORDER_ID(store, payload) {
+    set_order_id(store, payload) {
         this.$set(store, 'order_id', payload)
     }
-
 }
 
 const actions = {
     async select_way_payment({ commit }, payload) {
         try {
             const { data } = await this.$axios.post('/order/create', payload)
-            this.$store.commit('SET_ORDER_ID', data.order_id)
+            this.$store.commit('set_order_id', data.order_id)
             $nuxt.$bvModal.show('modal-prevent-closing')
         } catch (e) {
             console.log(e)
-            commit('OPEN_TOAST', {
-                title: 'ثبت سفارش',
+            commit('open_toast', {
                 msg: 'خطایی در ثبت اردر اتفاق افتاده است',
-                variant: 'danger'
+                variant: 'error'
             }, { root: true })
 
         }
@@ -38,7 +45,6 @@ const actions = {
             console.log(e)
         }
     }
-
 };
 
 

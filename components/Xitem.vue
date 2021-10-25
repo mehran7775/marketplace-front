@@ -1,7 +1,7 @@
 <template>
   <div id="item" @mouseover="item_hover()" @mouseleave="is_hover = false">
-    <h3 v-text="title" class="font-weight-bold">کفش مردانه</h3>
-    <nuxt-link :to="`${$route.params.store_slug}/${id}`">
+    <h5 v-text="title" class="font-weight-bold">کفش مردانه</h5>
+    <nuxt-link :to="`${$route.params.store_slug}/${id}`" class="d-flex align-items-center justify-content-center">
       <img :src="image" alt="تصویر محصول" />
     </nuxt-link>
     <div id="box_hover">
@@ -95,13 +95,16 @@ export default {
   a {
     display: block;
     color: inherit;
+    padding: 10px;
+    max-width: 240px;
+    height: 120px;
+  
     img {
-      width: 160px;
-      height: 120px;
-      margin: 1.3rem 1rem;
+      max-width: 100%;
+      max-height: 100%;
       @include mx_medium {
-        max-width: 80px;
-        max-height: 70px;
+        // max-width: 80px;
+        // max-height: 70px;
         margin: 1rem 0.3rem;
       }
     }

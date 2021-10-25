@@ -183,13 +183,6 @@ export default {
       // ]
     };
   },
-  data() {
-    return {
-      form: {
-        fname: "",
-      },
-    };
-  },
   components: {
     ValidationProvider,
   },
@@ -217,12 +210,7 @@ export default {
         store_id: this.$store.state.stores.id,
         products: items_second,
       };
-      console.log(items_end,data_user)
-      this.$bvModal.show('modal-prevent-closing2')
-      // this.$store.dispatch("payments/select_way_payment", {
-      //   data_user,
-      //   items_end,
-      // });
+      this.$store.dispatch('payments/select_way_payment',items_end)
     },
     do_payment() {
       let getway = null;
@@ -236,14 +224,14 @@ export default {
         getway = "null";
       }
 
-      this.$store.dispatch("payment/do_payment", {
+      this.$store.dispatch("payments/do_payment", {
         getway_id: getway,
       });
     },
   },
   computed: {
     getways() {
-      this.$store.state.payments.getways;
+      return this.$store.state.payments.getways
     },
   },
 };

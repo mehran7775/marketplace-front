@@ -25,31 +25,84 @@ export default {
       return tr();
     },
   },
-  async asyncData({ $axios, route, error }) {
-    try {
-      const { data } = await $axios.get(
-        `/store/${route.params.store_slug}/products`
-      );
-      return {
-        products: data.data.data
-      };
-    } catch (e) {
-      if (e.response) {
-        error({
-          statusCode: e.response.status,
-          message: e.response.message,
-        });
-      } else {
-        error({
-          statusCode: "",
-          message: "خطا در ارتباط",
-        });
-      }
+  data(){
+    return{
+      products:[
+
+        {
+          "id": "zpg3ergr",
+          "title": "محصول",
+          "thumbnail": "https://coreshop.paystar.ir/storage/images/Se70rRop9RiMLI8Jld3yzoA380IoOSCx7q3Gm4wY.png",
+          "description": null,
+          "price": "10,000",
+          "quantity": 20
+        },
+        {
+          "id": "vr9retkj",
+          "title": "vbvvb",
+          "thumbnail": "https://coreshop.paystar.ir/storage/images/zXGPi0Z02UwyELxHxHhcYWpeGsuDZaKIkE2xZf5n.png",
+          "description": null,
+          "price": "20,000",
+          "quantity": 20
+        },
+        {
+          "id": "vgr9rgj",
+          "title": "vbvvb",
+          "thumbnail": "https://coreshop.paystar.ir/storage/images/zXGPi0Z02UwyELxHxHhcYWpeGsuDZaKIkE2xZf5n.png",
+          "description": null,
+          "price": "20,000",
+          "quantity": 20
+        },
+        {
+          "id": "vr9kgthajj",
+          "title": "vbvvb",
+          "thumbnail": "https://coreshop.paystar.ir/storage/images/zXGPi0Z02UwyELxHxHhcYWpeGsuDZaKIkE2xZf5n.png",
+          "description": null,
+          "price": "20,000",
+          "quantity": 20
+        },
+        {
+          "id": "vr39rgj",
+          "title": "vbvvb",
+          "thumbnail": "https://coreshop.paystar.ir/storage/images/zXGPi0Z02UwyELxHxHhcYWpeGsuDZaKIkE2xZf5n.png",
+          "description": null,
+          "price": "20,000",
+          "quantity": 20
+        },
+        {
+          "id": "vr90kthjj",
+          "title": "vbvvb",
+          "thumbnail": "https://coreshop.paystar.ir/storage/images/zXGPi0Z02UwyELxHxHhcYWpeGsuDZaKIkE2xZf5n.png",
+          "description": null,
+          "price": "20,000",
+          "quantity": 20
+        },
+      ]
     }
-  },
-  mounted() {
-    
-  },
+
+  }
+  // async asyncData({ $axios, route, error }) {
+  //   try {
+  //     const { data } = await $axios.get(
+  //       `/store/${route.params.store_slug}/products`
+  //     );
+  //     return {
+  //       products: data.data.data
+  //     };
+  //   } catch (e) {
+  //     if (e.response) {
+  //       error({
+  //         statusCode: e.response.status,
+  //         message: e.response.message,
+  //       });
+  //     } else {
+  //       error({
+  //         statusCode: "",
+  //         message: "خطا در ارتباط",
+  //       });
+  //     }
+  //   }
+  // },
 };
 </script>
 
@@ -59,8 +112,5 @@ export default {
   @include mx_medium {
     padding: 0.05rem;
   }
-}
-.modal-footer{
-  display: none;
 }
 </style>

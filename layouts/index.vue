@@ -82,9 +82,9 @@ export default {
       const res= await this.$axios.get(
         `/store/${this.$route.params.store_slug}`
       )
-      this.$store.commit("payments/SET_GETWAYS", res.data.getways);
-      this.$store.commit("stores/SET_ID", res.data.id);
-      this.logo = res.data.logo;
+      this.$store.commit("payments/set_getways", res.data.getways);
+      this.$store.commit("stores/set_id", res.data.id);
+      this.logo = res.data.logo;z
       this.fa_name = res.data.fa_name;
     } catch (e) {
 

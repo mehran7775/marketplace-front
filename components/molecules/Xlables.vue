@@ -11,6 +11,7 @@
       <div class="mt-4">
         <div class="carousel-wrapper d-none d-md-block">
             <carousel :per-page="per_page" v-bind="options"
+            dir="rtl"
             >
               <slide v-for="product in products" :key="product.id" class="img-wrapper">
                 <Xitem :title="product.title" :image="product.thumbnail" :price="product.price" :id="product.id"></Xitem>
@@ -82,11 +83,10 @@ export default {
     color: text_color;
   }
   .carousel-wrapper {
-    cursor: grab;
     direction: ltr;
-    .VueCarousel-inner {
-      flex-direction: row-reverse !important;
-    }
+
+
+   
     text-align: center;
     @include medium {
       padding: 20px 0 40px 20px;
@@ -98,6 +98,9 @@ export default {
         margin: min(0.05rem, 0.05%);
       }
     }
+  }
+  .carousel-wrapper:nth-child(2){
+    flex-direction: row-reverse!important;
   }
 }
 </style>

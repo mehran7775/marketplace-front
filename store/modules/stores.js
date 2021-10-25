@@ -6,13 +6,7 @@ const getters = {
 };
 
 const mutations = {
-    SET_STORES(state, payload) {
-        this._vm.$set(state, 'stores', payload)
-    },
-    SET_MESSAGE(state, payload) {
-        this._vm.$set(state, 'message', payload)
-    },
-    SET_ID(state, payload) {
+    set_id(state, payload) {
         this.$set(state, 'id', payload)
     },
 }

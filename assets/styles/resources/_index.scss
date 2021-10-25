@@ -3,41 +3,6 @@
 @import "./mixins/index";
 
 body {
-    .b-toaster {
-        text-align: right;
-
-        .toast-header {
-            justify-content: space-between;
-            .close {
-                width: 24px;
-                margin-left: 1px !important;
-                float: left;
-                text-align: left;
-            }
-        }
-
-    }
-    .modal-content {
-        padding: 20px;
-        direction: rtl;
-        text-align: right;
-
-        .modal-header {
-            .modal-title {
-                color: $success;
-            }
-
-            .close {
-                margin: 0;
-                padding: 0;
-            }
-        }
-
-        .modal-footer {
-            display: none;
-        }
-    }
-
     #__nuxt {
         .cursor_pointer {
             cursor: pointer;

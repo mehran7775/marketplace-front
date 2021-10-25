@@ -38,24 +38,21 @@ const actions = {
                     cart.push(newObj)
                 }
                 localStorage.setItem('cartItems', JSON.stringify(cart))
-                commit('OPEN_TOAST', {
-                    title: 'افزودن به سبد خرید',
+                commit('open_toast', {
                     msg: 'محصول به سبد خرید اضاف شد',
                     variant: 'success'
                 }, { root: true })
             }
         } catch (e) {
             if (e.response) {
-                commit('OPEN_TOAST', {
-                    title: '',
+                commit('open_toast', {
                     msg: 'محصول در حاظر تمام شده است',
-                    variant: 'danger'
+                    variant: 'error'
                 }, { root: true })
             } else {
-                commit('OPEN_TOAST', {
-                    title: '',
+                commit('open_toast', {
                     msg: 'خطایی در ارتباط با سرور اتفاق افتاده است',
-                    variant: 'danger',
+                    variant: 'error',
                     vm: this
                 }, { root: true })
             }
