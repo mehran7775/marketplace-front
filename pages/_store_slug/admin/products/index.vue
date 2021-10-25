@@ -6,16 +6,16 @@
                 <span class="pr-2">ثبت محصول جدید</span>
             </nuxt-link>
         </page-title>
-        <div class="bg-white shadow-sm p-3 my-3" style="border-radius: 10px;">
+        <!--<div class="bg-white shadow-sm p-3 my-3" style="border-radius: 10px;">
             <div class="row">
                 <div class="col-sm my-2">
                     <input class="form-control" placeholder="عنوان محصول" v-model="filter_title">
                 </div>
-                <!--<div class="col-sm my-2">
+                <div class="col-sm my-2">
                     <select class="form-control" v-model="filter_status">
                         <option></option>
                     </select>
-                </div>-->
+                </div>
                 <div class="col-sm my-2">
                     <div class="form-group my-0">
                         <datePicker
@@ -56,7 +56,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <div class="bg-white shadow-sm py-3 my-2" style="border-radius: 10px;" v-if="products">
 
             <div class="px-3">

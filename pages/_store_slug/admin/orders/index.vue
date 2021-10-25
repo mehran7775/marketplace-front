@@ -2,7 +2,7 @@
     <div>
         <page-title title_text="سفارشات" icon="order">
         </page-title>
-        <div class="bg-white shadow-sm p-3 my-3 d-none" style="border-radius: 10px;">
+        <div class="bg-white shadow-sm p-3 my-3 d-none" v-show="false" style="border-radius: 10px;">
             <div class="row">
                 <div class="col-sm my-2">
                     <input class="form-control" placeholder="عنوان محصول" v-model="filter_title">

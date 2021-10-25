@@ -6,9 +6,9 @@
             </div>
         </page-title>
         <div class="bg-white shadow-sm py-4 my-2 px-5" style="border-radius: 10px;">
-            <template v-for="port in ports" v-if="port.is_deleted == false">
+            <template v-for="port in ports">
                 <hr>
-                {{port.en_name + ' ' +  PortTypes.getType(port.type)}}
+                {{port.fa_name + ' ' +  PortTypes.getType(port.type)}}
                 <hr>
                 <div class="row">
                     <div v-if="gateway.type === port.type" class="col-sm my-2" v-for="gateway in gateways">
@@ -57,7 +57,7 @@ export default {
                 })
         },
         getPorts(){
-            api.get('gateway/get-ports',this.$cookies.get('token')).then(res => {
+            api.get('gateway/get-active-ports',this.$cookies.get('token')).then(res => {
                 this.ports = res.data.data.data
             })
         },
