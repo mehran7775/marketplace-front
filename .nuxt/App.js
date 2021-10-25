@@ -7,9 +7,13 @@ import NuxtLoading from './components/nuxt-loading.vue'
 
 import '..\\node_modules\\@fortawesome\\fontawesome-svg-core\\styles.css'
 
+import '..\\assets\\styles\\main.scss'
+
 import '..\\assets\\styles\\bootstrap.css'
 
 import '..\\assets\\styles\\style.css'
+
+import '..\\node_modules\\vue-toastification\\dist\\index.css'
 
 import _77068119 from '..\\layouts\\admin.vue'
 import _777ba69c from '..\\layouts\\index.vue'

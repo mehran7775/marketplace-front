@@ -163,9 +163,7 @@ export default (ctx, inject) => {
     "head": {},
     "post": {},
     "put": {},
-    "patch": {},
-    "Content-Type": "application/json",
-    "Accept": "application/json"
+    "patch": {}
 }
 
   const axiosOptions = {

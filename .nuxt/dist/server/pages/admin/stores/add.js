@@ -1,7 +1,7 @@
 exports.ids = [36];
 exports.modules = {
 
-/***/ 111:
+/***/ 114:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9,7 +9,7 @@ const portTypes=[{value:'PF',text:'پرداخت یاری'},{value:'Dedicated',te
 
 /***/ }),
 
-/***/ 116:
+/***/ 120:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17,7 +17,7 @@ const gatewayStatus=[{text:'فعال',value:1,variant:'success'},{text:'در ا�
 
 /***/ }),
 
-/***/ 204:
+/***/ 220:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -32,10 +32,10 @@ var staticRenderFns = []
 // CONCATENATED MODULE: ./pages/admin/stores/add.vue?vue&type=template&id=d29a6902&scoped=true&
 
 // EXTERNAL MODULE: ./constants/PortTypes.js
-var PortTypes = __webpack_require__(111);
+var PortTypes = __webpack_require__(114);
 
 // EXTERNAL MODULE: ./constants/GatewayStatus.js
-var GatewayStatus = __webpack_require__(116);
+var GatewayStatus = __webpack_require__(120);
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/admin/stores/add.vue?vue&type=script&lang=js&
 //

@@ -1,13 +1,13 @@
 exports.ids = [22,1,7];
 exports.modules = {
 
-/***/ 102:
+/***/ 105:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(104);
+var content = __webpack_require__(107);
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
@@ -19,33 +19,33 @@ module.exports.__inject__ = function (context) {
 
 /***/ }),
 
-/***/ 103:
+/***/ 106:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_3_node_modules_sass_resources_loader_lib_loader_js_ref_7_oneOf_1_4_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Xbutton_vue_vue_type_style_index_0_id_1eab5d64_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(102);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_3_node_modules_sass_resources_loader_lib_loader_js_ref_7_oneOf_1_4_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Xbutton_vue_vue_type_style_index_0_id_1eab5d64_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(105);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_3_node_modules_sass_resources_loader_lib_loader_js_ref_7_oneOf_1_4_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Xbutton_vue_vue_type_style_index_0_id_1eab5d64_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_3_node_modules_sass_resources_loader_lib_loader_js_ref_7_oneOf_1_4_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Xbutton_vue_vue_type_style_index_0_id_1eab5d64_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_3_node_modules_sass_resources_loader_lib_loader_js_ref_7_oneOf_1_4_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Xbutton_vue_vue_type_style_index_0_id_1eab5d64_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_7_oneOf_1_3_node_modules_sass_resources_loader_lib_loader_js_ref_7_oneOf_1_4_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Xbutton_vue_vue_type_style_index_0_id_1eab5d64_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
 
-/***/ 104:
+/***/ 107:
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(2);
 var ___CSS_LOADER_EXPORT___ = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, "body[data-v-1eab5d64]{direction:rtl;box-sizing:border-box}body .b-toaster[data-v-1eab5d64]{text-align:right}body .b-toaster .toast-header[data-v-1eab5d64]{justify-content:space-between}body .b-toaster .toast-header .close[data-v-1eab5d64]{width:24px;margin-left:1px!important;float:left;text-align:left}body .modal-content[data-v-1eab5d64]{padding:20px;direction:rtl;text-align:right}body .modal-content .modal-header .modal-title[data-v-1eab5d64]{color:#00c1a4}body .modal-content .modal-header .close[data-v-1eab5d64]{margin:0;padding:0}body .modal-content .modal-footer[data-v-1eab5d64]{display:none}body #__nuxt[data-v-1eab5d64]{background-color:#f5f5f5}body #__nuxt h1[data-v-1eab5d64]{font-size:1.1rem}body #__nuxt h3[data-v-1eab5d64]{font-size:.95rem}body #__nuxt p[data-v-1eab5d64],body #__nuxt span[data-v-1eab5d64],body #__nuxt strong[data-v-1eab5d64]{font-size:.8rem}body #__nuxt .cursor_pointer[data-v-1eab5d64]{cursor:pointer}@media(min-width:420px){body #__nuxt h1[data-v-1eab5d64]{font-size:1.1rem}body #__nuxt h3[data-v-1eab5d64]{font-size:.95rem}body #__nuxt p[data-v-1eab5d64],body #__nuxt span[data-v-1eab5d64],body #__nuxt strong[data-v-1eab5d64]{font-size:.8rem}}@media(min-width:576px){body #__nuxt h1[data-v-1eab5d64]{font-size:1.2rem}body #__nuxt h3[data-v-1eab5d64]{font-size:1.15rem}body #__nuxt p[data-v-1eab5d64],body #__nuxt span[data-v-1eab5d64],body #__nuxt strong[data-v-1eab5d64]{font-size:.9rem}}@media(min-width:768px){body #__nuxt h1[data-v-1eab5d64]{font-size:1.3rem}body #__nuxt h3[data-v-1eab5d64]{font-size:1.15rem}body #__nuxt p[data-v-1eab5d64],body #__nuxt span[data-v-1eab5d64],body #__nuxt strong[data-v-1eab5d64]{font-size:1rem}}@media(min-width:992px){body #__nuxt h1[data-v-1eab5d64]{font-size:1.4rem}body #__nuxt h3[data-v-1eab5d64]{font-size:1.25rem}}@media(min-width:1200px){body #__nuxt h1[data-v-1eab5d64]{font-size:1.4rem}body #__nuxt h3[data-v-1eab5d64]{font-size:1.25rem}}body #__nuxt #panel_admin[data-v-1eab5d64]{background-color:#333;color:#fff}button[data-v-1eab5d64]{border-radius:3rem}button svg[data-v-1eab5d64]{color:rgba(0,0,0,.399)}", ""]);
+___CSS_LOADER_EXPORT___.push([module.i, "body #__nuxt .cursor_pointer[data-v-1eab5d64]{cursor:pointer}button[data-v-1eab5d64]{border-radius:3rem}button svg[data-v-1eab5d64]{color:rgba(0,0,0,.399)}", ""]);
 // Exports
 module.exports = ___CSS_LOADER_EXPORT___;
 
 
 /***/ }),
 
-/***/ 105:
+/***/ 108:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -89,7 +89,7 @@ var componentNormalizer = __webpack_require__(1);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(103)
+  var style0 = __webpack_require__(106)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -111,7 +111,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 
 /***/ }),
 
-/***/ 106:
+/***/ 109:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -209,13 +209,22 @@ var component = Object(componentNormalizer["a" /* default */])(
 
 /***/ }),
 
-/***/ 143:
+/***/ 130:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return provinces; });
+const provinces=[{key:"001",value:"آذربايجان شرقي",id:"ash"},{key:"002",value:"آذربايجان غربي",id:"agh"},{key:"003",value:"اردبيل",id:"ard"},{key:"004",value:"اصفهان",id:"esf"},{key:"005",value:"البرز",id:"alb"},{key:"006",value:"ايلام",id:"ilm"},{key:"007",value:"بوشهر",id:"bhr"},{key:"008",value:"تهران",id:"teh"},{key:"009",value:"چهارمحال بختياري",id:"chr"},{key:"010",value:"خراسان جنوبي",id:"khj"},{key:"011",value:"خراسان رضوي",id:"khr"},{key:"012",value:"خراسان شمالی",id:"xsh"},{key:"013",value:"خوزستان",id:"khz"},{key:"014",value:"زنجان",id:"znj"},{key:"015",value:"سمنان",id:"smn"},{key:"016",value:"سيستان و بلوچستان",id:"sys"},{key:"017",value:"فارس",id:"frs"},{key:"018",value:"قزوين",id:"qzv"},{key:"019",value:"قم",id:"qom"},{key:"020",value:"كردستان",id:"krd"},{key:"021",value:"كرمان",id:"krm"},{key:"022",value:"كرمانشاه",id:"ksh"},{key:"031",value:"کهگیلویه و بویراحمد",id:"byr"},{key:"023",value:"گلستان",id:"gol"},{key:"024",value:"گيلان",id:"gil"},{key:"025",value:"لرستان",id:"lor"},{key:"026",value:"مازندران",id:"mzn"},{key:"027",value:"مركزي",id:"mrk"},{key:"028",value:"هرمزگان",id:"hrm"},{key:"029",value:"همدان",id:"hmd"},{key:"030",value:"یزد",id:"yzd"}];
+
+/***/ }),
+
+/***/ 151:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(179);
+var content = __webpack_require__(194);
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
@@ -227,19 +236,19 @@ module.exports.__inject__ = function (context) {
 
 /***/ }),
 
-/***/ 178:
+/***/ 193:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_store_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(143);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_store_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(151);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_store_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_store_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_store_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_store_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
 
-/***/ 179:
+/***/ 194:
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
@@ -253,25 +262,28 @@ module.exports = ___CSS_LOADER_EXPORT___;
 
 /***/ }),
 
-/***/ 222:
+/***/ 238:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/_store_slug/admin/setting/store.vue?vue&type=template&id=35be017e&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"edit_store"}},[_c('page-title',{attrs:{"title_text":"ویرایش فروشگاه","icon":"product"}},[_c('div',{on:{"click":_vm.updateSetting}},[_c('Xbutton',{attrs:{"variant":"success"},domProps:{"textContent":_vm._s('بروزرسانی تنظیمات')}})],1)]),_vm._ssrNode(" "),_vm._ssrNode("<div class=\"bg-white shadow-sm py-4 my-2 px-5\" style=\"border-radius: 10px;\">","</div>",[_vm._ssrNode("<div class=\"row justify-content-around align-content-center pb-3\">","</div>",[_vm._ssrNode("<div class=\"col-4 col-md-4 my-2\"><input type=\"text\" id=\"title\" placeholder=\"عنوان فارسی\""+(_vm._ssrAttr("value",(_vm.formData.fa_name)))+" class=\"form-control\"></div> <div class=\"col-4 col-md-4 my-2\"><input type=\"text\" id=\"name\" placeholder=\"نام انگلیسی\""+(_vm._ssrAttr("value",(_vm.formData.en_name)))+" class=\"form-control\"></div> <div class=\"col-4 col-md-4 my-2\"><input type=\"text\" id=\"description\" placeholder=\"توضیحات\""+(_vm._ssrAttr("value",(_vm.formData.description)))+" class=\"form-control\"></div> <div class=\"col-4 col-md-4 my-2\"><input type=\"text\" id=\"privance\" placeholder=\"استان\""+(_vm._ssrAttr("value",(_vm.formData.province)))+" class=\"form-control\"></div> <div class=\"col-4 col-md-4 my-2\"><input type=\"text\" id=\"city\" placeholder=\"شهر\""+(_vm._ssrAttr("value",(_vm.formData.city)))+" class=\"form-control\"></div> <div class=\"col-4 col-md-4 my-2\"><input type=\"text\" id=\"phone_number\" placeholder=\"شماره همراه\""+(_vm._ssrAttr("value",(_vm.formData.phone_number)))+" class=\"form-control\"></div> "),_vm._ssrNode("<div class=\"col-4 my-2\">","</div>",[_c('b-form-file',{staticClass:"form-control",attrs:{"placeholder":"لوگو"},model:{value:(_vm.formData.logo),callback:function ($$v) {_vm.$set(_vm.formData, "logo", $$v)},expression:"formData.logo"}}),_vm._ssrNode(" "),_c('b-link',{staticClass:"btn btn-link",attrs:{"target":"_blank","href":'https://coreshop.paystar.ir/storage/'  + _vm.formData.logo}},[_vm._v("دانلود لوگو")]),_vm._ssrNode(" <div class=\"m-auto pt-2 pr-2\"><div class=\"w-100 text-right\"><div class=\"my-3\"><label class=\"switch\"><input type=\"checkbox\""+(_vm._ssrAttr("checked",Array.isArray(_vm.formData.phone_option)?_vm._i(_vm.formData.phone_option,null)>-1:(_vm.formData.phone_option)))+"> <span class=\"slider round\"></span></label>\n                            نمایش شماره موبایل\n                        </div></div> <div class=\"w-100 text-right\"><div class=\"my-3\"><label class=\"switch\"><input type=\"checkbox\""+(_vm._ssrAttr("checked",Array.isArray(_vm.formData.email_option)?_vm._i(_vm.formData.email_option,null)>-1:(_vm.formData.email_option)))+"> <span class=\"slider round\"></span></label>\n                            نمایش ایمیل\n\n                        </div></div> <div class=\"w-100 text-right\"><div class=\"my-3\"><label class=\"switch\"><input type=\"checkbox\""+(_vm._ssrAttr("checked",Array.isArray(_vm.formData.address_option)?_vm._i(_vm.formData.address_option,null)>-1:(_vm.formData.address_option)))+"> <span class=\"slider round\"></span></label>\n                            نمایش آدرس\n                        </div></div> <div class=\"w-100 text-right\"><div class=\"my-3\"><label class=\"switch\"><input type=\"checkbox\""+(_vm._ssrAttr("checked",Array.isArray(_vm.formData.name_option)?_vm._i(_vm.formData.name_option,null)>-1:(_vm.formData.name_option)))+"> <span class=\"slider round\"></span></label>\n                            نمایش نام و نام خانوادگی\n                        </div></div></div>")],2),_vm._ssrNode(" <div class=\"col-8 my-2\"><textarea rows=\"6\" id=\"lows\" placeholder=\"قوانین و مقررات فروشگاه\" class=\"form-control\">"+_vm._ssrEscape(_vm._s(_vm.formData.shop_terms))+"</textarea></div>")],2)])],2)}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/_store_slug/admin/setting/store.vue?vue&type=template&id=6e3e06b6&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"edit_store"}},[_c('page-title',{attrs:{"title_text":"ویرایش فروشگاه","icon":"product"}},[_c('div',{on:{"click":_vm.updateSetting}},[_c('Xbutton',{attrs:{"variant":"success"},domProps:{"textContent":_vm._s('بروزرسانی تنظیمات')}})],1)]),_vm._ssrNode(" "),_vm._ssrNode("<div class=\"bg-white shadow-sm py-4 my-2 px-5\" style=\"border-radius: 10px;\">","</div>",[_vm._ssrNode("<div class=\"row justify-content-around align-content-center pb-3\">","</div>",[_vm._ssrNode("<div class=\"col-4 col-md-4 my-2\"><input type=\"text\" id=\"title\" placeholder=\"عنوان فارسی\""+(_vm._ssrAttr("value",(_vm.formData.fa_name)))+" class=\"form-control\"></div> <div class=\"col-4 col-md-4 my-2\"><input type=\"text\" id=\"name\" placeholder=\"نام انگلیسی\""+(_vm._ssrAttr("value",(_vm.formData.en_name)))+" class=\"form-control\"></div> <div class=\"col-4 col-md-4 my-2\"><input type=\"text\" id=\"description\" placeholder=\"توضیحات\""+(_vm._ssrAttr("value",(_vm.formData.description)))+" class=\"form-control\"></div> "),_vm._ssrNode("<div class=\"col-4 col-md-4 my-2\">","</div>",[_c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.formData.province),expression:"formData.province"}],staticClass:"form-control",attrs:{"type":"text","placeholder":"استان"},on:{"change":function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.$set(_vm.formData, "province", $event.target.multiple ? $$selectedVal : $$selectedVal[0])}}},[_c('option',{domProps:{"value":null}},[_vm._v("انتخاب استان")]),_vm._v(" "),_vm._l((_vm.provinces),function(item){return _c('option',{key:item.key,domProps:{"value":item.id}},[_vm._v(_vm._s(item.value))])})],2)]),_vm._ssrNode(" <div class=\"col-4 col-md-4 my-2\"><input type=\"text\" id=\"city\" placeholder=\"شهر\""+(_vm._ssrAttr("value",(_vm.formData.city)))+" class=\"form-control\"></div> <div class=\"col-4 col-md-4 my-2\"><input type=\"text\" id=\"phone_number\" placeholder=\"شماره همراه\""+(_vm._ssrAttr("value",(_vm.formData.phone_number)))+" class=\"form-control\"></div> "),_vm._ssrNode("<div class=\"col-4 my-2\">","</div>",[_c('b-form-file',{staticClass:"form-control",attrs:{"placeholder":"لوگو"},model:{value:(_vm.formData.logo),callback:function ($$v) {_vm.$set(_vm.formData, "logo", $$v)},expression:"formData.logo"}}),_vm._ssrNode(" "),_c('b-link',{staticClass:"btn btn-link",attrs:{"target":"_blank","href":_vm.formData.logo}},[_vm._v("دانلود لوگو")]),_vm._ssrNode(" <div class=\"m-auto pt-2 pr-2\"><div class=\"w-100 text-right\"><div class=\"my-3\"><label class=\"switch\"><input type=\"checkbox\""+(_vm._ssrAttr("checked",Array.isArray(_vm.formData.phone_option)?_vm._i(_vm.formData.phone_option,null)>-1:(_vm.formData.phone_option)))+"> <span class=\"slider round\"></span></label>\n                            نمایش شماره موبایل\n                        </div></div> <div class=\"w-100 text-right\"><div class=\"my-3\"><label class=\"switch\"><input type=\"checkbox\""+(_vm._ssrAttr("checked",Array.isArray(_vm.formData.email_option)?_vm._i(_vm.formData.email_option,null)>-1:(_vm.formData.email_option)))+"> <span class=\"slider round\"></span></label>\n                            نمایش ایمیل\n\n                        </div></div> <div class=\"w-100 text-right\"><div class=\"my-3\"><label class=\"switch\"><input type=\"checkbox\""+(_vm._ssrAttr("checked",Array.isArray(_vm.formData.address_option)?_vm._i(_vm.formData.address_option,null)>-1:(_vm.formData.address_option)))+"> <span class=\"slider round\"></span></label>\n                            نمایش آدرس\n                        </div></div> <div class=\"w-100 text-right\"><div class=\"my-3\"><label class=\"switch\"><input type=\"checkbox\""+(_vm._ssrAttr("checked",Array.isArray(_vm.formData.name_option)?_vm._i(_vm.formData.name_option,null)>-1:(_vm.formData.name_option)))+"> <span class=\"slider round\"></span></label>\n                            نمایش نام و نام خانوادگی\n                        </div></div></div>")],2),_vm._ssrNode(" <div class=\"col-8 my-2\"><textarea rows=\"6\" id=\"lows\" placeholder=\"قوانین و مقررات فروشگاه\" class=\"form-control\">"+_vm._ssrEscape(_vm._s(_vm.formData.shop_terms))+"</textarea></div>")],2)])],2)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./pages/_store_slug/admin/setting/store.vue?vue&type=template&id=35be017e&
+// CONCATENATED MODULE: ./pages/_store_slug/admin/setting/store.vue?vue&type=template&id=6e3e06b6&
 
 // EXTERNAL MODULE: ./services/api.js
-var api = __webpack_require__(8);
+var api = __webpack_require__(9);
 
 // EXTERNAL MODULE: ./components/main/pageTitle.vue + 4 modules
-var pageTitle = __webpack_require__(106);
+var pageTitle = __webpack_require__(109);
+
+// EXTERNAL MODULE: ./constants/Provinces.js
+var Provinces = __webpack_require__(130);
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/_store_slug/admin/setting/store.vue?vue&type=script&lang=js&
 //
@@ -407,7 +419,8 @@ var pageTitle = __webpack_require__(106);
 //
 //
 //
-/* harmony default export */ var storevue_type_script_lang_js_ = ({components:{PageTitle: pageTitle["default"]},layout:"main-content",data(){return{store:{},formData:{fa_name:null,en_name:null,description:null,province:null,city:null,phone_number:null,logo:null,name_option:false,address_option:false,email_option:false,phone_option:false,shop_terms:null}};},created(){this.getData();},methods:{getData(){api["a" /* default */].get('store/find/'+this.$route.params.store_slug,this.$cookies.get('token')).then(res=>{this.store=res.data.data;for(let key in Object.keys(this.formData)){key=Object.keys(this.formData)[key];this.formData[key]=this.store[key];}});},updateSetting(){if(typeof this.formData.logo==='string'){this.formData.logo=null;}let form_data=new FormData();for(let key in this.formData){if(this.formData[key]===true||this.formData[key]===false){if(this.formData[key]===true){form_data.append(key,1);}if(this.formData[key]===false){form_data.append(key,0);}}else{if(this.formData[key]!==null){form_data.append(key,this.formData[key]);}}}api["a" /* default */].post('store/update/'+this.$route.params.store_slug,form_data,this.$cookies.get('token')).then(response=>{alert(response.data.message);this.getData();}).catch(({response})=>{alert(response.data.data[Object.keys(response.data.data)[0]]);});}}});
+//
+/* harmony default export */ var storevue_type_script_lang_js_ = ({components:{PageTitle: pageTitle["default"]},layout:"main-content",data(){return{provinces: Provinces["a" /* provinces */],store:{},formData:{fa_name:null,en_name:null,description:null,province:null,city:null,phone_number:null,logo:null,name_option:false,address_option:false,email_option:false,phone_option:false,shop_terms:null}};},created(){this.getData();},methods:{getData(){api["a" /* default */].get('store/find/'+this.$route.params.store_slug,this.$cookies.get('token')).then(res=>{this.store=res.data.data;for(let key in Object.keys(this.formData)){key=Object.keys(this.formData)[key];this.formData[key]=this.store[key];}});},updateSetting(){if(typeof this.formData.logo==='string'){this.formData.logo=null;}let form_data=new FormData();for(let key in this.formData){if(this.formData[key]===true||this.formData[key]===false){if(this.formData[key]===true){form_data.append(key,1);}if(this.formData[key]===false){form_data.append(key,0);}}else{if(this.formData[key]!==null){form_data.append(key,this.formData[key]);}}}api["a" /* default */].post('store/update/'+this.$route.params.store_slug,form_data,this.$cookies.get('token')).then(response=>{alert(response.data.message);this.getData();}).catch(({response})=>{alert(response.data.data[Object.keys(response.data.data)[0]]);});}}});
 // CONCATENATED MODULE: ./pages/_store_slug/admin/setting/store.vue?vue&type=script&lang=js&
  /* harmony default export */ var setting_storevue_type_script_lang_js_ = (storevue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
@@ -419,7 +432,7 @@ var componentNormalizer = __webpack_require__(1);
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__(178)
+  var style0 = __webpack_require__(193)
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -440,7 +453,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 /* harmony default export */ var store = __webpack_exports__["default"] = (component.exports);
 
 /* nuxt-component-imports */
-installComponents(component, {Xbutton: __webpack_require__(105).default})
+installComponents(component, {Xbutton: __webpack_require__(108).default})
 
 
 /***/ })

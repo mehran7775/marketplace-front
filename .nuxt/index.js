@@ -15,6 +15,7 @@ import { createStore } from './store.js'
 
 import nuxt_plugin_plugin_aa013526 from 'nuxt_plugin_plugin_aa013526' // Source: .\\components\\plugin.js (mode: 'all')
 import nuxt_plugin_bootstrapvue_2896b982 from 'nuxt_plugin_bootstrapvue_2896b982' // Source: .\\bootstrap-vue.js (mode: 'all')
+import nuxt_plugin_toast_36abbc82 from 'nuxt_plugin_toast_36abbc82' // Source: .\\toast.js (mode: 'client')
 import nuxt_plugin_cookieuniversalnuxt_48715690 from 'nuxt_plugin_cookieuniversalnuxt_48715690' // Source: .\\cookie-universal-nuxt.js (mode: 'all')
 import nuxt_plugin_workbox_6329462c from 'nuxt_plugin_workbox_6329462c' // Source: .\\workbox.js (mode: 'client')
 import nuxt_plugin_metaplugin_2d9d62a8 from 'nuxt_plugin_metaplugin_2d9d62a8' // Source: .\\pwa\\meta.plugin.js (mode: 'all')
@@ -227,6 +228,10 @@ async function createApp(ssrContext, config = {}) {
 
   if (typeof nuxt_plugin_bootstrapvue_2896b982 === 'function') {
     await nuxt_plugin_bootstrapvue_2896b982(app.context, inject)
+  }
+
+  if (process.client && typeof nuxt_plugin_toast_36abbc82 === 'function') {
+    await nuxt_plugin_toast_36abbc82(app.context, inject)
   }
 
   if (typeof nuxt_plugin_cookieuniversalnuxt_48715690 === 'function') {

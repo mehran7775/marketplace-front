@@ -1,7 +1,7 @@
 exports.ids = [34,1];
 exports.modules = {
 
-/***/ 106:
+/***/ 109:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99,7 +99,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 
 /***/ }),
 
-/***/ 111:
+/***/ 114:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -107,7 +107,7 @@ const portTypes=[{value:'PF',text:'پرداخت یاری'},{value:'Dedicated',te
 
 /***/ }),
 
-/***/ 124:
+/***/ 128:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -115,7 +115,7 @@ const portStatus=[{text:'غیرفعال',value:0,variant:'danger'},{text:'فعا
 
 /***/ }),
 
-/***/ 200:
+/***/ 216:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -130,16 +130,16 @@ var staticRenderFns = []
 // CONCATENATED MODULE: ./pages/admin/ports/index.vue?vue&type=template&id=71e7ab15&scoped=true&
 
 // EXTERNAL MODULE: ./constants/PortTypes.js
-var PortTypes = __webpack_require__(111);
+var PortTypes = __webpack_require__(114);
 
 // EXTERNAL MODULE: ./constants/PortStatus.js
-var PortStatus = __webpack_require__(124);
+var PortStatus = __webpack_require__(128);
 
 // EXTERNAL MODULE: ./components/main/pageTitle.vue + 4 modules
-var pageTitle = __webpack_require__(106);
+var pageTitle = __webpack_require__(109);
 
 // EXTERNAL MODULE: ./services/api.js
-var api = __webpack_require__(8);
+var api = __webpack_require__(9);
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/admin/ports/index.vue?vue&type=script&lang=js&
 //
