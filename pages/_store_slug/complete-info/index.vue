@@ -145,7 +145,7 @@
                 <input
                   class="mr-4"
                   type="radio"
-                  :name="'getway' + getway.id"
+                  name="getway"
                   :value="'getway' + getway.id"
                   :ref="'getway' + getway.id"
                   checked
@@ -228,6 +228,9 @@ export default {
         getway_id: getway,
       });
     },
+  },
+  created(){
+    console.log(this.$store.state.payments)
   },
   computed: {
     getways() {

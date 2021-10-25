@@ -1,14 +1,4 @@
 const state = {
-    getways:[
-        {
-            id:1,
-            title:'پرداخت پی استار1'
-        },
-        {
-            id:2,
-            title:'پرداخت پی استار1'
-        },
-    ]
 }
 const getters = {
 
