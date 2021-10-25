@@ -1,5 +1,5 @@
 <template>
-  <div>admin body</div>
+    <div>صفحه اول</div>
 </template>
 
 <script>

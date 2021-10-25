@@ -1,4 +1,4 @@
-export default function ({
+/*export default function ({
     $axios,
     store,
     redirect
@@ -20,3 +20,4 @@ export default function ({
     // })
 
 }
+*/

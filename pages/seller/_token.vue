@@ -6,15 +6,16 @@
 
 <script>
 export default {
-  async fetch() {
+  async mounted() {
     try {
-      const {data}=await this.$axios.get("/user/current",null, {
+      const {data} = await this.$axios.get("/user/current", {
         headers: {
           'Authorization': "Bearer " + this.$route.params.token,
         },
       });
       if(data.status==="ok"){
           this.$cookies.set("token", this.$route.params.token);
+          this.$router.push('/seller/stores')
       }
     } catch (e) {
         console.log(e)

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import {abilitiesPlugin} from '@casl/vue'
 import {Ability} from '@casl/ability'
+import api from "~/services/api";
 
 export const ability = new Ability()
 Vue.use(abilitiesPlugin, ability)
@@ -16,18 +17,18 @@ export default async function ({$axios}) {
                     "manage"
                 ]
             }
-        )
-    }
-    for (let role in res.data.data.roles) {
-        permissions.push(
-            {
-                "subject": res.data.data.roles[role].slug,
-                "actions": [
-                    "manage"
-                ]
+            for (let role in res.data.data.roles) {
+                permissions.push(
+                    {
+                        "subject": res.data.data.roles[role].slug,
+                        "actions": [
+                            "manage"
+                        ]
+                    }
+                )
             }
-        )
-    }
-    ability.update(permissions)*/
+
+            ability.update(permissions)
+        })
 
 }

@@ -1,4 +1,7 @@
 {
+  "Pagination": {
+    "description": "Auto imported from components/pagination.vue"
+  },
   "Xbasket": {
     "description": "Auto imported from components/Xbasket.vue"
   },
@@ -26,8 +29,17 @@
   "Xsearch": {
     "description": "Auto imported from components/Xsearch.vue"
   },
-  "UsersChangeAccess": {
-    "description": "Auto imported from components/users/change-access.vue"
+  "MainAside": {
+    "description": "Auto imported from components/main/aside.js"
+  },
+  "MainHeader": {
+    "description": "Auto imported from components/main/header.vue"
+  },
+  "MainPageTitle": {
+    "description": "Auto imported from components/main/pageTitle.vue"
+  },
+  "MoleculesXcardStore": {
+    "description": "Auto imported from components/molecules/XcardStore.vue"
   },
   "MoleculesXheader": {
     "description": "Auto imported from components/molecules/Xheader.vue"
@@ -41,10 +53,7 @@
   "MoleculesXsidebarBottom": {
     "description": "Auto imported from components/molecules/XsidebarBottom.vue"
   },
-  "MainAside": {
-    "description": "Auto imported from components/main/aside.js"
-  },
-  "MainHeader": {
-    "description": "Auto imported from components/main/header.vue"
+  "UsersChangeAccess": {
+    "description": "Auto imported from components/users/change-access.vue"
   }
 }

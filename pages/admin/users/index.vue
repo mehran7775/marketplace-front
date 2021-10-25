@@ -34,6 +34,7 @@
 <script>
 import UserStatus from "~/constants/UserStatus";
 import UserTypes from "~/constants/UserTypes";
+import api from "~/services/api";
 
 export default {
     name: "index",
@@ -46,7 +47,7 @@ export default {
         }
     },
     async created(){
-        let res = await this.$axios.get('user/get')
+        let res = await api.get('user/get',this.$cookies.get('token'))
         this.users = res.data.data.data
     }
 }

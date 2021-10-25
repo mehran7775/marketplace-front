@@ -10,7 +10,7 @@
                 :key="thumbnail"
                 class="img-wrapper"
               >
-                <img :src="thumbnail" />
+                <img :src="'https://coreshop.paystar.ir/storage/' + thumbnail" />
               </slide>
             </carousel>
           </client-only>
@@ -64,10 +64,10 @@ export default {
   },
   async asyncData({ error, route, $axios }) {
     try {
-      const res = await $axios.$get(`/products/${route.params.products_id}`);
-      if ((res.status === 200) & res.data) {
+      const res = await $axios.get('product/' + route.params.store_slug + '/' + route.params.products_id);
+      if (res.data) {
         return {
-          product: res.data,
+          product: res.data.data,
         };
       } else {
         return {

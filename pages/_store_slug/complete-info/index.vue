@@ -112,7 +112,7 @@
                   </div>
                 </div>
                 <!-- <div class="row">
-                 
+
                 </div> -->
                 <div class="row mt-2">
                   <hr class="dash w-100" />
@@ -130,6 +130,14 @@
                   <!-- <span>{{ errors[0] }}</span> -->
                 </div>
                 <!-- </ValidationProvider> -->
+
+                  <form ref="PayForm" method="post" :action="'https://coreshop.paystar.ir/api/pay/order/' + order_id">
+                      <input name="gateway_id" value="3rdqp"/>
+                  </form>
+
+
+
+
               </div>
             </template>
           </Xform>
@@ -169,6 +177,7 @@
 
 <script>
 import { ValidationProvider } from "vee-validate";
+import api from "~/services/api";
 export default {
   layout: "index",
   head() {
@@ -228,6 +237,12 @@ export default {
         getway_id: getway,
       });
     },
+      getStore(){
+        api.get(`store/${this.$route.params.store_slug}`)
+          .then(res => {
+             this.store = res.data.data
+          })
+      }
   },
   created(){
     console.log(this.$store.state.payments)
@@ -237,6 +252,9 @@ export default {
       return this.$store.state.payments.getways
     },
   },
+    mounted() {
+      this.getStore()
+    }
 };
 </script>
 

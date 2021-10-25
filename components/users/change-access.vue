@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import api from "~/services/api";
+
 export default {
     props: ['permissions', 'roles','user_id'],
     name: "change-access",
@@ -58,7 +60,7 @@ export default {
             let json = {}
             json.roles = this.roles
             json.permissions = this.permissions
-            let res = await this.$axios.post('user/change-access/' + this.user_id,json)
+            let res = await api.post('user/change-access/' + this.user_id,json,this.$cookies.get('token'))
             alert(res.data.message)
         }
     }
