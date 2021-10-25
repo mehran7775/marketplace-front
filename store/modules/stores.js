@@ -1,4 +1,4 @@
-/*const state = () => ({
+const state = () => ({
 
 })
 const getters = {
@@ -53,5 +53,5 @@ export default {
     mutations,
     actions,
     getters
-};*/
+};
 

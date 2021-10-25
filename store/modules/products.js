@@ -11,10 +11,10 @@ const mutations = {
 }
 
 const actions = {
-    addProductToCart({ commit, dispatch, getters }, product) {
+    async addProductToCart({ commit, dispatch, getters }, product) {
         try {
-            //const res = await api.post('check-product-exist')
-            if (true) {
+            await this.$axios.post('check-product-exist',product.id)
+            // if (res) {
                 let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
                 if (cart.length > 0) {
                     if (cart.some(el => el.id == product.id)) {
@@ -43,7 +43,7 @@ const actions = {
                     msg: 'محصول به سبد خرید اضاف شد',
                     variant: 'success'
                 }, { root: true })
-            }
+            // }
         } catch (e) {
             if (e.response) {
                 commit('open_toast', {
