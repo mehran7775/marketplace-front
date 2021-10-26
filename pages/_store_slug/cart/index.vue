@@ -71,20 +71,18 @@
                 ><span class="while-price pr-1">تومان</span>
               </div>
               <div class="col-12 col-md-6 text-center continue-buy">
-                <!--<Xbutton
-                  class="px-5"
-                  text="ادامه خرید"
-                  :on_click="continue_buy"
-                ></Xbutton>-->
-                  <nuxt-link :to="'/' + $route.params.store_slug + '/complete-info'" class="btn btn-success">
-                      ادامه خرید
-                  </nuxt-link>
+                <nuxt-link
+                  :to="`/${$route.params.store_slug}/complete-info`"
+                  class="btn btn-success"
+                >
+                  ادامه خرید
+                </nuxt-link>
               </div>
             </div>
           </div>
         </div>
         <div v-else class="row my-4 mx-auto text-center p-4 bg-white">
-          <p class="font-weight-bold">سبد خرید شما خالی است</p>
+          <p class="font-weight-bold" v-text="'سبد خرید شما خالی است'"></p>
         </div>
       </div>
     </div>
@@ -94,6 +92,7 @@
 <script>
 export default {
   layout: "index",
+  middleware: "activeStore",
   data() {
     return {
       items: null,
@@ -131,7 +130,7 @@ export default {
     compute_whole_price(items) {
       let sum = 0;
       items.forEach((element) => {
-        sum += element.price * element.count;
+        sum += parseInt(element.price.replace(",", "")) * element.count;
       });
       return sum;
     },

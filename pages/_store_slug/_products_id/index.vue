@@ -12,7 +12,7 @@
                 :key="thumbnail"
                 class="img-wrapper"
               >
-                <img :src="thumbnail" />
+                <img :src="thumbnail ? thumbnail: '/images/default-image.png'" alt="عکس محصول">
               </slide>
             </carousel>
           </client-only>
@@ -21,7 +21,7 @@
       <div class="col-12">
         <div class="row flex-sm-column text-right px-5" id="detail_product">
           <div class="column">
-            <h1 v-text="product.title" class="display-5"></h1>
+            <h2 v-text="product.title" class="display-5"></h2>
             <p class="pt-1" v-text="product.description">
             </p>
           </div>
@@ -52,6 +52,7 @@
 import { tr } from "@/services/lang";
 export default {
   layout: "index",
+  middleware: "activeStore",
   head() {
     return {
       title: "صفحه تک محصول",
@@ -112,6 +113,7 @@ export default {
         name: this.product.title,
         price: this.product.price,
         img: this.product.thumbnails[0],
+        quantity:this.product.quantity
       });
     },
   },

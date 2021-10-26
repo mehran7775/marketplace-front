@@ -5,7 +5,7 @@
       :to="`${$route.params.store_slug}/${id}`"
       class="d-flex align-items-center justify-content-center"
     >
-      <img :src="image" alt="تصویر محصول" />
+      <img :src="image ? image : '/images/default-image.png'" alt="تصویر محصول" />
     </nuxt-link>
     <div id="box_hover">
       <div v-if="is_hover" class="d-flex">
@@ -91,49 +91,7 @@ export default {
         img: this.image,
         quantity: this.quantity,
       }
-      if (this.quantity > 0) {
-        let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
-        if (cart.length > 0) {
-          if (cart.some((el) => el.id == product.id)) {
-            const p = cart.find(({ id }) => id === product.id);
-            p.count++;
-          } else {
-            const newObj = {
-              id: product.id,
-              name: product.name,
-              price: product.price,
-              count: 1,
-            };
-            cart.push(newObj);
-          }
-        } else {
-          const newObj = {
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            count: 1,
-          };
-          cart.push(newObj);
-        }
-        localStorage.setItem("cartItems", JSON.stringify(cart));
-        this.$store.commit(
-          "open_toast",
-          {
-            msg: "محصول به سبد خرید اضاف شد",
-            variant: "success",
-          },
-          { root: true }
-        );
-      } else {
-        this.$store.commit(
-          "open_toast",
-          {
-            msg: "محصول در حاظر تمام شده است",
-            variant: "error",
-          },
-          { root: true }
-        );
-      }
+      this.$store.dispatch("products/addProductToCart",product);
     },
   },
 };
@@ -163,7 +121,6 @@ export default {
     padding: 10px;
     max-width: 240px;
     height: 120px;
-
     img {
       max-width: 100%;
       max-height: 100%;

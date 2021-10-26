@@ -1,13 +1,17 @@
-const state = () => ({
-
-})
+const state = {
+    status:null,
+    id:null
+}
 const getters = {
 
 };
 
 const mutations = {
+    set_state_store(state,payload){
+        state.status=payload
+    },
     set_id(state, payload) {
-        this.$set(state, 'id', payload)
+        state.id=payload
     },
 }
 

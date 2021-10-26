@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ $route.params.token }}
   </div>
 </template>
 

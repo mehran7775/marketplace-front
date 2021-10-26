@@ -56,7 +56,6 @@ export default {
       },
       logo: "",
       fa_name: "",
-      
     };
   },
   head() {
@@ -77,18 +76,22 @@ export default {
       return tr();
     },
   },
-   async fetch() {
+  async fetch() {
     try {
-      const res= await this.$axios.get(
+      const res = await this.$axios.get(
         `/store/${this.$route.params.store_slug}`
-      )
+      );
       this.$store.commit("payments/set_getways", res.data.getways);
       this.$store.commit("stores/set_id", res.data.id);
-      this.logo = res.data.logo;z
+      this.logo = res.data.logo;
+      z;
       this.fa_name = res.data.fa_name;
     } catch (e) {
-
-      console.log(e.response)
+      // this.$nuxt.context.store.commit("stores/set_state_store", "deactive");
+      // this.$nuxt.context.error({
+      //   statusCode:e.response.status,
+      //   message:e.response.data.message
+      // })
     }
   },
 };

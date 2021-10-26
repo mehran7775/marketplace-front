@@ -26,7 +26,9 @@
               <div class="row">
                 <div v-for="product in products" :key="product.id" class="col-4">
                   <div class="row">
-                    <Xitem :title="product.title" :image="product.thumbnail" :price="product.price" :id="product.id" :quantity="product.quantity"></Xitem>
+                    <client-only>
+                       <Xitem :title="product.title" :image="product.thumbnail" :price="product.price" :id="product.id" :quantity="product.quantity"></Xitem>
+                    </client-only>
                   </div>
                 </div>
               </div>

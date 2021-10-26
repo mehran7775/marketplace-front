@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-10 m-auto col-md-7">
         <div class="row pt-5">
-          <h1>تکمیل اطلاعات</h1>
+          <h2>تکمیل اطلاعات</h2>
         </div>
         <div class="row text-right">
           <Xform
@@ -130,14 +130,6 @@
                   <!-- <span>{{ errors[0] }}</span> -->
                 </div>
                 <!-- </ValidationProvider> -->
-
-                  <form ref="PayForm" method="post" :action="'https://coreshop.paystar.ir/api/pay/order/' + order_id">
-                      <input name="gateway_id" value="3rdqp"/>
-                  </form>
-
-
-
-
               </div>
             </template>
           </Xform>
@@ -180,6 +172,7 @@ import { ValidationProvider } from "vee-validate";
 import api from "~/services/api";
 export default {
   layout: "index",
+  middleware: "activeStore",
   head() {
     return {
       title: "صفحه تکمیل اطلاعات",
@@ -219,7 +212,7 @@ export default {
         store_id: this.$store.state.stores.id,
         products: items_second,
       };
-      this.$store.dispatch('payments/select_way_payment',items_end)
+      this.$store.dispatch("payments/select_way_payment", items_end);
     },
     do_payment() {
       let getway = null;
@@ -237,29 +230,26 @@ export default {
         getway_id: getway,
       });
     },
-      getStore(){
-        api.get(`store/${this.$route.params.store_slug}`)
-          .then(res => {
-             this.store = res.data.data
-          })
-      }
-  },
-  created(){
-    console.log(this.$store.state.payments)
-  },
-  computed: {
-    getways() {
-      return this.$store.state.payments.getways
+    getStore() {
+      api.get(`store/${this.$route.params.store_slug}`).then((res) => {
+        this.store = res.data.data;
+      });
     },
   },
-    mounted() {
-      this.getStore()
-    }
+  created() {},
+  computed: {
+    getways() {
+      return this.$store.state.payments.getways;
+    },
+  },
+  mounted() {
+    this.getStore();
+  },
 };
 </script>
 
 <style scoped lang="scss">
-h1 {
+h2 {
   color: $success;
 }
 .naming {
