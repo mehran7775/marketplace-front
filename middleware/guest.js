@@ -1,5 +1,5 @@
-export default function({store,redirect}){
-    if(store.state.auth.loggedIn){
-      redirect('/userpanel')
-    }
+export default function(context){
+  if(context.app.$cookies.get('token-buyer')){
+    context.redirect('/admin-buyer')
+  }
   }

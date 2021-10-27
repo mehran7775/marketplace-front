@@ -52,7 +52,6 @@
 import { tr } from "@/services/lang";
 export default {
   layout: "index",
-  middleware: "activeStore",
   head() {
     return {
       title: "صفحه تک محصول",

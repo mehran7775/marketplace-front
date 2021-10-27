@@ -92,7 +92,6 @@
 <script>
 export default {
   layout: "index",
-  middleware: "activeStore",
   data() {
     return {
       items: null,

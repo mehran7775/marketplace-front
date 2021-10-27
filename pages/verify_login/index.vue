@@ -1,6 +1,6 @@
 <template>
   <div class="verify-login">
-    <div class="w-50 p-5 mx-auto mt-5">
+    <div class="w-75 p-5 mx-auto mt-5">
       <div class="form-group">
         <label class="font-weight-bold">کد تایید را وارد کنید</label>
         <input type="text" name="code" class="form-control" ref="code" />
@@ -26,10 +26,11 @@
 <script>
 import { mapState } from "vuex";
 export default {
+  middleware: "guest",
   data() {
     return {
       errors: [],
-      error:""
+      error: "",
     };
   },
   computed: mapState({
@@ -42,30 +43,31 @@ export default {
         code: this.$refs.code.value,
       };
       try {
-        this.errors=[]
-        this.error=""
-        const res=await this.$nuxt.context.$axios.post("/customer/verify", data);
-        if(res.status === 200){
-          this.$cookies.set("token", res.data.data.api.token)
-          this.$router.replace('/')
+        this.errors = [];
+        this.error = "";
+        const res = await this.$nuxt.context.$axios.post(
+          "/customer/verify",
+          data
+        );
+        if (res.status === 200) {
+          this.$cookies.set("token-buyer", res.data.data.api.token);
+          this.$router.replace("/");
           this.$store.commit(
-                "open_toast",
-                {
-                  msg: res.data.message,
-                  variant: "success",
-                },
-                { root: true }
-              );
+            "open_toast",
+            {
+              msg: res.data.message,
+              variant: "success",
+            },
+            { root: true }
+          );
         }
-
       } catch (e) {
-        if (e.response.data.status==="error") {
+        if (e.response.data.status === "error") {
           Object.keys(e.response.data.data).forEach((element) => {
-            this.errors.push(e.response.data.data[element][0])
-          })
-        }
-        else{
-          this.error=e.response.data.message
+            this.errors.push(e.response.data.data[element][0]);
+          });
+        } else {
+          this.error = e.response.data.message;
         }
       }
     },

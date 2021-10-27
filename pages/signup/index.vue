@@ -40,12 +40,14 @@
         </div>
         <div class="form-group">
           <label>استان</label>
-          <input
-            v-model="form.province"
-            ref="province"
-            type="text"
-            class="form-control"
-          />
+          <select class="form-control form-control-sm" ref="province">
+            <option
+              v-for="province in provinces"
+              :key="province.id"
+              :value="province.id"
+              v-text="province.value"
+            ></option>
+          </select>
         </div>
         <div class="form-group">
           <label>شهر</label>
@@ -74,16 +76,6 @@
             class="form-control"
           />
         </div>
-        <!-- <div class="form-group">
-          <label>تکرار کلمه عبور</label>
-          <input
-            v-model="re_password"
-            ref="city"
-            type="text"
-            class="form-control"
-          />
-        </div> -->
-
         <Xbutton is_submit class="btn-sign m-auto" text="ثبت نام"></Xbutton>
         <div class="form-group"></div>
       </template>
@@ -93,9 +85,10 @@
 </template>
 
 <script>
+import { provinces } from "@/constants/Provinces";
 export default {
+  middleware: "guest",
   layout: "sign",
-  middleware: "checkAuth",
   data() {
     return {
       form: {
@@ -104,7 +97,7 @@ export default {
         phone: "",
         password: "",
         email: "",
-        province: "",
+
         city: "",
         address: "",
       },
@@ -137,20 +130,23 @@ export default {
       if (this.validate() !== true) {
         alert(this.validate());
       } else {
-        const data={
-          "first_name": this.form.first_name,
-          "last_name": this.form.last_name,
-          "email": this.form.email,
-          "phone": this.form.phone,
-          "province":this.form.province,
-          "city":this.form.city,
-          "password":this.form.password,
-          "address":this.form.address,
-        }
-        this.$nuxt.context.$axios.post("customer/register", data)
+        const data = {
+          first_name: this.form.first_name,
+          last_name: this.form.last_name,
+          email: this.form.email,
+          phone: this.form.phone,
+          province: this.$refs.province.value,
+          city: this.form.city,
+          password: this.form.password,
+          address: this.form.address,
+        };
+        this.$nuxt.context.$axios
+          .post("customer/register", data)
           .then((res) => {
-            this.$store.commit('users/set_phone_number',data.phone,{root:true})
-            this.$router.push('/verify_login')
+            this.$store.commit("users/set_phone_number", data.phone, {
+              root: true,
+            });
+            this.$router.push("/verify_login");
             if (res.status === 200) {
               this.$store.commit(
                 "open_toast",
@@ -163,7 +159,6 @@ export default {
             }
           })
           .catch((e) => {
-            console.log(e.response);
             if (e.response.data.status === "error") {
               this.$store.commit(
                 "open_toast",
@@ -186,6 +181,11 @@ export default {
             }
           });
       }
+    },
+  },
+  computed: {
+    provinces() {
+      return provinces;
     },
   },
 };

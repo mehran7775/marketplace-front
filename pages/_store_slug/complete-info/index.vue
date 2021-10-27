@@ -172,7 +172,6 @@ import { ValidationProvider } from "vee-validate";
 import api from "~/services/api";
 export default {
   layout: "index",
-  middleware: "activeStore",
   head() {
     return {
       title: "صفحه تکمیل اطلاعات",

@@ -16,7 +16,6 @@
         </h1>
         <h1 v-else-if="error.statusCode === 500" v-text="error.message">
         </h1>
-
         <h1 v-else>
           {{ otherErrors }}
         </h1>

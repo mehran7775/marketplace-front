@@ -61,13 +61,6 @@ export default {
   head() {
     return {
       titleTemplate: "فروشگاه ساز رایگان - %s",
-      meta: [
-        {
-          hid: "description",
-          name: "description",
-          content: "فروشگاه ساز رایگان ارائه کننده خدمات مختلف ",
-        },
-      ],
       script: [{ type: "application/ld+json", json: this.structuredData }],
     };
   },
@@ -87,7 +80,7 @@ export default {
       z;
       this.fa_name = res.data.fa_name;
     } catch (e) {
-      // this.$nuxt.context.store.commit("stores/set_state_store", "deactive");
+      // this.$nuxt.context.store.commit("stores/set_status_store", "deactive");
       // this.$nuxt.context.error({
       //   statusCode:e.response.status,
       //   message:e.response.data.message

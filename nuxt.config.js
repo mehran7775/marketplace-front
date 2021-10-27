@@ -1,19 +1,12 @@
 export default {
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
-        titleTemplate: 'مارکت پلیس-فروشگاه ساز رایگان-%s',
-        title: 'مارکت پلیس-فروشگاه ساز رایگان',
         meta: [{
             charset: 'utf-8'
         },
         {
             name: 'viewport',
             content: 'width=device-width, initial-scale=1'
-        },
-        {
-            hid: 'description',
-            name: 'description',
-            content: ''
         },
         {
             hid: 'google-site-verification',
@@ -45,7 +38,6 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
-        //'~/plugins/axios',
         {
             src: '~/plugins/vue-carousel.js',
             mode: 'client'

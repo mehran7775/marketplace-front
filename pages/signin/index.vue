@@ -41,8 +41,8 @@
 
 <script>
 export default {
+  middleware: "guest",
   layout: "sign",
-  middleware: "checkAuth",
   data() {
     return {
       outh_param: "",
@@ -62,48 +62,46 @@ export default {
     },
     async do_login() {
       this.errors = [];
-      // if (this.validate() == true) {
-      //   alert(this.validate());
-      // } else {
-      try {
-        const res = await this.$nuxt.context.$axios.post("customer/login", {
-          outh_param: this.outh_param,
-          password: this.password,
-          login_with_verification_code: false,
-        });
-        if (res.status === 200) {
-          this.$cookies.set("token", res.data.data.api.token);
-            console.log(res.data.data.api.token)
-            console.log(res.data.data.api.exp)
-          this.$router.replace("/");
-          this.$store.commit(
-            "open_toast",
-            {
-              msg: res.data.message,
-              variant: "success",
-            },
-            { root: true }
-          );
-        }
-      } catch (e) {
-        if (e.response.status === 401) {
-          this.$store.commit(
-            "open_toast",
-            {
-              msg: e.response.data.message,
-              variant: "error",
-            },
-            { root: true }
-          );
-        }
-        if (e.response.status === 400) {
-          console.log(Object.keys(e.response.data.data));
-          Object.keys(e.response.data.data).forEach((element) => {
-            this.errors.push(e.response.data.data[element][0]);
+      if (this.validate() !== true) {
+        alert(this.validate());
+      } else {
+        try {
+          const res = await this.$nuxt.context.$axios.post("customer/login", {
+            outh_param: this.outh_param,
+            password: this.password,
+            login_with_verification_code: false,
           });
+          if (res.status === 200) {
+            this.$cookies.set("token-buyer", res.data.data.api.token);
+            this.$router.replace("/");
+            this.$store.commit(
+              "open_toast",
+              {
+                msg: res.data.message,
+                variant: "success",
+              },
+              { root: true }
+            );
+          }
+        } catch (e) {
+          if (e.response.status === 401) {
+            this.$store.commit(
+              "open_toast",
+              {
+                msg: e.response.data.message,
+                variant: "error",
+              },
+              { root: true }
+            );
+          }
+          if (e.response.status === 400) {
+            console.log(Object.keys(e.response.data.data));
+            Object.keys(e.response.data.data).forEach((element) => {
+              this.errors.push(e.response.data.data[element][0]);
+            });
+          }
         }
       }
-      // }
     },
   },
 };
