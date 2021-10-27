@@ -77,13 +77,12 @@ export default {
       this.$store.commit("payments/set_getways", res.data.getways);
       this.$store.commit("stores/set_id", res.data.id);
       this.logo = res.data.logo;
-      z;
       this.fa_name = res.data.fa_name;
     } catch (e) {
-      this.$nuxt.context.error({
-        statusCode:e.response.status,
-        message:e.response.data.message
-      })
+      // this.$nuxt.context.error({
+      //   statusCode:e.response.status,
+      //   message:e.response.data.message
+      // })
     }
   },
 };

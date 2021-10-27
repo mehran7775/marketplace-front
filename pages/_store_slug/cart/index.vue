@@ -71,12 +71,9 @@
                 ><span class="while-price pr-1">تومان</span>
               </div>
               <div class="col-12 col-md-6 text-center continue-buy">
-                <nuxt-link
-                  :to="`/${$route.params.store_slug}/complete-info`"
-                  class="btn btn-success"
-                >
+                <button class="btn btn-success" @click="continue_buy">
                   ادامه خرید
-                </nuxt-link>
+                </button>
               </div>
             </div>
           </div>
@@ -137,7 +134,27 @@ export default {
       return whole + this.taxation - this.discount;
     },
     continue_buy() {
-      this.$router.push(`complete-info`);
+      if (this.$cookies.get("token-buyer") && this.user_data) {
+        const data = {
+          store_id: this.$store.state.stores.id,
+          name: this.user_data.first_name + " " + this.user_data.last_name,
+          email: this.user_data.email,
+          phone: this.user_data.phone,
+          address: {
+            province: this.user_data.addresses[0].province,
+            city: this.user_data.addresses[0].city,
+            address: this.user_data.addresses[0].address,
+          },
+        };
+        this.$store.dispatch("payments/select_way_payment", data);
+      } else {
+        this.$router.push(`/${this.$route.params.store_slug}/complete-info`);
+      }
+    },
+  },
+  computed: {
+    user_data() {
+      return this.$store.state.users.current_user;
     },
   },
 };

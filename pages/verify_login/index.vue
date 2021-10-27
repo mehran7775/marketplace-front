@@ -51,7 +51,17 @@ export default {
         );
         if (res.status === 200) {
           this.$cookies.set("token-buyer", res.data.data.api.token);
-          this.$router.replace("/admin-buyer");
+          const res_current=await this.$nuxt.context.$axios.get('/customer/current',
+          {
+            headers: {
+              "authorization" : "Bearer " + res.data.data.api.token
+            }
+          }
+          )
+          if(res_current.status === 200){
+            this.$store.commit('users/set_current_user', res_current.data.data,{ root:true })
+          }
+          this.$router.replace("/admin-buyer")
           this.$store.commit(
             "open_toast",
             {

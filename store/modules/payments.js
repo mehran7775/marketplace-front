@@ -15,14 +15,23 @@ const mutations = {
 
 const actions = {
     async select_way_payment({ commit }, payload) {
+        const items = JSON.parse(localStorage.getItem("cartItems"));
+        const items_second = [];
+        items.forEach((element) => {
+          items_second.push({
+            id: element.id,
+            quantity: element.count,
+          });
+        });
+        payload["products"]=items_second
         try {
             const { data } = await this.$axios.post('/order/create', payload)
             this.$store.commit('set_order_id', data.order_id)
             $nuxt.$bvModal.show('modal-prevent-closing')
         } catch (e) {
-            console.log(e)
+            console.log(e.response)
             commit('open_toast', {
-                msg: 'خطایی در ثبت اردر اتفاق افتاده است',
+                msg: e.response.data.message,
                 variant: 'error'
             }, { root: true })
 
