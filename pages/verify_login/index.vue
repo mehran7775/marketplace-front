@@ -51,7 +51,7 @@ export default {
         );
         if (res.status === 200) {
           this.$cookies.set("token-buyer", res.data.data.api.token);
-          this.$router.replace("/");
+          this.$router.replace("/admin-buyer");
           this.$store.commit(
             "open_toast",
             {
