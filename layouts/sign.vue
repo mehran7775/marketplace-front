@@ -23,7 +23,7 @@ export default {};
   box-shadow: 1px 1px 12px 0 $secondary;
   text-align: right;
   padding: 30px;
-  max-width: 330px;
-  min-width: 300px;
+  max-width: 350px;
+  min-width: 330px;
 }
 </style>

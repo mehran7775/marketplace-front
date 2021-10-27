@@ -93,8 +93,6 @@
 </template>
 
 <script>
-import api from "~/services/api";
-
 export default {
   layout: "sign",
   middleware: "checkAuth",
@@ -139,7 +137,6 @@ export default {
       if (this.validate() !== true) {
         alert(this.validate());
       } else {
-        console.log(this.form)
         const data={
           "first_name": this.form.first_name,
           "last_name": this.form.last_name,
@@ -150,10 +147,9 @@ export default {
           "password":this.form.password,
           "address":this.form.address,
         }
-        // console.log(data)
-        console.log(JSON.parse(JSON.stringify(data)))
         this.$nuxt.context.$axios.post("customer/register", data)
           .then((res) => {
+            this.$store.commit('users/set_phone_number',data.phone,{root:true})
             this.$router.push('/verify_login')
             if (res.status === 200) {
               this.$store.commit(

@@ -5,7 +5,7 @@
         <div class="form-group">
           <label>نام کاربری</label>
           <input
-            v-model="auth_path"
+            v-model="outh_param"
             ref="auth_path"
             type="text"
             class="form-control"
@@ -26,7 +26,14 @@
           class="btn-sign m-auto"
           text="ورود"
         ></Xbutton>
-        <div class="form-group"></div>
+        <div v-if="errors.length > 0" class="text-center pt-3">
+          <p
+            v-for="error in errors"
+            :key="error"
+            v-text="error"
+            class="text-danger"
+          ></p>
+        </div>
       </template>
     </Xform>
   </div>
@@ -38,40 +45,65 @@ export default {
   middleware: "checkAuth",
   data() {
     return {
-      auth_path: "",
+      outh_param: "",
       password: "",
+      errors: [],
     };
   },
   methods: {
-    async do_login() {
-      try {
-        await this.$auth
-          .loginWith("laravelJWT", {
-            data: {
-              outh_param: this.auth_path,
-              password: this.password,
-              login_with_verification_code: false,
-            },
-          })
-          .then((res) => {
-            this.$bvToast.toast("شما با موفقیت لاگین شدید", {
-              title: "ورود",
-              variant: "success",
-              toaster: "b-toaster-top-center",
-              solid: true,
-              //  autoHideDelay: 10000,
-            });
-          });
-      } catch (e) {
-        console.log(e);
-        this.$bvToast.toast("خطایی در مورد اتفاق افتاده است", {
-          title: "ورود",
-          variant: "danger",
-          toaster: "b-toaster-top-center",
-          solid: true,
-          //  autoHideDelay: 10000,
-        });
+    validate() {
+      if (this.auth_path == "") {
+        return "شماره تلفن یا نام کاربری الزامی است";
       }
+      if (this.password == "") {
+        return "کلمه عبور الزامی است";
+      }
+      return true;
+    },
+    async do_login() {
+      this.errors = [];
+      // if (this.validate() == true) {
+      //   alert(this.validate());
+      // } else {
+      try {
+        const res = await this.$nuxt.context.$axios.post("customer/login", {
+          outh_param: this.outh_param,
+          password: this.password,
+          login_with_verification_code: false,
+        });
+        if (res.status === 200) {
+          this.$cookies.set("token", res.data.data.api.token);
+            console.log(res.data.data.api.token)
+            console.log(res.data.data.api.exp)
+          this.$router.replace("/");
+          this.$store.commit(
+            "open_toast",
+            {
+              msg: res.data.message,
+              variant: "success",
+            },
+            { root: true }
+          );
+        }
+      } catch (e) {
+        if (e.response.status === 401) {
+          this.$store.commit(
+            "open_toast",
+            {
+              msg: e.response.data.message,
+              variant: "error",
+            },
+            { root: true }
+          );
+        }
+        if (e.response.status === 400) {
+          console.log(Object.keys(e.response.data.data));
+          Object.keys(e.response.data.data).forEach((element) => {
+            this.errors.push(e.response.data.data[element][0]);
+          });
+        }
+      }
+      // }
     },
   },
 };
@@ -79,6 +111,4 @@ export default {
 
 
 <style lang="scss" scoped>
-.btn-sign {
-}
 </style>

@@ -1,6 +1,6 @@
 
 const state = () => ({
-    phone_number:'dd'
+    phone_number:null
 });
 
 
