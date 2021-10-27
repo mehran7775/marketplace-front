@@ -80,7 +80,6 @@ export default {
       z;
       this.fa_name = res.data.fa_name;
     } catch (e) {
-      this.$nuxt.context.store.commit("stores/set_status_store", "deactive");
       this.$nuxt.context.error({
         statusCode:e.response.status,
         message:e.response.data.message
