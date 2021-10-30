@@ -5,6 +5,12 @@
                 <Xbutton variant="success" v-text="'بروزرسانی تنظیمات'"></Xbutton>
             </div>
         </page-title>
+        <div class="alert alert-info" role="alert" v-if="message">
+            {{ message }}
+        </div>
+        <div class="alert alert-danger" role="alert" v-if="error">
+            {{ error }}
+        </div>
         <div class="bg-white shadow-sm py-4 my-2 px-5" style="border-radius: 10px;">
             <template v-for="port in ports">
                 <hr>
@@ -38,6 +44,8 @@ export default {
         return {
             GatewayTypes,
             PortTypes,
+            message: null,
+            error: null,
             gateways: null,
             ports : null,
             formData: {
@@ -93,10 +101,10 @@ export default {
 
             api.post('store/update-gateways/' + this.$route.params.store_slug, form_data, this.$cookies.get('token'))
                 .then(response => {
-                    alert(response.data.message)
+                    this.message = response.data.message
                     this.getData()
                 }).catch(({response}) => {
-                alert(response.data.data[Object.keys(response.data.data)[0]])
+                this.error = response.data.data[Object.keys(response.data.data)[0]]
             })
         }
     }

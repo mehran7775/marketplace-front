@@ -5,6 +5,12 @@
                 <Xbutton variant="success" v-text="'بروزرسانی تنظیمات'"></Xbutton>
             </div>
         </page-title>
+        <div class="alert alert-info" role="alert" v-if="message">
+            {{ message }}
+        </div>
+        <div class="alert alert-danger" role="alert" v-if="error">
+            {{ error }}
+        </div>
         <div class="bg-white shadow-sm py-4 my-2 px-5" style="border-radius: 10px;">
             <div class="row justify-content-around align-content-center pb-3">
                 <div class="col-4 col-md-4 my-2">
@@ -28,14 +34,17 @@
                     />
                 </div>
                 <div class="col-4 col-md-4 my-2">
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="description"
-                        ref="description"
-                        placeholder="توضیحات"
-                        v-model="formData.description"
-                    />
+                                            <textarea
+                                                type="text"
+                                                class="form-control"
+                                                id="description"
+                                                ref="description"
+                                                placeholder="توضیحات"
+
+                                                v-model="formData.description"
+                                            >
+
+                                            </textarea>
                 </div>
                 <div class="col-4 col-md-4 my-2">
                     <select
@@ -45,7 +54,7 @@
                         v-model="formData.province"
                     >
                         <option :value="null">انتخاب استان</option>
-                        <option :key="item.key" v-for="item in provinces" :value="item.id">{{item.value}}</option>
+                        <option :key="item.key" v-for="item in provinces" :value="item.id">{{ item.value }}</option>
                     </select>
                 </div>
                 <div class="col-4 col-md-4 my-2">
@@ -144,6 +153,8 @@ export default {
         return {
             provinces,
             store: {},
+            message: null,
+            error: null,
             formData: {
                 fa_name: null,
                 en_name: null,
@@ -195,10 +206,10 @@ export default {
             }
             api.post('store/update/' + this.$route.params.store_slug, form_data, this.$cookies.get('token'))
                 .then(response => {
-                    alert(response.data.message)
+                    this.message = response.data.message
                     this.getData()
                 }).catch(({response}) => {
-                alert(response.data.data[Object.keys(response.data.data)[0]])
+                this.error = response.data.data[Object.keys(response.data.data)[0]]
             })
         }
     }

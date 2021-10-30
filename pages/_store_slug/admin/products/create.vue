@@ -3,8 +3,15 @@
         <page-title title_text="افزودن محصول جدید" icon="product">
             <button class="btn btn-success shadow-sm mx-2 px-4 py-2" @click="createProduct" variant="primary"
                     style="border-radius: 20px; border-color: #bbb;"
-            >ثبت محصول</button>
+            >ثبت محصول
+            </button>
         </page-title>
+        <div class="alert alert-info" role="alert" v-if="message">
+            {{ message }}
+        </div>
+        <div class="alert alert-danger" role="alert" v-if="error">
+            {{ error }}
+        </div>
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -14,6 +21,7 @@
                                 <b-form-group label="عنوان">
                                     <input class="form-control" v-model="formData.title"/>
                                 </b-form-group>
+                                <small v-if="errors.title" class="text-danger px-2">{{errors.title}}</small>
                             </div>
                         </div>
                         <div class="row">
@@ -25,6 +33,7 @@
                             <div class="col-sm">
                                 <b-form-group label="تعداد">
                                     <input type="number" class="form-control" v-model="formData.quantity"/>
+                                    <small v-if="errors.quantity" class="text-danger px-2">{{errors.quantity}}</small>
                                 </b-form-group>
                             </div>
                         </div>
@@ -50,6 +59,7 @@
                                 <b-form-group label="تصویر محصول">
                                     <b-form-file placeholder="تصویر محصول" class="form-control"
                                                  v-model="formData.image"></b-form-file>
+                                    <small v-if="errors.image" class="text-danger px-2">{{errors.image}}</small>
                                 </b-form-group>
                             </div>
                         </div>
@@ -86,12 +96,15 @@
 <script>
 import PageTitle from "~/components/main/pageTitle";
 import api from "~/services/api";
+
 export default {
     name: "create",
     components: {PageTitle},
     layout: "main-content",
     data() {
         return {
+            message: null,
+            error: null,
             formData: {
                 title: null,
                 store_id: this.$route.params.store_slug,
@@ -104,34 +117,57 @@ export default {
                 discount_max_amount: 0,
                 image: null,
                 description: null
+            },
+            errors: {
+                title: null,
+                image: null,
+                quantity: null
             }
         }
     },
     methods: {
+        validate() {
+            let res = true
+            if (!this.formData.title) {
+                this.errors.title = 'عنوان الزامی است'
+                res = false
+            }
+            if (!this.formData.image) {
+                this.errors.image = 'تصویر محصول الزامی است'
+                res = false
+            }
+            if (!this.formData.quantity) {
+                this.errors.quantity = 'تعداد محصول الزامی است'
+                res = false
+            }
+            return res
+        },
         createProduct() {
-            let form_data = new FormData();
-            for (let key in this.formData) {
-                if (this.formData[key] === true || this.formData[key] === false) {
-                    if (this.formData[key] === true) {
-                        form_data.append(key, 1);
-                    }
-                    if (this.formData[key] === false) {
-                        form_data.append(key, 0);
-                    }
-                } else {
-                    if (this.formData[key] !== null) {
-                        form_data.append(key, this.formData[key]);
+            if (this.validate()) {
+                let form_data = new FormData();
+                for (let key in this.formData) {
+                    if (this.formData[key] === true || this.formData[key] === false) {
+                        if (this.formData[key] === true) {
+                            form_data.append(key, 1);
+                        }
+                        if (this.formData[key] === false) {
+                            form_data.append(key, 0);
+                        }
+                    } else {
+                        if (this.formData[key] !== null) {
+                            form_data.append(key, this.formData[key]);
+                        }
                     }
                 }
+                if (this.formData.image) {
+                    form_data.append('images[0]', this.formData.image)
+                }
+                api.post('product/create', form_data, this.$cookies.get('token')).then(response => {
+                    this.message = response.data.message
+                }).catch(({response}) => {
+                    this.error = response.data.data[Object.keys(response.data.data)[0]]
+                })
             }
-            if (this.formData.image){
-                form_data.append('images[0]',this.formData.image)
-            }
-            api.post('product/create', form_data,this.$cookies.get('token')).then(response => {
-                alert(response.data.message)
-            }).catch(({response}) => {
-                alert(response.data.data[Object.keys(response.data.data)[0]])
-            })
         }
     }
 }
