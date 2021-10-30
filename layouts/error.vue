@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col">
+      <div class="col-9 m-auto text-center pt-5">
         <h1 v-if="error.statusCode === 404">
           {{ pageNotFound }}
         </h1>
@@ -14,6 +14,8 @@
         <h1 v-else-if="error.statusCode === 401">
           {{ unauthorizedError }}
         </h1>
+        <h1 v-else-if="error.statusCode === 500" v-text="error.message">
+        </h1>
         <h1 v-else>
           {{ otherErrors }}
         </h1>
@@ -24,7 +26,6 @@
 
 <script>
 export default {
-  layout: "index",
   props: {
     error: {
       type: Object,

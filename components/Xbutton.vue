@@ -3,6 +3,7 @@
     :type="is_submit ? 'submit' : 'button'"
     :class="`mx-1 btn btn-${variant}`"
     @click="on_click"
+    :disabled="disabled"
   >
     <div class="row mx-1">
       <div v-if="text != ''"  class="px-2">
@@ -38,6 +39,10 @@ export default {
       type: Function,
       default: () => {},
     },
+    disabled:{
+      type:Boolean,
+      default: false
+    }
   },
 };
 </script>

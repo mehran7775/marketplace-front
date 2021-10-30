@@ -10,13 +10,15 @@
       </div> -->
       <div class="mt-4">
         <div class="carousel-wrapper d-none d-md-block">
-            <carousel :per-page="per_page" v-bind="options"
-            dir="rtl"
-            >
-              <slide v-for="product in products" :key="product.id" class="img-wrapper">
-                <Xitem :title="product.title" :image="product.thumbnail" :price="product.price" :id="product.id"></Xitem>
-              </slide>
-            </carousel>
+          <client-only>
+              <carousel :per-page="per_page" v-bind="options"
+              dir="rtl"
+              > 
+                <slide v-for="product in products" :key="product.id" class="img-wrapper">
+                  <Xitem :title="product.title" :image="product.thumbnail" :price="product.price" :id="product.id" :quantity="product.quantity"></Xitem>
+                </slide>
+              </carousel>
+            </client-only>
         </div>
         <div>
           <div class="d-md-none">
@@ -24,7 +26,9 @@
               <div class="row">
                 <div v-for="product in products" :key="product.id" class="col-4">
                   <div class="row">
-                    <Xitem :title="product.title" :image="product.thumbnail" :price="product.price" :id="product.id"></Xitem>
+                    <client-only>
+                       <Xitem :title="product.title" :image="product.thumbnail" :price="product.price" :id="product.id" :quantity="product.quantity"></Xitem>
+                    </client-only>
                   </div>
                 </div>
               </div>
@@ -43,7 +47,7 @@ export default {
   data() {
     return {
       options: {
-        loop: true,
+        // loop: true,
         paginationEnabled: false
       },
       per_page: 3,

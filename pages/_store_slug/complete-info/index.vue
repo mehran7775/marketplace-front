@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-10 m-auto col-md-7">
         <div class="row pt-5">
-          <h1>تکمیل اطلاعات</h1>
+          <h2>تکمیل اطلاعات</h2>
         </div>
         <div class="row text-right">
           <Xform
@@ -130,14 +130,6 @@
                   <!-- <span>{{ errors[0] }}</span> -->
                 </div>
                 <!-- </ValidationProvider> -->
-
-                  <form ref="PayForm" method="post" :action="'https://coreshop.paystar.ir/api/pay/order/' + order_id">
-                      <input name="gateway_id" value="3rdqp"/>
-                  </form>
-
-
-
-
               </div>
             </template>
           </Xform>
@@ -177,7 +169,6 @@
 
 <script>
 import { ValidationProvider } from "vee-validate";
-import api from "~/services/api";
 export default {
   layout: "index",
   head() {
@@ -197,7 +188,8 @@ export default {
   },
   methods: {
     select_way_payment() {
-      const data_user = {
+      const data = {
+        store_id: this.$store.state.stores.id,
         name: this.$refs.fname.value + " " + this.$refs.lname.value,
         email: this.$refs.email.value,
         address: {
@@ -207,19 +199,7 @@ export default {
         },
         phone: this.$refs.phone.value,
       };
-      const items = JSON.parse(localStorage.getItem("cartItems"));
-      const items_second = [];
-      items.forEach((element) => {
-        items_second.push({
-          id: element.id,
-          quantity: element.count,
-        });
-      });
-      const items_end = {
-        store_id: this.$store.state.stores.id,
-        products: items_second,
-      };
-      this.$store.dispatch('payments/select_way_payment',items_end)
+      this.$store.dispatch("payments/select_way_payment", data);
     },
     do_payment() {
       let getway = null;
@@ -237,29 +217,18 @@ export default {
         getway_id: getway,
       });
     },
-      getStore(){
-        api.get(`store/${this.$route.params.store_slug}`)
-          .then(res => {
-             this.store = res.data.data
-          })
-      }
   },
-  created(){
-    console.log(this.$store.state.payments)
-  },
+  created() {},
   computed: {
     getways() {
-      return this.$store.state.payments.getways
+      return this.$store.state.payments.getways;
     },
   },
-    mounted() {
-      this.getStore()
-    }
 };
 </script>
 
 <style scoped lang="scss">
-h1 {
+h2 {
   color: $success;
 }
 .naming {

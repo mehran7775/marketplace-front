@@ -36,9 +36,13 @@
                 <div id="menu_sidebar">
                   <ul>
                     <li><nuxt-link to="#">فروشگاه ها</nuxt-link></li>
-                    <li v-if="$can('manage','gateway-manager')"><nuxt-link to="/admin/ports">پورت ها</nuxt-link></li>
+                    <li v-if="$can('manage', 'gateway-manager')">
+                      <nuxt-link to="/admin/ports">پورت ها</nuxt-link>
+                    </li>
                     <li><nuxt-link to="#">درگاه ها</nuxt-link></li>
-                     <li v-if="$can('manage','user-manager')"><nuxt-link to="/admin/users">کاربران</nuxt-link></li>
+                    <li v-if="$can('manage', 'user-manager')">
+                      <nuxt-link to="/admin/users">کاربران</nuxt-link>
+                    </li>
                   </ul>
                 </div>
               </div>

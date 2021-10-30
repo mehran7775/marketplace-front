@@ -1,19 +1,29 @@
 <template>
   <div id="item" @mouseover="item_hover()" @mouseleave="is_hover = false">
     <h5 v-text="title" class="font-weight-bold">کفش مردانه</h5>
-    <nuxt-link :to="`${$route.params.store_slug}/${id}`" class="d-flex align-items-center justify-content-center">
-      <img :src="image" alt="تصویر محصول" />
+    <nuxt-link
+      :to="`${$route.params.store_slug}/${id}`"
+      class="d-flex align-items-center justify-content-center"
+    >
+      <img :src="image ? image : '/images/default-image.png'" alt="تصویر محصول" />
     </nuxt-link>
     <div id="box_hover">
       <div v-if="is_hover" class="d-flex">
         <Xbutton
-          :on_click="() => {$router.push(`${$route.params.store_slug}/${id}`)}"
+          :on_click="
+            () => {
+              $router.push(`${$route.params.store_slug}/${id}`);
+            }
+          "
           variant="outline-success"
           :text="lang.btn.detail"
           class="text"
         ></Xbutton>
-        <Xbutton variant="success" :text="lang.btn.add"
-         :on_click="add_item"
+        <Xbutton
+          variant="success"
+          :text="lang.btn.add"
+          :on_click="add_item"
+          :disabled="quantity > 0 ? false : true"
         ></Xbutton>
       </div>
       <div v-if="!is_hover" class="price">
@@ -39,16 +49,22 @@ export default {
       default: "",
     },
     price: {
-      type:String,
+      type: String,
       default: 0,
     },
-    id:{
+    id: {
       type: String,
       default: 0,
     },
     mt: {
       type: Boolean,
       default: false,
+    },
+    quantity: {
+      type: {
+        type: Number,
+        default: 0,
+      },
     },
   },
   computed: {
@@ -67,9 +83,16 @@ export default {
         this.is_hover = true;
       }
     },
-    add_item(){
-        this.$store.dispatch("products/addProductToCart",{id:this.id,name:this.title,price:this.price,img:this.image})
-    }
+    add_item() {
+      let product = {
+        id: this.id,
+        name: this.title,
+        price: this.price,
+        img: this.image,
+        quantity: this.quantity,
+      }
+      this.$store.dispatch("products/addProductToCart",product);
+    },
   },
 };
 </script>
@@ -98,7 +121,6 @@ export default {
     padding: 10px;
     max-width: 240px;
     height: 120px;
-  
     img {
       max-width: 100%;
       max-height: 100%;
@@ -120,7 +142,8 @@ export default {
     }
   }
 }
-#item:hover,#item:focus-within {
+#item:hover,
+#item:focus-within {
   border: 1px solid $border_success;
   cursor: grab;
 }

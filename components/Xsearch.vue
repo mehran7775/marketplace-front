@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    <input type="search" placeholder="جستو جو کنید ..." />
+    <input type="search" placeholder="جستجو کنید ..." />
     <fa icon="search" :title="lang.svg.search" class="fa-lg ml-2 mr-4"></fa>
   </div>
 </template>

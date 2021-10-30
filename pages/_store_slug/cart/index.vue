@@ -71,20 +71,15 @@
                 ><span class="while-price pr-1">تومان</span>
               </div>
               <div class="col-12 col-md-6 text-center continue-buy">
-                <!--<Xbutton
-                  class="px-5"
-                  text="ادامه خرید"
-                  :on_click="continue_buy"
-                ></Xbutton>-->
-                  <nuxt-link :to="'/' + $route.params.store_slug + '/complete-info'" class="btn btn-success">
-                      ادامه خرید
-                  </nuxt-link>
+                <button class="btn btn-success" @click="continue_buy">
+                  ادامه خرید
+                </button>
               </div>
             </div>
           </div>
         </div>
         <div v-else class="row my-4 mx-auto text-center p-4 bg-white">
-          <p class="font-weight-bold">سبد خرید شما خالی است</p>
+          <p class="font-weight-bold" v-text="'سبد خرید شما خالی است'"></p>
         </div>
       </div>
     </div>
@@ -131,7 +126,7 @@ export default {
     compute_whole_price(items) {
       let sum = 0;
       items.forEach((element) => {
-        sum += element.price * element.count;
+        sum += parseInt(element.price.replace(",", "")) * element.count;
       });
       return sum;
     },
@@ -139,7 +134,27 @@ export default {
       return whole + this.taxation - this.discount;
     },
     continue_buy() {
-      this.$router.push(`complete-info`);
+      if (this.$cookies.get("token-buyer") && this.user_data) {
+        const data = {
+          store_id: this.$store.state.stores.id,
+          name: this.user_data.first_name + " " + this.user_data.last_name,
+          email: this.user_data.email,
+          phone: this.user_data.phone,
+          address: {
+            province: this.user_data.addresses[0].province,
+            city: this.user_data.addresses[0].city,
+            address: this.user_data.addresses[0].address,
+          },
+        };
+        this.$store.dispatch("payments/select_way_payment", data);
+      } else {
+        this.$router.push(`/${this.$route.params.store_slug}/complete-info`);
+      }
+    },
+  },
+  computed: {
+    user_data() {
+      return this.$store.state.users.current_user;
     },
   },
 };

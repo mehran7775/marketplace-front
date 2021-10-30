@@ -6,7 +6,6 @@
     <fa icon="shopping-basket" :title="lang.svg.basket"></fa>
   </div>
 </template>
-
 <script>
 import { tr } from "@/services/lang";
 
@@ -21,11 +20,14 @@ export default {
       return tr();
     },
   },
-  mounted() {
-    this.$nextTick(function () {
+  created() {
+    if (process.browser) {
       if (localStorage.getItem("cartItems")) {
         this.count = JSON.parse(localStorage.getItem("cartItems")).length;
       }
+    }
+    this.$nuxt.$on("refresh_basket", (count) => {
+      this.count = count;
     });
   },
 };
