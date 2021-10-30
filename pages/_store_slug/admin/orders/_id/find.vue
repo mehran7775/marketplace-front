@@ -5,6 +5,12 @@
                 <Xbutton class="px-4" text="ذخیره تغییرات"></Xbutton>
             </div>
         </page-title>
+        <div class="alert alert-info" role="alert" v-if="message">
+            {{ message }}
+        </div>
+        <div class="alert alert-danger" role="alert" v-if="error">
+            {{ error }}
+        </div>
         <div class="row">
             <div class="col-12">
                 <div class="card" v-if="order">
@@ -48,6 +54,8 @@ export default {
     layout : "main-content",
     data(){
         return {
+            message: null,
+            error: null,
             OrderStatus,
             order : null,
             form : {
@@ -68,9 +76,9 @@ export default {
                 status : this.form.status
             })
                 .then(response => {
-                    alert(response.data.message)
+                    this.message = response.data.message
                 }).catch(({response}) => {
-                alert(response.data.data[Object.keys(response.data.data)[0]])
+                this.error = response.data.data[Object.keys(response.data.data)[0]]
             })
         }
     },

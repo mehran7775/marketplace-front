@@ -5,6 +5,12 @@
                 <Xbutton variant="success"  v-text="'بروزرسانی تنظیمات'"></Xbutton>
             </div>
         </page-title>
+        <div class="alert alert-info" role="alert" v-if="message">
+            {{ message }}
+        </div>
+        <div class="alert alert-danger" role="alert" v-if="error">
+            {{ error }}
+        </div>
         <div class="bg-white shadow-sm py-4 my-2 px-5" style="border-radius: 10px;">
             <b-form-row>
                 <b-col col="sm">
@@ -44,7 +50,7 @@
                     </b-form-group>
                 </b-col>
             </b-form-row>
-            <b-form-row>
+            <!--<b-form-row>
                 <b-col col="sm">
                     <b-form-group label="شیوه پرداخت شهر خود">
                         <select class="form-control" v-model="store.shipping_setting.own_city_payment_method">
@@ -67,7 +73,7 @@
                         </select>
                     </b-form-group>
                 </b-col>
-            </b-form-row>
+            </b-form-row>-->
         </div>
     </div>
 </template>
@@ -82,6 +88,8 @@ export default {
     layout: "main-content",
     data() {
         return {
+            message: null,
+            error: null,
             one : 1,
             zero : 0,
             store: {
@@ -102,10 +110,10 @@ export default {
         updateSetting() {
             api.post('store/update-shipping/' + this.$route.params.store_slug, this.store.shipping_setting, this.$cookies.get('token'))
                 .then(response => {
-                    alert(response.data.message)
+                    this.message = response.data.message
                     this.getData()
                 }).catch(({response}) => {
-                alert(response.data.data[Object.keys(response.data.data)[0]])
+                this.error = response.data.data[Object.keys(response.data.data)[0]]
             })
         }
     }
