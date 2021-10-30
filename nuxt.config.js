@@ -17,11 +17,6 @@ export default {
             content: 'telephone=no'
         }
         ],
-        link: [{
-            rel: 'icon',
-            type: 'image/x-icon',
-            href: '/favicon.ico'
-        }],
         script: [{
             src: "https://www.google-analytics.com/analytics.js",
             async: true,

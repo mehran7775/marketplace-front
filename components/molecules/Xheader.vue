@@ -1,5 +1,5 @@
 <template>
-  <header class="d-flex flex-column-reverse d-md-flex flex-md-row">
+  <header class="d-flex flex-column-reverse align-items-center d-md-flex flex-md-row">
     <div class="d-flex align-items-center" id="brand_index">
       <Xbrand :logo="logo"></Xbrand>
       <div class="text-right">
@@ -25,11 +25,11 @@
         id="setting_index"
       >
         <nuxt-link :to="`/${$route.params.store_slug}/cart`"> <Xbasket class="mx-1"></Xbasket></nuxt-link>
-        <nuxt-link :to="`/${$route.params.store_slug}/settings`">
+        <!-- <nuxt-link :to="`/${$route.params.store_slug}/settings`">
           <span
             ><fa icon="cog" class="fa-lg mx-1" :title="lang.svg.settings"></fa
           ></span>
-        </nuxt-link>
+        </nuxt-link> -->
         <nuxt-link :to="`/${$route.params.store_slug}`">
           <span
             >
