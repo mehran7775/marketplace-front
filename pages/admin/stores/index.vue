@@ -2,57 +2,6 @@
     <div>
         <page-title title_text="فروشگاه ها" icon="store">
         </page-title>
-        <div class="bg-white shadow-sm p-3 my-3" style="border-radius: 10px;">
-            <div class="row">
-                <div class="col-sm my-2">
-                    <input class="form-control" placeholder="عنوان محصول" v-model="filter_title">
-                </div>
-                <!--<div class="col-sm my-2">
-                    <select class="form-control" v-model="filter_status">
-                        <option></option>
-                    </select>
-                </div>-->
-                <div class="col-sm my-2">
-                    <!--   <div class="form-group my-0">
-                           <datePicker
-                               color="#00c1a4"
-                               format="YYYY-MM-DD HH:mm:ss"
-                               display-format="dddd jDD jMMMM jYYYY HH:mm"
-                               input-class="form-control"
-                               name="filter_from_date"
-                               placeholder="از تاریخ"
-                               clearable
-                               v-model="filter_from_date"
-                               type="datetime"/>
-
-                       </div>-->
-                </div>
-                <div class="col-sm my-2">
-                    <!-- <div class="form-group my-0">
-                         <datePicker
-                             color="#00c1a4"
-                             format="YYYY-MM-DD HH:mm:ss"
-                             display-format="dddd jDD jMMMM jYYYY HH:mm"
-                             input-class="form-control"
-                             name="filter_from_date"
-                             placeholder="تا تاریخ"
-                             clearable
-                             v-model="filter_to_date"
-                             type="datetime"/>
-                     </div>-->
-                </div>
-                <div class="col-sm my-2">
-                    <div>
-                        <button :class="query ? 'btn btn-success mr-2' : 'btn btn-success btn-block'" style="border-radius: 10px;"
-                                @click="get_data(stores.first_page_url)">اعمال فیلتر
-                        </button>
-                        <button class="btn btn-danger mr-3" style="border-radius: 10px;"
-                                @click="reset_and_get" v-if="query">حذف فیلتر
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="bg-white shadow-sm py-3 my-2" style="border-radius: 10px;" v-if="stores">
 
             <div class="px-3">
@@ -70,9 +19,13 @@
                         <tbody>
                         <tr v-for="(store, index) in stores.data" :key="index">
                             <td>{{ store.id }}</td>
-                            <td>{{ store.title }}</td>
+                            <td>{{ store.fa_name }}</td>
                             <td>{{ store.create_at }}</td>
                             <td>
+                                <b-badge :variant="StoreStatus.getStatus(store.status).variant">
+                                    {{ StoreStatus.getStatus(store.status).text }}
+                                </b-badge>
+
                             </td>
                             <td>
                                 <nuxt-link class="btn p-0 m-0 text-danger" :to="'stores/' + store.id + '/find'">
@@ -99,6 +52,7 @@ import pagination from "~/components/pagination";
 import PageTitle from "~/components/main/pageTitle";
 import api from "~/services/api";
 //import datePicker from 'vue-persian-datetime-picker'
+import StoreStatus from "~/constants/StoreStatus";
 export default {
     name: "index",
     components: {
@@ -109,6 +63,7 @@ export default {
     layout: "main-content",
     data() {
         return {
+            StoreStatus,
             filter_title: null,
             filter_from_date: null,
             filter_to_date: null,

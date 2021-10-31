@@ -14,7 +14,7 @@ export default {
       });
       if(data.status==="ok"){
           this.$cookies.set("token", this.$route.params.token);
-          this.$router.push('/seller/stores')
+          this.$router.push('/')
       }
     } catch (e) {
         console.log(e)
