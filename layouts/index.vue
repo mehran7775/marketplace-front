@@ -79,10 +79,10 @@ export default {
       this.logo = res.data.logo;
       this.fa_name = res.data.fa_name;
     } catch (e) {
-      // this.$nuxt.context.error({
-      //   statusCode:e.response.status,
-      //   message:e.response.data.message
-      // })
+      this.$nuxt.context.error({
+        statusCode:e.response.status,
+        message:e.response.data.message
+      })
     }
   },
 };
