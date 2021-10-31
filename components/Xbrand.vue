@@ -1,6 +1,6 @@
 <template>
   <nuxt-link :to="`/${$route.params.store_slug}`" class="brand">
-    <img :src="logo ? logo : '/icon.png'" width="24" height="24" alt="تصویر لوگو">
+    <img :src="logo ? logo : '/images/logo.svg'" alt="تصویر لوگو">
   </nuxt-link>
 </template>
 
@@ -24,16 +24,15 @@ export default {
 .brand {
   width: max-content;
   height: max-content;
-  padding: 10px 15px;
+  padding: 15px 15px;
   background-color: whitesmoke;
   border-radius: 100%;
   border: 2px solid $border_success;
-
-  svg {
-    font-size: 1.5rem;
-    color: $svg_color;
-    cursor: pointer;
-
+  img{
+    max-width: 48px;
+    min-width: 32px;
+    min-height: 32px;
+    max-height: 42px;
   }
 }
 </style>

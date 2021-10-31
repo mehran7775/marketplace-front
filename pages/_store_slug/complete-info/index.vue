@@ -6,133 +6,145 @@
           <h2>تکمیل اطلاعات</h2>
         </div>
         <div class="row text-right">
-          <Xform
-            :sub_form="select_way_payment"
-            legend="اطلاعات خودرا وارد کنید"
-          >
-            <template #content>
-              <div class="form-group px-3 pt-3">
-                <!-- <ValidationProvider rules="required|alpha" v-slot="{ errors }"> -->
-                <div class="row">
-                  <div class="col-12">
-                    <div class="row">
-                      <div class="d-flex w-100 justify-content-between">
-                        <div class="naming">
-                          <input
-                            class="form-control"
-                            type="text"
-                            id="fname"
-                            name="fname"
-                            ref="fname"
-                            placeholder="نام"
-                          />
-                        </div>
-                        <div class="naming">
-                          <input
-                            class="form-control"
-                            type="text"
-                            id="lname"
-                            name="lname"
-                            ref="lname"
-                            placeholder="نام خانوادگی"
-                          />
+          <ValidationObserver ref="validationObserver">
+            <Xform
+              :sub_form="select_way_payment"
+              legend="اطلاعات خودرا وارد کنید"
+            >
+              <template #content>
+                <div class="form-group px-3 pt-3">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="d-flex w-100 justify-content-between">
+                          <div class="naming">
+                            <input
+                              class="form-control"
+                              type="text"
+                              name="fname"
+                              v-model="form.first_name"
+                              placeholder="نام"
+                            />
+                          </div>
+                          <div class="naming">
+                            <input
+                              class="form-control"
+                              type="text"
+                              name="lname"
+                              v-model="form.last_name"
+                              placeholder="نام خانوادگی"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-12 mt-2">
-                    <div class="row">
-                      <div class="w-100">
-                        <input
-                          class="form-control"
-                          type="email"
-                          id="email"
-                          name="email"
-                          ref="email"
-                          placeholder="ایمیل"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 mt-2">
-                    <div class="row">
-                      <div class="w-100">
-                        <input
-                          class="form-control"
-                          type="text"
-                          id="phone"
-                          name="phone"
-                          ref="phone"
-                          placeholder="موبایل"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 mt-2">
-                    <div class="row">
-                      <div class="d-flex w-100 justify-content-between">
-                        <div class="naming">
+                    <div class="col-12 mt-2">
+                      <div class="row">
+                        <div class="w-100">
                           <input
                             class="form-control"
-                            type="text"
-                            id="province"
-                            name="province"
-                            ref="province"
-                            placeholder="استان"
-                          />
-                        </div>
-                        <div class="naming">
-                          <input
-                            class="form-control"
-                            type="text"
-                            id="city"
-                            name="city"
-                            ref="city"
-                            placeholder="شهر"
+                            type="email"
+                            name="email"
+                            v-model="form.email"
+                            placeholder="ایمیل"
                           />
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-12 mt-2">
-                    <div class="row">
-                      <div class="w-100">
-                        <input
-                          class="form-control"
-                          type="text"
-                          id="address"
-                          name="address"
-                          ref="address"
-                          placeholder="آدرس"
-                        />
+                  <div class="row">
+                    <div class="col-12 mt-2">
+                      <div class="row">
+                        <div class="w-100">
+                          <ValidationProvider
+                            rules="required|digits:11"
+                            v-slot="{ errors }"
+                          >
+                            <input
+                              :class="[
+                                errors[0] ? 'xborder-danger' : null,
+                                'form-control',
+                              ]"
+                              type="text"
+                              id="phone"
+                              name="phone"
+                              ref="phone"
+                              placeholder="موبایل"
+                              v-model="form.phone"
+                              maxlength="11"
+                            />
+                            <div v-if="errors[0]" class="py-2 pr-2">
+                              <span class="text-danger">{{ errors[0] }}</span>
+                            </div>
+                          </ValidationProvider>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mt-2">
+                      <div class="row">
+                        <div class="d-flex w-100 justify-content-between">
+                          <div class="naming">
+                            <select
+                              :class="[
+                                valid_province ? 'xborder-danger' : null,
+                                'form-control form-control-sm',
+                              ]"
+                              ref="province"
+                              @change="validate_province"
+                            >
+                              <option value="">انتخاب استان</option>
+                              <option
+                                v-for="province in provinces"
+                                :key="province.id"
+                                :value="province.id"
+                                v-text="province.value"
+                              ></option>
+                            </select>
+                            <div v-if="valid_province" class="py-2 pr-2">
+                              <span
+                                class="text-danger"
+                                v-text="'استان الزامی است'"
+                              ></span>
+                            </div>
+                          </div>
+                          <div class="naming">
+                            <input
+                              class="form-control"
+                              type="text"
+                              v-model="form.city"
+                              placeholder="شهر"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mt-2">
+                      <div class="row">
+                        <div class="w-100">
+                          <input
+                            class="form-control"
+                            type="text"
+                            v-model="form.address"
+                            placeholder="آدرس"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <div class="row mt-2">
+                    <hr class="dash w-100" />
+                  </div>
+                  <div class="row">
+                    <Xbutton
+                      is_submit
+                      class="px-5 m-auto"
+                      text="انتخاب روش پرداخت"
+                    ></Xbutton>
+                  </div>
                 </div>
-                <!-- <div class="row">
-
-                </div> -->
-                <div class="row mt-2">
-                  <hr class="dash w-100" />
-                </div>
-                <!-- <button v-b-modal.modal-prevent-closing>Open Modal</button> -->
-                <div class="row">
-                  <Xbutton
-                    is_submit
-                    class="px-5 m-auto"
-                    text="انتخاب روش پرداخت"
-                  ></Xbutton>
-                </div>
-                <!-- <input type="text" v-model="form.fname" /> -->
-                <div>
-                  <!-- <span>{{ errors[0] }}</span> -->
-                </div>
-                <!-- </ValidationProvider> -->
-              </div>
-            </template>
-          </Xform>
+              </template>
+            </Xform>
+          </ValidationObserver>
         </div>
       </div>
     </div>
@@ -168,7 +180,9 @@
 </template>
 
 <script>
-import { ValidationProvider } from "vee-validate";
+import { ValidationProvider, ValidationObserver } from "vee-validate";
+import { provinces } from "@/constants/Provinces";
+
 export default {
   layout: "index",
   head() {
@@ -183,23 +197,42 @@ export default {
       // ]
     };
   },
+  data() {
+    return {
+      form: {
+        phone: "",
+        first_name: "",
+        last_name: "",
+        email: "",
+        address: "",
+        city: "",
+      },
+      valid_province: null,
+    };
+  },
   components: {
     ValidationProvider,
+    ValidationObserver,
   },
   methods: {
     select_way_payment() {
-      const data = {
-        store_id: this.$store.state.stores.id,
-        name: this.$refs.fname.value + " " + this.$refs.lname.value,
-        email: this.$refs.email.value,
-        address: {
-          province: this.$refs.province.value,
-          city: this.$refs.city.value,
-          address: this.$refs.address.value,
-        },
-        phone: this.$refs.phone.value,
-      };
-      this.$store.dispatch("payments/select_way_payment", data);
+      this.validate_province();
+      this.$refs.validationObserver.validate().then((success) => {
+        if (success && !this.valid_province) {
+          const data = {
+            store_id: this.$store.state.stores.id,
+            name: this.form.first_name + " " + this.form.last_name,
+            email: this.form.email,
+            address: {
+              province: this.$refs.province.value,
+              city: this.form.city,
+              address: this.form.address,
+            },
+            phone: this.form.phone,
+          };
+          this.$store.dispatch("payments/select_way_payment", data);
+        }
+      });
     },
     do_payment() {
       let getway = null;
@@ -217,11 +250,17 @@ export default {
         getway_id: getway,
       });
     },
+    validate_province() {
+      const e = this.$refs.province.value;
+      e !== "" ? (this.valid_province = false) : (this.valid_province = true);
+    },
   },
-  created() {},
   computed: {
     getways() {
       return this.$store.state.payments.getways;
+    },
+    provinces() {
+      return provinces;
     },
   },
 };
