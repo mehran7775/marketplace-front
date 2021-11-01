@@ -1,15 +1,17 @@
 const state = {
+    getways:null,
+    order_id:null
 }
 const getters = {
 
 };
 
 const mutations = {
-    set_getways(store, payload) {
-        this.$set(store, 'getways', payload)
+    set_getways(state, payload) {
+        state.getways=payload
     },
-    set_order_id(store, payload) {
-        this.$set(store, 'order_id', payload)
+    set_order_id(state, payload) {
+        state.order_id=payload
     }
 }
 

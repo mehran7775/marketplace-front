@@ -3,10 +3,10 @@ import state from '@/store/state'
 import getters from '@/store/getters'
 import mutations from '@/store/mutations'
 import actions from '@/store/actions'
-import users from "~/store/modules/users";
-import stores from "~/store/modules/stores"
-import products from "~/store/modules/products";
-import payments from "~/store/modules/payments";
+import user from "~/store/modules/user";
+import store from "~/store/modules/store"
+import cart from "~/store/modules/cart";
+import payment from "~/store/modules/payment";
 
 
 const createStore = () => {
@@ -16,10 +16,10 @@ const createStore = () => {
         mutations,
         actions,
         modules: {
-            users,
-            products,
-            payments,
-            stores
+            user,
+            cart,
+            payment,
+            store
         }
     })
 }

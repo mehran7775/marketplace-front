@@ -1,13 +1,8 @@
 <template>
   <div class="container-fluid">
-    <div class="row mb-4">
+    <div class="row mb-4 pb-5">
       <div class="col">
-        <div class="row">
-          <MoleculesXheader :logo="logo" :fa_name="fa_name"></MoleculesXheader>
-        </div>
-        <div class="row pb-5">
           <Nuxt />
-        </div>
       </div>
     </div>
     <MoleculesXsidebarBottom></MoleculesXsidebarBottom>
@@ -54,13 +49,11 @@ export default {
           closes: "20:00",
         },
       },
-      logo: "",
-      fa_name: "",
     };
   },
   head() {
     return {
-      titleTemplate: "فروشگاه ساز رایگان - %s",
+      titleTemplate: "پی استار -%s",
       script: [{ type: "application/ld+json", json: this.structuredData }],
     };
   },
@@ -68,22 +61,6 @@ export default {
     lang() {
       return tr();
     },
-  },
-  async fetch() {
-    try {
-      const res = await this.$axios.get(
-        `/store/${this.$route.params.store_slug}`
-      );
-      this.$store.commit("payments/set_getways", res.data.getways);
-      this.$store.commit("stores/set_id", res.data.id);
-      this.logo = res.data.logo;
-      this.fa_name = res.data.fa_name;
-    } catch (e) {
-      this.$nuxt.context.error({
-        statusCode:e.response.status,
-        message:e.response.data.message
-      })
-    }
   },
 };
 </script>

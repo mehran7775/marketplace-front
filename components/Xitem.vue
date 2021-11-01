@@ -91,7 +91,7 @@ export default {
         img: this.image,
         quantity: this.quantity,
       }
-      this.$store.dispatch("products/addProductToCart",product);
+      this.$store.dispatch("cart/addProductToCart",product);
     },
   },
 };
