@@ -21,7 +21,7 @@
                     <strong class="ml-2" v-text="item.count"></strong
                     ><fa icon="times"></fa>
                   </div>
-                  <div class="icon_item ml-3">
+                  <div class="icon_item ml-2">
                     <img
                       src="/icon.png"
                       width="24"
@@ -31,11 +31,15 @@
                   </div>
                   <div class="name_icon"><span v-text="item.name"></span></div>
                 </div>
-                <div class="price_item_cart mr-3">
+                <div class="price_item_cart mr-1">
                   <span v-text="item.price"></span
                   ><span class="pr-1">تومان</span>
                 </div>
-                <span @click="delete_from_cart(item.id)"><fa icon="trash" class="ml-3 trash"></fa></span>
+                <div class="border d-flex justify-content-center p-1">
+                   <span @click="delete_from_cart(item.id)" class="mx-1"><fa icon="minus" class="m-auto"></fa></span>
+                   <span @click="delete_from_cart(item.id)" class="mx-1"><fa icon="plus" class="m-auto"></fa></span>
+                </div>
+                <span @click="delete_from_cart(item.id)"><fa icon="trash" class="ml-3"></fa></span>
               </div>
             </div>
             <!-- <div class="col-12">
@@ -210,7 +214,7 @@ export default {
   border: 1px solid $border_half_success;
 
   .detail_item_cart {
-    width: 60%;
+    width: 53%;
   }
   .price_item_cart {
     width: 26%;
