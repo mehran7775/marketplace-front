@@ -75,8 +75,8 @@ export default {
   async asyncData({ error, route, $axios, store }) {
     try {
       const res1 = await $axios.get(`/store/${route.params.store_slug}`);
-      store.commit("payments/set_getways", res1.data.data.gateways);
-      store.commit("stores/set_id", res1.data.data.id);
+      store.commit("payment/set_gateways", res1.data.data.gateways);
+      store.commit("store/set_id", res1.data.data.id);
       const res2 = await $axios.get(
         "/product/" + route.params.store_slug + "/" + route.params.products_id
       );

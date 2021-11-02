@@ -23,7 +23,7 @@
                   </div>
                   <div class="icon_item ml-2">
                     <img
-                      src="/icon.png"
+                      :src="item.img"
                       width="24"
                       height="24"
                       alt="عکس محصول"
@@ -35,11 +35,20 @@
                   <span v-text="item.price"></span
                   ><span class="pr-1">تومان</span>
                 </div>
-                <div class="border d-flex justify-content-center p-1">
-                   <span @click="delete_from_cart(item.id)" class="mx-1"><fa icon="minus" class="m-auto"></fa></span>
-                   <span @click="delete_from_cart(item.id)" class="mx-1"><fa icon="plus" class="m-auto"></fa></span>
+                <div
+                  class="d-flex justify-content-center p-1"
+                  id="change-count-product"
+                >
+                  <span @click="minusProduct(item.id)" class="mx-1"
+                    ><fa icon="minus" class="m-auto"></fa
+                  ></span>
+                  <span @click="plusProduct(item.id)" class="mx-1"
+                    ><fa icon="plus" class="m-auto"></fa
+                  ></span>
                 </div>
-                <span @click="delete_from_cart(item.id)"><fa icon="trash" class="ml-3"></fa></span>
+                <span @click="deleteProductFromCart(item.id)"
+                  ><fa icon="trash" class="ml-3"></fa
+                ></span>
               </div>
             </div>
             <!-- <div class="col-12">
@@ -88,7 +97,10 @@
               <div class="row p-3 align-items-center">
                 <div class="col-12 col-md-6 text-center">
                   <span class="font-weight-bold h5">جمع کل :</span>
-                  <span class="while-price" v-text="separate(whole_price)"></span
+                  <span
+                    class="while-price"
+                    v-text="separate(whole_price)"
+                  ></span
                   ><span class="while-price pr-1">تومان</span>
                 </div>
                 <div class="col-12 col-md-6 text-center continue-buy">
@@ -135,8 +147,8 @@ export default {
   async asyncData({ error, route, $axios, store }) {
     try {
       const res1 = await $axios.get(`/store/${route.params.store_slug}`);
-      store.commit("payments/set_getways", res1.data.data.gateways);
-      store.commit("stores/set_id", res1.data.data.id);
+      store.commit("payment/set_gateways", res1.data.data.gateways);
+      store.commit("store/set_id", res1.data.data.id);
       return {
         detail: res1.data.data,
       };
@@ -147,18 +159,24 @@ export default {
       });
     }
   },
-  mounted() {
-    this.$nextTick(async function () {
+  created() {
+    if (process.browser) {
+      this.setItems()
+    }
+    this.$nuxt.$on("refresh-cart", () => {
+      this.setItems()
+    });
+  },
+  methods: {
+    async setItems() {
       if (
         localStorage.getItem("cartItems") &&
         JSON.parse(localStorage.getItem("cartItems")).length > 0
       ) {
-        this.items = JSON.parse(localStorage.getItem("cartItems"))
-        this.whole_price = await this.compute_whole_price(this.items)
+        this.items = JSON.parse(localStorage.getItem("cartItems"));
+        this.whole_price = await this.compute_whole_price(this.items);
       }
-    });
-  },
-  methods: {
+    },
     compute_whole_price(items) {
       let sum = 0;
       items.forEach((element) => {
@@ -166,25 +184,29 @@ export default {
       });
       return sum;
     },
-     separate(Number) {
-      Number += '';
-      Number = Number.replace(',', '');
-      let x = Number.split('.');
+    separate(Number) {
+      Number += "";
+      Number = Number.replace(",", "");
+      let x = Number.split(".");
       let y = x[0];
-      let z = x.length > 1 ? '.' + x[1] : '';
+      let z = x.length > 1 ? "." + x[1] : "";
       var rgx = /(\d+)(\d{3})/;
-      while (rgx.test(y))
-        
-        y = y.replace(rgx, '$1' + ',' + '$2');
+      while (rgx.test(y)) y = y.replace(rgx, "$1" + "," + "$2");
       return y + z;
     },
-    delete_from_cart(id){
-      
+    deleteProductFromCart(id) {
+      this.$store.dispatch("cart/deleteProductFromCart", id);
+    },
+    minusProduct(id){
+      this.$store.dispatch('cart/minusProduct', id)
+    },
+    plusProduct(id){
+      this.$store.dispatch('cart/plusProduct', id)
     },
     continue_buy() {
       if (this.$cookies.get("token-buyer") && this.user_data) {
         const data = {
-          store_id: this.$store.state.stores.id,
+          store_id: this.$store.state.store.id,
           name: this.user_data.first_name + " " + this.user_data.last_name,
           email: this.user_data.email,
           phone: this.user_data.phone,
@@ -194,7 +216,7 @@ export default {
             address: this.user_data.addresses[0].address,
           },
         };
-        this.$store.dispatch("payments/select_way_payment", data);
+        this.$store.dispatch("payment/select_way_payment", data);
       } else {
         this.$router.push(`/${this.$route.params.store_slug}/complete-info`);
       }
@@ -202,7 +224,7 @@ export default {
   },
   computed: {
     user_data() {
-      return this.$store.state.users.current_user;
+      return this.$store.state.user.current_user;
     },
   },
 };
@@ -227,7 +249,7 @@ export default {
   strong {
     color: $text_color;
   }
-  svg:hover{
+  svg:hover {
     color: $success;
     cursor: pointer;
   }
@@ -271,5 +293,8 @@ export default {
   @include mx_medium {
     margin-top: 1rem;
   }
+}
+#change-count-product {
+  border: 1px solid $border_half_success;
 }
 </style>

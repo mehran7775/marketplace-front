@@ -234,34 +234,6 @@
           </div>
         </div>
       </div>
-      <template>
-        <MoleculesXmodal title="انتخاب روش پرداخت">
-          <template #content-modal>
-            <div class="row">
-              <div v-for="getway in getways" :key="getway.id" class="col-12">
-                <div class="getways">
-                  <input
-                    class="mr-4"
-                    type="radio"
-                    name="getway"
-                    :value="'getway' + getway.id"
-                    :ref="'getway' + getway.id"
-                    checked
-                  />
-                  <span class="mr-3" v-text="getway.title"></span>
-                </div>
-              </div>
-              <div class="col-12 text-center">
-                <Xbutton
-                  :on_click="do_payment"
-                  class="icon-getway"
-                  text="پرداخت"
-                ></Xbutton>
-              </div>
-            </div>
-          </template>
-        </MoleculesXmodal>
-      </template>
     </div>
   </div>
 </template>
@@ -301,8 +273,8 @@ export default {
   async asyncData({ error, route, $axios, store }) {
     try {
       const res1 = await $axios.get(`/store/${route.params.store_slug}`);
-      store.commit("payments/set_getways", res1.data.data.gateways);
-      store.commit("stores/set_id", res1.data.data.id);
+      store.commit("payment/set_gateways", res1.data.data.gateways);
+      store.commit("store/set_id", res1.data.data.id);
       return {
         detail: res1.data.data,
       };
@@ -330,7 +302,7 @@ export default {
       this.$refs.validationObserver.validate().then((success) => {
         if (success && !this.valid_province) {
           const data = {
-            store_id: this.$store.state.stores.id,
+            store_id: this.$store.state.store.id,
             name: this.form.first_name + " " + this.form.last_name,
             email: this.form.email,
             address: {
@@ -340,26 +312,10 @@ export default {
             },
             phone: this.form.phone,
           };
-          this.$store.dispatch("payments/select_way_payment", data);
+          this.$store.dispatch("payment/select_way_payment", data);
         } else {
           return;
         }
-      });
-    },
-    do_payment() {
-      let getway = null;
-      if (this.$refs.getway1.checked) {
-        getway = 1;
-      } else if (this.$refs.getway2.checked) {
-        getway = 2;
-      } else if (this.$refs.getway3.checked) {
-        getway = 3;
-      } else {
-        getway = "null";
-      }
-
-      this.$store.dispatch("payments/do_payment", {
-        getway_id: getway,
       });
     },
     validate_province() {
@@ -370,9 +326,6 @@ export default {
     },
   },
   computed: {
-    getways() {
-      return this.$store.state.payments.getways;
-    },
     provinces() {
       return provinces;
     },
@@ -391,16 +344,5 @@ h2 {
 .dash {
   border-top: 1px dashed $success;
 }
-.getways {
-  background-color: whitesmoke;
-  border-radius: 10px;
-  height: 50px;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-}
-.icon-getway {
-  padding-right: 6rem;
-  padding-left: 6rem;
-}
+
 </style>
