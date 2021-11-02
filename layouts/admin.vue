@@ -91,8 +91,8 @@ export default {
   },
   computed: {
     stores() {
-      if (this.$store.state.stores.stores) {
-        return this.$store.state.stores.stores;
+      if (this.$store.state.store.stores) {
+        return this.$store.state.store.stores;
       }
     },
   },

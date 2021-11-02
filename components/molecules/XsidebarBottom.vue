@@ -18,15 +18,28 @@
         </nuxt-link>
       </div>
       <div class="bottom_menu">
-        <nuxt-link :to="`/${$route.params.store_slug}/settings`">
-          <span
-            ><fa
-              icon="cog"
-              class="mx-1 icom_bto_menu"
-              :title="lang.svg.settings"
-            ></fa
-          ></span>
-        </nuxt-link>
+        <template v-if="$cookies.get('token-buyer')">
+          <nuxt-link :to="`/admin-customer`">
+            <span
+              ><fa
+                icon="user"
+                class="mx-1 icom_bto_menu"
+                :title="lang.svg.settings"
+              ></fa
+            ></span>
+          </nuxt-link>
+        </template>
+        <template v-else>
+          <nuxt-link :to="`/signin`">
+            <span
+              ><fa
+                icon="user"
+                class="mx-1 icom_bto_menu"
+                :title="lang.svg.settings"
+              ></fa
+            ></span>
+          </nuxt-link>
+        </template>
       </div>
     </div>
   </div>
@@ -35,12 +48,12 @@
 <script>
 import { tr } from "@/services/lang";
 export default {
-     computed: {
+  computed: {
     lang() {
       return tr();
     },
   },
-}
+};
 </script>
 
 <style scoped lang="scss">

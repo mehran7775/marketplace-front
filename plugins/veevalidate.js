@@ -4,7 +4,7 @@ import {
 import {
     required,
     alpha,
-    digits
+    digits,email
 } from "vee-validate/dist/rules";
 
 extend("required", {
@@ -16,8 +16,13 @@ extend("alpha", {
     ...alpha,
     message: "فقط حروف می تواند وارد شود"
 });
-
 extend("digits", {
     ...digits,
     message: "شماره تلفن باید بصورت عدد و یازده کاراکتر باشد"
 });
+
+extend("email", {
+    ...email,
+    message: "ایمیل صحیح وارد نشده است"
+});
+

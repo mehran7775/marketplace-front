@@ -41,17 +41,17 @@ export default {
       otherErrors: "خطایی اتفاق افتاده است",
     };
   },
-  head() {
-    if (this.error.statusCode === 404) {
-      return this.pageNotFound;
-    } else if (this.error.statusCode === 403) {
-      return this.forbiddenError;
-    } else if (this.error.statusCode === 401) {
-      return this.unauthorizedError;
-    } else {
-      return this.otherErrors;
-    }
-  },
+  // head() {
+  //   if (this.error.statusCode === 404) {
+  //     return this.pageNotFound;
+  //   } else if (this.error.statusCode === 403) {
+  //     return this.forbiddenError;
+  //   } else if (this.error.statusCode === 401) {
+  //     return this.unauthorizedError;
+  //   } else {
+  //     return this.otherErrors;
+  //   }
+  // },
 };
 </script>
 

@@ -22,14 +22,19 @@ export default {
   },
   created() {
     if (process.browser) {
-      if (localStorage.getItem("cartItems")) {
-        this.count = JSON.parse(localStorage.getItem("cartItems")).length;
-      }
+      this.setCount()
     }
     this.$nuxt.$on("refresh_basket", (count) => {
-      this.count = count;
+      this.setCount()
     });
   },
+  methods:{
+    setCount(){
+      if (localStorage.getItem("cartItems")) {
+        this.count = JSON.parse(localStorage.getItem("cartItems")).length
+      }
+    }
+  }
 };
 </script>
 

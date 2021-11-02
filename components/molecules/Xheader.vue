@@ -8,11 +8,11 @@
         </div>
         <div class="d-md-none mt-3 mr-4">
           <fa icon="envelope"></fa>
-          <span>test@gmail.com</span>
+          <span v-text="email"></span>
         </div>
         <div class="d-md-none mr-4">
           <fa icon="map-marker"></fa>
-          <span>آدرس ...</span>
+          <span v-text="address">آدرس ...</span>
         </div>
       </div>
     </div>
@@ -50,7 +50,13 @@ export default {
       },
       fa_name:{
         type:String
-      }
+      },
+      address:{
+        type:String
+      },
+      email:{
+        type:String
+      },
   },
   computed: {
     lang() {

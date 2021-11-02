@@ -143,7 +143,7 @@ export default {
         this.$nuxt.context.$axios
           .post("customer/register", data)
           .then((res) => {
-            this.$store.commit("users/set_phone_number", data.phone, {
+            this.$store.commit("user/set_phone_number", data.phone, {
               root: true,
             });
             this.$router.push("/verify_login");

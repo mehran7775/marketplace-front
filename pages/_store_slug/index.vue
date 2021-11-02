@@ -1,11 +1,13 @@
 <template>
-  <div id="body" class="w-100">
-    {{ $route.params.user_id }}
-    <div id="lables">
-      <div class="lables mb-4">
-        <MoleculesXlables v-if="products" :products="products">
-        </MoleculesXlables>
-        <p v-else>محصولی وجود ندارد</p>
+  <div class="row">
+    <MoleculesXheader :logo="detail.logo" :fa_name="detail.fa_name" :address="detail.address" :email="detail.email"></MoleculesXheader>
+    <div id="body" class="w-100">
+      <div id="lables">
+        <div class="lables mb-4">
+          <MoleculesXlables v-if="products" :products="products">
+          </MoleculesXlables>
+          <p v-else>محصولی وجود ندارد</p>
+        </div>
       </div>
     </div>
   </div>
@@ -17,7 +19,7 @@ export default {
   layout: "index",
   head() {
     return {
-      title: "صفحه اصلی",
+      title: this.detail.fa_name,
     };
   },
   computed: {
@@ -25,26 +27,23 @@ export default {
       return tr();
     },
   },
-  async asyncData({ $axios, route, error }) {
+  async asyncData({ $axios, route, error, store }) {
     try {
+      const res= await $axios.get(`/store/${route.params.store_slug}`)
+      store.commit("payment/set_gateways", res.data.data.gateways)
+      store.commit("store/set_id", res.data.data.id)
       const { data } = await $axios.get(
         `/store/${route.params.store_slug}/products`
       );
       return {
-        products: data.data.data
+        detail:res.data.data,
+        products: data.data.data,
       };
     } catch (e) {
-      if (e.response) {
         error({
           statusCode: e.response.status,
-          message: e.response.message,
-        });
-      } else {
-        error({
-          statusCode: "",
-          message: "خطا در ارتباط",
-        });
-      }
+          message: e.response.data.message,
+        })
     }
   },
 };

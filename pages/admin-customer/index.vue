@@ -1,6 +1,6 @@
 <template>
     <div>
-        Admin-buyer
+        Admin-customer
     </div>
 </template>
 

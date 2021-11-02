@@ -82,7 +82,7 @@ export default {
             );
             if (res_current.status === 200) {
               this.$store.commit(
-                "users/set_current_user",
+                "user/set_current_user",
                 res_current.data.data,
                 { root: true }
               );

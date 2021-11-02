@@ -34,7 +34,7 @@ export default {
     };
   },
   computed: mapState({
-    phone_number: (state) => state.users.phone_number,
+    phone_number: (state) => state.user.phone_number,
   }),
   methods: {
     async verify_code() {
@@ -59,7 +59,7 @@ export default {
           }
           )
           if(res_current.status === 200){
-            this.$store.commit('users/set_current_user', res_current.data.data,{ root:true })
+            this.$store.commit('user/set_current_user', res_current.data.data,{ root:true })
           }
           this.$router.replace("/admin-buyer")
           this.$store.commit(
