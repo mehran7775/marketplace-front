@@ -53,25 +53,25 @@ export default [
             '\n' +
             '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#a0a0a0"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 7h6v2h-6zm0 4h6v2h-6zm0 4h6v2h-6zM7 7h2v2H7zm0 4h2v2H7zm0 4h2v2H7zM20.1 3H3.9c-.5 0-.9.4-.9.9v16.2c0 .4.4.9.9.9h16.2c.4 0 .9-.5.9-.9V3.9c0-.5-.5-.9-.9-.9zM19 19H5V5h14v14z"/></svg>'
     },*/
-    /*{
-        url: '/seller/',
-        title: 'پیشخوان',
-        in_store: false,
-        need_auth: false,
-        icon: '<svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="#a0a0a0" viewBox="0 0 24 24">\n' +
-            '              <path d="M0 0h24v24H0z" fill="none"/>\n' +
-            '              <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>\n' +
-            '            </svg>'
-
-    },*/
     {
-        url: '/seller/stores',
+        url: '/',
         title: 'فروشگاه های من',
         in_store: false,
         need_auth: false,
         icon: '\n' +
             '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#a0a0a0"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>'
 
+    },
+    {
+        url: '/admin',
+        title: 'پیشخوان',
+        in_store: true,
+        need_auth: false,
+        icon: '\n' +
+            '\'<svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="#a0a0a0" viewBox="0 0 24 24">\\n\' +\n' +
+            '            \'              <path d="M0 0h24v24H0z" fill="none"/>\\n\' +\n' +
+            '            \'              <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>\\n\' +\n' +
+            '            \'            </svg>'
     },
     {
         url: '/admin/products',

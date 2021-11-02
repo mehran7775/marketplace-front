@@ -1,6 +1,6 @@
 <template>
     <div>
-        <page-title title_text="ویرایش محصول" icon="product">
+        <page-title title_text="جزییات محصول" icon="product">
             <button class="btn btn-success shadow-sm mx-2 px-4 py-2" @click="updateProduct" variant="primary"
                     style="border-radius: 20px; border-color: #bbb;"
             >ذخیره تغییرات
@@ -12,79 +12,140 @@
         <div class="alert alert-danger" role="alert" v-if="error">
             {{ error }}
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body" id="create_product">
-                        <div class="row">
-                            <div class="col-sm">
-                                <b-form-group label="عنوان">
-                                    <input class="form-control" v-model="formData.title"/>
-                                </b-form-group>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm">
-                                <b-form-group label="قیمت">
-                                    <input type="number" class="form-control" v-model="formData.price"/>
-                                </b-form-group>
-                            </div>
-                            <div class="col-sm">
-                                <b-form-group label="تعداد">
-                                    <input type="number" class="form-control" v-model="formData.quantity"/>
-                                </b-form-group>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm">
-                                <b-form-group label="میزان تخفیف">
-                                    <input type="number" class="form-control" v-model="formData.discount_amount"/>
-                                </b-form-group>
-                            </div>
-                            <div class="col-sm">
-                                <b-form-group label="درصد تخفیف">
-                                    <input type="number" class="form-control" v-model="formData.discount_percent"/>
-                                </b-form-group>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm">
-                                <b-form-group label="حداکثر میزان تخفیف">
-                                    <input type="number" class="form-control" v-model="formData.discount_max_amount"/>
-                                </b-form-group>
-                            </div>
-                            <div class="col-sm">
-                                <b-form-group label="تصویر محصول">
-                                    <b-form-file placeholder="تصویر محصول" class="form-control"
-                                                 v-model="formData.image"></b-form-file>
-                                </b-form-group>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm">
-                                <b-form-group label="محصول چندتایی است">
-                                    <div class="form-control">
-                                        <label class="switch">
-                                            <input type="checkbox" v-model="formData.is_multiple">
-                                            <span class="slider round"></span>
-                                        </label>
+        <div class="shadow-sm bg-white rounded p-3">
+            <b-tabs content-class="mt-3">
+                <b-tab title="ویرایش محصول" active>
+                    <div class="row">
+                        <div class="col-12">
+                            <div>
+                                <div class="mx-3" id="create_product">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <b-form-group label="عنوان">
+                                                <input class="form-control" v-model="formData.title"/>
+                                            </b-form-group>
+                                        </div>
                                     </div>
-                                </b-form-group>
-                            </div>
-                            <div class="col-sm">
-                                <b-form-group label="تعداد محصول نامحدود است">
-                                    <div class="form-control">
-                                        <label class="switch">
-                                            <input type="checkbox" v-model="formData.unlimited">
-                                            <span class="slider round"></span>
-                                        </label>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <b-form-group label="قیمت">
+                                                <input type="number" class="form-control" v-model="formData.price"/>
+                                            </b-form-group>
+                                        </div>
+                                        <div class="col-sm">
+                                            <b-form-group label="تعداد">
+                                                <input type="number" class="form-control" v-model="formData.quantity"/>
+                                            </b-form-group>
+                                        </div>
                                     </div>
-                                </b-form-group>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <b-form-group label="میزان تخفیف">
+                                                <input type="number" class="form-control"
+                                                       v-model="formData.discount_amount"/>
+                                            </b-form-group>
+                                        </div>
+                                        <div class="col-sm">
+                                            <b-form-group label="درصد تخفیف">
+                                                <input type="number" class="form-control"
+                                                       v-model="formData.discount_percent"/>
+                                            </b-form-group>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <b-form-group label="حداکثر میزان تخفیف">
+                                                <input type="number" class="form-control"
+                                                       v-model="formData.discount_max_amount"/>
+                                            </b-form-group>
+                                        </div>
+                                        <div class="col-sm">
+                                            <b-form-group label="تصویر محصول">
+                                                <b-form-file placeholder="تصویر محصول" class="form-control"
+                                                             v-model="formData.image"></b-form-file>
+                                            </b-form-group>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <b-form-group label="محصول چندتایی است">
+                                                <div class="form-control">
+                                                    <label class="switch">
+                                                        <input type="checkbox" v-model="formData.is_multiple">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </b-form-group>
+                                        </div>
+                                        <div class="col-sm">
+                                            <b-form-group label="تعداد محصول نامحدود است">
+                                                <div class="form-control">
+                                                    <label class="switch">
+                                                        <input type="checkbox" v-model="formData.unlimited">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                            </b-form-group>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </b-tab>
+                <b-tab title="آمار محصول" active>
+                    <div class="row">
+                        <div class="col-12">
+                            <div>
+                                <div class="mx-2">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <b-form-group label="سفارشات تکمیل شده">
+                                                <input class="form-control disabled"
+                                                       v-model="statistics.complete_orders" disabled/>
+                                            </b-form-group>
+                                        </div>
+                                        <div class="col-sm">
+                                            <b-form-group label="سفارشات در حال پردازش">
+                                                <input class="form-control disabled"
+                                                       v-model="statistics.processing_orders" disabled/>
+                                            </b-form-group>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <b-form-group label="تعداد فروش">
+                                                <input class="form-control disabled" v-model="statistics.sales_count"
+                                                       disabled/>
+                                            </b-form-group>
+                                        </div>
+                                        <div class="col-sm">
+                                            <b-form-group label="جمع قیمت">
+                                                <input class="form-control disabled" v-model="statistics.price_sum"
+                                                       disabled/>
+                                            </b-form-group>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <b-form-group label="تعداد مشاهده">
+                                                <input class="form-control disabled" v-model="statistics.views_count"
+                                                       disabled/>
+                                            </b-form-group>
+                                        </div>
+                                        <div class="col-sm">
+                                            <b-form-group label="نرخ تبدیل">
+                                                <input class="form-control disabled"
+                                                       v-model="statistics.conversion_rates" disabled/>
+                                            </b-form-group>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </b-tab>
+            </b-tabs>
         </div>
     </div>
 
@@ -113,7 +174,8 @@ export default {
                 discount_max_amount: 0,
                 image: null,
                 description: null
-            }
+            },
+            statistics: {}
         }
     },
     methods: {
@@ -142,17 +204,26 @@ export default {
                 this.error = response.data.data[Object.keys(response.data.data)[0]]
             })
         },
+        getProduct() {
+            api.get('product/find/' + this.$route.params.id, this.$cookies.get('token'))
+                .then(res => {
+                    this.formData.title = res.data.data.title
+                    this.formData.price = res.data.data.price
+                    this.formData.quantity = res.data.data.quantity
+                    this.formData.is_multiple = res.data.data.is_multiple == 1 ? true : false
+                    this.formData.unlimited = res.data.data.unlimited == 1 ? true : false
+                })
+        },
+        getStatistics() {
+            api.get('product/statistics/' + this.$route.params.id)
+                .then(res => {
+                    this.statistics = res.data.data
+                })
+        }
     },
     mounted() {
-        api.get('product/find/' + this.$route.params.id, this.$cookies.get('token'))
-            .then(res => {
-                console.log(res)
-                this.formData.title = res.data.data.title
-                this.formData.price = res.data.data.price
-                this.formData.quantity = res.data.data.quantity
-                this.formData.is_multiple = res.data.data.is_multiple == 1 ? true : false
-                this.formData.unlimited = res.data.data.unlimited == 1 ? true : false
-            })
+        this.getProduct()
+        this.getStatistics()
     }
 }
 </script>

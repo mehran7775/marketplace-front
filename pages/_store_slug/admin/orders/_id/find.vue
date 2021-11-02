@@ -16,25 +16,62 @@
                 <div class="card" v-if="order">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm">
+                            <div class="col-sm mt-2">
                                 <label>شناسه</label>
                                 <input disabled class="form-control" v-model="order.id"/>
                             </div>
-                            <div class="col-sm">
+                            <div class="col-sm mt-2">
                                 <label>عنوان فروشگاه</label>
                                 <input disabled class="form-control" v-model="order.store"/>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm">
+                            <div class="col-sm mt-2">
                                 <label>قیمت (ریال)</label>
                                 <input disabled class="form-control" v-model="order.payment_price"/>
                             </div>
-                            <div class="col-sm">
+                            <div class="col-sm mt-2">
                                 <label>وضعیت</label>
                                 <select class="form-control" v-model="form.status">
                                     <option v-for="status in OrderStatus.orderStatus" :value="status.value">{{status.text}}</option>
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card mt-4" v-if="order">
+                    <div class="card-header">
+                        <div class="card-title">
+                            محصولات سفارش
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            <div class="table-responsive">
+                                <table class="table  table-responsive table-borderless text-center">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" style="background-color: #eee;  border-radius: 0 16px 16px 0;">#</th>
+                                        <th scope="col" style="background-color: #eee;">تصویر</th>
+                                        <th scope="col" style="background-color: #eee;">تعداد</th>
+                                        <th scope="col"  style="background-color: #eee; border-radius: 16px 0px 0px 16px;">قیمت (ریال)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(product, index) in order.products" :key="index">
+                                        <td>{{ product.id }}</td>
+                                        <td>
+                                            <img :src="product.thumbnails[0]" width="30px"/>
+                                        </td>
+                                        <td>{{ product.quantity }}</td>
+                                        <td>{{ product.price }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

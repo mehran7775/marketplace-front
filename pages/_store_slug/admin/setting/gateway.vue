@@ -12,7 +12,7 @@
             {{ error }}
         </div>
         <div class="bg-white shadow-sm py-4 my-2 px-5" style="border-radius: 10px;">
-            <template v-for="port in ports">
+            <template v-for="port in ports"  v-if="port_types.includes(port.type)">
                 <hr>
                 {{port.fa_name + ' ' +  PortTypes.getType(port.type)}}
                 <hr>
@@ -42,6 +42,9 @@ export default {
     layout: "main-content",
     data() {
         return {
+            port_types : [
+
+            ],
             GatewayTypes,
             PortTypes,
             message: null,
@@ -62,6 +65,12 @@ export default {
             api.getUrl('https://core.paystar.ir/api/gateway/user-gateways-data', this.$cookies.get('token'))
                 .then(res => {
                     this.gateways = res.data.data
+                    for (let key in this.gateways){
+                        let item = this.gateways[key]
+                        if (!this.port_types.includes(item.type)){
+                            this.port_types.push(item.type)
+                        }
+                    }
                 })
         },
         getPorts(){
