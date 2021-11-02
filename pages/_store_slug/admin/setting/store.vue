@@ -204,7 +204,7 @@ export default {
                     }
                 }
             }
-            api.post('store/update/' + this.$route.params.store_slug, form_data, this.$cookies.get('token'))
+            api.post('store/update/' + this.$route.params.store_slug, form_data)
                 .then(response => {
                     this.message = response.data.message
                     this.getData()

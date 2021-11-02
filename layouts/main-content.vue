@@ -1,9 +1,10 @@
 <template>
     <div>
         <app-header></app-header>
+        <mobile-header></mobile-header>
 
         <sidebar></sidebar>
-
+        <mobile-aside></mobile-aside>
         <div id="app_content">
             <div class="container" style="padding-top: 5rem">
                 <Nuxt/>
@@ -15,9 +16,12 @@
 <script>
 import sidebar from "@/components/main/aside.vue";
 import appHeader from "@/components/main/header";
-
+import MobileAside from '@/components/main/mobile-aside'
+import MobileHeader from '@/components/main/mobile-header'
 export default {
     components: {
+        MobileAside,
+        MobileHeader,
         sidebar,
         appHeader,
     },

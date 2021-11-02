@@ -316,9 +316,11 @@
                                 </div>
                             </div>
                             <div v-show="wizard.current_step === 3">
-                                <template v-for="port in ports">
+                                <template v-for="port in ports" v-if="port_types.includes(port.type)">
                                     <hr>
-                                    {{ port.fa_name + ' ' + PortTypes.getType(port.type) }}
+                                    <span style="font-size: 1.1rem;">
+                                        {{ port.fa_name + ' ' + PortTypes.getType(port.type) }}
+                                    </span>
                                     <hr>
                                     <div class="row">
                                         <div v-if="gateway.type === port.type" class="col-sm my-2"
@@ -336,6 +338,7 @@
                                         </div>
                                     </div>
                                 </template>
+                                <hr>
                                 <div class="d-flex align-items-center px-3 mt-4">
                                     <div>
                                         <button
@@ -391,6 +394,9 @@ export default {
                 current_step: 1,
                 navigable: true,
             },
+            port_types : [
+
+            ],
             step: 1,
             message: null,
             error: null,
@@ -438,7 +444,22 @@ export default {
             api.getUrl('https://core.paystar.ir/api/gateway/user-gateways-data', this.$cookies.get('token'))
                 .then(res => {
                     this.gateways = res.data.data
+                    for (let key in this.gateways){
+                        let item = this.gateways[key]
+                        if (!this.port_types.includes(item.type)){
+                            this.port_types.push(item.type)
+                        }
+                    }
                 })
+        },
+        getCardGateways() {
+            api.get('user/current').then(res => {
+                let phone = res.data.data.phone
+                api.getUrl('https://card.paystar.ir/api/acceptor/' + '09386516983', )
+                    .then(json => {
+                        console.log(json)
+                    })
+            })
         },
         getPorts() {
             api.get('gateway/get-active-ports', this.$cookies.get('token')).then(res => {
@@ -449,9 +470,9 @@ export default {
             gateway.port_id = port_id,
                 gateway.port_type = gateway.type
             if (this.formData.gateways.includes(gateway)) {
-                var index = this.formData.gateways.indexOf(gateway);
-                if (create > -1) {
-                    this.formData.gateways.splice(create, 1);
+                let index = this.formData.gateways.indexOf(gateway);
+                if (index > -1) {
+                    this.formData.gateways.splice(index, 1);
                 }
                 return this.formData.gateways;
             } else {
@@ -532,6 +553,7 @@ export default {
                 }
                 api.post('store/create', form_data, this.$cookies.get('token')).then(response => {
                     this.message = response.data.message
+                    this.$router.push('/')
                 }).catch(({response}) => {
                     this.error = response.data.data[Object.keys(response.data.data)[0]]
                 })
@@ -543,6 +565,7 @@ export default {
     mounted() {
         this.getPorts()
         this.getGateways()
+        this.getCardGateways()
     }
 }
 ;
