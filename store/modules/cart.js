@@ -36,7 +36,7 @@ const actions = {
               return
             }
             localStorage.setItem("cartItems", JSON.stringify(cart))
-            $nuxt.$emit('refresh_basket',JSON.parse(localStorage.getItem("cartItems")).length,{ once : true})
+            $nuxt.$emit('refresh_basket', null, { once : true})
             commit(
               "open_toast",
               {
@@ -70,7 +70,8 @@ const actions = {
           },
           { root: true }
         );
-        $nuxt.$emit('refresh-cart',null, { once:true })
+        $nuxt.$emit('refresh-cart', null, { once:true })
+        $nuxt.$emit('refresh_basket', null, { once : true})
       }
     },
     minusProduct({commit}, pid){

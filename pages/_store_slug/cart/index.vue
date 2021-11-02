@@ -33,7 +33,7 @@
                 </div>
                 <div class="price_item_cart mr-1">
                   <span v-text="item.price"></span
-                  ><span class="pr-1">تومان</span>
+                  ><span class="pr-1" v-text="lang.price"></span>
                 </div>
                 <div
                   class="d-flex justify-content-center p-1"
@@ -101,7 +101,7 @@
                     class="while-price"
                     v-text="separate(whole_price)"
                   ></span
-                  ><span class="while-price pr-1">تومان</span>
+                  ><span class="while-price pr-1" v-text="lang.price"></span>
                 </div>
                 <div class="col-12 col-md-6 text-center continue-buy">
                   <button class="btn btn-success" @click="continue_buy">
@@ -121,6 +121,7 @@
 </template>
 
 <script>
+import { tr } from "@/services/lang"
 export default {
   layout: "index",
   data() {
@@ -164,6 +165,7 @@ export default {
       this.setItems()
     }
     this.$nuxt.$on("refresh-cart", () => {
+      console.log('refresh')
       this.setItems()
     });
   },
@@ -175,6 +177,8 @@ export default {
       ) {
         this.items = JSON.parse(localStorage.getItem("cartItems"));
         this.whole_price = await this.compute_whole_price(this.items);
+      }else{
+        this.items=null
       }
     },
     compute_whole_price(items) {
@@ -226,6 +230,9 @@ export default {
     user_data() {
       return this.$store.state.user.current_user;
     },
+    lang(){
+      return tr()
+    }
   },
 };
 </script>

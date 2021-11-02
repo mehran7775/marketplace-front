@@ -78,6 +78,9 @@ export default {
       }
     },
   },
+    mounted(){
+    console.log('f',document.querySelector('.carousel-wrapper'))
+  }
 };
 </script>
 
@@ -87,9 +90,6 @@ export default {
     color: text_color;
   }
   .carousel-wrapper {
-    direction: ltr;
-
-
    
     text-align: center;
     @include medium {
@@ -103,7 +103,7 @@ export default {
       }
     }
   }
-  .carousel-wrapper:nth-child(2){
+  .carousel-wrapper{
     flex-direction: row-reverse!important;
   }
 }

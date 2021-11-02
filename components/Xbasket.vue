@@ -12,7 +12,7 @@ import { tr } from "@/services/lang";
 export default {
   data() {
     return {
-      count: 0,
+      count: null
     };
   },
   computed: {
@@ -24,14 +24,16 @@ export default {
     if (process.browser) {
       this.setCount()
     }
-    this.$nuxt.$on("refresh_basket", (count) => {
+    this.$nuxt.$on("refresh_basket", () => {
       this.setCount()
-    });
+    })
   },
   methods:{
     setCount(){
       if (localStorage.getItem("cartItems")) {
         this.count = JSON.parse(localStorage.getItem("cartItems")).length
+      }else{
+        this.count = 0
       }
     }
   }

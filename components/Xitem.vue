@@ -37,7 +37,7 @@
   </div>
 </template>
 <script>
-import { tr } from "@/services/lang";
+import { tr } from "@/services/lang"
 export default {
   props: {
     title: {
@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     lang() {
-      return tr();
+      return tr()
     },
   },
   data() {
@@ -92,8 +92,8 @@ export default {
         quantity: this.quantity,
       }
       this.$store.dispatch("cart/addProductToCart",product);
-    },
-  },
+    }
+  }
 };
 </script>
 
