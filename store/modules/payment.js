@@ -17,7 +17,7 @@ const mutations = {
 
 const actions = {
      async select_way_payment({ commit }, payload) {
-        const items = JSON.parse(localStorage.getItem("cartItems"));
+        const items = JSON.parse(localStorage.getItem("cart"))[$nuxt.$route.params.store_slug]
         const items_second = [];
         items.forEach((element) => {
           items_second.push({
@@ -35,7 +35,6 @@ const actions = {
                 msg: e.response.data.message,
                 variant: 'error'
             }, { root: true })
-
         }
     },
     async do_payment({ commit, state }, payload) {
@@ -51,7 +50,6 @@ const actions = {
             form.appendChild(input)
             document.body.appendChild(form)
             form.submit()
-
         } catch (e) {
             console.log(e)
         }

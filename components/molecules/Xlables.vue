@@ -11,23 +11,41 @@
       <div class="mt-4">
         <div class="carousel-wrapper d-none d-md-block">
           <client-only>
-              <carousel :per-page="per_page" v-bind="options"
-              dir="rtl"
-              > 
-                <slide v-for="product in products" :key="product.id" class="img-wrapper">
-                  <Xitem :title="product.title" :image="product.thumbnail" :price="product.price" :id="product.id" :quantity="product.quantity"></Xitem>
-                </slide>
-              </carousel>
-            </client-only>
+            <carousel :per-page="per_page" v-bind="options" :rtl="true" >
+              <slide
+                v-for="product in products"
+                :key="product.id"
+                class="img-wrapper"
+              >
+                <Xitem
+                  :title="product.title"
+                  :image="product.thumbnail"
+                  :price="product.price"
+                  :id="product.id"
+                  :quantity="product.quantity"
+                ></Xitem>
+              </slide>
+            </carousel>
+          </client-only>
         </div>
         <div>
           <div class="d-md-none">
             <div class="container-fluid">
               <div class="row">
-                <div v-for="product in products" :key="product.id" class="col-4">
+                <div
+                  v-for="product in products"
+                  :key="product.id"
+                  class="col-4"
+                >
                   <div class="row">
                     <client-only>
-                       <Xitem :title="product.title" :image="product.thumbnail" :price="product.price" :id="product.id" :quantity="product.quantity"></Xitem>
+                      <Xitem
+                        :title="product.title"
+                        :image="product.thumbnail"
+                        :price="product.price"
+                        :id="product.id"
+                        :quantity="product.quantity"
+                      ></Xitem>
                     </client-only>
                   </div>
                 </div>
@@ -41,14 +59,13 @@
 </template>
 
 <script>
-
 export default {
   props: ["products"],
   data() {
     return {
       options: {
         // loop: true,
-        paginationEnabled: false
+        paginationEnabled: false,
       },
       per_page: 3,
     };
@@ -78,9 +95,6 @@ export default {
       }
     },
   },
-    mounted(){
-    console.log('f',document.querySelector('.carousel-wrapper'))
-  }
 };
 </script>
 
@@ -90,7 +104,6 @@ export default {
     color: text_color;
   }
   .carousel-wrapper {
-   
     text-align: center;
     @include medium {
       padding: 20px 0 40px 20px;
@@ -103,8 +116,8 @@ export default {
       }
     }
   }
-  .carousel-wrapper{
-    flex-direction: row-reverse!important;
+  .carousel-wrapper {
+    flex-direction: row-reverse !important;
   }
 }
 </style>

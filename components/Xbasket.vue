@@ -12,7 +12,7 @@ import { tr } from "@/services/lang";
 export default {
   data() {
     return {
-      count: null
+      count: null,
     };
   },
   computed: {
@@ -22,21 +22,25 @@ export default {
   },
   created() {
     if (process.browser) {
-      this.setCount()
+      this.setCount();
     }
     this.$nuxt.$on("refresh_basket", () => {
-      this.setCount()
-    })
+      this.setCount();
+    });
   },
-  methods:{
-    setCount(){
-      if (localStorage.getItem("cartItems")) {
-        this.count = JSON.parse(localStorage.getItem("cartItems")).length
-      }else{
-        this.count = 0
+  methods: {
+    setCount() {
+      const cart = JSON.parse(localStorage.getItem("cart"));
+      if (
+        typeof cart[this.$nuxt.$route.params.store_slug] !== "undefined" &&
+        cart[this.$nuxt.$route.params.store_slug].length > 0
+      ) {
+        this.count = cart[this.$nuxt.$route.params.store_slug].length;
+        return;
       }
-    }
-  }
+      this.count = 0;
+    },
+  },
 };
 </script>
 

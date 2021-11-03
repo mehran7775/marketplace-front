@@ -12,7 +12,7 @@
         </div>
         <div class="d-md-none mr-4">
           <fa icon="map-marker"></fa>
-          <span v-text="address">آدرس ...</span>
+          <span v-text="address"></span>
         </div>
       </div>
     </div>
@@ -25,11 +25,30 @@
         id="setting_index"
       >
         <nuxt-link :to="`/${$route.params.store_slug}/cart`"> <Xbasket class="mx-1"></Xbasket></nuxt-link>
-        <!-- <nuxt-link :to="`/${$route.params.store_slug}/settings`">
-          <span
-            ><fa icon="cog" class="fa-lg mx-1" :title="lang.svg.settings"></fa
-          ></span>
-        </nuxt-link> -->
+         <template v-if="$cookies.get('token-buyer')">
+          <nuxt-link :to="`/admin-customer`">
+            <span
+              ><fa
+                icon="user"
+                class="mx-1 icom_bto_menu"
+                :title="lang.svg.panel"
+                size="lg"
+              ></fa
+            ></span>
+          </nuxt-link>
+        </template>
+        <template v-else>
+          <nuxt-link :to="`/signin`">
+            <span
+              ><fa
+                icon="user"
+                class="mx-1 icom_bto_menu"
+                :title="lang.svg.signin"
+                size="lg"
+              ></fa
+            ></span>
+          </nuxt-link>
+        </template>
         <nuxt-link :to="`/${$route.params.store_slug}`">
           <span
             >

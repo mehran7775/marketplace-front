@@ -18,7 +18,11 @@ export const fa = {
         basket: 'سبدخرید',
         home:'خانه',
         settings:'تنظیمات',
-        search:'جستوجو'
+        search:'جستوجو',
+        signIn:'ورود',
+        signUp:'ثبت نام',
+        panel:'پنل ادمین'
+
     },
     validation: {},
     error: {},

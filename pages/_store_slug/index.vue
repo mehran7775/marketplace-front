@@ -1,6 +1,11 @@
 <template>
   <div class="row">
-    <MoleculesXheader :logo="detail.logo" :fa_name="detail.fa_name" :address="detail.address" :email="detail.email"></MoleculesXheader>
+    <MoleculesXheader
+      :logo="detail.logo"
+      :fa_name="detail.fa_name"
+      :address="detail.address"
+      :email="detail.email"
+    ></MoleculesXheader>
     <div id="body" class="w-100">
       <div id="lables">
         <div class="lables mb-4">
@@ -29,21 +34,21 @@ export default {
   },
   async asyncData({ $axios, route, error, store }) {
     try {
-      const res= await $axios.get(`/store/${route.params.store_slug}`)
-      store.commit("payment/set_gateways", res.data.data.gateways)
-      store.commit("store/set_id", res.data.data.id)
+      const res = await $axios.get(`/store/${route.params.store_slug}`);
+      store.commit("payment/set_gateways", res.data.data.gateways);
+      store.commit("store/set_id", res.data.data.id);
       const { data } = await $axios.get(
         `/store/${route.params.store_slug}/products`
       );
       return {
-        detail:res.data.data,
+        detail: res.data.data,
         products: data.data.data,
       };
     } catch (e) {
-        error({
-          statusCode: e.response.status,
-          message: e.response.data.message,
-        })
+      error({
+        statusCode: e.response.status,
+        message: e.response.data.message,
+      });
     }
   },
 };

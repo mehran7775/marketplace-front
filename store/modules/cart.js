@@ -11,9 +11,10 @@ const mutations = {
 
 const actions = {
     addProductToCart({ commit }, product) {
-        let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+        let cart = JSON.parse(localStorage.getItem("cart")) || {}
+        cart[$nuxt.$route.params.store_slug] = cart[$nuxt.$route.params.store_slug] || []
         if (product.quantity > 0 ) {
-            if (!cart.some((el) => el.id == product.id)) {
+            if (!cart[$nuxt.$route.params.store_slug].some((el) => el.id == product.id)) {
               const newObj = {
                 id: product.id,
                 name: product.name,
@@ -22,8 +23,7 @@ const actions = {
                 img:product.img,
                 quantity:product.quantity
               }
-              
-              cart.push(newObj)
+              cart[$nuxt.$route.params.store_slug].push(newObj)
             } else {
               commit(
                 "open_toast",
@@ -35,7 +35,7 @@ const actions = {
               )
               return
             }
-            localStorage.setItem("cartItems", JSON.stringify(cart))
+            localStorage.setItem("cart", JSON.stringify(cart))
             $nuxt.$emit('refresh_basket', null, { once : true})
             commit(
               "open_toast",
@@ -57,35 +57,34 @@ const actions = {
         }
     },
     deleteProductFromCart({commit} , pid){
-      let cart = JSON.parse(localStorage.getItem("cartItems"))
-      const product=cart.find(({ id }) => id === pid)
-      if(cart.indexOf(product) > -1){
-        cart.splice(cart.indexOf(product),1)
-        localStorage.setItem('cartItems',JSON.stringify(cart))
-        commit(
-          "open_toast",
-          {
-            msg: "محصول از سبد خرید حذف شد",
-            variant: "warning",
-          },
-          { root: true }
-        );
-        $nuxt.$emit('refresh-cart', null, { once:true })
-        $nuxt.$emit('refresh_basket', null, { once : true})
-      }
+      let cart = JSON.parse(localStorage.getItem("cart"))
+      const product= cart[$nuxt.$route.params.store_slug].find(({ id }) => id === pid)
+      cart[$nuxt.$route.params.store_slug].splice( cart[$nuxt.$route.params.store_slug].indexOf(product), 1)
+      localStorage.setItem('cart',JSON.stringify(cart))
+      commit(
+        "open_toast",
+        {
+          msg: "محصول از سبد خرید حذف شد",
+          variant: "warning",
+        },
+        { root: true }
+      )
+  
+      $nuxt.$emit('refresh-cart', null, { once:true })
+      $nuxt.$emit('refresh_basket', null, { once : true})
     },
     minusProduct({commit}, pid){
-      let cart = JSON.parse(localStorage.getItem("cartItems"))
-      const p = cart.find(({ id }) => id === pid)
+      let cart = JSON.parse(localStorage.getItem("cart"))
+      const p = cart[$nuxt.$route.params.store_slug].find(({ id }) => id === pid)
       if(p.count > 1) {
         p.count--
-        localStorage.setItem('cartItems',JSON.stringify(cart))
+        localStorage.setItem('cart',JSON.stringify(cart))
         $nuxt.$emit('refresh-cart',null, { once:true })
       }
     },
     plusProduct({commit}, pid){
-      let cart = JSON.parse(localStorage.getItem("cartItems"))
-      const p = cart.find(({ id }) => id === pid)
+      let cart = JSON.parse(localStorage.getItem("cart"))
+      const p = cart[$nuxt.$route.params.store_slug].find(({ id }) => id === pid)
       if(p.count >= p.quantity){
         commit(
           "open_toast",
@@ -98,7 +97,7 @@ const actions = {
         return
       }
       p.count++
-      localStorage.setItem('cartItems',JSON.stringify(cart))
+      localStorage.setItem('cart',JSON.stringify(cart))
       $nuxt.$emit('refresh-cart',null, { once:true })
     }
 };

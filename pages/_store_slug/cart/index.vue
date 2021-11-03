@@ -121,7 +121,7 @@
 </template>
 
 <script>
-import { tr } from "@/services/lang"
+import { tr } from "@/services/lang";
 export default {
   layout: "index",
   data() {
@@ -162,24 +162,24 @@ export default {
   },
   created() {
     if (process.browser) {
-      this.setItems()
+      this.setItems();
     }
     this.$nuxt.$on("refresh-cart", () => {
-      console.log('refresh')
-      this.setItems()
+      this.setItems();
     });
   },
   methods: {
     async setItems() {
+      const cart = JSON.parse(localStorage.getItem("cart"));
       if (
-        localStorage.getItem("cartItems") &&
-        JSON.parse(localStorage.getItem("cartItems")).length > 0
+        typeof cart[this.$nuxt.$route.params.store_slug] !== "undefined" &&
+        cart[this.$nuxt.$route.params.store_slug].length > 0
       ) {
-        this.items = JSON.parse(localStorage.getItem("cartItems"));
+        this.items = cart[this.$nuxt.$route.params.store_slug];
         this.whole_price = await this.compute_whole_price(this.items);
-      }else{
-        this.items=null
+        return;
       }
+      this.items = null;
     },
     compute_whole_price(items) {
       let sum = 0;
@@ -201,11 +201,11 @@ export default {
     deleteProductFromCart(id) {
       this.$store.dispatch("cart/deleteProductFromCart", id);
     },
-    minusProduct(id){
-      this.$store.dispatch('cart/minusProduct', id)
+    minusProduct(id) {
+      this.$store.dispatch("cart/minusProduct", id);
     },
-    plusProduct(id){
-      this.$store.dispatch('cart/plusProduct', id)
+    plusProduct(id) {
+      this.$store.dispatch("cart/plusProduct", id);
     },
     continue_buy() {
       if (this.$cookies.get("token-buyer") && this.user_data) {
@@ -230,9 +230,9 @@ export default {
     user_data() {
       return this.$store.state.user.current_user;
     },
-    lang(){
-      return tr()
-    }
+    lang() {
+      return tr();
+    },
   },
 };
 </script>
