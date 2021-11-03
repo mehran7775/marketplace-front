@@ -24,7 +24,7 @@
               ><fa
                 icon="user"
                 class="mx-1 icom_bto_menu"
-                :title="lang.svg.settings"
+                :title="lang.svg.panel"
               ></fa
             ></span>
           </nuxt-link>
@@ -35,7 +35,7 @@
               ><fa
                 icon="user"
                 class="mx-1 icom_bto_menu"
-                :title="lang.svg.settings"
+                :title="lang.svg.signin"
               ></fa
             ></span>
           </nuxt-link>

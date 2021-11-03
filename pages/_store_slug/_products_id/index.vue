@@ -36,7 +36,7 @@
               <span id="price">
                 <span>قیمت:</span>
                 <span class="mx-1" v-text="product.price"></span>
-                <span>تومان</span>
+                <span v-text="lang.price"></span>
               </span>
               <Xbutton
                 class="px-3"
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { tr } from "@/services/lang";
+import { tr } from "@/services/lang"
 export default {
   layout: "index",
   head() {
@@ -116,6 +116,11 @@ export default {
       });
     },
   },
+  mounted(){
+    // document.querySelector('.carousel-wrapper .VueCarousel-inner').style.flexDirection ="row-reverse!important"
+    // document.querySelector('.carousel-wrapper .VueCarousel-inner').style.flexDirection ="row-reverse!important"
+    
+  }
 };
 </script>
 

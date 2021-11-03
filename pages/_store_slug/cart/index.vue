@@ -33,7 +33,7 @@
                 </div>
                 <div class="price_item_cart mr-1">
                   <span v-text="item.price"></span
-                  ><span class="pr-1">تومان</span>
+                  ><span class="pr-1" v-text="lang.price"></span>
                 </div>
                 <div
                   class="d-flex justify-content-center p-1"
@@ -101,7 +101,7 @@
                     class="while-price"
                     v-text="separate(whole_price)"
                   ></span
-                  ><span class="while-price pr-1">تومان</span>
+                  ><span class="while-price pr-1" v-text="lang.price"></span>
                 </div>
                 <div class="col-12 col-md-6 text-center continue-buy">
                   <button class="btn btn-success" @click="continue_buy">
@@ -121,6 +121,7 @@
 </template>
 
 <script>
+import { tr } from "@/services/lang";
 export default {
   layout: "index",
   data() {
@@ -161,21 +162,24 @@ export default {
   },
   created() {
     if (process.browser) {
-      this.setItems()
+      this.setItems();
     }
     this.$nuxt.$on("refresh-cart", () => {
-      this.setItems()
+      this.setItems();
     });
   },
   methods: {
     async setItems() {
+      const cart = JSON.parse(localStorage.getItem("cart"));
       if (
-        localStorage.getItem("cartItems") &&
-        JSON.parse(localStorage.getItem("cartItems")).length > 0
+        typeof cart[this.$nuxt.$route.params.store_slug] !== "undefined" &&
+        cart[this.$nuxt.$route.params.store_slug].length > 0
       ) {
-        this.items = JSON.parse(localStorage.getItem("cartItems"));
+        this.items = cart[this.$nuxt.$route.params.store_slug];
         this.whole_price = await this.compute_whole_price(this.items);
+        return;
       }
+      this.items = null;
     },
     compute_whole_price(items) {
       let sum = 0;
@@ -197,11 +201,11 @@ export default {
     deleteProductFromCart(id) {
       this.$store.dispatch("cart/deleteProductFromCart", id);
     },
-    minusProduct(id){
-      this.$store.dispatch('cart/minusProduct', id)
+    minusProduct(id) {
+      this.$store.dispatch("cart/minusProduct", id);
     },
-    plusProduct(id){
-      this.$store.dispatch('cart/plusProduct', id)
+    plusProduct(id) {
+      this.$store.dispatch("cart/plusProduct", id);
     },
     continue_buy() {
       if (this.$cookies.get("token-buyer") && this.user_data) {
@@ -225,6 +229,9 @@ export default {
   computed: {
     user_data() {
       return this.$store.state.user.current_user;
+    },
+    lang() {
+      return tr();
     },
   },
 };

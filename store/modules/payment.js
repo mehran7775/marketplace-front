@@ -17,7 +17,7 @@ const mutations = {
 
 const actions = {
      async select_way_payment({ commit }, payload) {
-        const items = JSON.parse(localStorage.getItem("cartItems"));
+        const items = JSON.parse(localStorage.getItem("cart"))[$nuxt.$route.params.store_slug]
         const items_second = [];
         items.forEach((element) => {
           items_second.push({
@@ -28,23 +28,28 @@ const actions = {
         payload["products"]=items_second
         try {
             const {data} = await this.$axios.post('/order/create', payload)
-            console.log( data)
             commit('set_order_id', data.data.order_id)
-            console.log('reees',data)
             $nuxt.$bvModal.show('modal-prevent-closing')
         } catch (e) {
-            // console.log(e)
             commit('open_toast', {
                 msg: e.response.data.message,
                 variant: 'error'
             }, { root: true })
-
         }
     },
-    do_payment({ commit, state }, payload) {
+    async do_payment({ commit, state }, payload) {
         try {
-            console.log(state.order_id)
-            this.$axios.post(`pay/order/${state.order_id}`, payload)
+            const {data} = await this.$axios.post(`pay/order/${state.order_id}`, payload)
+            const form = document.createElement("form");
+            const input = document.createElement("input"); 
+            form.method = "POST";
+            form.action = data.data.url
+            input.type="hidden"
+            input.value=data.data.token
+            input.name="token"
+            form.appendChild(input)
+            document.body.appendChild(form)
+            form.submit()
         } catch (e) {
             console.log(e)
         }
