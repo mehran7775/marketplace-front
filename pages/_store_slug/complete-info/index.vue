@@ -99,6 +99,9 @@
                               <div v-if="errors[0]" class="py-2 pr-2">
                                 <span class="text-danger">{{ errors[0] }}</span>
                               </div>
+                              <div v-if="errorsApi['email']" class="py-2 pr-2">
+                                <span class="text-danger" v-text="errorsApi['email'][0]"></span>
+                              </div>
                             </ValidationProvider>
                           </div>
                         </div>
@@ -132,6 +135,9 @@
                               <div v-if="errors[0]" class="py-2 pr-2">
                                 <span class="text-danger">{{ errors[0] }}</span>
                               </div>
+                              <div v-if="errorsApi['phone']" class="py-2 pr-2">
+                                <span class="text-danger" v-text="errorsApi['phone'][0]"></span>
+                              </div>
                             </ValidationProvider>
                           </div>
                         </div>
@@ -162,6 +168,12 @@
                                   v-text="'این فیلد الزامی است'"
                                 ></span>
                               </div>
+                              <div v-if="errorsApi['province']" class="py-2 pr-2">
+                                <span
+                                  class="text-danger"
+                                  v-text="'این فیلد الزامی است'"
+                                ></span>
+                              </div>
                             </div>
                             <div class="naming">
                               <ValidationProvider
@@ -184,6 +196,10 @@
                                 <div v-if="errors[0]" class="py-2 pr-2">
                                   <span class="text-danger">{{
                                     errors[0]
+                                  }}</span>
+                                </div>
+                                <div v-if="errorsApi['city']" class="py-2 pr-2">
+                                  <span class="text-danger" v-text="errorsApi['city'][0]">{{
                                   }}</span>
                                 </div>
                               </ValidationProvider>
@@ -211,6 +227,9 @@
                               />
                               <div v-if="errors[0]" class="py-2 pr-2">
                                 <span class="text-danger">{{ errors[0] }}</span>
+                              </div>
+                              <div v-if="errorsApi['address']" class="py-2 pr-2">
+                                <span class="text-danger" v-text="errorsApi['address'][0]"></span>
                               </div>
                             </ValidationProvider>
                           </div>
@@ -241,7 +260,6 @@
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { provinces } from "@/constants/Provinces";
-
 export default {
   layout: "index",
   middleware: "guest",
@@ -279,7 +297,6 @@ export default {
         detail: res1.data.data,
       };
     } catch (e) {
-      console.log("33", e);
       if (e.response) {
         error({
           statusCode: e.response.status,
@@ -329,6 +346,9 @@ export default {
     provinces() {
       return provinces;
     },
+    errorsApi(){
+      return this.$store.getters['user/errorsApi']
+    }
   },
 };
 </script>
