@@ -100,7 +100,10 @@
                                 <span class="text-danger">{{ errors[0] }}</span>
                               </div>
                               <div v-if="errorsApi['email']" class="py-2 pr-2">
-                                <span class="text-danger" v-text="errorsApi['email'][0]"></span>
+                                <span
+                                  class="text-danger"
+                                  v-text="errorsApi['email'][0]"
+                                ></span>
                               </div>
                             </ValidationProvider>
                           </div>
@@ -136,7 +139,10 @@
                                 <span class="text-danger">{{ errors[0] }}</span>
                               </div>
                               <div v-if="errorsApi['phone']" class="py-2 pr-2">
-                                <span class="text-danger" v-text="errorsApi['phone'][0]"></span>
+                                <span
+                                  class="text-danger"
+                                  v-text="errorsApi['phone'][0]"
+                                ></span>
                               </div>
                             </ValidationProvider>
                           </div>
@@ -168,7 +174,10 @@
                                   v-text="'این فیلد الزامی است'"
                                 ></span>
                               </div>
-                              <div v-if="errorsApi['province']" class="py-2 pr-2">
+                              <div
+                                v-if="errorsApi['province']"
+                                class="py-2 pr-2"
+                              >
                                 <span
                                   class="text-danger"
                                   v-text="'این فیلد الزامی است'"
@@ -199,7 +208,10 @@
                                   }}</span>
                                 </div>
                                 <div v-if="errorsApi['city']" class="py-2 pr-2">
-                                  <span class="text-danger" v-text="errorsApi['city'][0]">{{
+                                  <span
+                                    class="text-danger"
+                                    v-text="errorsApi['city'][0]"
+                                    >{{
                                   }}</span>
                                 </div>
                               </ValidationProvider>
@@ -228,8 +240,14 @@
                               <div v-if="errors[0]" class="py-2 pr-2">
                                 <span class="text-danger">{{ errors[0] }}</span>
                               </div>
-                              <div v-if="errorsApi['address']" class="py-2 pr-2">
-                                <span class="text-danger" v-text="errorsApi['address'][0]"></span>
+                              <div
+                                v-if="errorsApi['address']"
+                                class="py-2 pr-2"
+                              >
+                                <span
+                                  class="text-danger"
+                                  v-text="errorsApi['address'][0]"
+                                ></span>
                               </div>
                             </ValidationProvider>
                           </div>
@@ -286,7 +304,7 @@ export default {
         city: "",
       },
       valid_province: null,
-    };
+    }
   },
   async asyncData({ error, route, $axios, store }) {
     try {
@@ -305,7 +323,7 @@ export default {
       }
       error({
         statusCode: 500,
-        message: e
+        message: e,
       });
     }
   },
@@ -346,9 +364,9 @@ export default {
     provinces() {
       return provinces;
     },
-    errorsApi(){
-      return this.$store.getters['user/errorsApi']
-    }
+    errorsApi() {
+      return this.$store.getters["user/errorsApi"];
+    },
   },
 };
 </script>
@@ -364,5 +382,4 @@ h2 {
 .dash {
   border-top: 1px dashed $success;
 }
-
 </style>

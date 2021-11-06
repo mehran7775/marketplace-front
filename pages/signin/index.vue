@@ -20,11 +20,11 @@
             class="form-control"
           />
         </div>
-
         <Xbutton
           :on_click="do_login"
-          class="btn-sign m-auto"
+          class="px-5 mx-auto"
           text="ورود"
+
         ></Xbutton>
         <div v-if="errors.length > 0" class="text-center pt-3">
           <p
@@ -33,6 +33,10 @@
             v-text="error"
             class="text-danger"
           ></p>
+        </div>
+        <div class="text-center mt-3">
+          <span>هنوز ثبت نام نکرده اید؟</span>
+          <router-link to="/signup">کلیک کنید</router-link>
         </div>
       </template>
     </Xform>
@@ -123,4 +127,7 @@ export default {
 
 
 <style lang="scss" scoped>
+a{
+  color: $success;
+}
 </style>
