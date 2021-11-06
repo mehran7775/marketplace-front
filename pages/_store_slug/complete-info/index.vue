@@ -272,14 +272,13 @@ export default {
   },
   async asyncData({ error, route, $axios, store }) {
     try {
-      const res1 = await $axios.get(`/store/${route.params.store_slug}`);
-      store.commit("payment/set_gateways", res1.data.data.gateways);
-      store.commit("store/set_id", res1.data.data.id);
+      const res1 = await $axios.get(`/store/${route.params.store_slug}`)
+      store.commit("payment/set_gateways", res1.data.data.gateways)
+      store.commit("store/set_id", res1.data.data.id)
       return {
         detail: res1.data.data,
       };
     } catch (e) {
-      console.log("33", e);
       if (e.response) {
         error({
           statusCode: e.response.status,
@@ -289,7 +288,7 @@ export default {
       error({
         statusCode: 500,
         message: e
-      });
+      })
     }
   },
   components: {

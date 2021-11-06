@@ -5,11 +5,11 @@
     @click="on_click"
     :disabled="disabled"
   >
-    <div class="row mx-1">
-      <div v-if="text != ''"  class="px-2">
+    <div class="row mx-auto">
+      <div v-if="text != ''"  class="px-2 text-center">
           <span v-text="text"></span>
       </div>
-      <div v-if="icon != ''" class="px-1">
+      <div v-if="icon != ''" class="px-1 text-center">
         <fa :icon="icon"></fa>
       </div>
     </div>
