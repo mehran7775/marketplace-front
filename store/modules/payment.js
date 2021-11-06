@@ -17,22 +17,34 @@ const mutations = {
 
 const actions = {
      async select_way_payment({ commit }, payload) {
+        commit('user/setApiError','',{root:true})
         const items = JSON.parse(localStorage.getItem("cart"))[$nuxt.$route.params.store_slug]
-        const items_second = [];
-        items.forEach((element) => {
-          items_second.push({
-            id: element.id,
-            quantity: element.count,
-          });
-        });
-        payload["products"]=items_second
-        try {
-            const {data} = await this.$axios.post('/order/create', payload)
-            commit('set_order_id', data.data.order_id)
-            $nuxt.$bvModal.show('modal-prevent-closing')
-        } catch (e) {
+        if(state.gateways && items && items.length > 0){
+            const items_second = [];
+            items.forEach((element) => {
+              items_second.push({
+                id: element.id,
+                quantity: element.count,
+              });
+            });
+            payload["products"]=items_second
+            try {
+                const {data} = await this.$axios.post('/order/create', payload)
+                commit('set_order_id', data.data.order_id)
+                $nuxt.$bvModal.show('modal-prevent-closing')
+            } catch (e) {
+                if(e.response.data.data){
+                    const keys=Object.keys(e.response.data.data)
+                    const eData={}
+                    keys.forEach(element => {
+                        eData[element]= e.response.data.data[element]
+                    });
+                    commit('user/setApiError',eData,{root:true})
+                }
+            }
+        }else{
             commit('open_toast', {
-                msg: e.response.data.message,
+                msg: 'درگاه یا محصولی برای پرداخت وجود ندارد',
                 variant: 'error'
             }, { root: true })
         }

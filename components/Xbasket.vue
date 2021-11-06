@@ -30,12 +30,13 @@ export default {
   },
   methods: {
     setCount() {
-      const cart = JSON.parse(localStorage.getItem("cart"));
-      if (
-        typeof cart[this.$nuxt.$route.params.store_slug] !== "undefined" &&
-        cart[this.$nuxt.$route.params.store_slug].length > 0
-      ) {
-        this.count = cart[this.$nuxt.$route.params.store_slug].length;
+      const cart = JSON.parse(localStorage.getItem("cart"))
+      if (cart && cart[this.$nuxt.$route.params.store_slug]) {
+        if (cart[this.$nuxt.$route.params.store_slug].length > 0) {
+          this.count = cart[this.$nuxt.$route.params.store_slug].length;
+        }else{
+          this.count= 0
+        }
         return;
       }
       this.count = 0;

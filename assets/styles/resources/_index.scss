@@ -22,7 +22,9 @@
         display: none!important;
     }
 }
-
+.modal-backdrop{
+    background-color:  rgba(0, 0, 0, 0.5)!important;
+  }
 body {
     #__nuxt {
         .cursor_pointer {
