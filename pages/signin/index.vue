@@ -22,7 +22,7 @@
         </div>
         <Xbutton
           :on_click="do_login"
-          class="px-5 mx-auto"
+          class="w-100"
           text="ورود"
 
         ></Xbutton>

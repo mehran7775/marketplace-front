@@ -4,12 +4,13 @@ import {
 import {
     required,
     alpha,
-    digits,email
+    digits,email,
+    length,min,max
 } from "vee-validate/dist/rules";
 
 extend("required", {
     ...required,
-    message: "این فیلد الزامیست"
+    message: "{_field_} الزامیست"
 });
 
 extend("alpha", {
@@ -17,12 +18,25 @@ extend("alpha", {
     message: "فقط حروف می تواند وارد شود"
 });
 extend("digits", {
-    ...digits,
-    message: "شماره تلفن باید بصورت عدد و یازده کاراکتر باشد"
+    ...digits
 });
 
 extend("email", {
     ...email,
     message: "ایمیل صحیح وارد نشده است"
+});
+extend("length", {
+    ...length,
+    message: `{_field_} باید {_value_} باشد`
+});
+
+
+extend('min', {
+    validate(value, { length }) {
+        return value.length >= length;
+    },
+    params: ['length'],
+    message: 'The {_field_} field must have at least {length} characters',
+    message: '{_field_} باید حداقل {length} کاراکتر باشد',
 });
 
