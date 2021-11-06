@@ -20,7 +20,8 @@
                   :ref="gateway.id"
                   :id="gateway.id"
                 />
-                <span class="mr-3" v-text="gateway.title"></span>
+                <img width="24" height="24" :src="gateway.logo" class="mr-2">
+               <label :for="gateway.id"><span class="mr-1" v-text="`درگاه پرداخت ${gateway.title}`"></span></label>
               </div>
             </div>
             <div class="col-12 text-center">

@@ -16,7 +16,7 @@ const mutations = {
 }
 
 const actions = {
-     async select_way_payment({ commit }, payload) {
+     async select_way_payment({ commit, state,dispatch }, payload) {
         commit('user/setApiError','',{root:true})
         const items = JSON.parse(localStorage.getItem("cart"))[$nuxt.$route.params.store_slug]
         if(state.gateways && items && items.length > 0){
@@ -31,7 +31,14 @@ const actions = {
             try {
                 const {data} = await this.$axios.post('/order/create', payload)
                 commit('set_order_id', data.data.order_id)
-                $nuxt.$bvModal.show('modal-prevent-closing')
+                if(state.gateways.length === 1){
+                    dispatch('do_payment',{
+                        gateway_id: state.gateways[0].id
+                    });
+                }else{
+                   $nuxt.$bvModal.show('modal-prevent-closing')
+                }
+
             } catch (e) {
                 if(e.response.data.data){
                     const keys=Object.keys(e.response.data.data)
