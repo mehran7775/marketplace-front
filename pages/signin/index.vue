@@ -1,52 +1,73 @@
 <template>
-  <div class="sign_in">
-    <Xform>
-      <template #content>
-        <div class="form-group">
-          <label>نام کاربری</label>
-          <input
-            v-model="outh_param"
-            ref="auth_path"
-            type="text"
-            class="form-control"
-          />
-        </div>
-        <div class="form-group">
-          <label>رمز عبور</label>
-          <input
-            v-model="password"
-            ref="password"
-            type="text"
-            class="form-control"
-          />
-        </div>
-        <Xbutton
-          :on_click="do_login"
-          class="px-5 mx-auto"
-          text="ورود"
-
-        ></Xbutton>
-        <div v-if="errors.length > 0" class="text-center pt-3">
-          <p
-            v-for="error in errors"
-            :key="error"
-            v-text="error"
-            class="text-danger"
-          ></p>
-        </div>
-        <div class="text-center mt-3">
-          <span>هنوز ثبت نام نکرده اید؟</span>
-          <router-link to="/signup">کلیک کنید</router-link>
-        </div>
-      </template>
-    </Xform>
+  <div class="sign-in">
+    <ValidationObserver ref="validationObserver">
+      <Xform>
+        <template #content>
+          <div class="form-group">
+            <label>نام کاربری</label>
+            <ValidationProvider rules="required|min:3" v-slot="{ errors }">
+              <input
+                v-model="outh_param"
+                ref="auth_path"
+                type="text"
+                id="نام کاربری"
+                maxlength="35"
+                placeholder="شماره تلفن یا ایمیل"
+                :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
+              />
+              <div v-if="errors[0]" class="py-2 pr-2">
+                <span class="text-danger">{{ errors[0] }}</span>
+              </div>
+            </ValidationProvider>
+          </div>
+          <div class="form-group">
+            <label>کلمه عبور</label>
+            <ValidationProvider
+              rules="required|min:6|max:20"
+              v-slot="{ errors }"
+            >
+              <input
+                v-model="password"
+                ref="password"
+                type="text"
+                placeholder="مثال: 1234565"
+                id="کلمه عبور"
+                maxlength="25"
+                class="form-control"
+              />
+              <div v-if="errors[0]" class="py-2 pr-2">
+                <span class="text-danger">{{ errors[0] }}</span>
+              </div>
+            </ValidationProvider>
+          </div>
+          <Xbutton :on_click="do_login" class="w-100" text="ورود"></Xbutton>
+          <div v-if="errors.length > 0" class="text-center pt-3">
+            <p
+              v-for="error in errors"
+              :key="error"
+              v-text="error"
+              class="text-danger"
+            ></p>
+          </div>
+          <div class="text-center mt-3">
+            <span>هنوز ثبت نام نکرده اید؟</span>
+            <router-link to="/signup">کلیک کنید</router-link>
+          </div>
+        </template>
+      </Xform>
+    </ValidationObserver>
   </div>
 </template>
 
 <script>
+import { ValidationProvider, ValidationObserver } from "vee-validate";
 export default {
   middleware: "guest",
   layout: "sign",
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
   data() {
     return {
       outh_param: "",
@@ -55,71 +76,63 @@ export default {
     };
   },
   methods: {
-    validate() {
-      if (this.auth_path == "") {
-        return "شماره تلفن یا نام کاربری الزامی است";
-      }
-      if (this.password == "") {
-        return "کلمه عبور الزامی است";
-      }
-      return true;
-    },
-    async do_login() {
+    do_login() {
       this.errors = [];
-      if (this.validate() !== true) {
-        alert(this.validate());
-      } else {
-        try {
-          const res = await this.$nuxt.context.$axios.post("customer/login", {
-            outh_param: this.outh_param,
-            password: this.password,
-            login_with_verification_code: false,
-          });
-          if (res.status === 200) {
-            this.$cookies.set("token-buyer", res.data.data.api.token);
-            const res_current = await this.$nuxt.context.$axios.get("/customer/current",
-              {
-                headers: {
-                  authorization: "Bearer " + res.data.data.api.token,
-                },
-              }
-            );
-            if (res_current.status === 200) {
+      this.$refs.validationObserver.validate().then((res) => {
+        if (res) {
+          try {
+            const res = this.$nuxt.context.$axios.post("customer/login", {
+              outh_param: this.outh_param,
+              password: this.password,
+              login_with_verification_code: false,
+            });
+            if (res.status === 200) {
+              this.$cookies.set("token-buyer", res.data.data.api.token);
+              const res_current = this.$nuxt.context.$axios
+                .get("/customer/current", {
+                  headers: {
+                    authorization: "Bearer " + res.data.data.api.token,
+                  },
+                })
+                .then((res) => {
+                  this.$store.commit(
+                    "user/set_current_user",
+                    res_current.data.data,
+                    { root: true }
+                  );
+                  this.$router.replace("/admin-buyer");
+                  this.$store.commit(
+                    "open_toast",
+                    {
+                      msg: res.data.message,
+                      variant: "success",
+                    },
+                    { root: true }
+                  );
+                });
+            }
+          } catch (e) {
+            if (e.response.status === 401) {
               this.$store.commit(
-                "user/set_current_user",
-                res_current.data.data,
+                "open_toast",
+                {
+                  msg: e.response.data.message,
+                  variant: "error",
+                },
                 { root: true }
               );
             }
-            this.$router.replace("/admin-buyer");
-            this.$store.commit(
-              "open_toast",
-              {
-                msg: res.data.message,
-                variant: "success",
-              },
-              { root: true }
-            );
+            if (e.response.status === 400) {
+              console.log(Object.keys(e.response.data.data));
+              Object.keys(e.response.data.data).forEach((element) => {
+                this.errors.push(e.response.data.data[element][0]);
+              });
+            }
           }
-        } catch (e) {
-          if (e.response.status === 401) {
-            this.$store.commit(
-              "open_toast",
-              {
-                msg: e.response.data.message,
-                variant: "error",
-              },
-              { root: true }
-            );
-          }
-          if (e.response.status === 400) {
-            console.log(Object.keys(e.response.data.data));
-            Object.keys(e.response.data.data).forEach((element) => {
-              this.errors.push(e.response.data.data[element][0]);
-            });
-          }
+        } else {
+          return;
         }
-      }
+      });
     },
   },
 };
@@ -127,7 +140,15 @@ export default {
 
 
 <style lang="scss" scoped>
-a{
+.sign-in{
+  border-radius: 10px;
+  box-shadow: 1px 1px 12px 0 $secondary;
+  padding: 30px;
+  max-width: 350px;
+  min-width: 330px;
+  a {
   color: $success;
 }
+}
+
 </style>
