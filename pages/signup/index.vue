@@ -1,143 +1,160 @@
 <template>
-  <div class="sign_up">
-    <ValidationObserver ref="validationObserver">
-      <Xform :sub_form="do_register">
-        <template #content>
-          <div class="form-group">
-            <label>نام</label>
-            <ValidationProvider rules="required|min:3" v-slot="{ errors }">
-              <input
-                v-model="form.first_name"
-                ref="first_name"
-                type="text"
-                id="نام"
-                :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-              />
-              <div v-if="errors[0]" class="py-2 pr-2">
-                <span class="text-danger">{{ errors[0] }}</span>
-              </div>
-            </ValidationProvider>
-          </div>
-          <div class="form-group">
-            <label>نام خانوادگی</label>
-            <ValidationProvider rules="required" v-slot="{ errors }">
-              <input
-                v-model="form.last_name"
-                ref="last_name"
-                type="text"
-                
-                :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-              />
-              <div v-if="errors[0]" class="py-2 pr-2">
-                <span class="text-danger">{{ errors[0] }}</span>
-              </div>
-            </ValidationProvider>
-          </div>
-          <div class="form-group">
-            <label>شماره تلفن</label>
-            <ValidationProvider rules="required|digits:11" v-slot="{ errors }">
-              <input
-                v-model="form.phone"
-                ref="phone"
-                type="text"
-                :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-              />
-              <div v-if="errors[0]" class="py-2 pr-2">
-                <span class="text-danger">{{ errors[0] }}</span>
-              </div>
-            </ValidationProvider>
-          </div>
-          <div class="form-group">
-            <label>ایمیل</label>
-            <ValidationProvider rules="required|email" v-slot="{ errors }">
-              <input
-                v-model="form.email"
-                ref="email"
-                type="text"
-                :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-              />
-              <div v-if="errors[0]" class="py-2 pr-2">
-                <span class="text-danger">{{ errors[0] }}</span>
-              </div>
-            </ValidationProvider>
-          </div>
-          <div class="form-group">
-            <label>استان</label>
-            <select
-              :class="[
-                valid_province ? 'xborder-danger' : null,
-                'form-control form-control-sm',
-              ]"
-              ref="province"
-              @change="validate_province"
-            >
-              <option value="">انتخاب استان</option>
-              <option
-                v-for="province in provinces"
-                :key="province.id"
-                :value="province.id"
-                v-text="province.value"
-              ></option>
-            </select>
-            <div
-              v-if="valid_province"
-              class="py-2 pr-2"
-            >
-              <span class="text-danger" v-text="'این فیلد الزامی است'"></span>
+  <div class="sign-up text-right">
+   
+      <ValidationObserver ref="validationObserver">
+        <Xform :sub_form="do_register">
+          <template #content>
+            <div class="form-group">
+              <label>نام</label>
+              <ValidationProvider rules="required|min:3" v-slot="{ errors }">
+                <input
+                  v-model="form.first_name"
+                  ref="first_name"
+                  type="text"
+                  id="نام"
+                  placeholder="مثال: علی"
+                  :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
+                />
+                <div v-if="errors[0]" class="py-2 pr-2">
+                  <span class="text-danger">{{ errors[0] }}</span>
+                </div>
+              </ValidationProvider>
             </div>
-          </div>
-          <div class="form-group">
-            <label>شهر</label>
-            <ValidationProvider rules="required" v-slot="{ errors }">
-              <input
-                v-model="form.city"
-                ref="city"
-                type="text"
-                :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-              />
-              <div v-if="errors[0]" class="py-2 pr-2">
-                <span class="text-danger">{{ errors[0] }}</span>
+            <div class="form-group">
+              <label>نام خانوادگی</label>
+              <ValidationProvider rules="required|min:3" v-slot="{ errors }">
+                <input
+                  v-model="form.last_name"
+                  ref="last_name"
+                  id="نام خانوادگی"
+                  type="text"
+                  placeholder="مثال: ابراهیمی"
+                  :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
+                />
+                <div v-if="errors[0]" class="py-2 pr-2">
+                  <span class="text-danger">{{ errors[0] }}</span>
+                </div>
+              </ValidationProvider>
+            </div>
+            <div class="form-group">
+              <label>شماره تلفن</label>
+              <ValidationProvider rules="required|regPhone" v-slot="{ errors }">
+                <input
+                  v-model="form.phone"
+                  ref="phone"
+                  type="text"
+                  id="شماره تلفن"
+                  maxlength="11"
+                  placeholder="مثال: 09xxxxxxx23"
+                  :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
+                />
+                <div v-if="errors[0]" class="py-2 pr-2">
+                  <span class="text-danger">{{ errors[0] }}</span>
+                </div>
+              </ValidationProvider>
+            </div>
+            <div class="form-group">
+              <label>ایمیل</label>
+              <ValidationProvider rules="required|email" v-slot="{ errors }">
+                <input
+                  v-model="form.email"
+                  ref="email"
+                  name="ایمیل
+                "
+                  type="text"
+                  placeholder="example@gmail.com"
+                  :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
+                />
+                <div v-if="errors[0]" class="py-2 pr-2">
+                  <span class="text-danger">{{ errors[0] }}</span>
+                </div>
+              </ValidationProvider>
+            </div>
+            <div class="form-group">
+              <label>استان</label>
+              <select
+                :class="[
+                  valid_province ? 'xborder-danger' : null,
+                  'form-control form-control-sm',
+                ]"
+                ref="province"
+                @change="validate_province"
+              >
+                <option value="">انتخاب استان</option>
+                <option
+                  v-for="province in provinces"
+                  :key="province.id"
+                  :value="province.id"
+                  v-text="province.value"
+                ></option>
+              </select>
+              <div v-if="valid_province" class="py-2 pr-2">
+                <span class="text-danger" v-text="'این فیلد الزامی است'"></span>
               </div>
-            </ValidationProvider>
-          </div>
-          <div class="form-group">
-            <label>آدرس</label>
-            <ValidationProvider rules="required" v-slot="{ errors }">
-              <input
-                v-model="form.address"
-                ref="city"
-                type="text"
-                :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-              />
-              <div v-if="errors[0]" class="py-2 pr-2">
-                <span class="text-danger">{{ errors[0] }}</span>
-              </div>
-            </ValidationProvider>
-          </div>
-          <div class="form-group">
-            <label>کلمه عبور</label>
-            <ValidationProvider rules="required" v-slot="{ errors }">
-              <input
-                v-model="form.password"
-                ref="city"
-                type="password"
-                :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-              />
-              <div v-if="errors[0]" class="py-2 pr-2">
-                <span class="text-danger">{{ errors[0] }}</span>
-              </div>
-            </ValidationProvider>
-          </div>
-          <Xbutton
-            is_submit
-            class="btn-sign m-auto w-100"
-            text="ثبت نام"
-          ></Xbutton>
-          <div class="form-group"></div>
-        </template>
-      </Xform>
-    </ValidationObserver>
-    <div v-if="errors" class="bg-danger text-white" v-html="errors"></div>
+            </div>
+            <div class="form-group">
+              <label>شهر</label>
+              <ValidationProvider rules="required|min:2" v-slot="{ errors }">
+                <input
+                  v-model="form.city"
+                  ref="city"
+                  type="text"
+                  id="شهر"
+                  placeholder="مثال: تهران"
+                  :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
+                />
+                <div v-if="errors[0]" class="py-2 pr-2">
+                  <span class="text-danger">{{ errors[0] }}</span>
+                </div>
+              </ValidationProvider>
+            </div>
+            <div class="form-group">
+              <label>آدرس</label>
+              <ValidationProvider rules="required|min:10" v-slot="{ errors }">
+                <input
+                  v-model="form.address"
+                  ref="address"
+                  type="text"
+                  id="آدرس"
+                  placeholder="مثال: تهران-میدان انقلاب-خیابان آزادی-پلاک30"
+                  :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
+                />
+                <div v-if="errors[0]" class="py-2 pr-2">
+                  <span class="text-danger">{{ errors[0] }}</span>
+                </div>
+              </ValidationProvider>
+            </div>
+            <div class="form-group">
+              <label>کلمه عبور</label>
+              <ValidationProvider
+                rules="required|min:6|max:20"
+                v-slot="{ errors }"
+              >
+                <input
+                  v-model="form.password"
+                  ref="city"
+                  type="password"
+                  id="کلمه عبور"
+                  maxlength="25"
+                  placeholder="مثال: 123456"
+                  :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
+                />
+                <div v-if="errors[0]" class="py-2 pr-2">
+                  <span class="text-danger">{{ errors[0] }}</span>
+                </div>
+              </ValidationProvider>
+            </div>
+            <Xbutton
+              is_submit
+              class="btn-sign m-auto w-100"
+              text="ثبت نام"
+            ></Xbutton>
+            <div class="form-group"></div>
+          </template>
+        </Xform>
+      </ValidationObserver>
+      <div v-if="errors" class="bg-danger text-white" v-html="errors"></div>
+    
   </div>
 </template>
 
@@ -168,10 +185,10 @@ export default {
     ValidationObserver,
   },
   methods: {
-    async do_register() {
+    do_register() {
       this.validate_province();
-      this.$refs.validationObserver.validate().then((success) => {
-        if (success && !this.valid_province) {
+      this.$refs.validationObserver.validate().then((res) => {
+        if (res && !this.valid_province) {
           const data = {
             first_name: this.form.first_name,
             last_name: this.form.last_name,
@@ -241,5 +258,15 @@ export default {
 </script>
 
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
+.sign-up {
+  border-radius: 10px;
+  box-shadow: 1px 1px 12px 0 $secondary;
+  padding: 30px;
+  max-width: 350px;
+  min-width: 330px;
+  overflow-y: auto;
+  height: 90vh;
+  direction: ltr;
+}
 </style>

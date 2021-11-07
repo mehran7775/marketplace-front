@@ -27,7 +27,7 @@
                             <div class="naming">
                               <ValidationProvider
                                 :rules="
-                                  detail.options.name === 1 ? 'required' : null
+                                  detail.options.name === 1 ? 'required|min:3' : null
                                 "
                                 v-slot="{ errors }"
                               >
@@ -37,7 +37,7 @@
                                     'form-control',
                                   ]"
                                   type="text"
-                                  name="fname"
+                                  name="نام"
                                   v-model="form.first_name"
                                   placeholder="نام"
                                 />
@@ -61,7 +61,7 @@
                                     'form-control',
                                   ]"
                                   type="text"
-                                  name="lname"
+                                  name="نام خانوادگی"
                                   v-model="form.last_name"
                                   placeholder="نام خانوادگی"
                                 />
@@ -92,7 +92,7 @@
                                   'form-control',
                                 ]"
                                 type="email"
-                                name="email"
+                                name="ایمیل"
                                 v-model="form.email"
                                 placeholder="ایمیل"
                               />
@@ -115,7 +115,7 @@
                               :rules="
                                 detail.options.phone === 1
                                   ? 'required'
-                                  : null | 'digits:11'
+                                  : null | 'regPhone'
                               "
                               v-slot="{ errors }"
                             >
@@ -126,7 +126,7 @@
                                 ]"
                                 type="text"
                                 id="phone"
-                                name="phone"
+                                name="تلفن"
                                 ref="phone"
                                 placeholder="موبایل"
                                 v-model="form.phone"
@@ -162,13 +162,7 @@
                                   v-text="province.value"
                                 ></option>
                               </select>
-                              <div v-if="valid_province" class="py-2 pr-2">
-                                <span
-                                  class="text-danger"
-                                  v-text="'این فیلد الزامی است'"
-                                ></span>
-                              </div>
-                              <div v-if="errorsApi['province']" class="py-2 pr-2">
+                              <div v-if="valid_province || errorsApi['province']" class="py-2 pr-2">
                                 <span
                                   class="text-danger"
                                   v-text="'این فیلد الزامی است'"
@@ -179,7 +173,7 @@
                               <ValidationProvider
                                 :rules="
                                   detail.options.address === 1
-                                    ? 'required'
+                                    ? 'required|min:2'
                                     : null
                                 "
                                 v-slot="{ errors }"
@@ -191,6 +185,7 @@
                                   ]"
                                   type="text"
                                   v-model="form.city"
+                                  name="شهر"
                                   placeholder="شهر"
                                 />
                                 <div v-if="errors[0]" class="py-2 pr-2">
@@ -212,7 +207,7 @@
                           <div class="w-100">
                             <ValidationProvider
                               :rules="
-                                detail.options.address === 1 ? 'required' : null
+                                detail.options.address === 1 ? 'required|min:10' : null
                               "
                               v-slot="{ errors }"
                             >
@@ -223,6 +218,7 @@
                                 ]"
                                 type="text"
                                 v-model="form.address"
+                                name="آدرس"
                                 placeholder="آدرس"
                               />
                               <div v-if="errors[0]" class="py-2 pr-2">

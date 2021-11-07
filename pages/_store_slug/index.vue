@@ -40,7 +40,6 @@ export default {
       const { data } = await $axios.get(
         `/store/${route.params.store_slug}/products`
       );
-      console.log(res.data)
       return {
         detail: res.data.data,
         products: data.data.data,
