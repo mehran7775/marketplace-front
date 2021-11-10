@@ -105,10 +105,8 @@ export default {
       padding: 20px 0 40px 20px;
     }
     .img-wrapper {
-      // margin:min(0.05rem, 0.2%);
       @include medium {
-        //   margin: 0 0.2rem;
-        margin: min(0.05rem, 0.05%);
+        // margin: min(0.05rem, 0.05%);
       }
     }
   }
@@ -116,9 +114,9 @@ export default {
   .grid-container {
     display: grid;
     grid-template-columns: auto auto auto;
-    grid-gap: 1.5px;
+    grid-gap: 2px;
     background: $border;
-    padding: 1.5px;
+    padding: 2px;
 }
 
 .grid-container > div {

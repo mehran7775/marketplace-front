@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div class="row mb-4 pb-5">
+    <div class="row mb-4">
       <div class="col">
         <Nuxt />
       </div>

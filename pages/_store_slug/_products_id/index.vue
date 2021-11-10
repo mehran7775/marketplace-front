@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row pb-5">
     <MoleculesXheader
       :logo="detail.logo"
       :fa_name="detail.fa_name"

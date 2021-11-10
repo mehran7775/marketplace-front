@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row index">
     <MoleculesXheader
       :logo="detail.logo"
       :fa_name="detail.fa_name"
@@ -55,10 +55,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#lables {
-  padding: 0;
-  @include mx_medium {
-    padding: 0.05rem;
-  }
+.index{
+  margin-bottom: 14.5px;
 }
 </style>

@@ -1,11 +1,14 @@
 <template>
   <div id="item" @mouseover="item_hover()" @mouseleave="is_hover = false">
-    <h5 v-text="title" class="font-weight-bold">کفش مردانه</h5>
+    <h5 v-text="title" class="font-weight-bold"></h5>
     <nuxt-link
       :to="`${$route.params.store_slug}/${id}`"
       class="d-flex align-items-center justify-content-center"
     >
-      <img :src="image ? image : '/images/default-image.png'" alt="تصویر محصول" />
+      <img
+        :src="image ? image : '/images/default-image.png'"
+        alt="تصویر محصول"
+      />
     </nuxt-link>
     <div id="box_hover">
       <div v-if="is_hover" class="d-flex">
@@ -37,7 +40,7 @@
   </div>
 </template>
 <script>
-import { tr } from "@/services/lang"
+import { tr } from "@/services/lang";
 export default {
   props: {
     title: {
@@ -69,7 +72,7 @@ export default {
   },
   computed: {
     lang() {
-      return tr()
+      return tr();
     },
   },
   data() {
@@ -90,10 +93,10 @@ export default {
         price: this.price,
         img: this.image,
         quantity: this.quantity,
-      }
-      this.$store.dispatch("cart/addProductToCart",product);
-    }
-  }
+      };
+      this.$store.dispatch("cart/addProductToCart", product);
+    },
+  },
 };
 </script>
 
@@ -104,6 +107,13 @@ export default {
   flex-direction: column;
   text-align: center;
   transition: border linear 0.2s;
+  h5 {
+    height: 40px;
+     word-break: break-all;
+    white-space: pre-wrap;
+    text-overflow: clip;
+    overflow: hidden;
+  }
   // background-color: $white;
   padding: 10px 0;
   @include medium {
