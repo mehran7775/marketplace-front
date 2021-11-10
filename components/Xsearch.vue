@@ -1,12 +1,12 @@
 <template>
   <div class="search">
-    <input type="search" placeholder="جستجو کنید ..." />
-    <fa icon="search" :title="lang.svg.search" class="fa-lg ml-2 mr-4"></fa>
+    <input type="search" placeholder="جستجو محصول ..." />
+    <fa icon="search" :title="lang.svg.search" class="fa-lg ml-2 mr-3"></fa>
   </div>
 </template>
 
 <script>
-import {tr} from '@/services/lang'
+import { tr } from "@/services/lang";
 export default {
   computed: {
     lang() {
@@ -22,18 +22,20 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: whitesmoke;
-  // border: 1px solid rgb(155, 151, 151);
-  border: 1px solid $border_half_success;
-  border-radius: 10px;
-  padding: 10px;
+  background-color: $silver;
+  border-radius: 20px;
+  padding: 8px 10px 8px;
+  box-shadow: 0 0 3px 0 $silver;
   input {
     outline: none;
     border: none;
-    border-radius: 10px;
-    background-color: inherit;
-    padding: 0 20px;
-    width: 280px;
+    border-radius: 20px;
+    background-color: unset;
+    padding: 0 15px 0 0;
+    min-width: 280px;
+    @include mx_medium {
+      min-width: 200px;
+    }
   }
   svg {
     color: $svg_color;
@@ -43,8 +45,5 @@ export default {
     color: black;
     cursor: pointer;
   }
-}
-.search:focus-within,.search:hover{
-  border-color: $border_success;
 }
 </style>

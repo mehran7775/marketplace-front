@@ -8,10 +8,10 @@
           </label>
         </h6>
       </div> -->
-      <div class="mt-4">
+      <div>
         <div class="carousel-wrapper d-none d-md-block">
           <client-only>
-            <carousel :per-page="per_page" v-bind="options" :rtl="true" >
+            <carousel :per-page="per_page" v-bind="options" :rtl="true">
               <slide
                 v-for="product in products"
                 :key="product.id"
@@ -29,15 +29,11 @@
           </client-only>
         </div>
         <div>
-          <div class="d-md-none">
-            <div class="container-fluid">
-              <div class="row">
-                <div
-                  v-for="product in products"
-                  :key="product.id"
-                  class="col-4"
-                >
-                  <div class="row">
+          <!-- <div class="d-md-none"> -->
+            <!-- <div class="container-fluid"> -->
+              <div class="grid-container d-md-none">
+                <div v-for="product in products" :key="product.id">
+                  <!-- <div class="row"> -->
                     <client-only>
                       <Xitem
                         :title="product.title"
@@ -47,11 +43,11 @@
                         :quantity="product.quantity"
                       ></Xitem>
                     </client-only>
-                  </div>
+                  <!-- </div> -->
                 </div>
               </div>
-            </div>
-          </div>
+            <!-- </div> -->
+          <!-- </div> -->
         </div>
       </div>
     </div>
@@ -116,8 +112,18 @@ export default {
       }
     }
   }
-  .carousel-wrapper {
-    flex-direction: row-reverse !important;
-  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 1.5px;
+    background: $border;
+    padding: 1.5px;
+}
+
+.grid-container > div {
+  background-color: $white;
+  text-align: center;
+}
 }
 </style>

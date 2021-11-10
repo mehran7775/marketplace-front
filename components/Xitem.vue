@@ -99,17 +99,17 @@ export default {
 
 <style lang="scss" scoped>
 #item {
-  max-width: 260px;
+  width: 260px;
   display: flex;
   flex-direction: column;
   text-align: center;
-  border: 1px solid $border_half_success;
   transition: border linear 0.2s;
-  background-color: $white;
+  // background-color: $white;
   padding: 10px 0;
   @include medium {
     padding: 15px 30px 10px 30px;
     border-radius: 10px;
+    border: 1px solid $border;
   }
   @include mx_medium {
     width: 100%;
@@ -144,7 +144,7 @@ export default {
 }
 #item:hover,
 #item:focus-within {
-  border: 1px solid $border_success;
+  border-color: $border_whitesmoke;
   cursor: grab;
 }
 </style>

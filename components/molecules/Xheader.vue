@@ -103,12 +103,15 @@ header {
   #brand_index {
     @include mx_medium {
       width: 100%;
-      background-color: whitesmoke;
-      padding: 1rem;
+      background-color: $silver;
+      padding: 30px 25px;
     }
 
     @include medium {
       width: 25%;
+    }
+    svg{
+      color: $success;
     }
   }
   #search_index {
@@ -116,16 +119,18 @@ header {
       width: 100%;
       margin-bottom: 1rem;
     }
+    
     @include medium {
       width: 50%;
     }
-    // background-color: lightblue;
   }
+
   #setting_index {
     svg:hover {
-      color: black;
+      color:black;
     }
   }
+
   a {
   text-decoration: none;
   color: inherit;
