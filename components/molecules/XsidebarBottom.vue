@@ -63,6 +63,7 @@ export default {
   left: 0;
   width: 100%;
   background-color: whitesmoke;
+  height: 50px;
   box-shadow: 1px 4px 8px 0 rgb(228, 227, 227);
 
   #bottom_menu {

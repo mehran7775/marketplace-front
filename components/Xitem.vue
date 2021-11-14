@@ -1,5 +1,5 @@
 <template>
-  <div id="item" @mouseover="item_hover()" @mouseleave="is_hover = false">
+  <div id="item" class="mx-auto" @mouseover="item_hover()" @mouseleave="is_hover = false">
     <h5 v-text="title" class="font-weight-bold"></h5>
     <nuxt-link
       :to="`${$route.params.store_slug}/${id}`"
@@ -59,15 +59,9 @@ export default {
       type: String,
       default: 0,
     },
-    mt: {
-      type: Boolean,
-      default: false,
-    },
     quantity: {
-      type: {
-        type: Number,
-        default: 0,
-      },
+      type: Number,
+      default: 0,
     },
   },
   computed: {
@@ -107,9 +101,10 @@ export default {
   flex-direction: column;
   text-align: center;
   transition: border linear 0.2s;
+  background-color: $white;
   h5 {
     height: 40px;
-     word-break: break-all;
+    word-break: break-all;
     white-space: pre-wrap;
     text-overflow: clip;
     overflow: hidden;

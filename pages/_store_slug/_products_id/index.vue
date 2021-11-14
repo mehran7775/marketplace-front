@@ -1,55 +1,70 @@
 <template>
-  <div class="row pb-5">
+  <div class="row">
     <MoleculesXheader
       :logo="detail.logo"
       :fa_name="detail.fa_name"
       :address="detail.address"
       :email="detail.email"
+      :setDetail="false"
     ></MoleculesXheader>
-    <div id="product" class="container pt-2 pb-5">
-      <div class="row" v-if="product">
-        <div class="col-12 mx-auto my-5 p-5 bg-white">
-          <div class="product w-100" dir="ltr">
-            <client-only>
-              <carousel :per-page="per_page" v-bind="options" dir="rtl">
-                <slide
-                  v-for="thumbnail in product.thumbnails"
-                  :key="thumbnail"
-                  class="img-wrapper"
-                >
-                  <img
-                    :src="thumbnail ? thumbnail : '/images/default-image.png'"
-                    alt="عکس محصول"
-                  />
-                </slide>
-              </carousel>
-            </client-only>
-          </div>
-        </div>
-        <div class="col-12">
-          <div class="row flex-sm-column text-right px-5" id="detail_product">
-            <div class="column">
-              <h2 v-text="product.title" class="display-5"></h2>
-              <p class="pt-1" v-text="product.description"></p>
-            </div>
-            <div class="buy_cost w-100 text-center mt-2">
-              <span id="price">
-                <span>قیمت:</span>
-                <span class="mx-1" v-text="product.price"></span>
-                <span v-text="lang.price"></span>
-              </span>
+    <div id="product" class="container body-hv-fit">
+      <div class="h-100">
+        <div class="row content-hv" v-if="product">
+          <div class="col-12 mx-auto p-5 bg-white">
+            <div class="d-flex justify-content-end">
               <Xbutton
-                class="px-3"
-                :text="lang.btn.buy"
-                :on_click="add_item"
-              ></Xbutton>
+                  class="px-4"
+                  :text="lang.btn.buy"
+                  :on_click="add_item"
+                ></Xbutton>
+            </div>
+            <div class="product w-100 mt-5" dir="ltr">
+              <client-only>
+                <carousel
+                  :rtl="true"
+                  :per-page="per_page"
+                  v-bind="options"
+                  pagination-color="#dee2e6"
+                  pagination-active-color="#00c1a4"
+                  pagination-padding="2"
+                >
+                  <slide
+                    v-for="thumbnail in product.thumbnails"
+                    :key="thumbnail"
+                    class="img-wrapper"
+                  >
+                    <img
+                      :src="thumbnail ? thumbnail : '/images/default-image.png'"
+                      alt="عکس محصول"
+                    />
+                  </slide>
+                </carousel>
+              </client-only>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="row flex-sm-column text-right py-4 px-5" id="detail-product">
+              <div class="column">
+                <div class="float-left">
+                  <span id="price" class="font-weight-bold">
+                  <span v-text="product.price"></span>
+                  <span v-text="lang.price"></span>
+                </span>
+                </div>
+                <h2 v-text="product.title" class="display-5"></h2>
+                <p class="pt-1">
+
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint pariatur nesciunt consectetur possimus doloremque porro nemo unde id dolores 
+                  eum, quas qui asperiores quisquam libero illo culpa provident ea minus!
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div v-else class="row">
-        <div class="col-6 m-auto text-center p-5">
-          <span class="font-weight-bold">محصول پیدا نشد</span>
+        <div v-else class="row">
+          <div class="col-6 m-auto text-center p-5">
+            <span class="font-weight-bold">محصول پیدا نشد</span>
+          </div>
         </div>
       </div>
     </div>
@@ -57,7 +72,7 @@
 </template>
 
 <script>
-import { tr } from "@/services/lang"
+import { tr } from "@/services/lang";
 export default {
   layout: "index",
   head() {
@@ -116,11 +131,10 @@ export default {
       });
     },
   },
-  mounted(){
+  mounted() {
     // document.querySelector('.carousel-wrapper .VueCarousel-inner').style.flexDirection ="row-reverse!important"
     // document.querySelector('.carousel-wrapper .VueCarousel-inner').style.flexDirection ="row-reverse!important"
-    
-  }
+  },
 };
 </script>
 
@@ -132,16 +146,16 @@ export default {
       text-align: center;
 
       img {
-        max-width: 280px;
+        max-width: 340px;
         max-height: 250px;
       }
     }
   }
-  #detail_product {
+  #detail-product {
+    background-color: $silver;
     #price {
       color: $success;
-      font-weight: bold;
-      margin: auto 4rem;
+      font-size: 1.3rem;
     }
   }
 }
