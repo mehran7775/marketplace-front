@@ -2,6 +2,36 @@
 @import "./functions/index";
 @import "./mixins/index";
 
+@font-face {
+	font-family: 'IRANSansFaNum';
+    src:  url('/assets/new/font/IRANSansWeb(FaNum)_Bold.woff2') format('woff2'),  /* Chrome36+, Opera24+*/
+          url('/assets/new/font/IRANSansWeb(FaNum)_Bold.woff')  format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+	font-weight: bold;
+}
+
+@font-face {
+	font-family: 'IRANSansFaNum';
+    src:  url('/assets/new/font/IRANSansWeb(FaNum).woff2')  format('woff2'),  /* Chrome36+, Opera24+*/
+          url('/assets/new/font/IRANSansWeb(FaNum).woff')   format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+	font-weight: normal;
+}
+
+
+@font-face {
+	font-family: 'IRANSansEnNum';
+    src:  url('/assets/new/font/IRANSansWeb_Bold.woff2') format('woff2'),  /* Chrome36+, Opera24+*/
+          url('/assets/new/font/IRANSansWeb_Bold.woff')  format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+	font-weight: bold;
+}
+
+@font-face {
+	font-family: 'IRANSansEnNum';
+    src:  url('/assets/new/font/IRANSansWeb.woff2')  format('woff2'),  /* Chrome36+, Opera24+*/
+          url('/assets/new/font/IRANSansWeb.woff')   format('woff');  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+	font-weight: normal;
+}
+
+
 .modal-content {
     padding: 20px;
     direction: rtl;
@@ -24,7 +54,11 @@
 }
 .modal-backdrop{
     background-color:  rgba(0, 0, 0, 0.5)!important;
-  }
+  }  
+.toast-body{
+
+    font-family: IRANSansEnNum, sans-serif!important;
+}
 body {
     #__nuxt {
         .cursor_pointer {
@@ -47,29 +81,14 @@ body {
             -ms-transform: translate(-50%, -50%); /* for IE 9 */
             -webkit-transform: translate(-50%, -50%); /* for Safari */
            
+        } 
+        .body-hv-fit{
+            min-height: calc(100vh - 100px);
+            @include mx_medium {
+                min-height: calc(100vh - 210px);
+                margin-bottom: 50px;
+            }
         }
-        
-        @include xsmall {
-
-           
-        }
-
-        @include small {
-         
-        }
-
-        @include medium {
-         
-        }
-
-        @include large {
-
-           
-        }
-
-        @include xlarge {
-        }
-       
     }
 }
 

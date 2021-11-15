@@ -22,12 +22,12 @@ export default {
 
 <style lang="scss" scoped>
 .brand {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   padding: 2px;
-  // background-color: whitesmoke;
+  background-color: $white;
   border-radius: 100%;
-  border: 2px solid $border_success;
+  border: 2.9px solid $success;
   img{
    width: 100%;
    height: 100%;

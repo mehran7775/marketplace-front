@@ -6,14 +6,10 @@
       :address="detail.address"
       :email="detail.email"
     ></MoleculesXheader>
-    <div id="body" class="w-100">
-      <div id="lables">
-        <div class="lables mb-4">
-          <MoleculesXlables v-if="products" :products="products">
-          </MoleculesXlables>
-          <p v-else>محصولی وجود ندارد</p>
-        </div>
-      </div>
+    <div class="w-100 body-hv-fit">
+      <MoleculesXlables v-if="products" :products="products">
+      </MoleculesXlables>
+      <p v-else>محصولی وجود ندارد</p>
     </div>
   </div>
 </template>
@@ -55,10 +51,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#lables {
-  padding: 0;
-  @include mx_medium {
-    padding: 0.05rem;
-  }
-}
 </style>

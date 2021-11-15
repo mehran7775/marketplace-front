@@ -6,7 +6,7 @@
       :address="detail.address"
       :email="detail.email"
     ></MoleculesXheader>
-    <div class="container">
+    <div class="container body-hv-fit">
       <div class="row">
         <div class="col-10 m-auto col-md-7">
           <div class="row pt-5">
@@ -165,7 +165,7 @@
                               <div v-if="valid_province || errorsApi['province']" class="py-2 pr-2">
                                 <span
                                   class="text-danger"
-                                  v-text="'این فیلد الزامی است'"
+                                  v-text="' استان الزامی است'"
                                 ></span>
                               </div>
                             </div>
@@ -207,8 +207,7 @@
                           <div class="w-100">
                             <ValidationProvider
                               :rules="
-                                detail.options.address === 1 ? 'required|min:10' : null
-                              "
+                                detail.options.address === 1 ? 'required|min:10' : null"
                               v-slot="{ errors }"
                             >
                               <input

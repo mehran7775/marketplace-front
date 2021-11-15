@@ -6,9 +6,9 @@
       :address="detail.address"
       :email="detail.email"
     ></MoleculesXheader>
-    <div class="container">
-      <div class="row">
-        <div class="col">
+    <div class="container body-hv-fit">
+      <div class="row h-100">
+        <div class="col h-100">
           <div v-if="items" class="row my-4 bg-white">
             <div
               v-for="item in items"
@@ -51,45 +51,6 @@
                 ></span>
               </div>
             </div>
-            <!-- <div class="col-12">
-              <div class="row py-4 mt-2">
-                <div class="col-12">
-                  <div class="row detail_price justify-content-center">
-                    <div class="w-auto">
-                      <span class="font-weight-bold">جمع کل :</span>
-                    </div>
-                    <div class="cost w-auto mr-2">
-                      <span v-text="whole_price"></span
-                      ><span class="pr-1">تومان</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-4">
-                  <div class="row detail_price">
-                    <div>
-                      <span class="font-weight-bold">تخفیف:</span>
-                    </div>
-                    <div class="cost">
-                      <span v-text="discount"></span
-                      ><span class="pr-1">تومان</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-4">
-                  <div class="row detail_price">
-                    <div>
-                      <span class="font-weight-bold"
-                        >مالیات برارزش افزوده:</span
-                      >
-                    </div>
-                    <div class="cost">
-                      <span v-text="taxation"></span
-                      ><span class="pr-1">تومان</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> -->
             <div class="col-12 mt-4">
               <hr class="dash" />
             </div>
@@ -104,7 +65,7 @@
                   ><span class="while-price pr-1" v-text="lang.price"></span>
                 </div>
                 <div class="col-12 col-md-6 text-center continue-buy">
-                  <button class="btn btn-success" @click="continue_buy">
+                  <button class="btn btn-success px-5 mt-3 mt-md-0" @click="continue_buy">
                     ادامه خرید
                   </button>
                 </div>
@@ -239,7 +200,7 @@ export default {
 <style scoped lang="scss">
 .row_item_cart {
   background-color: #fff;
-  border: 1px solid $border_half_success;
+  border: 1px solid $border;
 
   .detail_item_cart {
     width: 53%;
@@ -288,7 +249,7 @@ export default {
   }
 }
 .dash {
-  border-top: 1px dashed $success;
+  border-top: 1px dashed $border;
 }
 .while-price {
   color: $success;
@@ -301,6 +262,6 @@ export default {
   }
 }
 #change-count-product {
-  border: 1px solid $border_half_success;
+  border: 1px solid $border;
 }
 </style>

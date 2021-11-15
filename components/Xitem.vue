@@ -1,11 +1,19 @@
 <template>
-  <div id="item" @mouseover="item_hover()" @mouseleave="is_hover = false">
-    <h5 v-text="title" class="font-weight-bold">کفش مردانه</h5>
+  <div
+    id="item"
+    class="mx-auto"
+    @mouseover="item_hover()"
+    @mouseleave="is_hover = false"
+  >
+    <h5 v-text="title" class="font-weight-bold"></h5>
     <nuxt-link
       :to="`${$route.params.store_slug}/${id}`"
       class="d-flex align-items-center justify-content-center"
     >
-      <img :src="image ? image : '/images/default-image.png'" alt="تصویر محصول" />
+      <img
+        :src="image ? image : '/images/default-image.png'"
+        alt="تصویر محصول"
+      />
     </nuxt-link>
     <div id="box_hover">
       <div v-if="is_hover" class="d-flex">
@@ -37,7 +45,7 @@
   </div>
 </template>
 <script>
-import { tr } from "@/services/lang"
+import { tr } from "@/services/lang";
 export default {
   props: {
     title: {
@@ -56,20 +64,14 @@ export default {
       type: String,
       default: 0,
     },
-    mt: {
-      type: Boolean,
-      default: false,
-    },
     quantity: {
-      type: {
-        type: Number,
-        default: 0,
-      },
+      type: Number,
+      default: 0,
     },
   },
   computed: {
     lang() {
-      return tr()
+      return tr();
     },
   },
   data() {
@@ -90,26 +92,41 @@ export default {
         price: this.price,
         img: this.image,
         quantity: this.quantity,
-      }
-      this.$store.dispatch("cart/addProductToCart",product);
-    }
-  }
+      };
+      this.$store.dispatch("cart/addProductToCart", product);
+    },
+    stopLink() {
+      console.log(4);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 #item {
-  max-width: 260px;
+  width: 260px;
   display: flex;
   flex-direction: column;
   text-align: center;
-  border: 1px solid $border_half_success;
   transition: border linear 0.2s;
   background-color: $white;
+  h5 {
+    height: 40px;
+    word-break: break-all;
+    white-space: pre-wrap;
+    text-overflow: clip;
+    overflow: hidden;
+  }
   padding: 10px 0;
   @include medium {
     padding: 15px 30px 10px 30px;
     border-radius: 10px;
+    border: 1px solid $border;
+    &:hover,
+    &:focus-within {
+      border-color: $border_whitesmoke;
+      cursor: grab;
+    }
   }
   @include mx_medium {
     width: 100%;
@@ -125,8 +142,6 @@ export default {
       max-width: 100%;
       max-height: 100%;
       @include mx_medium {
-        // max-width: 80px;
-        // max-height: 70px;
         margin: 1rem 0.3rem;
       }
     }
@@ -141,10 +156,5 @@ export default {
       color: $success;
     }
   }
-}
-#item:hover,
-#item:focus-within {
-  border: 1px solid $border_success;
-  cursor: grab;
 }
 </style>

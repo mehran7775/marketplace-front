@@ -16,6 +16,7 @@ extend("alpha", {
     ...alpha,
     message: "فقط حروف می تواند وارد شود"
 });
+
 extend("regPhone", {
     validate(value){
         return value.match('^09[0-9]{9}')
