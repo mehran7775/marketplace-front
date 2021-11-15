@@ -1,5 +1,10 @@
 <template>
-  <div id="item" class="mx-auto" @mouseover="item_hover()" @mouseleave="is_hover = false">
+  <div
+    id="item"
+    class="mx-auto"
+    @mouseover="item_hover()"
+    @mouseleave="is_hover = false"
+  >
     <h5 v-text="title" class="font-weight-bold"></h5>
     <nuxt-link
       :to="`${$route.params.store_slug}/${id}`"
@@ -90,6 +95,9 @@ export default {
       };
       this.$store.dispatch("cart/addProductToCart", product);
     },
+    stopLink() {
+      console.log(4);
+    },
   },
 };
 </script>
@@ -109,12 +117,16 @@ export default {
     text-overflow: clip;
     overflow: hidden;
   }
-  // background-color: $white;
   padding: 10px 0;
   @include medium {
     padding: 15px 30px 10px 30px;
     border-radius: 10px;
     border: 1px solid $border;
+    &:hover,
+    &:focus-within {
+      border-color: $border_whitesmoke;
+      cursor: grab;
+    }
   }
   @include mx_medium {
     width: 100%;
@@ -130,8 +142,6 @@ export default {
       max-width: 100%;
       max-height: 100%;
       @include mx_medium {
-        // max-width: 80px;
-        // max-height: 70px;
         margin: 1rem 0.3rem;
       }
     }
@@ -146,10 +156,5 @@ export default {
       color: $success;
     }
   }
-}
-#item:hover,
-#item:focus-within {
-  border-color: $border_whitesmoke;
-  cursor: grab;
 }
 </style>

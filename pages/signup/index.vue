@@ -1,6 +1,6 @@
 <template>
   <div class="sign-up text-right">
-   
+    <div dir="rtl">
       <ValidationObserver ref="validationObserver">
         <Xform :sub_form="do_register">
           <template #content>
@@ -154,7 +154,7 @@
         </Xform>
       </ValidationObserver>
       <div v-if="errors" class="bg-danger text-white" v-html="errors"></div>
-    
+    </div>
   </div>
 </template>
 

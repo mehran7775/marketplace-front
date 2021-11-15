@@ -50,14 +50,11 @@ body {
         } 
         .body-hv-fit{
             min-height: calc(100vh - 100px);
-        
             @include mx_medium {
                 min-height: calc(100vh - 210px);
+                margin-bottom: 50px;
             }
         }
-        .content-hv{
-            margin-bottom: 50px;
-        }  
     }
 }
 

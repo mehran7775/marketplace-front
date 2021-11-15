@@ -100,6 +100,10 @@ header {
     transition: color 0.2s;
     cursor: pointer;
   }
+  @include medium {
+    box-shadow: 0 0 6px 0 $silver;
+    border-bottom: 1px solid $silver;
+  }
 
   @include mx_medium {
     padding: 1rem 0 0 0;
@@ -114,7 +118,7 @@ header {
     }
 
     @include medium {
-      width: 25%;
+      width: 33%;
     }
     svg{
       color: $success;

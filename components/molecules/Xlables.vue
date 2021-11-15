@@ -7,7 +7,7 @@
           </label>
         </h6>
       </div> -->
-    <div class="body-products h-100 content-hv">
+    <div class="body-products h-100 pb-0 pb-md-4">
       <div class="carousel-wrapper d-none d-md-block h-100">
         <client-only>
           <carousel :per-page="per_page" v-bind="options" :rtl="true">
