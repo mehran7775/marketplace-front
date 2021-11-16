@@ -1,7 +1,6 @@
-import axios from "~/plugins/axios"
+import authService from "./authService"
 
-export const authService ={
-    register(payload){
-        return axios.post('/customer/register',payload)
-    }
+
+export {
+    authService
 }

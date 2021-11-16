@@ -32,7 +32,7 @@
           <client-only>
             <Xitem
               :title="product.title"
-              :image="product.thumbnail"
+              :image="'/images/apple-iphone-12-r1.jpg'"
               :price="product.price"
               :id="product.id"
               :quantity="product.quantity"
@@ -83,14 +83,14 @@ export default {
   .grid-container {
     display: grid;
     grid-template-columns: 33.1% 33.1% 33.1%;
-    grid-gap: 2px;
+    grid-gap: 0.1rem;
     background: $border;
-    padding: 2px;
+    padding: 0.1rem;
 
     div {
       background-color: $white;
       text-align: center;
-      height: 240px;
+      // height: 240px;
     }
   }
   .body-products {

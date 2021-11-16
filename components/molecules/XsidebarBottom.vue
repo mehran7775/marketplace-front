@@ -64,7 +64,8 @@ export default {
   width: 100%;
   background-color: whitesmoke;
   height: 50px;
-  box-shadow: 1px 4px 8px 0 rgb(228, 227, 227);
+  // box-shadow: 1px 4px 8px 10px rgb(228, 227, 227);
+  box-shadow: 0 0 8px 5px rgba(228, 227, 227, 0.588);
 
   #bottom_menu {
     display: flex;

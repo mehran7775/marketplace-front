@@ -50,21 +50,19 @@
                 class="row flex-sm-column text-right py-4 px-5"
                 id="detail-product"
               >
-                <div class="column">
-                  <div class="float-left">
+                <div class="d-flex justify-content-between w-100">
+                  <h2 v-text="product.title" class="h4 font-weight-bold"></h2>
+                   <div>
                     <span id="price" class="font-weight-bold">
                       <span v-text="product.price"></span>
                       <span v-text="lang.price"></span>
                     </span>
                   </div>
-                  <h2 v-text="product.title" class="display-5"></h2>
-                  <p class="pt-1">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Sint pariatur nesciunt consectetur possimus doloremque porro
-                    nemo unde id dolores eum, quas qui asperiores quisquam
-                    libero illo culpa provident ea minus!
-                  </p>
                 </div>
+                  <p class="pt-2">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit fugiat nisi magni vitae aliquam facilis, eveniet accusamus illum ad amet quidem 
+                    nesciunt debitis corrupti hic at architecto reprehenderit soluta ex.
+                  </p>
               </div>
             </div>
           </div>

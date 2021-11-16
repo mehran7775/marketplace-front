@@ -24,7 +24,7 @@ export default {
         },],
     },
     env: {
-        baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+        baseUrl: process.env.BASE_URL || 'https://coreshop.paystar.ir/api'
     },
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
@@ -41,7 +41,6 @@ export default {
         },
         '~/plugins/veevalidate',
         '~/plugins/roles',
-        '~/plugins/axios'
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -106,12 +105,12 @@ export default {
     
     publicRuntimeConfig: {
         axios: {
-            baseURL: process.env.BASE_URL || 'http://localhost:3000'
+            baseURL: process.env.BASE_URL || 'https://coreshop.paystar.ir/api'
         },
     },
     privateRuntimeConfig: {
         axios: {
-            baseURL: process.env.BASE_URL || 'http://localhost:3000',
+            baseURL: process.env.BASE_URL || 'https://coreshop.paystar.ir/api',
         },
         // apiSecret: process.env.API_SECRET,
     },
