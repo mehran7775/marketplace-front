@@ -161,6 +161,7 @@
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { provinces } from "@/constants/Provinces";
+import { authService } from '@/services/apiServices'
 export default {
   middleware: "guest",
   layout: "sign",
@@ -199,8 +200,8 @@ export default {
             password: this.form.password,
             address: this.form.address,
           };
-          this.$nuxt.context.$axios
-            .post("customer/register", data)
+
+            authService.register(data)
             .then((res) => {
               this.$store.commit("user/set_phone_number", data.phone, {
                 root: true,
@@ -239,6 +240,48 @@ export default {
                 );
               }
             });
+          
+          
+          // this.$nuxt.context.$axios
+          //   .post("customer/register", data)
+          //   .then((res) => {
+          //     this.$store.commit("user/set_phone_number", data.phone, {
+          //       root: true,
+          //     });
+          //     this.$router.push("/verify_login");
+          //     if (res.status === 200) {
+          //       this.$store.commit(
+          //         "open_toast",
+          //         {
+          //           msg: res.data.message,
+          //           variant: "success",
+          //         },
+          //         { root: true }
+          //       );
+          //     }
+          //   })
+          //   .catch((e) => {
+          //     if (e.response.data.status === "error") {
+          //       this.$store.commit(
+          //         "open_toast",
+          //         {
+          //           msg: e.response.data.message,
+          //           variant: "error",
+          //         },
+          //         { root: true }
+          //       );
+          //       this.errors = e.response.data.data;
+          //     } else {
+          //       this.$store.commit(
+          //         "open_toast",
+          //         {
+          //           msg: e.response.data.message,
+          //           variant: "error",
+          //         },
+          //         { root: true }
+          //       );
+          //     }
+          //   });
         } else {
           return;
         }
