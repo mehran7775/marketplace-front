@@ -87,6 +87,7 @@
 <script>
 import { tr } from "@/services/lang";
 import separatePrice from '@/mixins/separatePrice'
+import { storeService } from '@/services/apiServices'
 export default {
   layout: "index",
   mixins:[separatePrice],
@@ -111,13 +112,13 @@ export default {
       ],
     };
   },
-  async asyncData({ error, route, $axios, store }) {
+  async asyncData({ error, route, store }) {
     try {
-      const res1 = await $axios.get(`/store/${route.params.store_slug}`);
-      store.commit("payment/set_gateways", res1.data.data.gateways);
-      store.commit("store/set_id", res1.data.data.id);
+      const res = await storeService.getDetail(route.params.store_slug)
+      store.commit("payment/set_gateways", res.data.data.gateways);
+      store.commit("store/set_id", res.data.data.id);
       return {
-        detail: res1.data.data,
+        detail: res.data.data,
       };
     } catch (e) {
       error({

@@ -17,7 +17,7 @@
       />
     </nuxt-link>
     <div id="box_hover">
-      <div v-if="is_hover" class="d-flex">
+      <div v-if="is_hover" class="d-flex justify-content-center">
         <Xbutton
           :on_click="
             () => {
@@ -26,13 +26,14 @@
           "
           variant="outline-success"
           :text="lang.btn.detail"
-          class="text"
+          class="text mx-1"
         ></Xbutton>
         <Xbutton
           variant="success"
           :text="lang.btn.add"
           :on_click="add_item"
           :disabled="quantity > 0 ? false : true"
+          class="mx-1"
         ></Xbutton>
       </div>
       <div v-if="!is_hover" class="price">
@@ -110,7 +111,6 @@ export default {
 
   h5,h6 {
     height: 35px;
-    word-break: break-all;
     white-space: pre-wrap;
     text-overflow: clip;
     overflow: hidden;
@@ -135,12 +135,12 @@ export default {
     color: inherit;
     padding-bottom: 10px;
     max-width: 240px;
-    height: 120px;
+    height: 9rem;
      @include mx_medium {
-        max-height: 7rem;
+        max-height: 7.3rem;
       }
       @include mx_small{
-         max-height: 5rem;
+         max-height: 4.6rem;
       }
     img {
       max-width: 100%;
@@ -154,6 +154,9 @@ export default {
     text-decoration: none;
   }
   #box_hover {
+    div{
+      height: 30px;
+    }
     .price {
       color: $success;
     }

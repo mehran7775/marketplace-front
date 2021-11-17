@@ -16,6 +16,8 @@
 
 <script>
 import { tr } from "@/services/lang";
+import { storeService } from "@/services/apiServices"
+import { productService } from "@/services/apiServices"
 export default {
   layout: "index",
   head() {
@@ -30,12 +32,11 @@ export default {
   },
   async asyncData({ $axios, route, error, store }) {
     try {
-      const res = await $axios.get(`/store/${route.params.store_slug}`);
+      const res = await storeService.getDetail(route.params.store_slug)
       store.commit("payment/set_gateways", res.data.data.gateways);
       store.commit("store/set_id", res.data.data.id);
-      const { data } = await $axios.get(
-        `/store/${route.params.store_slug}/products`
-      );
+
+      const { data } = await productService.getProducts(route.params.store_slug)
       return {
         detail: res.data.data,
         products: data.data.data,

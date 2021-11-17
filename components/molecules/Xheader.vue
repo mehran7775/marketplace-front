@@ -118,7 +118,7 @@ header {
     }
 
     @include medium {
-      width: 33%;
+      width: 34%;
     }
     svg{
       color: $success;

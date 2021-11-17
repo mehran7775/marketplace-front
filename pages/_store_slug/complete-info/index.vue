@@ -10,7 +10,7 @@
       <div class="row">
         <div class="col-10 m-auto col-md-7">
           <div class="row pt-5">
-            <h2>تکمیل اطلاعات</h2>
+            <h4 class="font-weight-bold">تکمیل اطلاعات</h4>
           </div>
           <div class="row text-right">
             <ValidationObserver ref="validationObserver">
@@ -237,7 +237,7 @@
                     <div class="row">
                       <Xbutton
                         is_submit
-                        class="px-5 m-auto"
+                        class="px-5 m-auto w-100"
                         text="انتخاب روش پرداخت"
                       ></Xbutton>
                     </div>
@@ -255,6 +255,7 @@
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { provinces } from "@/constants/Provinces";
+import { storeService } from "@/services/apiServices"
 export default {
   layout: "index",
   middleware: "guest",
@@ -285,11 +286,11 @@ export default {
   },
   async asyncData({ error, route, $axios, store }) {
     try {
-      const res1 = await $axios.get(`/store/${route.params.store_slug}`)
-      store.commit("payment/set_gateways", res1.data.data.gateways)
-      store.commit("store/set_id", res1.data.data.id)
+      const res = await storeService.getDetail(route.params.store_slug)
+      store.commit("payment/set_gateways", res.data.data.gateways)
+      store.commit("store/set_id", res.data.data.id)
       return {
-        detail: res1.data.data,
+        detail: res.data.data,
       };
     } catch (e) {
       if (e.response) {
@@ -349,7 +350,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-h2 {
+h4 {
   color: $success;
 }
 .naming {
