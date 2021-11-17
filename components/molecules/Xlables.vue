@@ -92,7 +92,7 @@ export default {
     }
   }
   .body-products {
-    @include mx_medium{
+    @include mx_medium {
       background-color: $border;
     }
   }

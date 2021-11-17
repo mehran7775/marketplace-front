@@ -7,8 +7,8 @@
       :email="detail.email"
     ></MoleculesXheader>
     <div class="w-100 body-hv-fit">
-      <MoleculesXlables v-if="products" :products="products">
-      </MoleculesXlables>
+      <LazyMoleculesXlables v-if="products" :products="products">
+      </LazyMoleculesXlables>
       <p v-else>محصولی وجود ندارد</p>
     </div>
   </div>
