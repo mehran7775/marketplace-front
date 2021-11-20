@@ -2,7 +2,7 @@
     <div>
         <app-header></app-header>
         <mobile-header></mobile-header>
-
+        
         <sidebar></sidebar>
         <mobile-aside></mobile-aside>
         <div id="app_content">
@@ -19,6 +19,12 @@ import appHeader from "@/components/main/header";
 import MobileAside from '@/components/main/mobile-aside'
 import MobileHeader from '@/components/main/mobile-header'
 export default {
+    head() {
+        return {
+            title:"فروشگاه ساز پی استار"
+        }
+    },
+
     components: {
         MobileAside,
         MobileHeader,

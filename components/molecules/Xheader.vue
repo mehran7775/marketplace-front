@@ -26,7 +26,7 @@
       >
         <nuxt-link :to="`/${$route.params.store_slug}/cart`"> <Xbasket class="mx-1"></Xbasket></nuxt-link>
          <template v-if="$cookies.get('token-buyer')">
-          <nuxt-link :to="`/admin-customer`">
+          <nuxt-link :to="`/panel-customer`">
             <span
               ><fa
                 icon="user"
