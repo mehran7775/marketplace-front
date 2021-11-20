@@ -40,7 +40,7 @@
               </div>
             </ValidationProvider>
           </div>
-          <Xbutton :on_click="do_login" class="w-100" text="ورود"></Xbutton>
+          <Xbutton :on_click="do_login" class="w-100 mt-3" text="ورود"></Xbutton>
           <div v-if="errors.length > 0" class="text-center pt-3">
             <p
               v-for="error in errors"
@@ -54,13 +54,14 @@
             <router-link to="/signup">کلیک کنید</router-link>
           </div>
         </template>
-      </Xform>
+      </Xform>  
     </ValidationObserver>
   </div>
 </template>
 
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
+import { authService } from "@/services/apiServices";
 export default {
   middleware: "guest",
   layout: "sign",
@@ -80,55 +81,48 @@ export default {
       this.errors = [];
       this.$refs.validationObserver.validate().then((res) => {
         if (res) {
-          try {
-            const res = this.$nuxt.context.$axios.post("customer/login", {
+          authService.loginCustomer({
               outh_param: this.outh_param,
               password: this.password,
               login_with_verification_code: false,
-            });
-            if (res.status === 200) {
-              this.$cookies.set("token-buyer", res.data.data.api.token);
-              const res_current = this.$nuxt.context.$axios
-                .get("/customer/current", {
-                  headers: {
-                    authorization: "Bearer " + res.data.data.api.token,
+            })
+            .then((res) => {
+              if (res.status === 200) {
+                this.$cookies.set("token-buyer", res.data.data.api.token);
+                authService.currentUser(res.data.data.api.token)
+                  .then((res) => {
+                    this.$store.commit(
+                      "user/set_current_user", res.data.data,{ root: true }
+                    );
+                    this.$router.replace("/admin-buyer");
+                    this.$store.commit(
+                      "open_toast",{
+                        msg: res.data.message,
+                        variant: "success",
+                      },{ root: true }
+                    );
+                  })
+                  .catch(e =>{
+                    console.log(e)
+                  })
+              }
+            })
+            .catch(e => {
+              if (e.response.status === 401){
+                this.$store.commit("open_toast",{
+                    msg: e.response.data.message,
+                    variant: "error",
                   },
+                  { root: true }
+                );
+              }
+              if (e.response.status === 400) {
+                console.log(Object.keys(e.response.data.data));
+                Object.keys(e.response.data.data).forEach((element) => {
+                  this.errors.push(e.response.data.data[element][0]);
                 })
-                .then((res) => {
-                  this.$store.commit(
-                    "user/set_current_user",
-                    res_current.data.data,
-                    { root: true }
-                  );
-                  this.$router.replace("/admin-buyer");
-                  this.$store.commit(
-                    "open_toast",
-                    {
-                      msg: res.data.message,
-                      variant: "success",
-                    },
-                    { root: true }
-                  );
-                });
-            }
-          } catch (e) {
-            if (e.response.status === 401) {
-              this.$store.commit(
-                "open_toast",
-                {
-                  msg: e.response.data.message,
-                  variant: "error",
-                },
-                { root: true }
-              );
-            }
-            if (e.response.status === 400) {
-              console.log(Object.keys(e.response.data.data));
-              Object.keys(e.response.data.data).forEach((element) => {
-                this.errors.push(e.response.data.data[element][0]);
-              });
-            }
-          }
+              }
+            })
         } else {
           return;
         }
@@ -140,15 +134,14 @@ export default {
 
 
 <style lang="scss" scoped>
-.sign-in{
+.sign-in {
   border-radius: 10px;
   box-shadow: 1px 1px 12px 0 $secondary;
   padding: 30px;
   max-width: 350px;
   min-width: 330px;
   a {
-  color: $success;
+    color: $success;
+  }
 }
-}
-
 </style>

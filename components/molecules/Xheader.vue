@@ -4,7 +4,7 @@
       <Xbrand :logo="logo"></Xbrand>
       <div class="text-right">
         <div id="name_brand">
-          <h1 class="mr-4 h4" v-text="fa_name ? fa_name : 'فروشگاه من'"></h1>
+          <h1 class="mr-4 h4 text-dark font-weight-bold" v-text="fa_name ? fa_name : 'فروشگاه من'"></h1>
         </div>
         <div class="mt-3 mr-4" v-if="setDetail">
           <fa icon="envelope"></fa>
@@ -12,7 +12,7 @@
         </div>
         <div class="mr-4" v-if="setDetail">
           <fa icon="map-marker"></fa>
-          <span v-text="address"></span>
+          <span class="mr-1" v-text="address"></span>
         </div>
       </div>
     </div>
@@ -118,7 +118,7 @@ header {
     }
 
     @include medium {
-      width: 33%;
+      width: 34%;
     }
     svg{
       color: $success;

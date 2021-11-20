@@ -65,7 +65,10 @@
                   ><span class="while-price pr-1" v-text="lang.price"></span>
                 </div>
                 <div class="col-12 col-md-6 text-center continue-buy">
-                  <button class="btn btn-success px-5 mt-3 mt-md-0" @click="continue_buy">
+                  <button
+                    class="btn btn-success px-5 mt-3 mt-md-0"
+                    @click="continue_buy"
+                  >
                     ادامه خرید
                   </button>
                 </div>
@@ -83,8 +86,11 @@
 
 <script>
 import { tr } from "@/services/lang";
+import separatePrice from '@/mixins/separatePrice'
+import { storeService } from '@/services/apiServices'
 export default {
   layout: "index",
+  mixins:[separatePrice],
   data() {
     return {
       items: null,
@@ -106,13 +112,13 @@ export default {
       ],
     };
   },
-  async asyncData({ error, route, $axios, store }) {
+  async asyncData({ error, route, store }) {
     try {
-      const res1 = await $axios.get(`/store/${route.params.store_slug}`)
-      store.commit("payment/set_gateways", res1.data.data.gateways)
-      store.commit("store/set_id", res1.data.data.id);
+      const res = await storeService.getDetail(route.params.store_slug)
+      store.commit("payment/set_gateways", res.data.data.gateways);
+      store.commit("store/set_id", res.data.data.id);
       return {
-        detail: res1.data.data,
+        detail: res.data.data,
       };
     } catch (e) {
       error({
@@ -121,10 +127,8 @@ export default {
       });
     }
   },
-  created() {
-    if (process.browser) {
-      this.setItems();
-    }
+  mounted() {
+    this.setItems();
     this.$nuxt.$on("refresh-cart", () => {
       this.setItems();
     });
@@ -147,16 +151,6 @@ export default {
         sum += parseInt(element.price.replace(",", "")) * element.count;
       });
       return sum;
-    },
-    separate(Number) {
-      Number += "";
-      Number = Number.replace(",", "");
-      let x = Number.split(".");
-      let y = x[0];
-      let z = x.length > 1 ? "." + x[1] : "";
-      var rgx = /(\d+)(\d{3})/;
-      while (rgx.test(y)) y = y.replace(rgx, "$1" + "," + "$2");
-      return y + z;
     },
     deleteProductFromCart(id) {
       this.$store.dispatch("cart/deleteProductFromCart", id);

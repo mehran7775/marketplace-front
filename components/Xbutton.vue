@@ -1,7 +1,7 @@
 <template>
   <button
     :type="is_submit ? 'submit' : 'button'"
-    :class="`mx-1 btn btn-${variant}`"
+    :class="`btn btn-${variant}`"
     @click="on_click"
     :disabled="disabled"
   >

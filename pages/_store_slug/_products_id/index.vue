@@ -35,9 +35,7 @@
                       class="img-wrapper"
                     >
                       <img
-                        :src="
-                          thumbnail ? thumbnail : '/images/default-image.png'
-                        "
+                        :src="thumbnail ? thumbnail : '/images/default-image.png'"
                         alt="عکس محصول"
                       />
                     </slide>
@@ -50,21 +48,17 @@
                 class="row flex-sm-column text-right py-4 px-5"
                 id="detail-product"
               >
-                <div class="column">
-                  <div class="float-left">
+                <div class="d-flex justify-content-between w-100">
+                  <h2 v-text="product.title" class="h4 font-weight-bold"></h2>
+                   <div>
                     <span id="price" class="font-weight-bold">
                       <span v-text="product.price"></span>
                       <span v-text="lang.price"></span>
                     </span>
                   </div>
-                  <h2 v-text="product.title" class="display-5"></h2>
-                  <p class="pt-1">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Sint pariatur nesciunt consectetur possimus doloremque porro
-                    nemo unde id dolores eum, quas qui asperiores quisquam
-                    libero illo culpa provident ea minus!
-                  </p>
                 </div>
+                  <p class="pt-2" v-text="product.description">
+                  </p>
               </div>
             </div>
           </div>
@@ -81,6 +75,8 @@
 
 <script>
 import { tr } from "@/services/lang";
+import { storeService } from "@/services/apiServices"
+import { productService } from "@/services/apiServices"
 export default {
   layout: "index",
   head() {
@@ -97,14 +93,17 @@ export default {
   },
   async asyncData({ error, route, $axios, store }) {
     try {
-      const res1 = await $axios.get(`/store/${route.params.store_slug}`);
-      store.commit("payment/set_gateways", res1.data.data.gateways);
-      store.commit("store/set_id", res1.data.data.id);
-      const res2 = await $axios.get(
-        "/product/" + route.params.store_slug + "/" + route.params.products_id
-      );
+      const res = await storeService.getDetail(route.params.store_slug)
+      store.commit("payment/set_gateways", res.data.data.gateways);
+      store.commit("store/set_id", res.data.data.id);
+      const res2=await productService.getProduct(
+        {
+          store_slug: route.params.store_slug,
+          products_id: route.params.products_id
+        }
+      )
       return {
-        detail: res1.data.data,
+        detail: res.data.data,
         product: res2.data.data,
       };
     } catch (e) {
@@ -153,7 +152,7 @@ export default {
       text-align: center;
 
       img {
-        max-width: 340px;
+        max-width: 100%;
         max-height: 250px;
       }
     }

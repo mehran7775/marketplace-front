@@ -51,9 +51,7 @@ export default {
     return {
       options: {
         paginationEnabled: false,
-        // autoplay : true,
         loop: true,
-        // centerMode: true,
         perPageCustom: [
           [340, 3],
           [576, 3],
@@ -83,18 +81,18 @@ export default {
   .grid-container {
     display: grid;
     grid-template-columns: 33.1% 33.1% 33.1%;
-    grid-gap: 2px;
+    grid-gap: 1px;
     background: $border;
-    padding: 2px;
+    padding: 1px;
 
     div {
       background-color: $white;
       text-align: center;
-      height: 240px;
+      // height: 240px;
     }
   }
   .body-products {
-    @include mx_medium{
+    @include mx_medium {
       background-color: $border;
     }
   }

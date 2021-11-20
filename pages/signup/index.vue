@@ -161,6 +161,7 @@
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { provinces } from "@/constants/Provinces";
+import { authService } from '@/services/apiServices'
 export default {
   middleware: "guest",
   layout: "sign",
@@ -199,8 +200,7 @@ export default {
             password: this.form.password,
             address: this.form.address,
           };
-          this.$nuxt.context.$axios
-            .post("customer/register", data)
+            authService.registerCustomer(data)
             .then((res) => {
               this.$store.commit("user/set_phone_number", data.phone, {
                 root: true,

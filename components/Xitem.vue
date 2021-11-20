@@ -5,7 +5,8 @@
     @mouseover="item_hover()"
     @mouseleave="is_hover = false"
   >
-    <h5 v-text="title" class="font-weight-bold"></h5>
+    <h5 v-text="title" class="d-none d-md-block font-weight-bold px-3 text-dark mb-0 mb-md-1"></h5>
+    <h6 v-text="title" class="d-md-none font-weight-bold px-3 text-dark mb-0 mb-md-1"></h6>
     <nuxt-link
       :to="`${$route.params.store_slug}/${id}`"
       class="d-flex align-items-center justify-content-center"
@@ -16,7 +17,7 @@
       />
     </nuxt-link>
     <div id="box_hover">
-      <div v-if="is_hover" class="d-flex">
+      <div v-if="is_hover" class="d-flex justify-content-center">
         <Xbutton
           :on_click="
             () => {
@@ -25,17 +26,17 @@
           "
           variant="outline-success"
           :text="lang.btn.detail"
-          class="text"
+          class="text mx-1"
         ></Xbutton>
         <Xbutton
           variant="success"
           :text="lang.btn.add"
           :on_click="add_item"
           :disabled="quantity > 0 ? false : true"
+          class="mx-1"
         ></Xbutton>
       </div>
       <div v-if="!is_hover" class="price">
-        <span class="font-weight-bold">قیمت:</span>
         <span v-text="price"></span>
         <strong>
           <span v-text="lang.price"></span>
@@ -95,9 +96,6 @@ export default {
       };
       this.$store.dispatch("cart/addProductToCart", product);
     },
-    stopLink() {
-      console.log(4);
-    },
   },
 };
 </script>
@@ -110,9 +108,9 @@ export default {
   text-align: center;
   transition: border linear 0.2s;
   background-color: $white;
-  h5 {
-    height: 40px;
-    word-break: break-all;
+
+  h5,h6 {
+    height: 35px;
     white-space: pre-wrap;
     text-overflow: clip;
     overflow: hidden;
@@ -135,14 +133,20 @@ export default {
   a {
     display: block;
     color: inherit;
-    padding: 10px;
+    padding-bottom: 10px;
     max-width: 240px;
-    height: 120px;
+    height: 9rem;
+     @include mx_medium {
+        max-height: 7.3rem;
+      }
+      @include mx_small{
+         max-height: 4.6rem;
+      }
     img {
       max-width: 100%;
       max-height: 100%;
       @include mx_medium {
-        margin: 1rem 0.3rem;
+        margin: 0.5rem 0.3rem;
       }
     }
   }
@@ -150,8 +154,9 @@ export default {
     text-decoration: none;
   }
   #box_hover {
-    height: 45px;
-    margin: auto;
+    div{
+      height: 30px;
+    }
     .price {
       color: $success;
     }
