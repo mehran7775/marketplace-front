@@ -16,6 +16,7 @@
         alt="تصویر محصول"
       />
     </nuxt-link>
+    <div v-if="quantity < 1" class="my-1"><span class="text-danger">ناموجود</span></div>
     <div id="box_hover">
       <div v-if="is_hover" class="d-flex justify-content-center">
         <Xbutton
@@ -32,9 +33,10 @@
           variant="success"
           :text="lang.btn.add"
           :on_click="add_item"
-          :disabled="quantity > 0 ? false : true"
+          :disabled="quantity < 1 ? true : false"
           class="mx-1"
         ></Xbutton>
+
       </div>
       <div v-if="!is_hover" class="price">
         <span v-text="price"></span>
@@ -69,6 +71,10 @@ export default {
       type: Number,
       default: 0,
     },
+    // singleProduct:{
+    //   type: Boolean,
+    //   default:false
+    // }
   },
   computed: {
     lang() {
@@ -93,6 +99,7 @@ export default {
         price: this.price,
         img: this.image,
         quantity: this.quantity,
+        // singleProduct: this.singleProduct
       };
       this.$store.dispatch("cart/addProductToCart", product);
     },

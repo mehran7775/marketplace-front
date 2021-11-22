@@ -21,7 +21,8 @@ const actions = {
                 price: product.price,
                 count: 1,
                 img:product.img,
-                quantity:product.quantity
+                quantity:product.quantity,
+                // singleProduct : product.singleProduct
               }
               cart[$nuxt.$route.params.store_slug].push(newObj)
             } else {
@@ -83,22 +84,34 @@ const actions = {
       }
     },
     plusProduct({commit}, pid){
-      let cart = JSON.parse(localStorage.getItem("cart"))
-      const p = cart[$nuxt.$route.params.store_slug].find(({ id }) => id === pid)
-      if(p.count >= p.quantity){
-        commit(
-          "open_toast",
-          {
-            msg: "تعداد محصول برابر با حداکثر موجودی است",
-            variant: "warning",
-          },
-          { root: true }
-        )
-        return
-      }
-      p.count++
-      localStorage.setItem('cart',JSON.stringify(cart))
-      $nuxt.$emit('refresh-cart',null, { once:true })
+      // if(!singleProduct){
+        let cart = JSON.parse(localStorage.getItem("cart"))
+        const p = cart[$nuxt.$route.params.store_slug].find(({ id }) => id === pid)
+        if(p.count >= p.quantity){
+          commit(
+            "open_toast",
+            {
+              msg: "تعداد محصول برابر با حداکثر موجودی است",
+              variant: "warning",
+            },
+            { root: true }
+          )
+          return
+        }
+        p.count++
+        localStorage.setItem('cart',JSON.stringify(cart))
+        $nuxt.$emit('refresh-cart',null, { once:true })
+      // }else{
+      //   commit(
+      //     "open_toast",
+      //     {
+      //       msg: "محصول یکتاست",
+      //       variant: "warning",
+      //     },
+      //     { root: true }
+      //   )
+      // }
+      
     }
 };
 
