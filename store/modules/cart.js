@@ -28,7 +28,7 @@ const actions = {
               commit(
                 "open_toast",
                 {
-                  msg: "محصول به سبد خرید اضاف شده است",
+                  msg: "محصول به سبد خرید اضافه شده است",
                   variant: "warning",
                 },
                 { root: true }
@@ -40,7 +40,7 @@ const actions = {
             commit(
               "open_toast",
               {
-                msg: "محصول به سبد خرید اضاف شد",
+                msg: "محصول به سبد خرید اضافه شد",
                 variant: "success",
               },
               { root: true }
