@@ -19,7 +19,7 @@
       </div>
       <div class="bottom_menu">
         <template v-if="$cookies.get('token-buyer')">
-          <nuxt-link :to="`/admin-customer`">
+          <nuxt-link :to="`/penel-customer`">
             <span
               ><fa
                 icon="user"

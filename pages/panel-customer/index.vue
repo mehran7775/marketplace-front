@@ -1,6 +1,6 @@
 <template>
     <div>
-        Admin-customer
+        panel-customer
     </div>
 </template>
 
