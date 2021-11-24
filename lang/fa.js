@@ -9,6 +9,7 @@ export const fa = {
     },
     label: {
         info: 'اطلاع',
+        completeInfo:'تکمیل اطلاعات',
         warning: 'هشدار',
         no_icon: 'بدون آیکن',
         test: 'تست',

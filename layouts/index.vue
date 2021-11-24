@@ -5,36 +5,34 @@
         <Nuxt />
       </div>
     </div>
-    <MoleculesXsidebarBottom></MoleculesXsidebarBottom>
-    <template>
-      <MoleculesXmodal title="انتخاب روش پرداخت">
-        <template #content-modal>
-          <div class="row">
-            <div v-for="gateway in gateways" :key="gateway.id" class="col-12">
-              <div class="getways">
-                <input
-                  class="mr-4"
-                  type="radio"
-                  name="getway"
-                  :value="gateway.id"
-                  :ref="gateway.id"
-                  :id="gateway.id"
-                />
-                <img width="24" height="24" :src="gateway.logo" class="mr-2">
-               <label :for="gateway.id"><span class="mr-1" v-text="`درگاه پرداخت ${gateway.title}`"></span></label>
-              </div>
-            </div>
-            <div class="col-12 text-center">
-              <Xbutton
-                :on_click="do_payment"
-                class="icon-getway"
-                text="پرداخت"
-              ></Xbutton>
+    <MoleculesXsidebarBottom></MoleculesXsidebarBottom>    
+    <!-- <MoleculesXmodal title="انتخاب روش پرداخت" :id="'select-getways'" hideFooter>
+      <template #content-modal>
+        <div class="row">
+          <div v-for="gateway in gateways" :key="gateway.id" class="col-12">
+            <div class="getways">
+              <input
+                class="mr-4"
+                type="radio"
+                name="getway"
+                :value="gateway.id"
+                :ref="gateway.id"
+                :id="gateway.id"
+              />
+              <img width="24" height="24" :src="gateway.logo" class="mr-2">
+              <label :for="gateway.id"><span class="mr-1" v-text="`درگاه پرداخت ${gateway.title}`"></span></label>
             </div>
           </div>
-        </template>
-      </MoleculesXmodal>
-    </template>
+          <div class="col-12 text-center">
+            <Xbutton
+              :on_click="do_payment"
+              class="icon-getway"
+              text="پرداخت"
+            ></Xbutton>
+          </div>
+        </div>
+      </template>
+    </MoleculesXmodal> -->
   </div>
 </template>
 
@@ -90,25 +88,13 @@ export default {
     lang() {
       return tr();
     },
-    gateways() {
-      return this.$store.state.payment.gateways;
-    },
   },
-  methods: {
-    do_payment() {
-      let gateway_id = null;
-      this.gateways.forEach((gateway) => {
-        if (document.getElementById(gateway.id).checked) {
-          gateway_id = gateway.id;
-        }
-      });
-      if (gateway_id) {
-        this.$store.dispatch("payment/do_payment", {
-          gateway_id:gateway_id
-        })
-      }
-    },
-  },
+  mounted(){
+    $nuxt.$on('show-checkout', (data) => {
+      console.log(data)
+      document.getElementById("gatewayId").value=data.data.order_id
+    })
+  }
 };
 </script>
 
@@ -148,16 +134,5 @@ a {
   text-decoration: none;
   color: inherit;
 }
-.getways {
-  background-color: whitesmoke;
-  border-radius: 10px;
-  height: 50px;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-}
-.icon-getway {
-  padding-right: 6rem;
-  padding-left: 6rem;
-}
+
 </style>

@@ -88,6 +88,7 @@
 import { tr } from "@/services/lang";
 import separatePrice from '@/mixins/separatePrice'
 import { storeService } from '@/services/apiServices'
+
 export default {
   layout: "index",
   mixins:[separatePrice],
@@ -174,7 +175,7 @@ export default {
             address: this.user_data.addresses[0].address,
           },
         };
-        this.$store.dispatch("payment/select_way_payment", data);
+        this.$store.dispatch("payment/select_payment", data);
       } else {
         this.$router.push(`/${this.$route.params.store_slug}/complete-info`);
       }
@@ -201,7 +202,6 @@ export default {
   }
   .price_item_cart {
     width: 26%;
-    // background-color: red;
     color: $success;
     text-align: right;
   }

@@ -1,3 +1,5 @@
+import { orderService } from '@/services/apiServices'
+
 const state = {
     gateways:null,
     order_id:null
@@ -5,6 +7,7 @@ const state = {
 const getters = {
 
 };
+
 
 const mutations = {
     set_gateways(state, payload) {
@@ -16,7 +19,7 @@ const mutations = {
 }
 
 const actions = {
-     async select_way_payment({ commit, state,dispatch }, payload) {
+     async select_payment({ commit, state,dispatch }, payload) {
         commit('user/setApiError','',{root:true})
         const items = JSON.parse(localStorage.getItem("cart"))[$nuxt.$route.params.store_slug]
         if(state.gateways && items && items.length > 0){
@@ -27,18 +30,18 @@ const actions = {
                 quantity: element.count,
               });
             });
-            payload["products"]=items_second
+            payload["products"] = items_second
             try {
-                const {data} = await this.$axios.post('/order/create', payload)
+                const {data} = await orderService.orderCreate(payload)
                 commit('set_order_id', data.data.order_id)
-                if(state.gateways.length === 1){
-                    dispatch('do_payment',{
-                        gateway_id: state.gateways[0].id
-                    });
-                }else{
-                   $nuxt.$bvModal.show('modal-prevent-closing')
-                }
-
+                $nuxt.$router.push(
+                    { 
+                        path:`checkout`,
+                        query: {
+                            order_id:data.data.order_id
+                        }
+                    }
+                )
             } catch (e) {
                 if(e.response.data.data){
                     const keys=Object.keys(e.response.data.data)
