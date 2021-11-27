@@ -7,6 +7,7 @@ import user from "~/store/modules/user";
 import store from "~/store/modules/store"
 import cart from "~/store/modules/cart";
 import payment from "~/store/modules/payment";
+import product from "~/store/modules/product";
 
 
 const createStore = () => {
@@ -19,7 +20,8 @@ const createStore = () => {
             user,
             cart,
             payment,
-            store
+            store,
+            product
         }
     })
 }
