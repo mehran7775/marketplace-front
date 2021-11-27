@@ -4,7 +4,6 @@
       :logo="detail.logo"
       :fa_name="detail.fa_name"
       :address="detail.address"
-      :email="detail.email"
     ></MoleculesXheader>
     <div class="w-100 body-hv-fit">
       <LazyMoleculesXlables v-if="products" :products="products">
@@ -33,7 +32,7 @@ export default {
   async asyncData({ route, error, store }) {
     try {
       const res = await storeService.getDetail(route.params.store_slug)
-      store.commit("payment/set_gateways", res.data.data.gateways);
+      store.commit("payment/", res.data.data.gateways);
       store.commit("store/set_id", res.data.data.id);
 
       const { data } = await productService.getProducts(route.params.store_slug)

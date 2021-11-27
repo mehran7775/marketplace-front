@@ -4,7 +4,6 @@
       :logo="detail.logo"
       :fa_name="detail.fa_name"
       :address="detail.address"
-      :email="detail.email"
     ></MoleculesXheader>
     <div class="container body-hv-fit">
       <div class="row h-100">

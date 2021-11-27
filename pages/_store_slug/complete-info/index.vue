@@ -4,7 +4,6 @@
       :logo="detail.logo"
       :fa_name="detail.fa_name"
       :address="detail.address"
-      :email="detail.email"
     ></MoleculesXheader>
     <div class="container body-hv-fit">
       <div class="row">
@@ -359,10 +358,6 @@ export default {
         e !== "" ? (this.valid_province = false) : (this.valid_province = true);
       }
     },
-    // calculateShipingCost(){
-    //   console.log(this.$refs.province.value)
-    //   // return this.$refs.province.value
-    // }
   },
   computed: {
     provinces() {

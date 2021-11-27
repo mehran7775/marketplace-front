@@ -13,6 +13,11 @@ export default {
       return tr();
     },
   },
+  mounted(){
+    var object = { 'a': 1, 'b': '2', 'c': 3 };
+    this._.pick(object, ['a', 'c']);
+    console.log(this._.pick(object, ['a', 'c']))
+  }
 };
 </script>
 
