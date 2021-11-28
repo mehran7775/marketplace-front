@@ -2,37 +2,10 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <Nuxt />
+        <Nuxt/>
       </div>
     </div>
     <MoleculesXsidebarBottom></MoleculesXsidebarBottom>    
-    <!-- <MoleculesXmodal title="انتخاب روش پرداخت" :id="'select-getways'" hideFooter>
-      <template #content-modal>
-        <div class="row">
-          <div v-for="gateway in gateways" :key="gateway.id" class="col-12">
-            <div class="getways">
-              <input
-                class="mr-4"
-                type="radio"
-                name="getway"
-                :value="gateway.id"
-                :ref="gateway.id"
-                :id="gateway.id"
-              />
-              <img width="24" height="24" :src="gateway.logo" class="mr-2">
-              <label :for="gateway.id"><span class="mr-1" v-text="`درگاه پرداخت ${gateway.title}`"></span></label>
-            </div>
-          </div>
-          <div class="col-12 text-center">
-            <Xbutton
-              :on_click="do_payment"
-              class="icon-getway"
-              text="پرداخت"
-            ></Xbutton>
-          </div>
-        </div>
-      </template>
-    </MoleculesXmodal> -->
   </div>
 </template>
 
