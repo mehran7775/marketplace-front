@@ -6,10 +6,6 @@
         <div id="name_brand">
           <h1 class="mr-4 h4 text-dark font-weight-bold" v-text="fa_name ? fa_name : 'فروشگاه من'"></h1>
         </div>
-        <div class="mt-3 mr-4" v-if="setDetail">
-          <fa icon="envelope"></fa>
-          <span v-text="email"></span>
-        </div>
         <div class="mr-4" v-if="setDetail">
           <fa icon="map-marker"></fa>
           <span class="mr-1" v-text="address"></span>
@@ -71,9 +67,6 @@ export default {
         type:String
       },
       address:{
-        type:String
-      },
-      email:{
         type:String
       },
       setDetail:{

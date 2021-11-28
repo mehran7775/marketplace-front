@@ -4,7 +4,6 @@
       :logo="detail.logo"
       :fa_name="detail.fa_name"
       :address="detail.address"
-      :email="detail.email"
     ></MoleculesXheader>
     <div class="w-100 body-hv-fit">
       <LazyMoleculesXlables v-if="products" :products="products">
@@ -30,7 +29,7 @@ export default {
       return tr();
     },
   },
-  async asyncData({ $axios, route, error, store }) {
+  async asyncData({ route, error, store }) {
     try {
       const res = await storeService.getDetail(route.params.store_slug)
       store.commit("payment/set_gateways", res.data.data.gateways);

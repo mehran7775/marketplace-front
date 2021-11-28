@@ -52,6 +52,7 @@ export default {
       options: {
         paginationEnabled: false,
         loop: true,
+        centerMode: true,
         perPageCustom: [
           [340, 3],
           [576, 3],

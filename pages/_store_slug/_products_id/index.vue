@@ -4,7 +4,6 @@
       :logo="detail.logo"
       :fa_name="detail.fa_name"
       :address="detail.address"
-      :email="detail.email"
       :setDetail="false"
     ></MoleculesXheader>
     <div id="product" class="container body-hv-fit">
@@ -57,7 +56,7 @@
                     </span>
                   </div>
                 </div>
-                  <p class="pt-2" v-text="product.description">
+                  <p class="text-justify px-1 pt-2" v-text="product.description">
                   </p>
               </div>
             </div>
@@ -135,6 +134,7 @@ export default {
         price: this.product.price,
         img: this.product.thumbnails[0],
         quantity: this.product.quantity,
+        // singleProduct: this.product.singleProduct
       });
     },
   },

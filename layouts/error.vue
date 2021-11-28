@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="hv-center rounded-0">
-        <div class="error">
+        <div class="error text-center">
           <h1 v-if="error.statusCode === 404">
             <ErrorsNotFound :pageNotFound="pageNotFound"></ErrorsNotFound>
           </h1>

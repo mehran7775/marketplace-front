@@ -4,19 +4,18 @@
       :logo="detail.logo"
       :fa_name="detail.fa_name"
       :address="detail.address"
-      :email="detail.email"
     ></MoleculesXheader>
     <div class="container body-hv-fit">
       <div class="row">
         <div class="col-10 m-auto col-md-7">
           <div class="row pt-5">
-            <h4 class="font-weight-bold">تکمیل اطلاعات</h4>
+            <h4 class="font-weight-bold" v-text="lang.label.completeInfo"></h4>
           </div>
           <div class="row text-right">
             <ValidationObserver ref="validationObserver">
               <Xform
-                :sub_form="select_way_payment"
-                legend="اطلاعات خودرا وارد کنید"
+                :sub_form="showCheckout"
+                legend="لطفا اطلاعات خود را وارد کنید"
               >
                 <template #content>
                   <div class="form-group px-3 pt-3">
@@ -238,7 +237,7 @@
                       <Xbutton
                         is_submit
                         class="px-5 m-auto w-100"
-                        text="انتخاب روش پرداخت"
+                        text="ثبت سفارش"
                       ></Xbutton>
                     </div>
                   </div>
@@ -248,7 +247,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>   
   </div>
 </template>
 
@@ -256,6 +255,7 @@
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { provinces } from "@/constants/Provinces";
 import { storeService } from "@/services/apiServices"
+import { tr } from "@/services/lang"
 export default {
   layout: "index",
   middleware: "guest",
@@ -310,7 +310,7 @@ export default {
     ValidationObserver,
   },
   methods: {
-    select_way_payment() {
+    showCheckout(){
       this.validate_province();
       this.$refs.validationObserver.validate().then((success) => {
         if (success && !this.valid_province) {
@@ -325,7 +325,28 @@ export default {
             },
             phone: this.form.phone,
           };
-          this.$store.dispatch("payment/select_way_payment", data);
+          this.$store.dispatch("payment/select_payment", data);
+        } else {
+          return;
+        }
+      });
+    },
+    select_payment() {
+      this.validate_province();
+      this.$refs.validationObserver.validate().then((success) => {
+        if (success && !this.valid_province) {
+          const data = {
+            store_id: this.$store.state.store.id,
+            name: this.form.first_name + " " + this.form.last_name,
+            email: this.form.email,
+            address: {
+              province: this.$refs.province.value,
+              city: this.form.city,
+              address: this.form.address,
+            },
+            phone: this.form.phone,
+          };
+          this.$store.dispatch("payment/select_payment", data);
         } else {
           return;
         }
@@ -344,7 +365,13 @@ export default {
     },
     errorsApi(){
       return this.$store.getters['user/errorsApi']
-    }
+    },
+    lang(){
+      return tr()
+    },
+    gateways() {
+      return this.$store.state.payment.gateways;
+    },
   },
 };
 </script>
@@ -360,5 +387,4 @@ h4 {
 .dash {
   border-top: 1px dashed $success;
 }
-
 </style>
