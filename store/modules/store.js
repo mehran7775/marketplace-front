@@ -1,5 +1,7 @@
+import Vue from 'vue'
+
 const state = {
-    id:null
+  
 }
 const getters = {
 
@@ -7,7 +9,7 @@ const getters = {
 
 const mutations = {
     set_id(state, payload) {
-        state.id=payload
+        Vue.set(state, "id", payload)
     },
 }
 

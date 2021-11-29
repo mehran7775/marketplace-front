@@ -148,7 +148,10 @@ export default {
     compute_whole_price(items) {
       let sum = 0;
       items.forEach((element) => {
-        sum += parseInt(element.price.replace(",", "")) * element.count;
+        while( element.price.includes(",")){
+          element.price=element.price.replace(",", "")
+        }
+      sum += parseInt(element.price.replace(",", "")) * element.count;
       });
       return sum;
     },
@@ -174,6 +177,18 @@ export default {
             address: this.user_data.addresses[0].address,
           },
         };
+
+        if(this.detail.options.address === 1){
+          if(this.detail.shipping_settings.shipping_region === 1 || data.address.province == this.detail.province){
+            this.$store.dispatch("payment/select_payment", data)
+            return
+          }
+          this.$store.commit('open_toast',{
+            msg: ' محصول در منطقه شما قابل ارسال نمی باشد',
+            variant: 'error'
+          })
+          return
+        }
         this.$store.dispatch("payment/select_payment", data);
       } else {
         this.$router.push(`/${this.$route.params.store_slug}/complete-info`);

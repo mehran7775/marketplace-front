@@ -60,6 +60,7 @@ export default {
           )
           if(res_current.status === 200){
             this.$store.commit('user/set_current_user', res_current.data.data,{ root:true })
+            this.$store.commit('user/delete_phone_number')
           }
           this.$router.replace("/admin-buyer")
           this.$store.commit(

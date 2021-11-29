@@ -15,13 +15,13 @@ const mutations = {
     }
 }
 const getters = {
-    // apiErrors: state => {
-    //     return state.apiErrors
-    //   }
+    apiErrors: state => {
+        return state.apiErrors
+      }
 };
 
 const actions = {
-     async select_payment({ commit, state, dispatch }, payload) {
+     async select_payment({ commit, state }, payload) {
         commit('user/setApiError','',{ root:true })
         const items = JSON.parse(localStorage.getItem("cart"))[$nuxt.$route.params.store_slug]
         if(state.gateways && items && items.length > 0){
@@ -35,16 +35,18 @@ const actions = {
             payload["products"] = items_second
             try {
                 const {data} = await orderService.orderCreate(payload)
-                // commit('set_order_id', data.data.order_id)
-                localStorage.setItem('Oid',data.data.order_id)
-                $nuxt.$router.push(
-                    { 
-                        path:`checkout`,
-                        query: {
-                            order_id:data.data.order_id
+                if(data.data.order_id){
+                    localStorage.setItem('Oid',data.data.order_id)
+                    $nuxt.$router.push(
+                        { 
+                            path:`checkout`,
+                            query: {
+                                order_id:data.data.order_id
+                            }
                         }
-                    }
-                )
+                    )
+                    this.$store.commit('user/deleteApiError')
+                }
             } catch (e) {
                 if(e.response.data.data){
                     const keys=Object.keys(e.response.data.data)
@@ -62,7 +64,7 @@ const actions = {
             }, { root: true })
         }
     },
-    async do_payment({ commit, state }, payload) {
+    async do_payment({ commit }, payload) {
         try {
             const {data} = await this.$axios.post(`pay/order/${localStorage.getItem("Oid")}`, payload)
             const form = document.createElement("form");

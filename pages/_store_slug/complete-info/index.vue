@@ -14,7 +14,7 @@
           <div class="row text-right">
             <ValidationObserver ref="validationObserver">
               <Xform
-                :sub_form="showCheckout"
+                :sub_form="doValidate"
                 legend="لطفا اطلاعات خود را وارد کنید"
               >
                 <template #content>
@@ -256,6 +256,7 @@ import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { provinces } from "@/constants/Provinces";
 import { storeService } from "@/services/apiServices"
 import { tr } from "@/services/lang"
+import { mapGetters } from 'vuex'
 export default {
   layout: "index",
   middleware: "guest",
@@ -285,6 +286,7 @@ export default {
     };
   },
   async asyncData({ error, route, $axios, store }) {
+    store.commit('user/setApiError','')
     try {
       const res = await storeService.getDetail(route.params.store_slug)
       store.commit("payment/set_gateways", res.data.data.gateways)
@@ -310,7 +312,7 @@ export default {
     ValidationObserver,
   },
   methods: {
-    showCheckout(){
+    doValidate(){
       this.validate_province();
       this.$refs.validationObserver.validate().then((success) => {
         if (success && !this.valid_province) {
@@ -325,32 +327,25 @@ export default {
             },
             phone: this.form.phone,
           };
-          this.$store.dispatch("payment/select_payment", data);
+          this.showCheckout(data)
         } else {
-          return;
+          return
         }
-      });
+      })     
     },
-    select_payment() {
-      this.validate_province();
-      this.$refs.validationObserver.validate().then((success) => {
-        if (success && !this.valid_province) {
-          const data = {
-            store_id: this.$store.state.store.id,
-            name: this.form.first_name + " " + this.form.last_name,
-            email: this.form.email,
-            address: {
-              province: this.$refs.province.value,
-              city: this.form.city,
-              address: this.form.address,
-            },
-            phone: this.form.phone,
-          };
+    showCheckout(data){
+      if(this.detail.options.address === 1){
+        if(this.detail.shipping_settings.shipping_region === 1 || data.address.province == this.detail.province){
           this.$store.dispatch("payment/select_payment", data);
-        } else {
-          return;
+          return
         }
-      });
+        this.$store.commit('open_toast',{
+          msg: ' محصول در منطقه شما قابل ارسال نمی باشد',
+          variant: 'error'
+        })
+        return
+      } 
+      this.$store.dispatch("payment/select_payment", data);
     },
     validate_province() {
       if (this.detail.options.address === 1) {
@@ -363,9 +358,7 @@ export default {
     provinces() {
       return provinces;
     },
-    errorsApi(){
-      return this.$store.getters['user/errorsApi']
-    },
+    ...mapGetters("user",["errorsApi"]),
     lang(){
       return tr()
     },

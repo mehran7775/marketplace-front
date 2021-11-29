@@ -177,7 +177,7 @@ export default {
         city: "",
         address: "",
       },
-      errors: null,
+      errorsApi: null,
       valid_province: null,
     };
   },
@@ -228,6 +228,9 @@ export default {
                   { root: true }
                 );
                 this.errors = e.response.data.data;
+
+                
+                
               } else {
                 this.$store.commit(
                   "open_toast",

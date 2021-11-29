@@ -10,7 +10,7 @@
         </div>
         <div class="row">
             <template v-if="stores">
-                <div v-for="store in stores" :key="store.id" class="col-12 col-md-6 col-lg-4">
+                <div v-for="store in stores" :key="store.id" class="col-12 col-md-6 col-lg-4 mb-4">
                     <div class="h-100 bg-white shadow-sm border p-3 m-2"
                          style="border-color: rgb(187, 187, 187) !important; border-radius: 10px;">
                         <div class="d-flex align-items-center">
