@@ -118,7 +118,6 @@ export default {
     async asyncData({ error, route, store }) {
         try {
         const res = await storeService.getDetail(route.params.store_slug)
-        // store.commit("payment/set_gateways", res.data.data.gateways)
         store.commit("store/set_id", res.data.data.id)
         return {
             detail: res.data.data,
@@ -162,14 +161,9 @@ export default {
 
 <style scoped lang="scss">
 #checkout{
-//   background-color: red;
     border-radius: 10px;
     box-shadow: 1px 1px 12px 0 $secondary;
     padding: 30px;
-    // @include medium{
-    //     max-width: 350px;
-        
-    // }
     margin-top: 10%;
     .getways {
         background-color: white;

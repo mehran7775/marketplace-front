@@ -7,8 +7,8 @@ const mutations = {
     setProducts(state, data) {
         Vue.set(state, "searchProducts", data)
     },
-    deleteProducts(state){
-        Vue.delete(state,"searchProducts")
+    deleteFromState(state, payload){
+        Vue.delete(state, payload)
     }
 };
 

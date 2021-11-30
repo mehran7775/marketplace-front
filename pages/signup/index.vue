@@ -1,12 +1,12 @@
 <template>
   <div class="sign-up text-right">
     <div dir="rtl">
-      <ValidationObserver ref="validationObserver">
+      <ValidationObserver ref="validationObserver" >
         <Xform :sub_form="do_register">
           <template #content>
             <div class="form-group">
               <label>نام</label>
-              <ValidationProvider rules="required|min:3" v-slot="{ errors }">
+              <ValidationProvider vid="first_name" rules="required|min:3" v-slot="{ errors }">
                 <input
                   v-model="form.first_name"
                   ref="first_name"
@@ -22,7 +22,7 @@
             </div>
             <div class="form-group">
               <label>نام خانوادگی</label>
-              <ValidationProvider rules="required|min:3" v-slot="{ errors }">
+              <ValidationProvider vid="last_name" rules="required|min:3" v-slot="{ errors }">
                 <input
                   v-model="form.last_name"
                   ref="last_name"
@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
               <label>شماره تلفن</label>
-              <ValidationProvider rules="required|regPhone" v-slot="{ errors }">
+              <ValidationProvider vid="phone" rules="required|regPhone" v-slot="{ errors }">
                 <input
                   v-model="form.phone"
                   ref="phone"
@@ -55,7 +55,7 @@
             </div>
             <div class="form-group">
               <label>ایمیل</label>
-              <ValidationProvider rules="required|email" v-slot="{ errors }">
+              <ValidationProvider vid="email" rules="required|email" v-slot="{ errors }">
                 <input
                   v-model="form.email"
                   ref="email"
@@ -68,6 +68,7 @@
                 <div v-if="errors[0]" class="py-2 pr-2">
                   <span class="text-danger">{{ errors[0] }}</span>
                 </div>
+                 
               </ValidationProvider>
             </div>
             <div class="form-group">
@@ -94,7 +95,7 @@
             </div>
             <div class="form-group">
               <label>شهر</label>
-              <ValidationProvider rules="required|min:2" v-slot="{ errors }">
+              <ValidationProvider vid="city" rules="required|min:2" v-slot="{ errors }">
                 <input
                   v-model="form.city"
                   ref="city"
@@ -110,7 +111,7 @@
             </div>
             <div class="form-group">
               <label>آدرس</label>
-              <ValidationProvider rules="required|min:10" v-slot="{ errors }">
+              <ValidationProvider vid="address" rules="required|min:10" v-slot="{ errors }">
                 <input
                   v-model="form.address"
                   ref="address"
@@ -129,6 +130,7 @@
               <ValidationProvider
                 rules="required|min:6|max:20"
                 v-slot="{ errors }"
+                vid="password"
               >
                 <input
                   v-model="form.password"
@@ -148,12 +150,15 @@
               is_submit
               class="btn-sign m-auto w-100"
               text="ثبت نام"
-            ></Xbutton>
-            <div class="form-group"></div>
+              :disable="btnDisable"
+            >
+              <template #spinner>
+                <b-spinner v-show="laodingLogin" small  class="float-left"></b-spinner>
+              </template>            
+            </Xbutton>
           </template>
         </Xform>
       </ValidationObserver>
-      <div v-if="errors" class="bg-danger text-white" v-html="errors"></div>
     </div>
   </div>
 </template>
@@ -173,12 +178,12 @@ export default {
         phone: "",
         password: "",
         email: "",
-
         city: "",
         address: "",
       },
-      errorsApi: null,
       valid_province: null,
+      btnDisable: false,
+      laodingLogin: false
     };
   },
   components: {
@@ -190,6 +195,8 @@ export default {
       this.validate_province();
       this.$refs.validationObserver.validate().then((res) => {
         if (res && !this.valid_province) {
+          this.btnDisable= true
+          this.laodingLogin= true
           const data = {
             first_name: this.form.first_name,
             last_name: this.form.last_name,
@@ -197,11 +204,13 @@ export default {
             phone: this.form.phone,
             province: this.$refs.province.value,
             city: this.form.city,
-            password: this.form.password,
+            password2: this.form.password,
             address: this.form.address,
           };
             authService.registerCustomer(data)
             .then((res) => {
+              this.btnDisable= false
+              this.laodingLogin= false
               this.$store.commit("user/set_phone_number", data.phone, {
                 root: true,
               });
@@ -218,19 +227,11 @@ export default {
               }
             })
             .catch((e) => {
+              this.btnDisable= false
+              this.laodingLogin= false
               if (e.response.data.status === "error") {
-                this.$store.commit(
-                  "open_toast",
-                  {
-                    msg: e.response.data.message,
-                    variant: "error",
-                  },
-                  { root: true }
-                );
-                this.errors = e.response.data.data;
-
-                
-                
+                  document.$refs.validationObserver.setErrors(e.response.data.data);
+                  return;
               } else {
                 this.$store.commit(
                   "open_toast",
@@ -266,6 +267,10 @@ export default {
   border-radius: 10px;
   box-shadow: 1px 1px 12px 0 $secondary;
   padding: 30px;
+  @include medium{
+    max-width: 550px;
+    min-width: 500px;
+  }
   max-width: 350px;
   min-width: 330px;
   overflow-y: auto;

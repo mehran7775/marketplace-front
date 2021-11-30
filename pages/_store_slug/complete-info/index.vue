@@ -12,7 +12,7 @@
             <h4 class="font-weight-bold" v-text="lang.label.completeInfo"></h4>
           </div>
           <div class="row text-right">
-            <ValidationObserver ref="validationObserver">
+            <ValidationObserver ref="completeInfoForm">
               <Xform
                 :sub_form="doValidate"
                 legend="لطفا اطلاعات خود را وارد کنید"
@@ -25,9 +25,8 @@
                           <div class="d-flex w-100 justify-content-between">
                             <div class="naming">
                               <ValidationProvider
-                                :rules="
-                                  detail.options.name === 1 ? 'required|min:3' : null
-                                "
+                                vid="first_name"
+                                :rules="detail.options.name === 1 ? 'required|min:3' : null"
                                 v-slot="{ errors }"
                               >
                                 <input
@@ -49,9 +48,8 @@
                             </div>
                             <div class="naming">
                               <ValidationProvider
-                                :rules="
-                                  detail.options.name === 1 ? 'required' : null
-                                "
+                                vid="last_name"
+                                :rules=" detail.options.name === 1 ? 'required' : null"
                                 v-slot="{ errors }"
                               >
                                 <input
@@ -78,6 +76,7 @@
                         <div class="row">
                           <div class="w-100">
                             <ValidationProvider
+                              vid="email"
                               :rules="
                                 detail.options.email === 1
                                   ? 'required'
@@ -98,9 +97,6 @@
                               <div v-if="errors[0]" class="py-2 pr-2">
                                 <span class="text-danger">{{ errors[0] }}</span>
                               </div>
-                              <div v-if="errorsApi['email']" class="py-2 pr-2">
-                                <span class="text-danger" v-text="errorsApi['email'][0]"></span>
-                              </div>
                             </ValidationProvider>
                           </div>
                         </div>
@@ -111,6 +107,7 @@
                         <div class="row">
                           <div class="w-100">
                             <ValidationProvider
+                              vid="phone"
                               :rules="
                                 detail.options.phone === 1
                                   ? 'required'
@@ -133,9 +130,6 @@
                               />
                               <div v-if="errors[0]" class="py-2 pr-2">
                                 <span class="text-danger">{{ errors[0] }}</span>
-                              </div>
-                              <div v-if="errorsApi['phone']" class="py-2 pr-2">
-                                <span class="text-danger" v-text="errorsApi['phone'][0]"></span>
                               </div>
                             </ValidationProvider>
                           </div>
@@ -161,7 +155,7 @@
                                   v-text="province.value"
                                 ></option>
                               </select>
-                              <div v-if="valid_province || errorsApi['province']" class="py-2 pr-2">
+                              <div v-if="valid_province" class="py-2 pr-2">
                                 <span
                                   class="text-danger"
                                   v-text="' استان الزامی است'"
@@ -170,6 +164,7 @@
                             </div>
                             <div class="naming">
                               <ValidationProvider
+                                vid="city"
                                 :rules="
                                   detail.options.address === 1
                                     ? 'required|min:2'
@@ -192,10 +187,6 @@
                                     errors[0]
                                   }}</span>
                                 </div>
-                                <div v-if="errorsApi['city']" class="py-2 pr-2">
-                                  <span class="text-danger" v-text="errorsApi['city'][0]">{{
-                                  }}</span>
-                                </div>
                               </ValidationProvider>
                             </div>
                           </div>
@@ -205,6 +196,7 @@
                         <div class="row">
                           <div class="w-100">
                             <ValidationProvider
+                              vid="address"
                               :rules="
                                 detail.options.address === 1 ? 'required|min:10' : null"
                               v-slot="{ errors }"
@@ -222,9 +214,6 @@
                               <div v-if="errors[0]" class="py-2 pr-2">
                                 <span class="text-danger">{{ errors[0] }}</span>
                               </div>
-                              <div v-if="errorsApi['address']" class="py-2 pr-2">
-                                <span class="text-danger" v-text="errorsApi['address'][0]"></span>
-                              </div>
                             </ValidationProvider>
                           </div>
                         </div>
@@ -238,7 +227,12 @@
                         is_submit
                         class="px-5 m-auto w-100"
                         text="ثبت سفارش"
-                      ></Xbutton>
+                        :disable="btnDisable"
+                      >
+                       <template #spinner>
+                         <b-spinner v-show="laodingRegister" small  class="float-left"></b-spinner>
+                       </template>
+                      </Xbutton>
                     </div>
                   </div>
                 </template>
@@ -283,10 +277,16 @@ export default {
         city: "",
       },
       valid_province: null,
+      laodingRegister:false,
+      btnDisable:false
     };
   },
-  async asyncData({ error, route, $axios, store }) {
-    store.commit('user/setApiError','')
+  watch:{
+    errorsApi(){
+      this.$refs.completeInfoForm.setErrors(this.errorsApi)
+    }
+  },
+  async asyncData({ error, route, store }) {
     try {
       const res = await storeService.getDetail(route.params.store_slug)
       store.commit("payment/set_gateways", res.data.data.gateways)
@@ -307,6 +307,10 @@ export default {
       })
     }
   },
+  created(){
+    this.$store.commit('user/setApiError','')
+    // this.$store.commit('payment/setSpinnerLoading')
+  },
   components: {
     ValidationProvider,
     ValidationObserver,
@@ -314,7 +318,7 @@ export default {
   methods: {
     doValidate(){
       this.validate_province();
-      this.$refs.validationObserver.validate().then((success) => {
+      this.$refs.completeInfoForm.validate().then((success) => {
         if (success && !this.valid_province) {
           const data = {
             store_id: this.$store.state.store.id,
@@ -334,9 +338,15 @@ export default {
       })     
     },
     showCheckout(data){
+      this.laodingRegister=true
+      this.btnDisable=true
       if(this.detail.options.address === 1){
         if(this.detail.shipping_settings.shipping_region === 1 || data.address.province == this.detail.province){
-          this.$store.dispatch("payment/select_payment", data);
+          const res =this.$store.dispatch("payment/select_payment", data);
+         res.finally(()=>{
+          this.laodingRegister=false
+          this.btnDisable=false
+        })
           return
         }
         this.$store.commit('open_toast',{
@@ -345,7 +355,13 @@ export default {
         })
         return
       } 
-      this.$store.dispatch("payment/select_payment", data);
+      const res=this.$store.dispatch("payment/select_payment", data)
+      res.finally(()=>{
+        this.laodingRegister=false
+        this.btnDisable=false
+      })
+
+      
     },
     validate_province() {
       if (this.detail.options.address === 1) {
@@ -361,9 +377,6 @@ export default {
     ...mapGetters("user",["errorsApi"]),
     lang(){
       return tr()
-    },
-    gateways() {
-      return this.$store.state.payment.gateways;
     },
   },
 };

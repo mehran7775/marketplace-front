@@ -42,7 +42,7 @@ export default {
     watch: {
         search(value) {
           if (value === '') {
-            this.$store.commit("product/deleteProducts")
+            this.$store.commit("product/deleteFromState","searchProducts")
             return;
           }
           this.searchable = {store_slug: this.$route.params.store_slug, search: value};
@@ -53,7 +53,7 @@ export default {
             },1200)
         },
         routeName() {
-          this.$store.commit('product/deleteProducts')  
+          this.$store.commit('product/deleteFromState',"searchProducts")  
         }
     },
     methods: {
@@ -86,9 +86,11 @@ export default {
       let vm=this
       
       window.addEventListener('click', function(event) {
-        if (!document.getElementById('boxSearch').contains(event.target)) {
-          vm.$store.commit('product/deleteProducts') 
-          vm.boxSearch=false
+        if(document.getElementById('boxSearch')){
+          if (!document.getElementById('boxSearch').contains(event.target)) {
+            vm.$store.commit('product/deleteFromState', 'searchProducts') 
+            vm.boxSearch=false
+          }
         }
       });
     }

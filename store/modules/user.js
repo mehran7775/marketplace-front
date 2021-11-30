@@ -13,12 +13,12 @@ const mutations = {
    setApiError(state,payload){
        Vue.set(state, "errorsApi", payload)
    },
+   deleteFromState(state, payload){
+    Vue.delete(state, payload)
+   },
    deleteApiError(){
     Vue.delete(state, "errorsApi")
    },
-   delete_phone_number(){
-    Vue.delete(state, "phone_number")
-   }
 };
 
 const getters = {

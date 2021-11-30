@@ -93,7 +93,6 @@ export default {
   async asyncData({ error, route, $axios, store }) {
     try {
       const res = await storeService.getDetail(route.params.store_slug)
-      store.commit("payment/set_gateways", res.data.data.gateways);
       store.commit("store/set_id", res.data.data.id);
       const res2=await productService.getProduct(
         {

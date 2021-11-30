@@ -2,8 +2,10 @@ import Vue from 'vue'
 import { orderService } from '@/services/apiServices'
 
 const state = {
+    
 }
 const mutations = {
+    
     set_gateways(state, payload) {
         Vue.set(state, "gateways", payload)
     },
@@ -12,17 +14,20 @@ const mutations = {
     },
     set_errors_api(state, payload){
         Vue.set(state, "apiErrors", payload)
+    },
+    deleteFromState(state,payload){
+        Vue.delete(state,payload)
     }
+
 }
 const getters = {
     apiErrors: state => {
         return state.apiErrors
-      }
+    }
 };
 
 const actions = {
      async select_payment({ commit, state }, payload) {
-        commit('user/setApiError','',{ root:true })
         const items = JSON.parse(localStorage.getItem("cart"))[$nuxt.$route.params.store_slug]
         if(state.gateways && items && items.length > 0){
             const items_second = [];
@@ -36,7 +41,7 @@ const actions = {
             try {
                 const {data} = await orderService.orderCreate(payload)
                 if(data.data.order_id){
-                    localStorage.setItem('Oid',data.data.order_id)
+                    localStorage.setItem('oId',data.data.order_id)
                     $nuxt.$router.push(
                         { 
                             path:`checkout`,
@@ -45,16 +50,13 @@ const actions = {
                             }
                         }
                     )
-                    this.$store.commit('user/deleteApiError')
+                    commit('user/deleteFromState', "apiErrors")
+                    commit('user/deleteFromState', "gateways")
+                    commit('deleteFromState', "apiErrors")
                 }
             } catch (e) {
                 if(e.response.data.data){
-                    const keys=Object.keys(e.response.data.data)
-                    const eData={}
-                    keys.forEach(element => {
-                        eData[element]= e.response.data.data[element]
-                    });
-                    commit('user/setApiError',eData,{root:true})
+                    commit('user/setApiError',e.response.data.data,{root:true})
                 }
             }
         }else{
@@ -66,7 +68,10 @@ const actions = {
     },
     async do_payment({ commit }, payload) {
         try {
-            const {data} = await this.$axios.post(`pay/order/${localStorage.getItem("Oid")}`, payload)
+            const {data} = await orderService.orderPayment({
+                oId:localStorage.getItem("oId"),
+                data:payload
+            })
             const form = document.createElement("form");
             const input = document.createElement("input"); 
             form.method = "POST";
@@ -76,7 +81,7 @@ const actions = {
             input.name="token"
             form.appendChild(input)
             document.body.appendChild(form)
-            localStorage.removeItem("Oid")
+            localStorage.removeItem("oId")
             form.submit()
         } catch (e) {
             commit('open_toast', {

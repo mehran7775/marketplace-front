@@ -52,8 +52,14 @@
     background-color:  rgba(0, 0, 0, 0.5)!important;
   }  
 .toast-body{
-
+    direction: rtl!important;
     font-family: IRANSansEnNum, sans-serif!important;
+    svg{
+        margin-left: 2px;
+    }
+    button{
+        margin-right: 10px;
+    }
 }
 body {
     #__nuxt {

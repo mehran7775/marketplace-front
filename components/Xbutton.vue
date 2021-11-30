@@ -5,13 +5,14 @@
     @click="on_click"
     :disabled="disabled"
   >
-    <div class="row mx-auto">
+    <div class="row mx-auto align-items-center">
       <div v-if="text != ''"  class="px-2 text-center m-auto">
           <span v-text="text"></span>
       </div>
       <div v-if="icon != ''" class="px-1 text-center m-auto">
         <fa :icon="icon"></fa>
       </div>
+      <slot name="spinner"></slot>
     </div>
   </button>
 </template>
@@ -42,7 +43,7 @@ export default {
     disabled:{
       type:Boolean,
       default: false
-    }
+    },
   },
 };
 </script>
