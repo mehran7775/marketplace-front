@@ -59,10 +59,13 @@ export default {
           }
           )
           if(res_current.status === 200){
-            this.$store.commit('user/set_current_user', res_current.data.data,{ root:true })
+            this.$store.commit("user/setToState", {
+              name: 'current_user',
+              data: res.data.data
+            },{ root:true })
             this.$store.commit('user/deleteFromState', "phone_number")
           }
-          this.$router.replace("/admin-buyer")
+          this.$router.replace("/panel-customer")
           this.$store.commit(
             "open_toast",
             {

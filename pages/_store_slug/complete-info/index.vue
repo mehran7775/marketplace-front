@@ -3,7 +3,7 @@
     <MoleculesXheader
       :logo="detail.logo"
       :fa_name="detail.fa_name"
-      :address="detail.address"
+      :address="detail.province"
     ></MoleculesXheader>
     <div class="container body-hv-fit">
       <div class="row">
@@ -26,196 +26,146 @@
                             <div class="naming">
                               <ValidationProvider
                                 vid="first_name"
-                                :rules="detail.options.name === 1 ? 'required|min:3' : null"
-                                v-slot="{ errors }"
+                                :rules="`${ detail.options.name === 1 ? 'required|min:3' : 'min:3'}`"
+                                v-slot="{ errors, valid }"
+                                :name="lang.label.fname"
                               >
-                                <input
-                                  :class="[
-                                    errors[0] ? 'xborder-danger' : null,
-                                    'form-control',
-                                  ]"
+                                <b-form-input
                                   type="text"
-                                  name="نام"
                                   v-model="form.first_name"
-                                  placeholder="نام"
+                                  :placeholder="lang.label.fname"
+                                  :state="errors[0] ? false : (valid && form.first_name != '' ? true : null)"
                                 />
-                                <div v-if="errors[0]" class="py-2 pr-2">
-                                  <span class="text-danger">{{
-                                    errors[0]
-                                  }}</span>
-                                </div>
+                                <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
                               </ValidationProvider>
                             </div>
                             <div class="naming">
                               <ValidationProvider
                                 vid="last_name"
-                                :rules=" detail.options.name === 1 ? 'required' : null"
-                                v-slot="{ errors }"
+                                :rules="`${ detail.options.name === 1 ? 'required|min:3' : 'min:3'}`"
+                                v-slot="{ errors, valid }"
+                                :name="lang.label.lname"
                               >
-                                <input
-                                  :class="[
-                                    errors[0] ? 'xborder-danger' : null,
-                                    'form-control',
-                                  ]"
+                                <b-form-input
+                                  :state="errors[0] ? false : (valid && form.last_name != '' ? true : null)"
                                   type="text"
-                                  name="نام خانوادگی"
                                   v-model="form.last_name"
-                                  placeholder="نام خانوادگی"
+                                  :placeholder="lang.label.lname"
                                 />
-                                <div v-if="errors[0]" class="py-2 pr-2">
-                                  <span class="text-danger">{{
-                                    errors[0]
-                                  }}</span>
-                                </div>
+                                <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
                               </ValidationProvider>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="col-12 mt-2">
+                      <div class="col-12 mt-3">
                         <div class="row">
                           <div class="w-100">
                             <ValidationProvider
                               vid="email"
-                              :rules="
-                                detail.options.email === 1
-                                  ? 'required'
-                                  : null | 'email'
-                              "
-                              v-slot="{ errors }"
+                              :rules="`${ detail.options.email === 1 ? 'required|email' : 'email'}`"
+                              v-slot="{ errors, valid }"
+                              :name="lang.label.email"
                             >
-                              <input
-                                :class="[
-                                  errors[0] ? 'xborder-danger' : null,
-                                  'form-control',
-                                ]"
+                              <b-form-input
+                                :state="errors[0] ? false : (valid && form.email != '' ? true : null)"
                                 type="email"
-                                name="ایمیل"
                                 v-model="form.email"
-                                placeholder="ایمیل"
+                                :placeholder="lang.label.email"
                               />
-                              <div v-if="errors[0]" class="py-2 pr-2">
-                                <span class="text-danger">{{ errors[0] }}</span>
-                              </div>
+                              <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
                             </ValidationProvider>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-12 mt-2">
+                      <div class="col-12 mt-3">
                         <div class="row">
                           <div class="w-100">
                             <ValidationProvider
                               vid="phone"
-                              :rules="
-                                detail.options.phone === 1
-                                  ? 'required'
-                                  : null | 'regPhone'
-                              "
-                              v-slot="{ errors }"
+                               :rules="`${detail.options.phone === 1 ? 'required|regPhone' : 'regPhone'}`"
+                              v-slot="{ errors, valid }"
+                              :name="lang.label.phone"
                             >
-                              <input
-                                :class="[
-                                  errors[0] ? 'xborder-danger' : null,
-                                  'form-control',
-                                ]"
+                              <b-form-input
                                 type="text"
                                 id="phone"
-                                name="تلفن"
                                 ref="phone"
-                                placeholder="موبایل"
+                                :state="errors[0] ? false : (valid && form.phone!= '' ? true : null)"
+                                :placeholder="lang.label.phone"
                                 v-model="form.phone"
                                 maxlength="11"
                               />
-                              <div v-if="errors[0]" class="py-2 pr-2">
-                                <span class="text-danger">{{ errors[0] }}</span>
-                              </div>
+                              <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
                             </ValidationProvider>
                           </div>
                         </div>
                       </div>
-                      <div class="col-12 mt-2">
-                        <div class="row">
+                      <div class="col-12 mt-3">
+                        <div class="row ">
                           <div class="d-flex w-100 justify-content-between">
                             <div class="naming">
-                              <select
-                                :class="[
-                                  valid_province ? 'xborder-danger' : null,
-                                  'form-control form-control-sm',
-                                ]"
-                                ref="province"
-                                @change="validate_province"
-                              >
-                                <option value="">انتخاب استان</option>
-                                <option
-                                  v-for="province in provinces"
-                                  :key="province.id"
-                                  :value="province.id"
-                                  v-text="province.value"
-                                ></option>
-                              </select>
-                              <div v-if="valid_province" class="py-2 pr-2">
-                                <span
-                                  class="text-danger"
-                                  v-text="' استان الزامی است'"
-                                ></span>
-                              </div>
+                               <ValidationProvider vid="province" :name="lang.label.province"
+                                 :rules="`${detail.options.address === 1 ? 'required' : '' }`"
+                                 v-slot="{ valid, errors }">
+                                <b-form-group id="provinceGroup">
+                                  <b-form-select
+                                    id="rovince"
+                                    ref="province"
+                                    :state="errors[0] ? false : (valid && form.selected != null ? true : null)"
+                                    :class="['form-control', !form.selected && !errors[0] ? 'pr-4' : null]"
+                                    v-model="form.selected"
+                                    
+                                  >
+                                  <option :value="null">انتخاب استان</option>
+                                  <option
+                                    v-for="province in provinces"
+                                    :key="province.id"
+                                    :value="province.id"
+                                    v-text="province.value"
+                                  ></option>
+                                  </b-form-select>
+                                  <b-form-invalid-feedback id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+                                </b-form-group>
+                              </ValidationProvider>
                             </div>
                             <div class="naming">
                               <ValidationProvider
                                 vid="city"
-                                :rules="
-                                  detail.options.address === 1
-                                    ? 'required|min:2'
-                                    : null
-                                "
-                                v-slot="{ errors }"
+                                :rules="`${detail.options.address === 1 ? 'required|min:2' : 'min:2'}`"
+                                v-slot="{ errors, valid }"
+                                :name="lang.label.city"
                               >
-                                <input
-                                  :class="[
-                                    errors[0] ? 'xborder-danger' : null,
-                                    'form-control',
-                                  ]"
+                                <b-form-input
                                   type="text"
                                   v-model="form.city"
-                                  name="شهر"
-                                  placeholder="شهر"
+                                  :placeholder="lang.label.city"
+                                  :state="errors[0] ? false : (valid ,form.city != '' ? true : null)"
                                 />
-                                <div v-if="errors[0]" class="py-2 pr-2">
-                                  <span class="text-danger">{{
-                                    errors[0]
-                                  }}</span>
-                                </div>
+                                <b-form-invalid-feedback id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
                               </ValidationProvider>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="col-12 mt-2">
+                      <div class="col-12">
                         <div class="row">
-                          <div class="w-100">
-                            <ValidationProvider
-                              vid="address"
-                              :rules="
-                                detail.options.address === 1 ? 'required|min:10' : null"
-                              v-slot="{ errors }"
-                            >
-                              <input
-                                :class="[
-                                  errors[0] ? 'xborder-danger' : null,
-                                  'form-control',
-                                ]"
-                                type="text"
-                                v-model="form.address"
-                                name="آدرس"
-                                placeholder="آدرس"
-                              />
-                              <div v-if="errors[0]" class="py-2 pr-2">
-                                <span class="text-danger">{{ errors[0] }}</span>
-                              </div>
-                            </ValidationProvider>
-                          </div>
+                          <ValidationProvider
+                            vid="address" class="w-100"
+                            :rules="`${detail.options.address === 1 ? 'required|min:10' : 'min:10'}`"
+                            v-slot="{ errors , valid}"
+                            :name="lang.label.address"
+                          >
+                            <b-form-input
+                              type="text"
+                              v-model="form.address"
+                              :placeholder="lang.label.address"
+                              :state="errors[0] ? false : (valid && form.address != '' ? true : null)"
+                            />
+                            <b-form-invalid-feedback id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+                          </ValidationProvider>
                         </div>
                       </div>
                     </div>
@@ -256,7 +206,7 @@ export default {
   middleware: "guest",
   head() {
     return {
-      title: `${this.detail.fa_name} -صفحه تکمیل اطلاعات`,
+      title: `${this.detail.fa_name} - تکمیل اطلاعات`,
       // meta:[
       //    {
       //        hid:"description",
@@ -275,10 +225,10 @@ export default {
         email: "",
         address: "",
         city: "",
+        selected:null
       },
-      valid_province: null,
       laodingRegister:false,
-      btnDisable:false
+      btnDisable:false,
     };
   },
   watch:{
@@ -289,27 +239,26 @@ export default {
   async asyncData({ error, route, store }) {
     try {
       const res = await storeService.getDetail(route.params.store_slug)
-      store.commit("payment/set_gateways", res.data.data.gateways)
+       store.commit("payment/setToState", {
+        name:'gateways',
+        data: res.data.data.gateways
+      });
       store.commit("store/set_id", res.data.data.id)
       return {
         detail: res.data.data,
       };
     } catch (e) {
-      if (e.response) {
-        error({
-          statusCode: e.response.status,
-          message: e.response.data.message,
-        });
-      }
       error({
-        statusCode: 500,
-        message: e
+          statusCode: e.response.status,
+        message: e.response.data.message,
       })
     }
   },
   created(){
-    this.$store.commit('user/setApiError','')
-    // this.$store.commit('payment/setSpinnerLoading')
+    this.$store.commit('user/setToState',{
+      name:'errorsApi',
+      data:''
+    })
   },
   components: {
     ValidationProvider,
@@ -317,15 +266,14 @@ export default {
   },
   methods: {
     doValidate(){
-      this.validate_province();
       this.$refs.completeInfoForm.validate().then((success) => {
-        if (success && !this.valid_province) {
+        if (success) {
           const data = {
             store_id: this.$store.state.store.id,
             name: this.form.first_name + " " + this.form.last_name,
             email: this.form.email,
             address: {
-              province: this.$refs.province.value,
+              province: this.form.selected,
               city: this.form.city,
               address: this.form.address,
             },
@@ -338,12 +286,12 @@ export default {
       })     
     },
     showCheckout(data){
-      this.laodingRegister=true
-      this.btnDisable=true
       if(this.detail.options.address === 1){
         if(this.detail.shipping_settings.shipping_region === 1 || data.address.province == this.detail.province){
+          this.laodingRegister=true
+          this.btnDisable=true
           const res =this.$store.dispatch("payment/select_payment", data);
-         res.finally(()=>{
+          res.finally(()=>{
           this.laodingRegister=false
           this.btnDisable=false
         })
@@ -355,6 +303,8 @@ export default {
         })
         return
       } 
+      this.laodingRegister=true
+      this.btnDisable=true
       const res=this.$store.dispatch("payment/select_payment", data)
       res.finally(()=>{
         this.laodingRegister=false
@@ -362,12 +312,6 @@ export default {
       })
 
       
-    },
-    validate_province() {
-      if (this.detail.options.address === 1) {
-        const e = this.$refs.province.value;
-        e !== "" ? (this.valid_province = false) : (this.valid_province = true);
-      }
     },
   },
   computed: {

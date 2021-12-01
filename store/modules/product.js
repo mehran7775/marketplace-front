@@ -4,8 +4,8 @@ const state = {
 }
 
 const mutations = {
-    setProducts(state, data) {
-        Vue.set(state, "searchProducts", data)
+    setToState(state,payload){
+        Vue.set(state, payload.name, payload.date)
     },
     deleteFromState(state, payload){
         Vue.delete(state, payload)
@@ -24,8 +24,10 @@ const actions = {
             const res = await this.$axios.$get(
                 `store/${store_slug}/search?q=${search}`
             );
-            console.log(res)
-            commit("setProducts", res.data);
+            commit("setToState", {
+                name: 'searchProducts',
+                data: res.data
+            });
         }catch(e){
             console.log(e)
         }

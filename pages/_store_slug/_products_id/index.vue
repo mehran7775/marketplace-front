@@ -3,7 +3,7 @@
     <MoleculesXheader
       :logo="detail.logo"
       :fa_name="detail.fa_name"
-      :address="detail.address"
+      :address="detail.province"
       :setDetail="false"
     ></MoleculesXheader>
     <div id="product" class="container body-hv-fit">
@@ -80,7 +80,7 @@ export default {
   layout: "index",
   head() {
     return {
-      title: `${this.detail.fa_name} - ${this.product.title}`,
+      title: `فروشگاه ${this.detail.fa_name} - ${this.product.title}`,
       meta: [
         {
           hid: "description",

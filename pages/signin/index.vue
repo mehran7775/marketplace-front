@@ -1,60 +1,44 @@
 <template>
   <div class="sign-in">
-    <template v-if="apiErrors">
-          <b-alert
-          v-for="error in apiErrors"
-          :key="error"
-            :show="dismissCountDown"
-            dismissible
-            fade
-            variant="danger"
-            @dismiss-count-down="countDownChanged"
-            class="mt-2"
-            >
-            {{ error }}
-            </b-alert>
-    </template>
     <ValidationObserver ref="validationObserver">
       <Xform>
         <template #content>
-          <div class="form-group">
-            <label>نام کاربری</label>
-            <ValidationProvider rules="required|min:3" v-slot="{ errors }">
-              <input
-                v-model="outh_param"
-                ref="auth_path"
-                type="text"
-                id="نام کاربری"
-                maxlength="35"
-                placeholder="شماره تلفن یا ایمیل"
-                :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-              />
-             <div v-if="errors[0]" class="py-2 pr-2">
-                <span class="text-danger">{{ errors[0] }}</span>
-              </div>
-            </ValidationProvider>
-          </div>
-          <div class="form-group">
-            <label>کلمه عبور</label>
-            <ValidationProvider
-              rules="required|min:6|max:20"
-              v-slot="{ errors }"
+          <ValidationProvider vid="outh_param" :name="lang.label.username" rules="required|min:3"   v-slot="{ valid, errors }">
+            <b-form-group
+            :label="lang.label.username"
             >
-              <input
-                v-model="password"
-                ref="password"
-                type="text"
-                placeholder="مثال: 1234565"
-                id="کلمه عبور"
-                maxlength="25"
-                :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-              />
-              <div v-if="errors[0]" class="py-2 pr-2">
-                <span class="text-danger">{{ errors[0] }}</span>
-              </div>
-            </ValidationProvider>
-          </div>
-          <Xbutton :disable="btnDisable" :on_click="do_login" class="w-100 mt-3" text="ورود">
+                <b-form-input
+                  v-model="outh_param"
+                  ref="auth_path"
+                  type="text"
+                  maxlength="35"
+                  placeholder="شماره تلفن یا ایمیل"
+                  :state="errors[0] ? false : (valid ? true : null)"
+                ></b-form-input>
+              <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+            </b-form-group>
+          </ValidationProvider>
+          <ValidationProvider 
+              vid="password" :name="lang.label.password"
+              rules="required|min:6|max:20"
+                v-slot="{ valid, errors }"
+            >
+              <b-form-group
+                :label="lang.label.password"
+              >
+                
+                  <b-form-input
+                    v-model="password"
+                    ref="password"
+                    type="text"
+                    placeholder="مثال: 1234565"
+                    maxlength="25"
+                    :state="errors[0] ? false : (valid ? true : null)"
+                  ></b-form-input>
+                  <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+              </b-form-group>
+          </ValidationProvider>
+          <Xbutton :disable="btnDisable" :on_click="do_login" class="w-100 mt-3" :text="lang.svg.signIn">
             <template #spinner>
               <b-spinner v-show="laodingLogin" small  class="float-left"></b-spinner>
             </template>
@@ -72,11 +56,11 @@
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { authService } from "@/services/apiServices";
-import bAlert from "@/mixins/b-alert"
+import { tr } from "@/services/lang";
+
 export default {
   middleware: "guest",
   layout: "sign",
-  mixins:[ bAlert ],
   components: {
     ValidationProvider,
     ValidationObserver,
@@ -85,7 +69,6 @@ export default {
     return {
       outh_param: "",
       password: "",
-      apiErrors: [],
       laodingLogin:false,
       btnDisable:false
     };
@@ -109,9 +92,12 @@ export default {
                 authService.currentUser(res.data.data.api.token)
                   .then((res) => {
                     this.$store.commit(
-                      "user/set_current_user", res.data.data,{ root: true }
+                      "user/setToState", {
+                        name: 'current_user',
+                        data: res.data.data
+                      },{ root: true }
                     );
-                    this.$router.replace("/admin-buyer");
+                    this.$router.replace("/panel-customer");
                     this.$store.commit(
                       "open_toast",{
                         msg: res.data.message,
@@ -136,13 +122,7 @@ export default {
                 );
               }
               if (e.response.status === 400) {
-                this.showAlert()
-                Object.keys(e.response.data.data).forEach((element) => {
-                  this.apiErrors.push(e.response.data.data[element][0]);
-                })
-                setTimeout(() =>{
-                  this.apiErrors=[]
-                },5000)
+                this.$refs.validationObserver.setErrors(e.response.data.data);
               }
             })
         } else {
@@ -151,6 +131,11 @@ export default {
       });
     },
   },
+  computed:{
+    lang(){
+      return tr()
+    }
+  }
 };
 </script>
 

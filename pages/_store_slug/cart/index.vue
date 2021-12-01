@@ -3,7 +3,7 @@
     <MoleculesXheader
       :logo="detail.logo"
       :fa_name="detail.fa_name"
-      :address="detail.address"
+      :address="detail.province"
     ></MoleculesXheader>
     <div class="container body-hv-fit">
       <div class="row h-100">
@@ -115,7 +115,10 @@ export default {
   async asyncData({ error, route, store }) {
     try {
       const res = await storeService.getDetail(route.params.store_slug)
-      store.commit("payment/set_gateways", res.data.data.gateways);
+      store.commit("payment/", {
+        name:'gateways',
+        data: res.data.data.gateways
+      });
       store.commit("store/set_id", res.data.data.id);
       return {
         detail: res.data.data,

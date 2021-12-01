@@ -3,7 +3,7 @@
     <MoleculesXheader
       :logo="detail.logo"
       :fa_name="detail.fa_name"
-      :address="detail.address"
+      :address="detail.province"
     ></MoleculesXheader>
     <div class="w-100 body-hv-fit">
       <LazyMoleculesXlables v-if="products" :products="products">
@@ -21,7 +21,7 @@ export default {
   layout: "index",
   head() {
     return {
-      title: this.detail.fa_name,
+      title: `فروشگاه ${this.detail.fa_name}`,
     };
   },
   computed: {

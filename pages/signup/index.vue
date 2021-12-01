@@ -4,148 +4,130 @@
       <ValidationObserver ref="validationObserver" >
         <Xform :sub_form="do_register">
           <template #content>
-            <div class="form-group">
-              <label>نام</label>
-              <ValidationProvider vid="first_name" rules="required|min:3" v-slot="{ errors }">
-                <input
-                  v-model="form.first_name"
-                  ref="first_name"
-                  type="text"
-                  id="نام"
-                  placeholder="مثال: علی"
-                  :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-                />
-                <div v-if="errors[0]" class="py-2 pr-2">
-                  <span class="text-danger">{{ errors[0] }}</span>
-                </div>
-              </ValidationProvider>
-            </div>
-            <div class="form-group">
-              <label>نام خانوادگی</label>
-              <ValidationProvider vid="last_name" rules="required|min:3" v-slot="{ errors }">
-                <input
-                  v-model="form.last_name"
-                  ref="last_name"
-                  id="نام خانوادگی"
-                  type="text"
-                  placeholder="مثال: ابراهیمی"
-                  :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-                />
-                <div v-if="errors[0]" class="py-2 pr-2">
-                  <span class="text-danger">{{ errors[0] }}</span>
-                </div>
-              </ValidationProvider>
-            </div>
-            <div class="form-group">
-              <label>شماره تلفن</label>
-              <ValidationProvider vid="phone" rules="required|regPhone" v-slot="{ errors }">
-                <input
-                  v-model="form.phone"
-                  ref="phone"
-                  type="text"
-                  id="شماره تلفن"
-                  maxlength="11"
-                  placeholder="مثال: 09xxxxxxx23"
-                  :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-                />
-                <div v-if="errors[0]" class="py-2 pr-2">
-                  <span class="text-danger">{{ errors[0] }}</span>
-                </div>
-              </ValidationProvider>
-            </div>
-            <div class="form-group">
-              <label>ایمیل</label>
-              <ValidationProvider vid="email" rules="required|email" v-slot="{ errors }">
-                <input
-                  v-model="form.email"
-                  ref="email"
-                  name="ایمیل
-                "
-                  type="text"
-                  placeholder="example@gmail.com"
-                  :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-                />
-                <div v-if="errors[0]" class="py-2 pr-2">
-                  <span class="text-danger">{{ errors[0] }}</span>
-                </div>
-                 
-              </ValidationProvider>
-            </div>
-            <div class="form-group">
-              <label>استان</label>
-              <select
-                :class="[
-                  valid_province ? 'xborder-danger' : null,
-                  'form-control form-control-sm',
-                ]"
-                ref="province"
-                @change="validate_province"
+            <ValidationProvider vid="first_name" :name="lang.label.fname" rules="required|min:3"  v-slot="{ valid, errors }">
+              <b-form-group :label="lang.label.fname">
+                  <b-form-input
+                    v-model="form.first_name"
+                    ref="first_name"
+                    type="text"
+                    placeholder="مثال: علی"
+                    :state="errors[0] ? false : (valid ? true : null)"
+                  ></b-form-input>
+                  <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+              </b-form-group>
+            </ValidationProvider>
+            <ValidationProvider vid="last_name" :name="lang.label.lname" rules="required|min:3"  v-slot="{ valid, errors }">
+              <b-form-group
+              :label="lang.label.lname"
               >
-                <option value="">انتخاب استان</option>
+                  <b-form-input
+                    v-model="form.last_name"
+                    ref="last_name"
+                    type="text"
+                    placeholder="مثال: ابراهیمی"
+                    :state="errors[0] ? false : (valid ? true : null)"
+                  ></b-form-input>
+                  <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+              </b-form-group>
+            </ValidationProvider>
+            <ValidationProvider vid="phone" :name="lang.label.phone" rules="required|regPhone"  v-slot="{ valid, errors }">
+              <b-form-group
+              :label="lang.label.phone"
+              >
+                  <b-form-input
+                    v-model="form.phone"
+                    ref="phone"
+                    type="text"
+                    maxlength="11"
+                    placeholder="مثال: 09xxxxxxx23"
+                    :state="errors[0] ? false : (valid ? true : null)"
+                  ></b-form-input>
+                <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+              </b-form-group>
+            </ValidationProvider>
+            <ValidationProvider vid="email" :name="lang.label.email" rules="required|email"  v-slot="{ valid, errors }">
+              <b-form-group
+              :label="lang.label.email" 
+              >
+                  <b-form-input
+                    v-model="form.email"
+                    ref="email"
+                    type="text"
+                    placeholder="example@gmail.com"
+                    :state="errors[0] ? false : (valid ? true : null)"
+                  />
+                  <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+              </b-form-group>
+            </ValidationProvider>
+            <ValidationProvider vid="province" :name="lang.label.province" rules="required" v-slot="{ valid, errors }">
+              <b-form-group id="provinceGroup" :label="lang.label.province" label-for="province">
+                <b-form-select
+                  id="province"
+                  :state="errors[0] ? false : (valid && form.selected != null ? true : null)"
+                  v-model="form.selected"
+                  ref="province"
+                  :class="['form-control', !form.selected && !errors[0] ? 'pr-4' : null]"
+                >
+                <option :value="null">انتخاب استان</option>
                 <option
                   v-for="province in provinces"
                   :key="province.id"
                   :value="province.id"
                   v-text="province.value"
                 ></option>
-              </select>
-              <div v-if="valid_province" class="py-2 pr-2">
-                <span class="text-danger" v-text="'این فیلد الزامی است'"></span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>شهر</label>
-              <ValidationProvider vid="city" rules="required|min:2" v-slot="{ errors }">
-                <input
-                  v-model="form.city"
-                  ref="city"
-                  type="text"
-                  id="شهر"
-                  placeholder="مثال: تهران"
-                  :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-                />
-                <div v-if="errors[0]" class="py-2 pr-2">
-                  <span class="text-danger">{{ errors[0] }}</span>
-                </div>
-              </ValidationProvider>
-            </div>
-            <div class="form-group">
-              <label>آدرس</label>
-              <ValidationProvider vid="address" rules="required|min:10" v-slot="{ errors }">
-                <input
-                  v-model="form.address"
-                  ref="address"
-                  type="text"
-                  id="آدرس"
-                  placeholder="مثال: تهران-میدان انقلاب-خیابان آزادی-پلاک30"
-                  :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-                />
-                <div v-if="errors[0]" class="py-2 pr-2">
-                  <span class="text-danger">{{ errors[0] }}</span>
-                </div>
-              </ValidationProvider>
-            </div>
-            <div class="form-group">
-              <label>کلمه عبور</label>
-              <ValidationProvider
-                rules="required|min:6|max:20"
-                v-slot="{ errors }"
-                vid="password"
+                </b-form-select>
+                <b-form-invalid-feedback id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+              </b-form-group>
+            </ValidationProvider>
+            <ValidationProvider vid="city" :name="lang.label.city" rules="required|min:2"  v-slot="{ valid, errors }">
+              <b-form-group
+              :label="lang.label.city"
               >
-                <input
-                  v-model="form.password"
-                  ref="city"
-                  type="password"
-                  id="کلمه عبور"
-                  maxlength="25"
-                  placeholder="مثال: 123456"
-                  :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-                />
-                <div v-if="errors[0]" class="py-2 pr-2">
-                  <span class="text-danger">{{ errors[0] }}</span>
-                </div>
-              </ValidationProvider>
-            </div>
+                  <b-form-input
+                    v-model="form.city"
+                    ref="city"
+                    type="text"
+                    placeholder="مثال: تهران"
+                    :state="errors[0] ? false : (valid ? true : null)"
+                  />
+                <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+              </b-form-group>
+            </ValidationProvider>
+            <ValidationProvider vid="address" :name="lang.label.address" rules="required|min:10"  v-slot="{ valid, errors }">
+              <b-form-group
+              :label="lang.label.address"
+              >
+                  <b-form-input
+                    v-model="form.address"
+                    ref="address"
+                    type="text"
+                    placeholder="مثال: تهران-میدان انقلاب-خیابان آزادی-پلاک30"
+                    :state="errors[0] ? false : (valid ? true : null)"
+                  />
+                  <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+              </b-form-group>
+            </ValidationProvider>
+            <ValidationProvider
+              rules="required|min:6|max:20"
+                v-slot="{ valid, errors }"
+              vid="password"
+              :name="lang.label.password"
+            >
+              <b-form-group
+              :label="lang.label.password"
+              >
+              
+                  <b-form-input
+                    v-model="form.password"
+                    ref="city"
+                    type="password"
+                    maxlength="25"
+                    placeholder="مثال: 123456"
+                    :state="errors[0] ? false : (valid ? true : null)"
+                  ></b-form-input>
+                <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+              </b-form-group>
+            </ValidationProvider>
             <Xbutton
               is_submit
               class="btn-sign m-auto w-100"
@@ -167,6 +149,7 @@
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { provinces } from "@/constants/Provinces";
 import { authService } from '@/services/apiServices'
+import { tr } from "@/services/lang";
 export default {
   middleware: "guest",
   layout: "sign",
@@ -180,8 +163,8 @@ export default {
         email: "",
         city: "",
         address: "",
+        selected:null
       },
-      valid_province: null,
       btnDisable: false,
       laodingLogin: false
     };
@@ -192,9 +175,8 @@ export default {
   },
   methods: {
     do_register() {
-      this.validate_province();
       this.$refs.validationObserver.validate().then((res) => {
-        if (res && !this.valid_province) {
+        if (res) {
           this.btnDisable= true
           this.laodingLogin= true
           const data = {
@@ -202,7 +184,7 @@ export default {
             last_name: this.form.last_name,
             email: this.form.email,
             phone: this.form.phone,
-            province: this.$refs.province.value,
+            province: this.form.selected,
             city: this.form.city,
             password2: this.form.password,
             address: this.form.address,
@@ -211,7 +193,10 @@ export default {
             .then((res) => {
               this.btnDisable= false
               this.laodingLogin= false
-              this.$store.commit("user/set_phone_number", data.phone, {
+              this.$store.commit("user/setToState",{
+                name: 'phone_number',
+                data: data.phone
+              }, {
                 root: true,
               });
               this.$router.push("/verify_login");
@@ -230,7 +215,7 @@ export default {
               this.btnDisable= false
               this.laodingLogin= false
               if (e.response.data.status === "error") {
-                  document.$refs.validationObserver.setErrors(e.response.data.data);
+                  this.$refs.validationObserver.setErrors(e.response.data.data);
                   return;
               } else {
                 this.$store.commit(
@@ -248,15 +233,14 @@ export default {
         }
       });
     },
-    validate_province() {
-      const e = this.$refs.province.value;
-      e !== "" ? (this.valid_province = false) : (this.valid_province = true);
-    },
   },
   computed: {
     provinces() {
       return provinces;
     },
+    lang(){
+      return tr()
+    }
   },
 };
 </script>
@@ -276,5 +260,10 @@ export default {
   overflow-y: auto;
   height: 90vh;
   direction: ltr;
+  
+  ::-webkit-inner-spin-button,
+  ::-webkit-outer-spin-button { 
+	-webkit-appearance: none;
+}
 }
 </style>

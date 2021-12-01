@@ -4,20 +4,12 @@ const state = {
 }
 
 const mutations = {
-   set_phone_number(state,payload){
-       Vue.set(state, "phone_number", payload)
-   },
-   set_current_user(state,payload){
-       Vue.set(state, "current_user", payload)
-   },
-   setApiError(state,payload){
-       Vue.set(state, "errorsApi", payload)
+ 
+   setToState(state,payload){
+    Vue.set(state, payload.name, payload.data)
    },
    deleteFromState(state, payload){
     Vue.delete(state, payload)
-   },
-   deleteApiError(){
-    Vue.delete(state, "errorsApi")
    },
 };
 

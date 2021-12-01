@@ -3,7 +3,7 @@
     <MoleculesXheader
       :logo="detail.logo"
       :fa_name="detail.fa_name"
-      :address="detail.address"
+      :address="detail.province"
     ></MoleculesXheader>
     <div class="container body-hv-fit">
         <div class="row">

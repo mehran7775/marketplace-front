@@ -5,15 +5,8 @@ const state = {
     
 }
 const mutations = {
-    
-    set_gateways(state, payload) {
-        Vue.set(state, "gateways", payload)
-    },
-    set_order_id(state, payload) {
-        Vue.set(state, "order_id", payload)
-    },
-    set_errors_api(state, payload){
-        Vue.set(state, "apiErrors", payload)
+    setToState(state,payload){
+        Vue.set(state,payload.name,payload.data)
     },
     deleteFromState(state,payload){
         Vue.delete(state,payload)
@@ -55,9 +48,18 @@ const actions = {
                     commit('deleteFromState', "apiErrors")
                 }
             } catch (e) {
-                if(e.response.data.data){
-                    commit('user/setApiError',e.response.data.data,{root:true})
+                if(e.response.data.data.length > 0 ){
+                    commit('user/setToState',{
+                        name: 'errorsApi',
+                        data: e.response.data.data
+                    },{root:true})
+                    return
                 }
+                commit('open_toast', {
+                    msg: e.response.data.message,
+                    variant: 'error'
+                }, { root: true })
+
             }
         }else{
             commit('open_toast', {
