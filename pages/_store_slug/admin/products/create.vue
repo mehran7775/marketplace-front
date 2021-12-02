@@ -20,28 +20,42 @@
                             <div class="col-sm">
                                 <b-form-group label="عنوان">
                                     <input class="form-control" v-model="formData.title"/>
+                                    <small v-if="errors.title" class="text-danger px-2">{{ errors.title }}</small>
                                 </b-form-group>
-                                <small v-if="errors.title" class="text-danger px-2">{{errors.title}}</small>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm">
                                 <b-form-group label="قیمت">
                                     <input type="number" class="form-control" v-model="formData.price"/>
+                                    <small class="text-success px-2">
+                                        {{moneyFormat(formData.price)}}
+                                        ریال
+                                    </small>
                                 </b-form-group>
                             </div>
                             <div class="col-sm">
-                                <b-form-group label="تعداد">
-                                    <input type="number" class="form-control" v-model="formData.quantity"/>
-                                    <small v-if="errors.quantity" class="text-danger px-2">{{errors.quantity}}</small>
-                                </b-form-group>
+                            <b-form-group label=" امکان انتخاب چند محصول توسط مشتری">
+                                <div class="form-control">
+                                    <label class="switch">
+                                        <input type="checkbox" v-model="formData.is_multiple">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </b-form-group>
                             </div>
+
                         </div>
                         <div class="row">
                             <div class="col-sm">
                                 <b-form-group label="میزان تخفیف">
                                     <input type="number" class="form-control" v-model="formData.discount_amount"/>
+                                    <small class="text-success px-2">
+                                        {{moneyFormat(formData.discount_amount)}}
+                                        ریال
+                                    </small>
                                 </b-form-group>
+
                             </div>
                             <div class="col-sm">
                                 <b-form-group label="درصد تخفیف">
@@ -53,27 +67,29 @@
                             <div class="col-sm">
                                 <b-form-group label="حداکثر میزان تخفیف">
                                     <input type="number" class="form-control" v-model="formData.discount_max_amount"/>
+                                    <small class="text-success px-2">
+                                        {{moneyFormat(formData.discount_max_amount)}}
+                                        ریال
+                                    </small>
                                 </b-form-group>
+
                             </div>
                             <div class="col-sm">
                                 <b-form-group label="تصویر محصول">
                                     <b-form-file placeholder="تصویر محصول" class="form-control"
+                                                 accept="image/*"
                                                  v-model="formData.image"></b-form-file>
-                                    <small v-if="errors.image" class="text-danger px-2">{{errors.image}}</small>
+                                    <small v-if="errors.image" class="text-danger px-2">{{ errors.image }}</small>
                                 </b-form-group>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm">
-                                <b-form-group label="محصول چندتایی است">
-                                    <div class="form-control">
-                                        <label class="switch">
-                                            <input type="checkbox" v-model="formData.is_multiple">
-                                            <span class="slider round"></span>
-                                        </label>
-                                    </div>
-                                </b-form-group>
-                            </div>
+                                <div class="col-sm">
+                                    <b-form-group label="تعداد">
+                                        <input type="number" class="form-control" v-model="formData.quantity"/>
+                                        <small v-if="errors.quantity" class="text-danger px-2">{{ errors.quantity }}</small>
+                                    </b-form-group>
+                                </div>
                             <div class="col-sm">
                                 <b-form-group label="تعداد محصول نامحدود است">
                                     <div class="form-control">
@@ -82,6 +98,14 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
+                                </b-form-group>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm">
+                                <b-form-group label="توضیحات محصول">
+                                            <textarea class="form-control" v-model="formData.description">
+                                            </textarea>
                                 </b-form-group>
                             </div>
                         </div>
@@ -136,6 +160,10 @@ export default {
                 this.errors.image = 'تصویر محصول الزامی است'
                 res = false
             }
+            if (this.formData.image && (this.formData.image.size > ((1024 * 1024) * 5))) {
+                this.errors.image = 'تصویر محصول نباید بیشتر از ۵ مگ باشد'
+                res = false
+            }
             if (!this.formData.quantity) {
                 this.errors.quantity = 'تعداد محصول الزامی است'
                 res = false
@@ -164,11 +192,23 @@ export default {
                 }
                 api.post('product/create', form_data, this.$cookies.get('token')).then(response => {
                     this.message = response.data.message
+                    this.$router.push('/'+ this.$route.params.store_slug +'/admin/products')
                 }).catch(({response}) => {
                     this.error = response.data.data[Object.keys(response.data.data)[0]]
                 })
             }
-        }
+        },
+        moneyFormat(price) {
+            if (!price){
+                return 0
+            }
+            const pieces = parseFloat(price).toFixed(0).split("");
+            let ii = pieces.length;
+            while ((ii -= 3) > 0) {
+                pieces.splice(ii, 0, ",");
+            }
+            return pieces.join("");
+        },
     }
 }
 </script>

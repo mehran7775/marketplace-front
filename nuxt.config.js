@@ -102,7 +102,7 @@ export default {
     },
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
 
-    
+
     publicRuntimeConfig: {
         axios: {
             baseURL: process.env.BASE_URL || 'https://coreshop.paystar.ir/api'

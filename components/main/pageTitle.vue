@@ -43,7 +43,7 @@
     <div>
       <h4 class="pr-2 mr-2 page_title" v-text="title_text"></h4>
     </div>
-    <div class="mr-auto d-none d-md-block">
+    <div class="mr-auto">
       <slot> </slot>
     </div>
   </div>

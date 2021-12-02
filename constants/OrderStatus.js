@@ -26,6 +26,19 @@ const orderStatus = [
     },
 ]
 
+const sellerStatus = [
+    {
+        text: 'درحال پردازش',
+        value: 2,
+        variant : 'warning'
+    },
+    {
+        text: 'تکمیل شده',
+        value: 3,
+        variant : 'success'
+    },
+]
+
 const getStatus = function(status){
     return {
         text : orderStatus.find(o => o.value === status).text,
@@ -35,5 +48,6 @@ const getStatus = function(status){
 
 export default {
     orderStatus,
+    sellerStatus,
     getStatus
 }

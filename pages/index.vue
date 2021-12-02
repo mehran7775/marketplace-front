@@ -10,7 +10,7 @@
         </div>
         <div class="row">
             <template v-if="stores">
-                <div v-for="store in stores" :key="store.id" class="col-12 col-md-6 col-lg-4">
+                <div v-for="store in stores" :key="store.id" class="col-lg-4 col-md col-sm my-2">
                     <div class="h-100 bg-white shadow-sm border p-3 m-2"
                          style="border-color: rgb(187, 187, 187) !important; border-radius: 10px;">
                         <div class="d-flex align-items-center">
@@ -21,7 +21,7 @@
                                 alt="logo" class="mw-100 mh-100 rounded-circle">
                             </div>
                             <div class="mx-auto">
-                                <div class="text-dark bg-white text-center">{{ store.fa_name }}</div>
+                                <div class="text-dark bg-white text-center" style="font-size: 1.3rem;">{{ store.fa_name }}</div>
                                 <div class="text-center"><span
                                     :class="'text-' + StoreStatus.getStatus(store.status).variant">
                                     {{ StoreStatus.getStatus(store.status).text }}
@@ -36,7 +36,7 @@
                                 صفحه اصلی فروشگاه
                             </a>
 
-                            <nuxt-link :to="'/' + store.id + '/admin/products'" class="btn btn-block m-2"
+                            <nuxt-link :to="'/' + store.id + '/admin'" class="btn btn-block m-2"
                                        style="border-radius: 10px; color: gray; border: 1px solid darkgray;">
                                 مدیریت فروشگاه
                             </nuxt-link>

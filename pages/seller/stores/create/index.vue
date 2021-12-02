@@ -61,7 +61,7 @@
                             <div v-show="wizard.current_step === 1">
                                 <div class="col w-100" id="record_getway">
                                     <div class="row justify-content-around align-content-center pb-3">
-                                        <div class="col-4 col-md-4 my-2">
+                                        <div class="col-md-4 col-sm-12 my-2">
                                             <input
                                                 type="text"
                                                 class="form-control"
@@ -73,7 +73,7 @@
                                             <small v-if="validation_errors.fa_name" class="text-danger px-2">تکمیل این
                                                 فیلد الزامی است.</small>
                                         </div>
-                                        <div class="col-4 col-md-4 my-2">
+                                        <div class="col-sm col-md-4 my-2">
                                             <input
                                                 type="text"
                                                 class="form-control"
@@ -85,20 +85,7 @@
                                             <small v-if="validation_errors.en_name" class="text-danger px-2">تکمیل این
                                                 فیلد الزامی است.</small>
                                         </div>
-                                        <div class="col-4 col-md-4 my-2">
-                                            <textarea
-                                                type="text"
-                                                class="form-control"
-                                                id="description"
-                                                ref="description"
-                                                placeholder="توضیحات"
-
-                                                v-model="formData.description"
-                                            >
-
-                                            </textarea>
-                                        </div>
-                                        <div class="col-4 col-md-4 my-2">
+                                        <div class="col-sm col-md-4 my-2">
                                             <select
                                                 type="text"
                                                 class="form-control"
@@ -106,12 +93,14 @@
                                                 v-model="formData.province"
                                             >
                                                 <option :value="null">انتخاب استان</option>
-                                                <option :key="item.key" v-for="item in provinces" :value="item.id">{{item.value}}</option>
+                                                <option :key="item.key" v-for="item in provinces" :value="item.id">
+                                                    {{ item.value }}
+                                                </option>
                                             </select>
                                             <small v-if="validation_errors.province" class="text-danger px-2">تکمیل این
                                                 فیلد الزامی است.</small>
                                         </div>
-                                        <div class="col-4 col-md-4 my-2">
+                                        <div class="col-sm col-md-4 my-2">
                                             <input
                                                 type="text"
                                                 class="form-control"
@@ -123,7 +112,7 @@
                                             <small v-if="validation_errors.city" class="text-danger px-2">تکمیل این فیلد
                                                 الزامی است.</small>
                                         </div>
-                                        <div class="col-4 col-md-4 my-2">
+                                        <div class="col-sm col-md-4 my-2">
                                             <input
                                                 type="text"
                                                 class="form-control"
@@ -135,16 +124,65 @@
                                             <small v-if="validation_errors.phone_number" class="text-danger px-2">تکمیل
                                                 این فیلد الزامی است.</small>
                                         </div>
-                                        <div class="col-4 my-2">
+                                        <div class="col-sm col-md-4 my-2">
                                             <b-form-file id="logo"
-                                                         ref="logo" placeholder="لوگو" class="form-control"
+                                                         ref="logo" placeholder=" انتخاب فایل لوگو" class="form-control"
+                                                         accept="image/*"
+                                                         @change="onFileChange"
                                                          v-model="formData.logo"></b-form-file>
                                             <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
                                                 این فیلد الزامی است.</small>
+                                            <small v-if="validation_errors.logo_size" class="text-danger px-2">
+                                                حجم لوگو نباید بیشتر از یک مگ باشد
+                                            </small>
+                                        </div>
+                                        <div class="col-sm col-md-6 my-2">
+                                    <textarea
+                                        rows="4"
+                                        class="form-control"
+                                        id="lows"
+                                        ref="logo"
+                                        v-model="formData.shop_terms"
+                                        placeholder="قوانین و مقررات فروشگاه">
+                                    </textarea>
+                                        </div>
+                                        <div class="col-sm col-md-6 my-2">
+                                            <textarea
+                                                rows="4"
+                                                type="text"
+                                                class="form-control"
+                                                id="description"
+                                                ref="description"
+                                                placeholder="توضیحات"
+                                                v-model="formData.description"
+                                            >
 
+                                            </textarea>
+                                        </div>
+                                        <div class="col-md-3"
+                                             v-if="imagePreviewURL"
+                                        >
+                                            <div class="m-auto pt-2 pr-2">
+                                                <img
+
+                                                    :src="imagePreviewURL"
+                                                    style="width: 100%;border-radius: 10px"/>
+                                            </div>
+                                        </div>
+                                        <div :class="imagePreviewURL ? 'col-md-9' : 'col-md-12'">
                                             <div class="m-auto pt-2 pr-2">
                                                 <hr>
                                                 <label class="my-2">اطلاعات مورد نیاز از مشتری</label>
+                                                <div class="w-100 text-right">
+
+                                                    <div class="my-3">
+                                                        <label class="switch">
+                                                            <input type="checkbox" v-model="formData.name_option">
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                        نام و نام خانوادگی
+                                                    </div>
+                                                </div>
                                                 <div class="w-100 text-right">
                                                     <div class="my-3">
                                                         <label class="switch">
@@ -157,16 +195,6 @@
                                                 <div class="w-100 text-right">
                                                     <div class="my-3">
                                                         <label class="switch">
-                                                            <input type="checkbox" v-model="formData.email_option">
-                                                            <span class="slider round"></span>
-                                                        </label>
-                                                        ایمیل
-
-                                                    </div>
-                                                </div>
-                                                <div class="w-100 text-right">
-                                                    <div class="my-3">
-                                                        <label class="switch">
                                                             <input type="checkbox" v-model="formData.address_option">
                                                             <span class="slider round"></span>
                                                         </label>
@@ -174,26 +202,16 @@
                                                     </div>
                                                 </div>
                                                 <div class="w-100 text-right">
-
                                                     <div class="my-3">
                                                         <label class="switch">
-                                                            <input type="checkbox" v-model="formData.name_option">
+                                                            <input type="checkbox" v-model="formData.email_option">
                                                             <span class="slider round"></span>
                                                         </label>
-                                                        نام و نام خانوادگی
+                                                        ایمیل
+
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-8 my-2">
-                                    <textarea
-                                        rows="6"
-                                        class="form-control"
-                                        id="lows"
-                                        ref="logo"
-                                        v-model="formData.shop_terms"
-                                        placeholder="قوانین و مقررات فروشگاه">
-                                    </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -217,14 +235,14 @@
                             <div v-show="wizard.current_step === 2">
                                 <div class="col w-100" id="info_send">
                                     <div class="row pb-3">
-                                        <div class="col-4 col-md-4 my-2">
+                                        <div class="col-sm col-md-4 my-2">
                                             <select class="form-control" v-model="formData.shipping_region">
                                                 <option :value="null">منطقه ارسال</option>
-                                                <option value="0">شهر خودم</option>
-                                                <option value="1">همه شهرها</option>
+                                                <option value="0">استان خودم</option>
+                                                <option value="1">سراسر کشور</option>
                                             </select>
                                         </div>
-                                        <div class="col-4 col-md-4 my-2">
+                                        <div class="col-sm col-md-4 my-2">
                                             <input
                                                 type="number"
                                                 class="form-control"
@@ -234,7 +252,7 @@
                                                 v-model="formData.own_city_delivery_time"
                                             />
                                         </div>
-                                        <div class="col-4 col-md-4 my-2">
+                                        <div class="col-sm col-md-4 my-2">
                                             <input
                                                 type="number"
                                                 class="form-control"
@@ -244,20 +262,7 @@
                                                 v-model="formData.other_cities_delivery_time"
                                             />
                                         </div>
-                                        <!--<div class="col-4 col-md-4 my-2 d-none">
-                                            <select class="form-control" v-model="formData.own_city_payment_method">
-                                                <option :value="null">
-                                                    شیوه پرداخت شهر خود
-                                                </option>
-                                                <option selected value="0">
-                                                    آنلاین
-                                                </option>
-                                                <option value="1">
-                                                    در محل
-                                                </option>-
-                                            </select>
-                                        </div>-->
-                                        <div class="col-4 col-md-4 my-2">
+                                        <div class="col-sm col-md-4 my-2">
                                             <input
                                                 type="number"
                                                 class="form-control"
@@ -266,8 +271,12 @@
                                                 placeholder="هزینه ارسال شهر خود (ریال)"
                                                 v-model="formData.own_city_shipping_cost"
                                             />
+                                            <small class="text-success px-2">
+                                                {{ moneyFormat(formData.own_city_shipping_cost) }}
+                                                ریال
+                                            </small>
                                         </div>
-                                        <div class="col-4 col-md-4 my-2">
+                                        <div class="col-sm col-md-4 my-2">
                                             <input
                                                 type="number"
                                                 class="form-control"
@@ -276,20 +285,11 @@
                                                 placeholder="هزینه ارسال سایر شهر ها (ریال)"
                                                 v-model="formData.other_cities_shipping_cost"
                                             />
+                                            <small class="text-success px-2">
+                                                {{ moneyFormat(formData.other_cities_shipping_cost) }}
+                                                ریال
+                                            </small>
                                         </div>
-                                        <!--<div class="col-4 my-2">
-                                            <select class="form-control" v-model="formData.other_cities_payment_method">
-                                                <option :value="null">
-                                                    شیوه پرداخت سایر شهرها
-                                                </option>
-                                                <option selected value="0">
-                                                    آنلاین
-                                                </option>
-                                                <option value="1">
-                                                    در محل
-                                                </option>
-                                            </select>
-                                        </div>-->
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center px-3 mt-4">
@@ -381,6 +381,7 @@ import PageTitle from "~/components/main/pageTitle";
 import GatewayTypes from "~/constants/GatewayTypes";
 import PortTypes from "~/constants/PortTypes";
 import {provinces} from '~/constants/Provinces'
+
 export default {
     layout: "main-content",
     data() {
@@ -394,9 +395,8 @@ export default {
                 current_step: 1,
                 navigable: true,
             },
-            port_types : [
-
-            ],
+            imagePreviewURL: null,
+            port_types: [],
             step: 1,
             message: null,
             error: null,
@@ -432,6 +432,7 @@ export default {
                 city: null,
                 phone_number: null,
                 logo: null,
+                logo_size: null,
                 name_option: false,
             }
         };
@@ -440,13 +441,22 @@ export default {
         PageTitle,
     },
     methods: {
+        onFileChange(payload) {
+            const file = payload.target.files[0]; // use it in case of normal HTML input
+            if (file) {
+                this.imagePreviewURL = URL.createObjectURL(file);
+                URL.revokeObjectURL(file); // free memory
+            } else {
+                this.imagePreviewURL =  null
+            }
+        },
         getGateways() {
             api.getUrl('https://core.paystar.ir/api/gateway/user-gateways-data', this.$cookies.get('token'))
                 .then(res => {
                     this.gateways = res.data.data
-                    for (let key in this.gateways){
+                    for (let key in this.gateways) {
                         let item = this.gateways[key]
-                        if (!this.port_types.includes(item.type)){
+                        if (!this.port_types.includes(item.type)) {
                             this.port_types.push(item.type)
                         }
                     }
@@ -455,7 +465,7 @@ export default {
         getCardGateways() {
             api.get('user/current').then(res => {
                 let phone = res.data.data.phone
-                api.getUrl('https://card.paystar.ir/api/acceptor/' + '09386516983', )
+                api.getUrl('https://card.paystar.ir/api/acceptor/' + '09386516983',)
                     .then(json => {
                         console.log(json)
                     })
@@ -507,6 +517,10 @@ export default {
                 this.validation_errors.logo = true
                 res = false
             }
+            if (this.formData.logo && (this.formData.logo.size > ((1024 * 1024) * 1))) {
+                this.validation_errors.logo_size = true
+                res = false
+            }
             if (!this.formData.province) {
                 this.validation_errors.province = true
                 res = false
@@ -516,6 +530,17 @@ export default {
                 res = false
             }
             return res
+        },
+        moneyFormat(price) {
+            if (!price) {
+                return 0
+            }
+            const pieces = parseFloat(price).toFixed(0).split("");
+            let ii = pieces.length;
+            while ((ii -= 3) > 0) {
+                pieces.splice(ii, 0, ",");
+            }
+            return pieces.join("");
         },
         createStore() {
             if (!this.validate()) {
@@ -593,7 +618,10 @@ input[type="file"]::-webkit-file-upload-button {
 
 .custom-file-label {
     border: none;
-    background: none;
+    background: url('/images/icons/file_upload_black_24dp.svg');
+    background-repeat: no-repeat;
+    background-position: left;
+    background-position-x: 10px;
 }
 
 .custom-file-label::after {

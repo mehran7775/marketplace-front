@@ -98,7 +98,7 @@ export default {
             this.filter_to_date = null;
         },
         async get_data(url) {
-            let res = await api.getUrl(url + this.query + '&perpage=' + this.per_page,this.$cookies.get('token'))
+            let res = await api.getUrl(url + this.query + '&perpage=' + this.per_page)
             this.stores = res.data.data
         },
         reset_and_get() {

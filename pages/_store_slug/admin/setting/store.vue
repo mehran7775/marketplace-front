@@ -13,7 +13,7 @@
         </div>
         <div class="bg-white shadow-sm py-4 my-2 px-5" style="border-radius: 10px;">
             <div class="row justify-content-around align-content-center pb-3">
-                <div class="col-4 col-md-4 my-2">
+                <div class="col-sm col-md-4 my-2">
                     <input
                         type="text"
                         class="form-control"
@@ -23,7 +23,7 @@
                         v-model="formData.fa_name"
                     />
                 </div>
-                <div class="col-4 col-md-4 my-2">
+                <div class="col-sm col-md-4 my-2">
                     <input
                         type="text"
                         class="form-control"
@@ -33,8 +33,53 @@
                         v-model="formData.en_name"
                     />
                 </div>
-                <div class="col-4 col-md-4 my-2">
+                <div class="col-sm col-md-4 my-2">
+                    <select
+                        type="text"
+                        class="form-control"
+                        placeholder="استان"
+                        v-model="formData.province"
+                    >
+                        <option :value="null">انتخاب استان</option>
+                        <option :key="item.key" v-for="item in provinces" :value="item.id">{{ item.value }}</option>
+                    </select>
+                </div>
+                <div class="col-sm col-md-4 my-2">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="city"
+                        ref="city"
+                        placeholder="شهر"
+                        v-model="formData.city"
+                    />
+                </div>
+                <div class="col-sm col-md-4 my-2">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="phone_number"
+                        ref="phone_number"
+                        placeholder="شماره همراه"
+                        v-model="formData.phone_number"
+                    />
+                </div>
+                <div class="col-sm col-md-4 my-2">
+
+                    <b-form-file
+                        placeholder="لوگو" class="form-control"
+                        accept="image/*"
+                        v-model="formData.logo"></b-form-file>
+                    <small v-if="validation_errors.logo_size" class="text-danger px-2">
+                        حجم لوگو نباید بیشتر از یک مگ باشد
+                    </small>
+
+                    <b-link class="btn btn-link" target="_blank" :href="formData.logo">دانلود لوگو</b-link>
+                </div>
+
+                <div class="col-sm col-md-6 my-2">
                                             <textarea
+                                                rows="4"
                                                 type="text"
                                                 class="form-control"
                                                 id="description"
@@ -46,63 +91,43 @@
 
                                             </textarea>
                 </div>
-                <div class="col-4 col-md-4 my-2">
-                    <select
-                        type="text"
-                        class="form-control"
-                        placeholder="استان"
-                        v-model="formData.province"
-                    >
-                        <option :value="null">انتخاب استان</option>
-                        <option :key="item.key" v-for="item in provinces" :value="item.id">{{ item.value }}</option>
-                    </select>
+                <div class="col-sm col-md-6 my-2">
+                                    <textarea
+                                        rows="4"
+                                        class="form-control"
+                                        id="lows"
+                                        ref="logo"
+                                        v-model="formData.shop_terms"
+                                        placeholder="قوانین و مقررات فروشگاه">
+                                    </textarea>
                 </div>
-                <div class="col-4 col-md-4 my-2">
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="city"
-                        ref="city"
-                        placeholder="شهر"
-                        v-model="formData.city"
-                    />
-                </div>
-                <div class="col-4 col-md-4 my-2">
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="phone_number"
-                        ref="phone_number"
-                        placeholder="شماره همراه"
-                        v-model="formData.phone_number"
-                    />
-                </div>
-                <div class="col-4 my-2">
 
-                    <b-form-file
-                        placeholder="لوگو" class="form-control"
-                        v-model="formData.logo"></b-form-file>
-
-                    <b-link class="btn btn-link" target="_blank" :href="formData.logo">دانلود لوگو</b-link>
-
+                <div class="col-md-3">
                     <div class="m-auto pt-2 pr-2">
+                        <img :src="formData.logo"  style="width: 100%;border-radius: 10px"/>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="m-auto pt-2 pr-2">
+                        <hr>
+                        <label class="my-2">اطلاعات مورد نیاز از مشتری</label>
+                        <div class="w-100 text-right">
+
+                            <div class="my-3">
+                                <label class="switch">
+                                    <input type="checkbox" v-model="formData.name_option">
+                                    <span class="slider round"></span>
+                                </label>
+                                نام و نام خانوادگی
+                            </div>
+                        </div>
                         <div class="w-100 text-right">
                             <div class="my-3">
                                 <label class="switch">
                                     <input type="checkbox" v-model="formData.phone_option">
                                     <span class="slider round"></span>
                                 </label>
-                                نمایش شماره موبایل
-                            </div>
-                        </div>
-                        <div class="w-100 text-right">
-                            <div class="my-3">
-                                <label class="switch">
-                                    <input type="checkbox" v-model="formData.email_option">
-                                    <span class="slider round"></span>
-                                </label>
-                                نمایش ایمیل
-
+                                شماره موبایل
                             </div>
                         </div>
                         <div class="w-100 text-right">
@@ -111,30 +136,20 @@
                                     <input type="checkbox" v-model="formData.address_option">
                                     <span class="slider round"></span>
                                 </label>
-                                نمایش آدرس
+                                آدرس
                             </div>
                         </div>
                         <div class="w-100 text-right">
-
                             <div class="my-3">
                                 <label class="switch">
-                                    <input type="checkbox" v-model="formData.name_option">
+                                    <input type="checkbox" v-model="formData.email_option">
                                     <span class="slider round"></span>
                                 </label>
-                                نمایش نام و نام خانوادگی
+                                ایمیل
+
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-8 my-2">
-                                    <textarea
-                                        rows="6"
-                                        class="form-control"
-                                        id="lows"
-                                        ref="logo"
-                                        v-model="formData.shop_terms"
-                                        placeholder="قوانین و مقررات فروشگاه">
-                                    </textarea>
                 </div>
             </div>
         </div>
@@ -168,6 +183,9 @@ export default {
                 email_option: false,
                 phone_option: false,
                 shop_terms: null,
+            },
+            validation_errors : {
+                logo_size : null
             }
         }
     },
@@ -175,6 +193,18 @@ export default {
         this.getData()
     },
     methods: {
+        validate(){
+            let spy = this.validation_errors
+            Object.keys(spy).forEach(function (key) {
+                spy[key] = null
+            });
+            let res = true
+            if (this.formData.logo && (this.formData.logo.size > ((1024 * 1024) * 1))) {
+                this.validation_errors.logo_size = true
+                res = false
+            }
+            return res
+        },
         getData() {
             api.get('store/find/' + this.$route.params.store_slug, this.$cookies.get('token'))
                 .then(res => {
@@ -186,31 +216,35 @@ export default {
                 })
         },
         updateSetting() {
-            if (typeof this.formData.logo === 'string') {
-                this.formData.logo = null
-            }
-            let form_data = new FormData();
-            for (let key in this.formData) {
-                if (this.formData[key] === true || this.formData[key] === false) {
-                    if (this.formData[key] === true) {
-                        form_data.append(key, 1);
-                    }
-                    if (this.formData[key] === false) {
-                        form_data.append(key, 0);
-                    }
-                } else {
-                    if (this.formData[key] !== null) {
-                        form_data.append(key, this.formData[key]);
+            if (!this.validate()) {
+                //alert(this.validate())
+            } else {
+                if (typeof this.formData.logo === 'string') {
+                    this.formData.logo = null
+                }
+                let form_data = new FormData();
+                for (let key in this.formData) {
+                    if (this.formData[key] === true || this.formData[key] === false) {
+                        if (this.formData[key] === true) {
+                            form_data.append(key, 1);
+                        }
+                        if (this.formData[key] === false) {
+                            form_data.append(key, 0);
+                        }
+                    } else {
+                        if (this.formData[key] !== null) {
+                            form_data.append(key, this.formData[key]);
+                        }
                     }
                 }
+                api.post('store/update/' + this.$route.params.store_slug, form_data)
+                    .then(response => {
+                        this.message = response.data.message
+                        this.getData()
+                    }).catch(({response}) => {
+                    this.error = response.data.data[Object.keys(response.data.data)[0]]
+                })
             }
-            api.post('store/update/' + this.$route.params.store_slug, form_data)
-                .then(response => {
-                    this.message = response.data.message
-                    this.getData()
-                }).catch(({response}) => {
-                this.error = response.data.data[Object.keys(response.data.data)[0]]
-            })
         }
     }
 }

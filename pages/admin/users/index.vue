@@ -3,7 +3,27 @@
         <page-title title_text="فروشندگان" icon="gateway">
         </page-title>
         <div>
-            <div class="bg-white shadow-sm py-3 my-2" style="border-radius: 10px;" v-if="users.length > 0">
+            <div class="bg-white shadow-sm p-3 my-3" style="border-radius: 10px;">
+                <div class="row">
+                    <div class="col-sm my-2">
+                        <input class="form-control" placeholder="نام کامل" v-model="filter_name">
+                    </div>
+                    <div class="col-sm my-2">
+                        <input class="form-control" placeholder="موبایل" v-model="filter_mobile">
+                    </div>
+                    <div class="col-sm my-2">
+                        <div>
+                            <button :class="query ? 'btn btn-success mr-2' : 'btn btn-success btn-block'" style="border-radius: 10px;"
+                                    @click="get_data(users.first_page_url)">اعمال فیلتر
+                            </button>
+                            <button class="btn btn-danger mr-3" style="border-radius: 10px;"
+                                    @click="reset_and_get" v-if="query">حذف فیلتر
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white shadow-sm py-3 my-2" style="border-radius: 10px;" v-if="users">
                 <div class="px-3">
                     <div class="table-responsive">
                         <table class="table  table-responsive table-borderless text-center">
@@ -20,7 +40,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="user in users" :key="user.id">
+                            <tr v-for="user in users.data" :key="user.id">
                                 <td>{{ user.id }}</td>
                                 <td>{{ user.full_name }}</td>
                                 <td>{{ UserTypes.getType(user.user_type) }}</td>
@@ -45,6 +65,9 @@
                         </table>
                     </div>
                 </div>
+                <hr v-if="users.next_page_url || users.prev_page_url">
+
+                <pagination v-if="users.next_page_url || users.prev_page_url" :data="users" :get_data="get_data" :perpage="per_page"></pagination>
             </div>
         </div>
     </div>
@@ -55,21 +78,50 @@ import UserStatus from "~/constants/UserStatus";
 import UserTypes from "~/constants/UserTypes";
 import api from "~/services/api";
 import PageTitle from "~/components/main/pageTitle";
-
+import pagination from "~/components/pagination";
 export default {
     name: "index",
-    components: {PageTitle},
+    components: {PageTitle,pagination,},
     layout: "main-content",
     data() {
         return {
             UserStatus,
             UserTypes,
-            users: []
+            users: null,
+            per_page: 15,
+            filter_name : null,
+            filter_mobile : null,
         }
     },
+    computed: {
+        query() {
+            let res = '';
+            if (this.filter_name != null) {
+                res = res + '&query[full_name]=' + this.filter_name;
+            }
+            if (this.filter_mobile != null) {
+                res = res + '&query[phone]=' + this.filter_mobile;
+            }
+            return res;
+        }
+    },
+    methods: {
+        resetQuery() {
+            this.filter_name = null;
+            this.filter_mobile = null;
+        },
+        async get_data(url) {
+            let res = await api.getUrl(url  + this.query + '&perpage=' + this.per_page)
+            this.users = res.data.data
+        },
+        reset_and_get() {
+            this.resetQuery();
+            this.get_data(this.users.path + '?page=1');
+        },
+    },
     async created() {
-        let res = await api.get('user/get', this.$cookies.get('token'))
-        this.users = res.data.data.data
+        let res = await api.get('user/get')
+        this.users = res.data.data
     }
 }
 </script>

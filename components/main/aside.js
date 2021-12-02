@@ -1,5 +1,17 @@
 export default [
     {
+        url: '/admin/',
+        title: 'پیشخوان',
+        in_store: false,
+        manager : 'store-manager',
+        need_auth: false,
+        icon: '\n' +
+            '\'<svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="#a0a0a0" viewBox="0 0 24 24">\\n\' +\n' +
+            '            \'              <path d="M0 0h24v24H0z" fill="none"/>\\n\' +\n' +
+            '            \'              <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>\\n\' +\n' +
+            '            \'            </svg>'
+    },
+    {
         url: '/admin/ports',
         title: 'پورت ها',
         manager : 'manage-port',
@@ -35,7 +47,7 @@ export default [
             '\n' +
             '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#a0a0a0"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M18.36 9l.6 3H5.04l.6-3h12.72M20 4H4v2h16V4zm0 3H4l-1 5v2h1v6h10v-6h4v6h2v-6h1v-2l-1-5zM6 18v-4h6v4H6z"/></svg>'
     },
-    /*{
+    {
         url: '/admin/customers',
         title: 'مشتریان',
         need_auth: false,
@@ -52,7 +64,7 @@ export default [
         icon: '\n' +
             '\n' +
             '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#a0a0a0"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 7h6v2h-6zm0 4h6v2h-6zm0 4h6v2h-6zM7 7h2v2H7zm0 4h2v2H7zm0 4h2v2H7zM20.1 3H3.9c-.5 0-.9.4-.9.9v16.2c0 .4.4.9.9.9h16.2c.4 0 .9-.5.9-.9V3.9c0-.5-.5-.9-.9-.9zM19 19H5V5h14v14z"/></svg>'
-    },*/
+    },
     {
         url: '/',
         title: 'فروشگاه های من',
