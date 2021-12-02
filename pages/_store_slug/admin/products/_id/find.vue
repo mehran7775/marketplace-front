@@ -3,7 +3,8 @@
         <page-title title_text="جزییات محصول" icon="product">
             <button class="btn btn-success shadow-sm mx-2 px-4 py-2" @click="updateProduct" variant="primary"
                     style="border-radius: 20px; border-color: #bbb;"
-            >ذخیره تغییرات
+            >
+                ذخیره تغییرات
             </button>
         </page-title>
         <div class="alert alert-info" role="alert" v-if="message">
@@ -30,11 +31,20 @@
                                         <div class="col-sm">
                                             <b-form-group label="قیمت">
                                                 <input type="number" class="form-control" v-model="formData.price"/>
+                                                <small class="text-success px-2">
+                                                    {{moneyFormat(formData.price)}}
+                                                    ریال
+                                                </small>
                                             </b-form-group>
                                         </div>
                                         <div class="col-sm">
-                                            <b-form-group label="تعداد">
-                                                <input type="number" class="form-control" v-model="formData.quantity"/>
+                                            <b-form-group label=" امکان انتخاب چند محصول توسط مشتری">
+                                                <div class="form-control">
+                                                    <label class="switch">
+                                                        <input type="checkbox" v-model="formData.is_multiple">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
                                             </b-form-group>
                                         </div>
                                     </div>
@@ -43,7 +53,12 @@
                                             <b-form-group label="میزان تخفیف">
                                                 <input type="number" class="form-control"
                                                        v-model="formData.discount_amount"/>
+                                                <small class="text-success px-2">
+                                                    {{moneyFormat(formData.discount_amount)}}
+                                                    ریال
+                                                </small>
                                             </b-form-group>
+
                                         </div>
                                         <div class="col-sm">
                                             <b-form-group label="درصد تخفیف">
@@ -57,7 +72,12 @@
                                             <b-form-group label="حداکثر میزان تخفیف">
                                                 <input type="number" class="form-control"
                                                        v-model="formData.discount_max_amount"/>
+                                                <small class="text-success px-2">
+                                                    {{moneyFormat(formData.discount_max_amount)}}
+                                                    ریال
+                                                </small>
                                             </b-form-group>
+
                                         </div>
                                         <div class="col-sm">
                                             <b-form-group label="تصویر محصول">
@@ -68,13 +88,8 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm">
-                                            <b-form-group label="محصول چندتایی است">
-                                                <div class="form-control">
-                                                    <label class="switch">
-                                                        <input type="checkbox" v-model="formData.is_multiple">
-                                                        <span class="slider round"></span>
-                                                    </label>
-                                                </div>
+                                            <b-form-group label="تعداد">
+                                                <input type="number" class="form-control" v-model="formData.quantity"/>
                                             </b-form-group>
                                         </div>
                                         <div class="col-sm">
@@ -88,56 +103,48 @@
                                             </b-form-group>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <b-form-group label="توضیحات محصول">
+                                            <textarea class="form-control" v-model="formData.description">
+                                            </textarea>
+                                            </b-form-group>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </b-tab>
-                <b-tab title="آمار محصول" active>
+                <b-tab title="آمار محصول" >
                     <div class="row">
                         <div class="col-12">
                             <div>
                                 <div class="mx-2">
                                     <div class="row">
-                                        <div class="col-sm">
-                                            <b-form-group label="سفارشات تکمیل شده">
-                                                <input class="form-control disabled"
-                                                       v-model="statistics.complete_orders" disabled/>
-                                            </b-form-group>
+                                        <div class="col-md-4 col-sm my-3">
+                                            <dashboard-box :number="statistics.complete_orders" title="سفارشات تکمیل شده">
+                                            </dashboard-box>
                                         </div>
-                                        <div class="col-sm">
-                                            <b-form-group label="سفارشات در حال پردازش">
-                                                <input class="form-control disabled"
-                                                       v-model="statistics.processing_orders" disabled/>
-                                            </b-form-group>
+                                        <div class="col-md-4 col-sm my-3">
+                                            <dashboard-box :number="statistics.processing_orders" title="سفارشات در حال پردازش">
+                                            </dashboard-box>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <b-form-group label="تعداد فروش">
-                                                <input class="form-control disabled" v-model="statistics.sales_count"
-                                                       disabled/>
-                                            </b-form-group>
+                                        <div class="col-md-4 col-sm my-3">
+                                            <dashboard-box :number="statistics.sales_count" title="تعداد فروش">
+                                            </dashboard-box>
                                         </div>
-                                        <div class="col-sm">
-                                            <b-form-group label="جمع قیمت">
-                                                <input class="form-control disabled" v-model="statistics.price_sum"
-                                                       disabled/>
-                                            </b-form-group>
+                                        <div class=" col-md-4 col-sm my-3">
+                                            <dashboard-box :number="statistics.price_sum" title="کل مبلغ فروش">
+                                            </dashboard-box>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <b-form-group label="تعداد مشاهده">
-                                                <input class="form-control disabled" v-model="statistics.views_count"
-                                                       disabled/>
-                                            </b-form-group>
+                                        <div class=" col-md-4 col-sm my-3">
+                                            <dashboard-box :number="statistics.views_count" title="تعداد مشاهده">
+                                            </dashboard-box>
                                         </div>
-                                        <div class="col-sm">
-                                            <b-form-group label="نرخ تبدیل">
-                                                <input class="form-control disabled"
-                                                       v-model="statistics.conversion_rates" disabled/>
-                                            </b-form-group>
+                                        <div class="col-md-4 col-sm my-3">
+                                            <dashboard-box :number="statistics.conversion_rates" title="نرخ تبدیل">
+                                            </dashboard-box>
                                         </div>
                                     </div>
                                 </div>
@@ -154,9 +161,10 @@
 <script>
 import api from "~/services/api";
 import PageTitle from "~/components/main/pageTitle";
+import DashboardBox from "~/components/dashboard-box";
 
 export default {
-    components: {PageTitle},
+    components: {DashboardBox, PageTitle},
     layout: "main-content",
     data() {
         return {
@@ -219,7 +227,18 @@ export default {
                 .then(res => {
                     this.statistics = res.data.data
                 })
-        }
+        },
+        moneyFormat(price) {
+            if (!price){
+                return 0
+            }
+            const pieces = parseFloat(price).toFixed(0).split("");
+            let ii = pieces.length;
+            while ((ii -= 3) > 0) {
+                pieces.splice(ii, 0, ",");
+            }
+            return pieces.join("");
+        },
     },
     mounted() {
         this.getProduct()

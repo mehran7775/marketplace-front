@@ -6,44 +6,18 @@
                 <span class="pr-2">ثبت محصول جدید</span>
             </nuxt-link>
         </page-title>
-        <!--<div class="bg-white shadow-sm p-3 my-3" style="border-radius: 10px;">
+        <div class="bg-white shadow-sm p-3 my-3" style="border-radius: 10px;">
             <div class="row">
                 <div class="col-sm my-2">
                     <input class="form-control" placeholder="عنوان محصول" v-model="filter_title">
                 </div>
                 <div class="col-sm my-2">
+                    <input class="form-control" placeholder="قیمت" v-model="filter_price">
+                </div>
+                <div class="col-sm my-2">
                     <select class="form-control" v-model="filter_status">
-                        <option></option>
+                        <option v-for="status in ProductStatus.productStatus" :value="status.value">{{status.text}}</option>
                     </select>
-                </div>
-                <div class="col-sm my-2">
-                    <div class="form-group my-0">
-                        <datePicker
-                            color="#00c1a4"
-                            format="YYYY-MM-DD HH:mm:ss"
-                            display-format="dddd jDD jMMMM jYYYY HH:mm"
-                            input-class="form-control"
-                            name="filter_from_date"
-                            placeholder="از تاریخ"
-                            clearable
-                            v-model="filter_from_date"
-                            type="datetime"/>
-
-                    </div>
-                </div>
-                <div class="col-sm my-2">
-                    <div class="form-group my-0">
-                        <datePicker
-                            color="#00c1a4"
-                            format="YYYY-MM-DD HH:mm:ss"
-                            display-format="dddd jDD jMMMM jYYYY HH:mm"
-                            input-class="form-control"
-                            name="filter_from_date"
-                            placeholder="تا تاریخ"
-                            clearable
-                            v-model="filter_to_date"
-                            type="datetime"/>
-                    </div>
                 </div>
                 <div class="col-sm my-2">
                     <div>
@@ -56,7 +30,7 @@
                     </div>
                 </div>
             </div>
-        </div>-->
+        </div>
         <div class="bg-white shadow-sm py-3 my-2" style="border-radius: 10px;" v-if="products">
 
             <div class="px-3">
@@ -70,7 +44,7 @@
                             <th scope="col" style="background-color: #eee;">تعداد</th>
                             <th scope="col" style="background-color: #eee;">قیمت (ریال)</th>
                             <th scope="col" style="background-color: #eee;">وضعیت</th>
-                            <th scope="col" style="background-color: #eee; border-radius: 16px 0px 0px 16px;">جزییات
+                            <th scope="col" style="background-color: #eee; border-radius: 16px 0px 0px 16px;">عملیات
                             </th>
                         </tr>
                         </thead>
@@ -96,6 +70,25 @@
                                     d="M12 4C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
                                 </span>
                                 </nuxt-link>
+                                <!--begin modal-->
+                                <b-button variant="link" class="p-0 m-0" v-b-modal="'my-modal' + index">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"  fill="#bbb"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zm0-7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                                </b-button>
+
+                                <b-modal hide-footer hide-header-close :id="'my-modal' + index" title="تغییر وضعیت محصول">
+                                    <b-form-group>
+                                        <select class="form-control" v-model="product_status">
+                                            <option  value="1">فعال</option>
+                                            <option value="0">آرشیو</option>
+                                        </select>
+                                    </b-form-group>
+                                    <b-form-group>
+                                        <b-button variant="primary" @click="changeProductStatus(product_status,product.id)">
+                                            تغییر وضعیت
+                                        </b-button>
+                                    </b-form-group>
+                                </b-modal>
+                                 <!-- end modal -->
                             </td>
                         </tr>
                         </tbody>
@@ -133,9 +126,11 @@ export default {
             filter_title: null,
             filter_from_date: null,
             filter_to_date: null,
+            filter_price : null,
             filter_status: null,
             products: null,
-            per_page: 15
+            per_page: 15,
+            product_status : null
         }
     },
     computed: {
@@ -153,6 +148,9 @@ export default {
             if (this.filter_to_date != null) {
                 res = res + '&query[to_date]=' + this.filter_to_date;
             }
+            if (this.filter_price != null) {
+                res = res + '&query[price]=' + this.filter_price;
+            }
             return res;
         }
     },
@@ -162,6 +160,7 @@ export default {
             this.filter_status = null;
             this.filter_from_date = null;
             this.filter_to_date = null;
+            this.filter_price = null
         },
         async get_data(url) {
             let res = await api.getUrl(url + this.query + '&perpage=' + this.per_page, this.$cookies.get('token'))
@@ -171,6 +170,10 @@ export default {
             this.resetQuery();
             this.get_data(this.products.path + '?page=1');
         },
+        async changeProductStatus(status,product){
+            let res = await api.post('product/change-status/' + product , {status : status})
+            await this.get_data(this.products.path + '?page=1');
+        }
     },
     async created() {
         let res = await api.get('product/' + this.$route.params.store_slug + '?perpage=' + this.per_page, this.$cookies.get('token'))

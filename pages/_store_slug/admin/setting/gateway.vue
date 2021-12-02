@@ -19,9 +19,11 @@
                 <div class="row">
                     <div v-if="gateway.type === port.type" class="col-sm my-2" v-for="gateway in gateways">
                         <div :class="formData.gateways.includes(gateway) ? 'card  border-primary' : 'card'" style="width: 18rem;cursor: pointer;" @click="addGateway(gateway,port.id)">
-                            <div class="card-body">
+                            <div :class="'card-body'">
                                 <h5 class="card-title">{{ gateway.title }}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">{{ GatewayTypes.getType(gateway.type) }}</h6>
+                                <hr>
+                                <span class="text-success" v-if="isSelected(gateway)">ثبت شده</span>
                             </div>
                         </div>
                     </div>
@@ -53,14 +55,65 @@ export default {
             ports : null,
             formData: {
                 gateways : []
-            }
+            },
+            selected_gateways : []
         }
     },
     created() {
+        this.getData()
         this.getPorts()
         this.getGateways()
+
     },
     methods: {
+        getData() {
+            api.get('store/find/' + this.$route.params.store_slug, this.$cookies.get('token'))
+                .then(res => {
+                    this.selected_gateways =  res.data.data.gateways
+                })
+        },
+        isSelected(gateway){
+            if (gateway.type == 'PF'){
+                let key = gateway.port_config.sequence
+                let sequences = [];
+                for (let index in this.selected_gateways){
+                    sequences.push(this.selected_gateways[index].port_config.sequence)
+                }
+                if (sequences.includes(key)){
+                    return true
+                }
+            }
+            if (gateway.type == 'Card'){
+                let key = gateway.port_config.token
+                let sequences = [];
+                for (let index in this.selected_gateways){
+                    sequences.push(this.selected_gateways[index].port_config.token)
+                }
+                if (sequences.includes(key)){
+                    return true
+                }
+            }
+            if (gateway.type == 'IVR'){
+                let key = gateway.port_config.sequence
+                let sequences = [];
+                for (let index in this.selected_gateways){
+                    sequences.push(this.selected_gateways[index].port_config.sequence)
+                }
+                if (sequences.includes(key)){
+                    return true
+                }
+            }
+            if (gateway.type == 'Dedicated'){
+                let key = gateway.port_config.terminal_id
+                let sequences = [];
+                for (let index in this.selected_gateways){
+                    sequences.push(this.selected_gateways[index].port_config.terminal_id)
+                }
+                if (sequences.includes(key)){
+                    return true
+                }
+            }
+        },
         getGateways() {
             api.getUrl('https://core.paystar.ir/api/gateway/user-gateways-data', this.$cookies.get('token'))
                 .then(res => {

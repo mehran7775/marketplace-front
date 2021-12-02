@@ -4,6 +4,7 @@
 </template>
 
 <script>
+import roles from "~/plugins/roles";
 export default {
   async mounted() {
     try {
@@ -14,6 +15,7 @@ export default {
       });
       if(data.status==="ok"){
           this.$cookies.set("token", this.$route.params.token);
+          roles();
           this.$router.push('/')
       }
     } catch (e) {

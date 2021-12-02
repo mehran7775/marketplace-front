@@ -48,17 +48,22 @@
 
 <script>
 
+import api from "~/services/api";
+
 export default {
     name: "find",
     layout: "main-content",
     data() {
         return {
-            user: null
+            user: null,
+            orders : []
         }
     },
     async mounted() {
-        let res = await this.$axios.get('customer/find/' + this.$route.params.id)
+        let res = await api.get('customer/find/' + this.$route.params.id)
         this.user = res.data.data
+        let response = await  api.get('order/customer/' + this.$route.params.id)
+        this.orders = response.data.data
     }
 
 }

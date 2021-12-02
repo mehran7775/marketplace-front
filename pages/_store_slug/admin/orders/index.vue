@@ -2,45 +2,18 @@
     <div>
         <page-title title_text="سفارشات" icon="order">
         </page-title>
-        <div class="bg-white shadow-sm p-3 my-3 d-none" v-show="false" style="border-radius: 10px;">
+        <div class="bg-white shadow-sm p-3 my-3" style="border-radius: 10px;">
             <div class="row">
                 <div class="col-sm my-2">
-                    <input class="form-control" placeholder="عنوان محصول" v-model="filter_title">
+                    <input class="form-control" placeholder="کد رهگیری" v-model="filter_tracking_number">
                 </div>
-                <!--<div class="col-sm my-2">
+                <div class="col-sm my-2">
                     <select class="form-control" v-model="filter_status">
-                        <option></option>
+                        <option v-for="status in OrderStatus.orderStatus" :value="status.value">
+                            {{status.text}}
+                        </option>
                     </select>
-                </div>-->
-                <div class="col-sm my-2">
-                    <!--   <div class="form-group my-0">
-                           <datePicker
-                               color="#00c1a4"
-                               format="YYYY-MM-DD HH:mm:ss"
-                               display-format="dddd jDD jMMMM jYYYY HH:mm"
-                               input-class="form-control"
-                               name="filter_from_date"
-                               placeholder="از تاریخ"
-                               clearable
-                               v-model="filter_from_date"
-                               type="datetime"/>
-
-                       </div>-->
-                   </div>
-                <div class="col-sm my-2">
-                    <!-- <div class="form-group my-0">
-                         <datePicker
-                             color="#00c1a4"
-                             format="YYYY-MM-DD HH:mm:ss"
-                             display-format="dddd jDD jMMMM jYYYY HH:mm"
-                             input-class="form-control"
-                             name="filter_from_date"
-                             placeholder="تا تاریخ"
-                             clearable
-                             v-model="filter_to_date"
-                             type="datetime"/>
-                     </div>-->
-                 </div>
+                </div>
                 <div class="col-sm my-2">
                     <div>
                         <button :class="query ? 'btn btn-success mr-2' : 'btn btn-success btn-block'" style="border-radius: 10px;"
@@ -76,7 +49,11 @@
                             <td>{{ order.tracking_number }}</td>
                             <td>{{ order.payment_price }}</td>
                             <td>{{ order.created_at }}</td>
-                            <td>{{ OrderStatus.getStatus(order.status).text}}</td>
+                            <td>
+                                <b-badge :variant="OrderStatus.getStatus(order.status).variant">
+                                    {{ OrderStatus.getStatus(order.status).text}}
+                                </b-badge>
+                                </td>
                             <td>
                                 <nuxt-link class="btn p-0 m-0 text-danger" :to="'orders/' + order.id + '/find'">
                                 <span class="special-tooltip btn btn-sm btn-clean btn-icon btn-icon-sm">
@@ -115,9 +92,7 @@ export default {
     data() {
         return {
             OrderStatus,
-            filter_title: null,
-            filter_from_date: null,
-            filter_to_date: null,
+            filter_tracking_number: null,
             filter_status : null,
             orders: null,
             per_page: 15
@@ -126,27 +101,19 @@ export default {
     computed: {
         query() {
             let res = '';
-            if (this.filter_title != null) {
-                res = res + '&query[title]=' + this.filter_title;
+            if (this.filter_tracking_number != null) {
+                res = res + '&query[tracking_number]=' + this.filter_tracking_number;
             }
             if (this.filter_status != null) {
                 res = res + '&query[status]=' + this.filter_status;
-            }
-            if (this.filter_from_date != null) {
-                res = res + '&query[from_date]=' + this.filter_from_date;
-            }
-            if (this.filter_to_date != null) {
-                res = res + '&query[to_date]=' + this.filter_to_date;
             }
             return res;
         }
     },
     methods: {
         resetQuery() {
-            this.filter_title = null;
+            this.filter_tracking_number = null;
             this.filter_status = null;
-            this.filter_from_date = null;
-            this.filter_to_date = null;
         },
         async get_data(url) {
             let res = await api.getUrl(url + this.query + '&perpage=' + this.per_page,this.$cookies.get('token'))

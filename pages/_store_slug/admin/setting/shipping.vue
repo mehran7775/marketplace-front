@@ -16,8 +16,8 @@
                 <b-col col="sm">
                     <b-form-group label="منطقه ارسال">
                         <select class="form-control" v-model="store.shipping_setting.shipping_region">
-                            <option :value="zero">شهر خودم</option>
-                            <option :value="one">همه شهرها</option>
+                            <option :value="zero">استان خودم</option>
+                            <option :value="one">سراسر کشور</option>
                         </select>
                     </b-form-group>
                 </b-col>
@@ -41,39 +41,23 @@
                     <b-form-group label="هزینه ارسال شهر خود (ریال)">
                         <b-form-input type="number"
                                       v-model="store.shipping_setting.own_city_shipping_cost"></b-form-input>
+                        <small class="text-success px-2">
+                            {{moneyFormat(store.shipping_setting.own_city_shipping_cost)}}
+                            ریال
+                        </small>
                     </b-form-group>
                 </b-col>
                 <b-col col="sm">
                     <b-form-group label="هزینه ارسال سایر شهر ها (ریال)">
                         <b-form-input type="number"
                                       v-model="store.shipping_setting.other_cities_shipping_cost"></b-form-input>
+                        <small class="text-success px-2">
+                            {{moneyFormat(store.shipping_setting.other_cities_shipping_cost)}}
+                            ریال
+                        </small>
                     </b-form-group>
                 </b-col>
             </b-form-row>
-            <!--<b-form-row>
-                <b-col col="sm">
-                    <b-form-group label="شیوه پرداخت شهر خود">
-                        <select class="form-control" v-model="store.shipping_setting.own_city_payment_method">
-                            <option :value="zero" :selected="store.shipping_setting.own_city_payment_method === 0">آنلاین
-                            </option>
-                            <option :value="one" :selected="store.shipping_setting.own_city_payment_method === 1">در محل
-                            </option>
-                        </select>
-                    </b-form-group>
-                </b-col>
-                <b-col col="sm">
-                    <b-form-group label="شیوه پرداخت سایر شهرها">
-                        <select class="form-control" v-model="store.shipping_setting.other_cities_payment_method">
-                            <option :value="zero" :selected="store.shipping_setting.other_cities_payment_method === 0">
-                                آنلاین
-                            </option>
-                            <option :value="one" :selected="store.shipping_setting.other_cities_payment_method === 1">در
-                                محل
-                            </option>
-                        </select>
-                    </b-form-group>
-                </b-col>
-            </b-form-row>-->
         </div>
     </div>
 </template>
@@ -111,11 +95,22 @@ export default {
             api.post('store/update-shipping/' + this.$route.params.store_slug, this.store.shipping_setting, this.$cookies.get('token'))
                 .then(response => {
                     this.message = response.data.message
-                    this.getData()
+                    //this.getData()
                 }).catch(({response}) => {
                 this.error = response.data.data[Object.keys(response.data.data)[0]]
             })
-        }
+        },
+        moneyFormat(price) {
+            if (!price){
+                return 0
+            }
+            const pieces = parseFloat(price).toFixed(0).split("");
+            let ii = pieces.length;
+            while ((ii -= 3) > 0) {
+                pieces.splice(ii, 0, ",");
+            }
+            return pieces.join("");
+        },
     }
 }
 </script>
