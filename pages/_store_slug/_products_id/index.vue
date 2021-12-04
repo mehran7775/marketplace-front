@@ -1,9 +1,6 @@
 <template>
   <div class="row">
     <MoleculesXheader
-      :logo="detail.logo"
-      :fa_name="detail.fa_name"
-      :address="detail.province"
       :setDetail="false"
     ></MoleculesXheader>
     <div id="product" class="container body-hv-fit">
@@ -22,7 +19,6 @@
                 <client-only>
                   <carousel
                     :rtl="true"
-                    :per-page="per_page"
                     v-bind="options"
                     pagination-color="#dee2e6"
                     pagination-active-color="#00c1a4"
@@ -31,7 +27,7 @@
                     <slide
                       v-for="thumbnail in product.thumbnails"
                       :key="thumbnail"
-                      class="img-wrapper"
+                      class="img-wrapper text-center"
                     >
                       <img
                         :src="thumbnail ? thumbnail : '/images/default-image.png'"
@@ -74,8 +70,9 @@
 
 <script>
 import { tr } from "@/services/lang";
-import { storeService } from "@/services/apiServices"
 import { productService } from "@/services/apiServices"
+import { mapGetters } from 'vuex'
+
 export default {
   layout: "index",
   head() {
@@ -90,19 +87,16 @@ export default {
       ],
     };
   },
-  async asyncData({ error, route, $axios, store }) {
+  async asyncData({ error, route}) {
     try {
-      const res = await storeService.getDetail(route.params.store_slug)
-      store.commit("store/set_id", res.data.data.id);
-      const res2=await productService.getProduct(
+      const res=await productService.getProduct(
         {
           store_slug: route.params.store_slug,
           products_id: route.params.products_id
         }
       )
       return {
-        detail: res.data.data,
-        product: res2.data.data,
+        product: res.data.data,
       };
     } catch (e) {
       error({
@@ -115,14 +109,18 @@ export default {
     lang() {
       return tr();
     },
+    ...mapGetters([
+      'detail',
+    ])
   },
   data() {
     return {
       options: {
         loop: false,
         paginationEnabled: true,
+        perPage: 1,
       },
-      per_page: 1,
+     
     };
   },
   methods: {
@@ -133,13 +131,8 @@ export default {
         price: this.product.price,
         img: this.product.thumbnails[0],
         quantity: this.product.quantity,
-        // singleProduct: this.product.singleProduct
       });
     },
-  },
-  mounted() {
-    // document.querySelector('.carousel-wrapper .VueCarousel-inner').style.flexDirection ="row-reverse!important"
-    // document.querySelector('.carousel-wrapper .VueCarousel-inner').style.flexDirection ="row-reverse!important"
   },
 };
 </script>
@@ -148,8 +141,6 @@ export default {
 #product {
   .product {
     .img-wrapper {
-      text-align: center;
-
       img {
         max-width: 100%;
         max-height: 250px;

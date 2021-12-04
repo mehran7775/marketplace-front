@@ -8,9 +8,12 @@ const getters = {
 };
 
 const mutations = {
-    set_id(state, payload) {
-        Vue.set(state, "id", payload)
+    setToState(state,payload){
+        Vue.set(state, payload.name, payload.data)
     },
+    deleteFromState(state,payload){
+        Vue.delete(state, payload)
+    }
 }
 
 const actions = {

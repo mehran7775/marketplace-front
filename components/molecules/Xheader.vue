@@ -1,14 +1,14 @@
 <template>
   <header class="d-flex flex-column-reverse align-items-center d-md-flex flex-md-row">
     <div class="d-flex align-items-center" id="brand_index">
-      <Xbrand :logo="logo"></Xbrand>
+      <Xbrand :logo="detail.logo" :showStory="() => triggerStory=true"></Xbrand>
       <div class="text-right">
         <div id="name_brand">
-          <h1 class="mr-4 h4 text-dark font-weight-bold" v-text="fa_name ? fa_name : 'فروشگاه من'"></h1>
+          <h1 class="mr-4 h4 text-dark font-weight-bold" v-text="detail.fa_name ? detail.fa_name : 'فروشگاه من'"></h1>
         </div>
         <div class="mr-4" v-if="setDetail">
           <fa icon="map-marker"></fa>
-          <span class="mr-1" v-text="address"></span>
+          <span class="mr-1" v-text="detail.province"></span>
         </div>
       </div>
     </div>
@@ -53,31 +53,74 @@
         </nuxt-link>
       </div>
     </div>
+    <transition name="fade">
+      <div v-if="triggerStory" id="story">
+        <div class="float-left mt-3 ml-5">
+          <span class="text-white">
+            <fa  @click="triggerStory=false" :icon="['fa', 'times']" class="text-muted fa-3x closeStory"/>
+          </span>
+        </div>
+        <div class="hv-center">
+          <div class="story rounded">
+            <client-only>
+              <carousel
+                :rtl="true"
+                v-bind="options"
+                pagination-color="#dee2e6"
+                pagination-active-color="#00c1a4"
+                pagination-padding="2"
+              >
+                <slide class="img-wrapper p-4">
+                 <div>
+                   <h2 class="h5 font-weight-bold">توضیحات فروشگاه:</h2>
+                   <p v-text="detail.description"></p>
+                 </div>
+                </slide>
+                <slide class="img-wrapper p-4">
+                 <div>
+                   <h2 class="h5 font-weight-bold">قوانین فروشگاه:</h2>
+                   <p></p>
+                 </div>
+                </slide>
+              </carousel>
+            </client-only>
+          </div>
+        </div>
+      </div>
+    </transition>
   </header>
 </template>
 
 <script>
 import { tr } from "@/services/lang";
+import { mapGetters } from 'vuex'
+
 export default {
   props:{
-      logo:{
-        type:String
-      },
-      fa_name:{
-        type:String
-      },
-      address:{
-        type:String
-      },
       setDetail:{
         type:Boolean,
         default: true
-      }
+      },
+  },
+  data(){
+    return{
+      triggerStory: false,
+      options: {
+        loop: false,
+        paginationEnabled: false,
+        perPage: 1,
+        centerMode: true,
+        navigationEnabled:true,
+        navigationNextLabel:'',
+        navigationPrevLabel:'',
+      },
+    }
   },
   computed: {
     lang() {
       return tr();
     },
+    ...mapGetters(["detail"])
   },
 };
 </script>
@@ -137,6 +180,39 @@ header {
   a {
   text-decoration: none;
   color: inherit;
+  }
 }
+#story{
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height: 100%;
+  background: $back_dark;
+  z-index: 9999;
+  .story{
+   @include medium{
+    max-width: 550px;
+    min-width: 500px;
+   }
+    max-width: 350px;
+    min-width: 330px;
+    height: 80vh;
+    background-color: whitesmoke;
+
+    .img-wrapper {
+      height: 80vh;
+    }
+  }
+  .closeStory:hover{
+    color: white!important;
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

@@ -1,9 +1,6 @@
 <template>
   <div class="row">
     <MoleculesXheader
-      :logo="detail.logo"
-      :fa_name="detail.fa_name"
-      :address="detail.province"
     ></MoleculesXheader>
     <div class="container body-hv-fit">
       <div class="row h-100">
@@ -86,7 +83,7 @@
 <script>
 import { tr } from "@/services/lang";
 import separatePrice from '@/mixins/separatePrice'
-import { storeService } from '@/services/apiServices'
+import { mapGetters } from 'vuex'
 
 export default {
   layout: "index",
@@ -112,24 +109,24 @@ export default {
       ],
     };
   },
-  async asyncData({ error, route, store }) {
-    try {
-      const res = await storeService.getDetail(route.params.store_slug)
-      store.commit("payment/", {
-        name:'gateways',
-        data: res.data.data.gateways
-      });
-      store.commit("store/set_id", res.data.data.id);
-      return {
-        detail: res.data.data,
-      };
-    } catch (e) {
-      error({
-        statusCode: e.response.status,
-        message: e.response.data.message,
-      });
-    }
-  },
+  // async asyncData({ error, route, store }) {
+  //   try {
+  //     const res = await storeService.getDetail(route.params.store_slug)
+  //     store.commit("payment/setToState", {
+  //       name:'gateways',
+  //       data: res.data.data.gateways
+  //     });
+
+  //     return {
+  //       detail: res.data.data,
+  //     };
+  //   } catch (e) {
+  //     error({
+  //       statusCode: e.response.status,
+  //       message: e.response.data.message,
+  //     });
+  //   }
+  // },
   mounted() {
     this.setItems();
     this.$nuxt.$on("refresh-cart", () => {
@@ -199,6 +196,9 @@ export default {
     },
   },
   computed: {
+     ...mapGetters([
+      'detail',
+    ]),
     user_data() {
       return this.$store.state.user.current_user;
     },

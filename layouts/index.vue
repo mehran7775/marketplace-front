@@ -5,7 +5,8 @@
         <Nuxt/>
       </div>
     </div>
-    <MoleculesXsidebarBottom></MoleculesXsidebarBottom>    
+    <MoleculesXsidebarBottom />
+    <!-- <LazyMoleculesStory v-if="triggerStory"/>    -->
   </div>
 </template>
 

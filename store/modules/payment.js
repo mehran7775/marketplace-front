@@ -20,9 +20,9 @@ const getters = {
 };
 
 const actions = {
-     async select_payment({ commit, state }, payload) {
+     async select_payment({ commit, rootState  }, payload) {
         const items = JSON.parse(localStorage.getItem("cart"))[$nuxt.$route.params.store_slug]
-        if(state.gateways && items && items.length > 0){
+        if(rootState.detail.gateways && items && items.length > 0){
             const items_second = [];
             items.forEach((element) => {
               items_second.push({
@@ -43,8 +43,7 @@ const actions = {
                             }
                         }
                     )
-                    commit('user/deleteFromState', "apiErrors")
-                    commit('user/deleteFromState', "gateways")
+                    commit('user/deleteFromState', "apiErrors",{ root:true })
                     commit('deleteFromState', "apiErrors")
                 }
             } catch (e) {

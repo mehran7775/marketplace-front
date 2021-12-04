@@ -1,5 +1,5 @@
 <template>
-  <button @click="showStory()" class="brand d-flex align-items-center justify-content-center">
+  <button @click="showStory" class="brand d-flex align-items-center justify-content-center">
     <img :src="logo ? logo : '/images/logo.svg'" alt="تصویر لوگو">
   </button>
 </template>
@@ -10,6 +10,10 @@ export default {
   props:{
     logo:{
       type:String
+    },
+    showStory:{
+      type:Function,
+      default: () => {}
     }
   },
   computed: {
@@ -17,9 +21,6 @@ export default {
       return tr();
     },
   },
-  showStory(){
-    // this.$store.
-  }
 };
 </script>
 

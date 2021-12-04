@@ -1,9 +1,6 @@
 <template>
   <div class="row">
     <MoleculesXheader
-      :logo="detail.logo"
-      :fa_name="detail.fa_name"
-      :address="detail.province"
     ></MoleculesXheader>
     <div class="container body-hv-fit">
         <div class="row">
@@ -111,29 +108,13 @@
 </template>
 
 <script>
-import { storeService } from "@/services/apiServices"
 import { mapGetters } from 'vuex'
 export default {
     layout: "index",
-    async asyncData({ error, route, store }) {
-        try {
-        const res = await storeService.getDetail(route.params.store_slug)
-        store.commit("store/set_id", res.data.data.id)
-        return {
-            detail: res.data.data,
-        };
-        } catch (e) {
-        if (e.response) {
-            error({
-            statusCode: e.response.status,
-            message: e.response.data.message,
-            });
-        }
-        error({
-            statusCode: 500,
-            message: e
-        })
-        }
+    computed:{
+        ...mapGetters([
+        'detail',
+        ]),
     },
     methods:{      
         do_payment() {
