@@ -1,27 +1,23 @@
-
+import Vue from "vue"
 const state = {
-    phone_number:null,
-    current_user:null,
-    errorsApi:''
+    
 }
+
+const mutations = {
+ 
+   setToState(state,payload){
+    Vue.set(state, payload.name, payload.data)
+   },
+   deleteFromState(state, payload){
+    Vue.delete(state, payload)
+   },
+};
 
 const getters = {
     errorsApi(state) {
         return state.errorsApi
       },
 }
-
-const mutations = {
-   set_phone_number(state,payload){
-       state.phone_number=payload
-   },
-   set_current_user(state,payload){
-       state.current_user=payload
-   },
-   setApiError(state,payload){
-    state.errorsApi=payload
-   }
-};
 
 const actions = {
   

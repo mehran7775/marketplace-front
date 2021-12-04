@@ -1,9 +1,6 @@
 <template>
   <div class="row">
     <MoleculesXheader
-      :logo="detail.logo"
-      :fa_name="detail.fa_name"
-      :address="detail.address"
     ></MoleculesXheader>
     <div class="container body-hv-fit">
         <div class="row">
@@ -111,30 +108,13 @@
 </template>
 
 <script>
-import { storeService } from "@/services/apiServices"
 import { mapGetters } from 'vuex'
 export default {
     layout: "index",
-    async asyncData({ error, route, store }) {
-        try {
-        const res = await storeService.getDetail(route.params.store_slug)
-        // store.commit("payment/set_gateways", res.data.data.gateways)
-        store.commit("store/set_id", res.data.data.id)
-        return {
-            detail: res.data.data,
-        };
-        } catch (e) {
-        if (e.response) {
-            error({
-            statusCode: e.response.status,
-            message: e.response.data.message,
-            });
-        }
-        error({
-            statusCode: 500,
-            message: e
-        })
-        }
+    computed:{
+        ...mapGetters([
+        'detail',
+        ]),
     },
     methods:{      
         do_payment() {
@@ -162,14 +142,9 @@ export default {
 
 <style scoped lang="scss">
 #checkout{
-//   background-color: red;
     border-radius: 10px;
     box-shadow: 1px 1px 12px 0 $secondary;
     padding: 30px;
-    // @include medium{
-    //     max-width: 350px;
-        
-    // }
     margin-top: 10%;
     .getways {
         background-color: white;

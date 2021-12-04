@@ -22,7 +22,6 @@ const actions = {
                 count: 1,
                 img:product.img,
                 quantity:product.quantity,
-                // singleProduct : product.singleProduct
               }
               cart[$nuxt.$route.params.store_slug].push(newObj)
             } else {
@@ -84,7 +83,6 @@ const actions = {
       }
     },
     plusProduct({commit}, pid){
-      // if(!singleProduct){
         let cart = JSON.parse(localStorage.getItem("cart"))
         const p = cart[$nuxt.$route.params.store_slug].find(({ id }) => id === pid)
         if(p.count >= p.quantity){
@@ -101,17 +99,6 @@ const actions = {
         p.count++
         localStorage.setItem('cart',JSON.stringify(cart))
         $nuxt.$emit('refresh-cart',null, { once:true })
-      // }else{
-      //   commit(
-      //     "open_toast",
-      //     {
-      //       msg: "محصول یکتاست",
-      //       variant: "warning",
-      //     },
-      //     { root: true }
-      //   )
-      // }
-      
     }
 };
 
