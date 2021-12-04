@@ -2,29 +2,27 @@ import Vue from 'vue'
 import { orderService } from '@/services/apiServices'
 
 const state = {
+    
 }
 const mutations = {
-    set_gateways(state, payload) {
-        Vue.set(state, "gateways", payload)
+    setToState(state,payload){
+        Vue.set(state,payload.name,payload.data)
     },
-    set_order_id(state, payload) {
-        Vue.set(state, "order_id", payload)
-    },
-    set_errors_api(state, payload){
-        Vue.set(state, "apiErrors", payload)
+    deleteFromState(state,payload){
+        Vue.delete(state,payload)
     }
+
 }
 const getters = {
-    // apiErrors: state => {
-    //     return state.apiErrors
-    //   }
+    apiErrors: state => {
+        return state.apiErrors
+    }
 };
 
 const actions = {
-     async select_payment({ commit, state, dispatch }, payload) {
-        commit('user/setApiError','',{ root:true })
+     async select_payment({ commit, rootState  }, payload) {
         const items = JSON.parse(localStorage.getItem("cart"))[$nuxt.$route.params.store_slug]
-        if(state.gateways && items && items.length > 0){
+        if(rootState.detail.gateways && items && items.length > 0){
             const items_second = [];
             items.forEach((element) => {
               items_second.push({
@@ -35,25 +33,32 @@ const actions = {
             payload["products"] = items_second
             try {
                 const {data} = await orderService.orderCreate(payload)
-                // commit('set_order_id', data.data.order_id)
-                localStorage.setItem('Oid',data.data.order_id)
-                $nuxt.$router.push(
-                    { 
-                        path:`checkout`,
-                        query: {
-                            order_id:data.data.order_id
+                if(data.data.order_id){
+                    localStorage.setItem('oId',data.data.order_id)
+                    $nuxt.$router.push(
+                        { 
+                            path:`checkout`,
+                            query: {
+                                order_id:data.data.order_id
+                            }
                         }
-                    }
-                )
-            } catch (e) {
-                if(e.response.data.data){
-                    const keys=Object.keys(e.response.data.data)
-                    const eData={}
-                    keys.forEach(element => {
-                        eData[element]= e.response.data.data[element]
-                    });
-                    commit('user/setApiError',eData,{root:true})
+                    )
+                    commit('user/deleteFromState', "apiErrors",{ root:true })
+                    commit('deleteFromState', "apiErrors")
                 }
+            } catch (e) {
+                if(e.response.data.data.length > 0 ){
+                    commit('user/setToState',{
+                        name: 'errorsApi',
+                        data: e.response.data.data
+                    },{root:true})
+                    return
+                }
+                commit('open_toast', {
+                    msg: e.response.data.message,
+                    variant: 'error'
+                }, { root: true })
+
             }
         }else{
             commit('open_toast', {
@@ -62,9 +67,12 @@ const actions = {
             }, { root: true })
         }
     },
-    async do_payment({ commit, state }, payload) {
+    async do_payment({ commit }, payload) {
         try {
-            const {data} = await this.$axios.post(`pay/order/${localStorage.getItem("Oid")}`, payload)
+            const {data} = await orderService.orderPayment({
+                oId:localStorage.getItem("oId"),
+                data:payload
+            })
             const form = document.createElement("form");
             const input = document.createElement("input"); 
             form.method = "POST";
@@ -74,7 +82,7 @@ const actions = {
             input.name="token"
             form.appendChild(input)
             document.body.appendChild(form)
-            localStorage.removeItem("Oid")
+            localStorage.removeItem("oId")
             form.submit()
         } catch (e) {
             commit('open_toast', {

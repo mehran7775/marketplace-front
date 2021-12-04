@@ -8,6 +8,15 @@ export const fa = {
         buy:'خرید'
     },
     label: {
+        fname:'نام',
+        lname:'نام خانوادگی',
+        username:'نام کاربری',
+        phone:'شماره تلفن',
+        email:'ایمیل',
+        province:'استان',
+        city:'شهر',
+        address:'آدرس',
+        password:'کلمه عبور',
         info: 'اطلاع',
         completeInfo:'تکمیل اطلاعات',
         warning: 'هشدار',

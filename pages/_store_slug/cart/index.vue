@@ -1,9 +1,6 @@
 <template>
   <div class="row">
     <MoleculesXheader
-      :logo="detail.logo"
-      :fa_name="detail.fa_name"
-      :address="detail.address"
     ></MoleculesXheader>
     <div class="container body-hv-fit">
       <div class="row h-100">
@@ -86,7 +83,7 @@
 <script>
 import { tr } from "@/services/lang";
 import separatePrice from '@/mixins/separatePrice'
-import { storeService } from '@/services/apiServices'
+import { mapGetters } from 'vuex'
 
 export default {
   layout: "index",
@@ -112,21 +109,24 @@ export default {
       ],
     };
   },
-  async asyncData({ error, route, store }) {
-    try {
-      const res = await storeService.getDetail(route.params.store_slug)
-      store.commit("payment/set_gateways", res.data.data.gateways);
-      store.commit("store/set_id", res.data.data.id);
-      return {
-        detail: res.data.data,
-      };
-    } catch (e) {
-      error({
-        statusCode: e.response.status,
-        message: e.response.data.message,
-      });
-    }
-  },
+  // async asyncData({ error, route, store }) {
+  //   try {
+  //     const res = await storeService.getDetail(route.params.store_slug)
+  //     store.commit("payment/setToState", {
+  //       name:'gateways',
+  //       data: res.data.data.gateways
+  //     });
+
+  //     return {
+  //       detail: res.data.data,
+  //     };
+  //   } catch (e) {
+  //     error({
+  //       statusCode: e.response.status,
+  //       message: e.response.data.message,
+  //     });
+  //   }
+  // },
   mounted() {
     this.setItems();
     this.$nuxt.$on("refresh-cart", () => {
@@ -148,7 +148,10 @@ export default {
     compute_whole_price(items) {
       let sum = 0;
       items.forEach((element) => {
-        sum += parseInt(element.price.replace(",", "")) * element.count;
+        while( element.price.includes(",")){
+          element.price=element.price.replace(",", "")
+        }
+      sum += parseInt(element.price.replace(",", "")) * element.count;
       });
       return sum;
     },
@@ -174,6 +177,18 @@ export default {
             address: this.user_data.addresses[0].address,
           },
         };
+
+        if(this.detail.options.address === 1){
+          if(this.detail.shipping_settings.shipping_region === 1 || data.address.province == this.detail.province){
+            this.$store.dispatch("payment/select_payment", data)
+            return
+          }
+          this.$store.commit('open_toast',{
+            msg: ' محصول در منطقه شما قابل ارسال نمی باشد',
+            variant: 'error'
+          })
+          return
+        }
         this.$store.dispatch("payment/select_payment", data);
       } else {
         this.$router.push(`/${this.$route.params.store_slug}/complete-info`);
@@ -181,6 +196,9 @@ export default {
     },
   },
   computed: {
+     ...mapGetters([
+      'detail',
+    ]),
     user_data() {
       return this.$store.state.user.current_user;
     },

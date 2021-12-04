@@ -1,7 +1,7 @@
 <template>
-  <nuxt-link :to="`/${$route.params.store_slug}`" class="brand">
+  <button @click="showStory" class="brand d-flex align-items-center justify-content-center">
     <img :src="logo ? logo : '/images/logo.svg'" alt="تصویر لوگو">
-  </nuxt-link>
+  </button>
 </template>
 
 <script>
@@ -10,6 +10,10 @@ export default {
   props:{
     logo:{
       type:String
+    },
+    showStory:{
+      type:Function,
+      default: () => {}
     }
   },
   computed: {
@@ -25,6 +29,7 @@ export default {
   width: 60px;
   height: 60px;
   padding: 2px;
+  padding-top: 3.1px;
   background-color: $white;
   border-radius: 100%;
   border: 2.9px solid $success;

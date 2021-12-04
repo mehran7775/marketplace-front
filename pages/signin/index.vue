@@ -3,52 +3,46 @@
     <ValidationObserver ref="validationObserver">
       <Xform>
         <template #content>
-          <div class="form-group">
-            <label>نام کاربری</label>
-            <ValidationProvider rules="required|min:3" v-slot="{ errors }">
-              <input
-                v-model="outh_param"
-                ref="auth_path"
-                type="text"
-                id="نام کاربری"
-                maxlength="35"
-                placeholder="شماره تلفن یا ایمیل"
-                :class="[errors[0] ? 'xborder-danger' : null, 'form-control']"
-              />
-              <div v-if="errors[0]" class="py-2 pr-2">
-                <span class="text-danger">{{ errors[0] }}</span>
-              </div>
-            </ValidationProvider>
-          </div>
-          <div class="form-group">
-            <label>کلمه عبور</label>
-            <ValidationProvider
-              rules="required|min:6|max:20"
-              v-slot="{ errors }"
+          <ValidationProvider vid="outh_param" :name="lang.label.username" rules="required|min:3"   v-slot="{ valid, errors }">
+            <b-form-group
+            :label="lang.label.username"
             >
-              <input
-                v-model="password"
-                ref="password"
-                type="text"
-                placeholder="مثال: 1234565"
-                id="کلمه عبور"
-                maxlength="25"
-                class="form-control"
-              />
-              <div v-if="errors[0]" class="py-2 pr-2">
-                <span class="text-danger">{{ errors[0] }}</span>
-              </div>
-            </ValidationProvider>
-          </div>
-          <Xbutton :on_click="do_login" class="w-100 mt-3" text="ورود"></Xbutton>
-          <div v-if="errors.length > 0" class="text-center pt-3">
-            <p
-              v-for="error in errors"
-              :key="error"
-              v-text="error"
-              class="text-danger"
-            ></p>
-          </div>
+                <b-form-input
+                  v-model="outh_param"
+                  ref="auth_path"
+                  type="text"
+                  maxlength="35"
+                  placeholder="شماره تلفن یا ایمیل"
+                  :state="errors[0] ? false : (valid ? true : null)"
+                ></b-form-input>
+              <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+            </b-form-group>
+          </ValidationProvider>
+          <ValidationProvider 
+              vid="password" :name="lang.label.password"
+              rules="required|min:6|max:20"
+                v-slot="{ valid, errors }"
+            >
+              <b-form-group
+                :label="lang.label.password"
+              >
+                
+                  <b-form-input
+                    v-model="password"
+                    ref="password"
+                    type="text"
+                    placeholder="مثال: 1234565"
+                    maxlength="25"
+                    :state="errors[0] ? false : (valid ? true : null)"
+                  ></b-form-input>
+                  <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
+              </b-form-group>
+          </ValidationProvider>
+          <Xbutton :disable="btnDisable" :on_click="do_login" class="w-100 mt-3" :text="lang.svg.signIn">
+            <template #spinner>
+              <b-spinner v-show="laodingLogin" small  class="float-left"></b-spinner>
+            </template>
+          </Xbutton>
           <div class="text-center mt-3">
             <span>هنوز ثبت نام نکرده اید؟</span>
             <router-link to="/signup">کلیک کنید</router-link>
@@ -62,6 +56,8 @@
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { authService } from "@/services/apiServices";
+import { tr } from "@/services/lang";
+
 export default {
   middleware: "guest",
   layout: "sign",
@@ -73,28 +69,35 @@ export default {
     return {
       outh_param: "",
       password: "",
-      errors: [],
+      laodingLogin:false,
+      btnDisable:false
     };
   },
   methods: {
     do_login() {
-      this.errors = [];
       this.$refs.validationObserver.validate().then((res) => {
         if (res) {
+          this.btnDisable= true
+          this.laodingLogin= true
           authService.loginCustomer({
               outh_param: this.outh_param,
               password: this.password,
               login_with_verification_code: false,
             })
             .then((res) => {
+              this.btnDisable= false
+              this.laodingLogin= false
               if (res.status === 200) {
                 this.$cookies.set("token-buyer", res.data.data.api.token);
                 authService.currentUser(res.data.data.api.token)
                   .then((res) => {
                     this.$store.commit(
-                      "user/set_current_user", res.data.data,{ root: true }
+                      "user/setToState", {
+                        name: 'current_user',
+                        data: res.data.data
+                      },{ root: true }
                     );
-                    this.$router.replace("/admin-buyer");
+                    this.$router.replace("/panel-customer");
                     this.$store.commit(
                       "open_toast",{
                         msg: res.data.message,
@@ -108,6 +111,8 @@ export default {
               }
             })
             .catch(e => {
+              this.btnDisable= false
+              this.laodingLogin= false
               if (e.response.status === 401){
                 this.$store.commit("open_toast",{
                     msg: e.response.data.message,
@@ -117,10 +122,7 @@ export default {
                 );
               }
               if (e.response.status === 400) {
-                console.log(Object.keys(e.response.data.data));
-                Object.keys(e.response.data.data).forEach((element) => {
-                  this.errors.push(e.response.data.data[element][0]);
-                })
+                this.$refs.validationObserver.setErrors(e.response.data.data);
               }
             })
         } else {
@@ -129,6 +131,11 @@ export default {
       });
     },
   },
+  computed:{
+    lang(){
+      return tr()
+    }
+  }
 };
 </script>
 
