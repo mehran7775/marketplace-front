@@ -5,7 +5,7 @@ const state = {
 
 const mutations = {
     setToState(state,payload){
-        Vue.set(state, payload.name, payload.date)
+        Vue.set(state, payload.name, payload.data)
     },
     deleteFromState(state, payload){
         Vue.delete(state, payload)
