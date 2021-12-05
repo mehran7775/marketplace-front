@@ -26,6 +26,7 @@ export default {
     env: {
         baseUrl: process.env.BASE_URL || 'https://coreshop.paystar.ir/api'
     },
+    debug: true,
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
         '@/assets/styles/main.scss',
@@ -110,35 +111,9 @@ export default {
         axios: {
             baseURL: process.env.BASE_URL || 'https://coreshop.paystar.ir/api',
         },
-        // apiSecret: process.env.API_SECRET,
     },
     loading: {
         color: '#00c1a4',
         height: '2px'
     },
-    auth: {
-        strategies: {
-            'laravelJWT': {
-                // provider: 'laravel/jwt',
-                url: 'https://coreshop.paystar.ir/api',
-                endpoints: {
-                    login: {
-                        url: '/customer/login',
-                        method: 'post',
-                    },
-                    user: {
-                        url: '/customer/current',
-                        method: 'get'
-                    }
-                },
-                token: {
-                    property: 'data.api.token',
-                    // maxAge: 60 * 60
-                },
-                //   refreshToken: {
-                //     maxAge: 20160 * 60
-                //   },
-            },
-        }
-    }
 }
