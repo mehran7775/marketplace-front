@@ -34,15 +34,8 @@ const actions = {
             try {
                 const {data} = await orderService.orderCreate(payload)
                 if(data.data.order_id){
-                    localStorage.setItem('oId',data.data.order_id)
-                    $nuxt.$router.push(
-                        { 
-                            path:`checkout`,
-                            query: {
-                                order_id:data.data.order_id
-                            }
-                        }
-                    )
+                    localStorage.setItem('dataPayment',JSON.stringify(data.data))
+                    $nuxt.$router.push({path:`checkout`})
                     commit('user/deleteFromState', "apiErrors",{ root:true })
                     commit('deleteFromState', "apiErrors")
                 }
@@ -82,7 +75,7 @@ const actions = {
             input.name="token"
             form.appendChild(input)
             document.body.appendChild(form)
-            localStorage.removeItem("oId")
+            localStorage.removeItem("dataPayment")
             form.submit()
         } catch (e) {
             commit('open_toast', {

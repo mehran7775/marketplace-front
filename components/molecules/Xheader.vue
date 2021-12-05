@@ -62,34 +62,32 @@
         </div>
         <div class="hv-center">
           <div class="story rounded">
-            <client-only>
-              <carousel
-                :rtl="true"
-                v-bind="options"
-                pagination-color="#dee2e6"
-                pagination-active-color="#00c1a4"
-                pagination-padding="2"
-              >
-                <slide class="img-wrapper p-4">
-                 <div class="d-flex align-items-center">
-                   <img class="rounded-circle" width="48" height="48" :src="detail.logo" :alt="`لوگوی فروشگاه ${detail.fa_name}`">
-                   <h2 class="h5 font-weight-bold">توضیحات فروشگاه:</h2>
-                 </div>
-                 <div class="py-4 px-4">
-                   <p v-text="detail.description"></p>
-                 </div>
-                </slide>
-                <slide class="img-wrapper p-4">
+            <carousel
+              :rtl="true"
+              v-bind="options"
+              pagination-color="#dee2e6"
+              pagination-active-color="#00c1a4"
+              pagination-padding="2"
+            >
+              <slide class="img-wrapper p-4">
                 <div class="d-flex align-items-center">
-                   <img class="rounded-circle" width="48" height="48" :src="detail.logo" :alt="`لوگوی فروشگاه ${detail.fa_name}`">
-                   <h2 class="h5 font-weight-bold">قوانین فروشگاه:</h2>
-                 </div>
-                 <div class="py-4 px-4">
-                   <p v-text="detail.description"></p>
-                 </div>
-                </slide>
-              </carousel>
-            </client-only>
+                  <img class="rounded-circle" width="48" height="48" :src="detail.logo" :alt="`لوگوی فروشگاه ${detail.fa_name}`">
+                  <h2 class="h5 font-weight-bold">توضیحات فروشگاه:</h2>
+                </div>
+                <div class="py-4 px-4">
+                  <p v-text="detail.description"></p>
+                </div>
+              </slide>
+              <slide class="img-wrapper p-4">
+              <div class="d-flex align-items-center">
+                  <img class="rounded-circle" width="48" height="48" :src="detail.logo" :alt="`لوگوی فروشگاه ${detail.fa_name}`">
+                  <h2 class="h5 font-weight-bold">قوانین فروشگاه:</h2>
+                </div>
+                <div class="py-4 px-4">
+                  <p v-text="detail.description"></p>
+                </div>
+              </slide>
+            </carousel>
           </div>
         </div>
       </div>
