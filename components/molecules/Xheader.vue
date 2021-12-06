@@ -62,28 +62,32 @@
         </div>
         <div class="hv-center">
           <div class="story rounded">
-            <client-only>
-              <carousel
-                :rtl="true"
-                v-bind="options"
-                pagination-color="#dee2e6"
-                pagination-active-color="#00c1a4"
-                pagination-padding="2"
-              >
-                <slide class="img-wrapper p-4">
-                 <div>
-                   <h2 class="h5 font-weight-bold">توضیحات فروشگاه:</h2>
-                   <p v-text="detail.description"></p>
-                 </div>
-                </slide>
-                <slide class="img-wrapper p-4">
-                 <div>
-                   <h2 class="h5 font-weight-bold">قوانین فروشگاه:</h2>
-                   <p></p>
-                 </div>
-                </slide>
-              </carousel>
-            </client-only>
+            <carousel
+              :rtl="true"
+              v-bind="options"
+              pagination-color="#dee2e6"
+              pagination-active-color="#00c1a4"
+              pagination-padding="2"
+            >
+              <slide class="img-wrapper p-4">
+                <div class="d-flex align-items-center">
+                  <img class="rounded-circle" width="48" height="48" :src="detail.logo" :alt="`لوگوی فروشگاه ${detail.fa_name}`">
+                  <h2 class="h5 font-weight-bold">توضیحات فروشگاه:</h2>
+                </div>
+                <div class="py-4 px-4">
+                  <p v-text="detail.description"></p>
+                </div>
+              </slide>
+              <slide class="img-wrapper p-4">
+              <div class="d-flex align-items-center">
+                  <img class="rounded-circle" width="48" height="48" :src="detail.logo" :alt="`لوگوی فروشگاه ${detail.fa_name}`">
+                  <h2 class="h5 font-weight-bold">قوانین فروشگاه:</h2>
+                </div>
+                <div class="py-4 px-4">
+                  <p v-text="detail.description"></p>
+                </div>
+              </slide>
+            </carousel>
           </div>
         </div>
       </div>
@@ -136,6 +140,7 @@ header {
     transition: color 0.2s;
     cursor: pointer;
   }
+
   @include medium {
     box-shadow: 0 0 6px 0 $silver;
     border-bottom: 1px solid $silver;
@@ -191,14 +196,10 @@ header {
   background: $back_dark;
   z-index: 9999;
   .story{
-   @include medium{
-    max-width: 550px;
-    min-width: 500px;
-   }
-    max-width: 350px;
-    min-width: 330px;
+    width: 70vw;
     height: 80vh;
-    background-color: whitesmoke;
+    background-color: aqua;
+    background-color: $white;
 
     .img-wrapper {
       height: 80vh;

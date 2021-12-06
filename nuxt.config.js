@@ -69,11 +69,9 @@ export default {
         // https://go.nuxtjs.dev/bootstrap
         'bootstrap-vue/nuxt',
         // https://go.nuxtjs.dev/axios
-        '@nuxtjs/axios',
         // https://go.nuxtjs.dev/pwa
         '@nuxtjs/pwa',
         '@nuxtjs/axios',
-        '@nuxtjs/auth-next',
         "cookie-universal-nuxt",
         "vue-toastification/nuxt",
     ],
@@ -112,35 +110,9 @@ export default {
         axios: {
             baseURL: process.env.BASE_URL || 'https://coreshop.paystar.ir/api',
         },
-        // apiSecret: process.env.API_SECRET,
     },
     loading: {
         color: '#00c1a4',
         height: '2px'
     },
-    auth: {
-        strategies: {
-            'laravelJWT': {
-                // provider: 'laravel/jwt',
-                url: 'https://coreshop.paystar.ir/api',
-                endpoints: {
-                    login: {
-                        url: '/customer/login',
-                        method: 'post',
-                    },
-                    user: {
-                        url: '/customer/current',
-                        method: 'get'
-                    }
-                },
-                token: {
-                    property: 'data.api.token',
-                    // maxAge: 60 * 60
-                },
-                //   refreshToken: {
-                //     maxAge: 20160 * 60
-                //   },
-            },
-        }
-    }
 }

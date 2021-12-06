@@ -67,7 +67,7 @@ export default {
                     this.stores = res.data.data.data
                 })
         }).catch(({response}) => {
-            // this.$router.push('/landing');
+            this.$router.push('/landing');
         })
     },
 };
