@@ -109,24 +109,6 @@ export default {
       ],
     };
   },
-  // async asyncData({ error, route, store }) {
-  //   try {
-  //     const res = await storeService.getDetail(route.params.store_slug)
-  //     store.commit("payment/setToState", {
-  //       name:'gateways',
-  //       data: res.data.data.gateways
-  //     });
-
-  //     return {
-  //       detail: res.data.data,
-  //     };
-  //   } catch (e) {
-  //     error({
-  //       statusCode: e.response.status,
-  //       message: e.response.data.message,
-  //     });
-  //   }
-  // },
   mounted() {
     this.setItems();
     this.$nuxt.$on("refresh-cart", () => {
