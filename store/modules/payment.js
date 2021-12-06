@@ -34,8 +34,9 @@ const actions = {
             try {
                 const {data} = await orderService.orderCreate(payload)
                 if(data.data.order_id){
-                    localStorage.setItem('dataPayment',JSON.stringify(data.data))
-                    $nuxt.$router.push({path:`checkout`})
+                    $nuxt.$router.push({path:`checkout`, query:{
+                        data:data.data
+                    }})
                     commit('user/deleteFromState', "apiErrors",{ root:true })
                     commit('deleteFromState', "apiErrors")
                 }
