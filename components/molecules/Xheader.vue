@@ -1,7 +1,7 @@
 <template>
   <header class="d-flex flex-column-reverse align-items-center d-md-flex flex-md-row">
     <div class="d-flex align-items-center" id="brand_index">
-      <Xbrand :logo="detail.logo" :showStory="() => triggerStory=true"></Xbrand>
+      <Xbrand :logo="detail.logo" :showStory="() => startStory()"></Xbrand>
       <div class="text-right">
         <div id="name_brand">
           <h1 class="mr-4 h4 text-dark font-weight-bold" v-text="detail.fa_name ? detail.fa_name : 'فروشگاه من'"></h1>
@@ -57,37 +57,45 @@
       <div v-if="triggerStory" id="story">
         <div class="float-left mt-3 ml-5">
           <span class="text-white">
-            <fa  @click="triggerStory=false" :icon="['fa', 'times']" class="text-muted fa-3x closeStory"/>
+            <fa  @click="hideStory()" :icon="['fa', 'times']" class="text-muted fa-2x closeStory"/>
           </span>
         </div>
         <div class="hv-center">
           <div class="story rounded">
-            <carousel
-              :rtl="true"
-              v-bind="options"
-              pagination-color="#dee2e6"
-              pagination-active-color="#00c1a4"
-              pagination-padding="2"
-            >
-              <slide class="img-wrapper p-4">
-                <div class="d-flex align-items-center">
-                  <img class="rounded-circle" width="48" height="48" :src="detail.logo" :alt="`لوگوی فروشگاه ${detail.fa_name}`">
-                  <h2 class="h5 font-weight-bold">توضیحات فروشگاه:</h2>
-                </div>
-                <div class="py-4 px-4">
-                  <p v-text="detail.description"></p>
-                </div>
-              </slide>
-              <slide class="img-wrapper p-4">
-              <div class="d-flex align-items-center">
-                  <img class="rounded-circle" width="48" height="48" :src="detail.logo" :alt="`لوگوی فروشگاه ${detail.fa_name}`">
-                  <h2 class="h5 font-weight-bold">قوانین فروشگاه:</h2>
-                </div>
-                <div class="py-4 px-4">
-                  <p v-text="detail.description"></p>
-                </div>
-              </slide>
-            </carousel>
+            <div class="col h-100">
+               <div class="row justify-content-center h-100">
+                  <div class="w-50">
+                        <div @click="changeStory('first')"><b-progress height="4px" :value="counterTime.first" variant="success"  class="mb-3 cursor_pointer" :striped="false"></b-progress></div>
+                   </div>
+                  <div class="w-50 pr-1">
+                      <div @click="changeStory('second')"><b-progress height="4px" :value="counterTime.second" variant="success" class="mb-3 cursor_pointer" :striped="false"></b-progress></div>
+                  </div>
+                  <div class="col h-100">
+                    <div v-show="counterTime.first >= 0 && counterTime.first <= 100 && showStory.first" @mousedown="stopCounterTime('first')" @mouseup="continueCounterTime('first')" class="row h-100">
+                    <div class="col">
+                      <div class="row align-items-center">
+                        <Xbrand class="mx-3" :logo="detail.logo" :alt="detail.fa_name"></Xbrand>
+                        <h2 class="h4">توضیحات فروشگاه</h2>
+                      </div>
+                      <div class="row">
+                        <p class="py-2 px-5 mt-2" v-text="detail.description"></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div v-show="counterTime.second >= 0 && counterTime.second <= 100 && showStory.second" @mousedown="stopCounterTime('second')" @mouseup="continueCounterTime('second')" class="row h-100">
+                    <div class="col">
+                      <div class="row align-items-center">
+                        <Xbrand class="mx-3" :logo="detail.logo" :alt="detail.fa_name"></Xbrand>
+                        <h2 class="h4">قوانین فروشگاه</h2>
+                      </div>
+                      <div class="row">
+                        <p class="py-2 px-5 mt-2" v-text="'قوانین'"></p>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -96,6 +104,7 @@
 </template>
 
 <script>
+
 import { tr } from "@/services/lang";
 import { mapGetters } from 'vuex'
 
@@ -109,15 +118,18 @@ export default {
   data(){
     return{
       triggerStory: false,
-      options: {
-        loop: false,
-        paginationEnabled: false,
-        perPage: 1,
-        centerMode: true,
-        navigationEnabled:true,
-        navigationNextLabel:'',
-        navigationPrevLabel:'',
+      showStory:{
+        first: true,
+        second: false
       },
+      counterTime:{
+        first: 0,
+        second: 0
+      },
+      story:{
+        first: null,
+        second: null
+      }
     }
   },
   computed: {
@@ -126,6 +138,74 @@ export default {
     },
     ...mapGetters(["detail"])
   },
+  mounted(){
+    
+  },
+  methods:{
+    startStory(){
+      this.triggerStory=true
+      if(this.showStory.first){
+        this.story.first=setInterval(this.actionStartFirstStory,60) 
+      }else if(this.showStory.second){
+        this.story.second=setInterval(this.actionStartSecondStory,60) 
+      }
+    },
+    actionStartFirstStory(){
+      if(this.counterTime.first >= 100){
+        clearInterval(this.story.first)
+        this.showStory.first = false
+        this.showStory.second = true
+        this.startStory()
+      }else{
+         this.counterTime.first++
+      }
+    },
+    actionStartSecondStory(){
+      if(this.counterTime.second >= 100){
+        setTimeout(this.hideStory,1000)
+      }else{
+         this.counterTime.second++
+      }
+    },
+    stopCounterTime(name){
+      clearInterval(this.story[name])
+      
+    },
+    continueCounterTime(){
+      this.startStory()
+    },
+    hideStory(fade= true){
+      this.showStory.first= true
+      this.showStory.second= false
+      this.counterTime.first= 0
+      this.counterTime.second= 0
+      fade ? this.triggerStory= false : null
+      clearInterval(this.story.first)
+      clearInterval(this.story.second)
+
+    },
+    changeStory(name){
+      if(name == 'first'){
+        if(this.showStory.first){
+          return
+        }
+        this.hideStory(false)
+        setTimeout(this.startStory,300)
+      }else{
+        if(this.showStory.second){
+          return
+        }
+        this.showStory.first= false
+        this.showStory.second= true
+        this.counterTime.first= 100
+        this.counterTime.second= 0
+        clearInterval(this.story.first)
+        clearInterval(this.story.second)
+         setTimeout(this.startStory,300)
+      }
+    }
+
+  }
 };
 </script>
 
@@ -196,10 +276,13 @@ header {
   background: $back_dark;
   z-index: 9999;
   .story{
-    width: 70vw;
+    width: 85vw;
     height: 80vh;
     background-color: aqua;
     background-color: $white;
+    @include medium{
+      width: 50vw;
+    }
 
     .img-wrapper {
       height: 80vh;

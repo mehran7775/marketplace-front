@@ -14,25 +14,25 @@
                             <div class="row mb-1 mt-2">
                                 <div class="col-12 rounded text-white py-2" id="bgInfo">
                                     <div class="row mt-1">
-                                        <div class="col12 col-sm-6">
+                                        <div v-if="detail.options.name === 1" class="col-12 col-sm-6">
                                             نام: 
-                                            <span v-if="detail.options.name === 1" v-text="dataPayment.customer_data.first_name ? dataPayment.customer_data.first_name : ''"></span>
+                                            <span v-text="dataPayment.customer_data.first_name ? dataPayment.customer_data.first_name : ''"></span>
                                         </div>
-                                        <div class="col12 col-sm-6 mt-1">
+                                        <div  v-if="detail.options.name === 1" class="col-12 col-sm-6 mt-1">
                                             نام خانوادگی: 
-                                            <span v-if="detail.options.name === 1" v-text="dataPayment.customer_data.last_name ? dataPayment.customer_data.last_name: ''"></span>
+                                            <span v-text="dataPayment.customer_data.last_name ? dataPayment.customer_data.last_name: ''"></span>
                                         </div>
-                                        <div class="col12 col-sm-6 mt-1">
+                                        <div v-if="detail.options.email === 1" class="col-12 col-sm-6 mt-1">
                                             ایمیل: 
-                                            <span v-if="detail.options.email === 1" v-text="dataPayment.customer_data.email"></span>
+                                            <span v-text="dataPayment.customer_data.email"></span>
                                         </div>
-                                        <div class="col12 col-sm-6 mt-1">
+                                        <div v-if="detail.options.phone === 1" class="col-12 col-sm-6 mt-1">
                                             تلفن: 
-                                            <span v-if="detail.options.phone === 1" v-text="dataPayment.customer_data.phone"></span>
+                                            <span v-text="dataPayment.customer_data.phone"></span>
                                         </div>
-                                        <div class="col-12 mt-1">
+                                        <div v-if="detail.options.address === 1" class="col-12 mt-1">
                                             آدرس: 
-                                            <span v-if="detail.options.address === 1" v-text="dataPayment.customer_data.address"></span>
+                                            <span v-text="dataPayment.customer_data.address"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@
                                             <div class="row">
                                                 <div class="d-flex justify-content-between w-100">
                                                     <div v-text="product.title"></div>
-                                                    <div v-text="separate(product.price)"></div>
+                                                    <div v-text="`${separate(product.price)} ${lang.price}`"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -60,17 +60,21 @@
                         <hr class="w-100">
                         <div class="col">
                             <div class="row">
+                                 <div class="d-flex justify-content-between w-100">
+                                    <span>جمع کل سفارش</span>
+                                    <span v-text="`${separate(dataPayment.total_price)} ${separate(dataPayment.total_price) != 0 ? lang.price : '' }`"></span>
+                                </div>
                                 <div class="d-flex justify-content-between w-100">
                                     <span>هزینه ارسال</span>
-                                    <span v-text="separate(dataPayment.shipping_cost)"></span>
+                                    <span v-text="`${separate(dataPayment.shipping_cost)} ${separate(dataPayment.shipping_cost) != 0 ? lang.price : ''}`"></span>
                                 </div>
                                 <div class="d-flex justify-content-between w-100">
                                     <span>مالیات بر ارزش افزوده</span>
-                                    <span v-text="separate(dataPayment.tax)"></span>
+                                    <span v-text="`${separate(dataPayment.tax)} ${separate(dataPayment.tax) != 0 ? lang.price : ''}`"></span>
                                 </div>
-                                <div class="d-flex justify-content-between w-100">
-                                    <span>جمع کل</span>
-                                    <span v-text="separate(dataPayment.total_price)"></span>
+                                  <div class="d-flex justify-content-between w-100">
+                                    <span>مبلغ قابل پرداخت</span>
+                                    <span v-text="`${separate(dataPayment.payment_price)} ${separate(dataPayment.payment_price) != 0 ? lang.price : ''}`"></span>
                                 </div>
                             </div>
                         </div>
@@ -114,6 +118,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import separatePrice from '@/mixins/separatePrice'
+import { tr } from '@/services/lang'
 export default {
     layout: "index",
      middleware({ route, redirect }) {
@@ -128,6 +133,9 @@ export default {
         ]),
         dataPayment(){
             return this.$route.query.data
+        },
+        lang(){
+            return tr()
         }
     },
  

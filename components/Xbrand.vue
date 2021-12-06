@@ -1,6 +1,6 @@
 <template>
   <button @click="showStory" class="brand d-flex align-items-center justify-content-center">
-    <img :src="logo ? logo : '/images/logo.svg'" alt="تصویر لوگو">
+    <img :src="logo ? logo : '/images/logo.svg'" :alt="`لوگوی فروشگاه ${alt}`">
   </button>
 </template>
 
@@ -9,6 +9,9 @@ import { tr } from "@/services/lang";
 export default {
   props:{
     logo:{
+      type:String
+    },
+    alt:{
       type:String
     },
     showStory:{
