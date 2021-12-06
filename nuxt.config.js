@@ -26,7 +26,6 @@ export default {
     env: {
         baseUrl: process.env.BASE_URL || 'https://coreshop.paystar.ir/api'
     },
-    debug: true,
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
         '@/assets/styles/main.scss',
