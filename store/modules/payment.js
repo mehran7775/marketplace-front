@@ -61,11 +61,11 @@ const actions = {
             }, { root: true })
         }
     },
-    async do_payment({ commit }, payload) {
+    async doPayment({ commit }, payload) {
         try {
             const {data} = await orderService.orderPayment({
-                oId:localStorage.getItem("oId"),
-                data:payload
+                oId:payload.oId.order_id,
+                data:payload.gId
             })
             const form = document.createElement("form");
             const input = document.createElement("input"); 

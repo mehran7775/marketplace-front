@@ -104,7 +104,7 @@
                         </div>
                         <div class="col">
                             <div class="row mt-4">
-                                <button class="btn btn-success w-100" @click="do_payment()">پرداخت</button>
+                                <button class="btn btn-success w-100" @click="doPayment()">پرداخت</button>
                             </div>
                         </div>
                     </div>
@@ -140,7 +140,7 @@ export default {
     },
  
     methods:{      
-        do_payment() {
+        doPayment() {
             if(this.detail.gateways.length > 1){
                 let gateway_id = null;
                 this.detail.gateways.forEach((gateway) => {
@@ -149,13 +149,23 @@ export default {
                     }
                 });
                 if (gateway_id) {
-                    this.$store.dispatch("payment/do_payment", {
-                        gateway_id:gateway_id
+                    this.$store.dispatch("payment/doPayment", {
+                        gId:{ 
+                            gateway_id:gateway_id
+                        },
+                        oId:{
+                            order_id: this.dataPayment.order_id
+                        }
                     })
                 }
             }else{
-                this.$store.dispatch('payment/do_payment',{
-                    gateway_id: this.detail.gateways[0].id
+                this.$store.dispatch('payment/doPayment',{
+                    gId:{ 
+                        gateway_id: this.detail.gateways[0].id
+                    },
+                    oId:{
+                        order_id: this.dataPayment.order_id
+                    }
                 });
             }
         },
