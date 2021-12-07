@@ -71,10 +71,10 @@ export default {
       type: Number,
       default: 0,
     },
-    // singleProduct:{
-    //   type: Boolean,
-    //   default:false
-    // }
+    is_multiple:{
+      type: Boolean,
+      default:false
+    }
   },
   computed: {
     lang() {
@@ -99,7 +99,8 @@ export default {
         price: this.price,
         img: this.image,
         quantity: this.quantity,
-        // singleProduct: this.singleProduct
+        is_multiple : this.is_multiple,
+        count: 1
       };
       this.$store.dispatch("cart/addProductToCart", product);
     },

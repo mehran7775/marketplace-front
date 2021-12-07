@@ -25,7 +25,8 @@
                               <span v-html="item.icon"></span>
                               <span class="pr-2">{{ item.title }}</span>
                            </div>
-                            <span class="ml-2 badge-counter bg-success text-white d-flex justify-content-center" v-if="InAnticipationShops && $can('manage', 'all') && item.url === '/admin/stores'" v-text="InAnticipationShops"></span>
+                            <span class="ml-2 badge-counter bg-success text-white d-flex justify-content-center" v-if="inAnticipationShops && item.url === '/admin/stores'" v-text="inAnticipationShops"></span>
+                      <span class="ml-2 badge-counter bg-success text-white d-flex justify-content-center" v-if="inMyAnticipationShops && item.url === '/'" v-text="inMyAnticipationShops"></span>
                         </nuxt-link>
                     </li>
                 </template>
@@ -36,7 +37,8 @@
                               <span v-html="item.icon"></span>
                               <span class="pr-2">{{ item.title }}</span>
                             </div>
-                            <span class="ml-2 badge-counter bg-success text-white d-flex justify-content-center" v-if="InAnticipationShops && $can('manage', 'all') && item.url === '/admin/stores'" v-text="InAnticipationShops"></span>
+                             <span class="ml-2 badge-counter bg-success text-white d-flex justify-content-center" v-if="inAnticipationShops && item.url === '/admin/stores'" v-text="inAnticipationShops"></span>
+                      <span class="ml-2 badge-counter bg-success text-white d-flex justify-content-center" v-if="inMyAnticipationShops && item.url === '/'" v-text="inMyAnticipationShops"></span>
                         </nuxt-link>
                     </li>
                 </template>
@@ -54,10 +56,12 @@ import $ from 'jquery'
 export default {
   name: "mobile-aside",
   props:{
-    InAnticipationShops:{
-      default: '',
-      type: Number
-    }
+     inAnticipationShops:{
+      default: ''
+    },
+    inMyAnticipationShops:{
+      default: ''
+    },
   },
   data() {
     return {

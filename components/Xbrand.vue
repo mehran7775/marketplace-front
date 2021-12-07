@@ -1,6 +1,6 @@
 <template>
   <button @click="showStory" class="brand d-flex align-items-center justify-content-center">
-    <img :src="logo ? logo : '/images/logo.svg'" :alt="`لوگوی فروشگاه ${alt}`">
+    <img :src="logo ? logo : '/images/logo.svg'" :alt="`لوگوی فروشگاه ${alt ? alt : ''}`">
   </button>
 </template>
 

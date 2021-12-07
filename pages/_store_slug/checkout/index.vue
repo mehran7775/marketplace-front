@@ -121,7 +121,7 @@ import separatePrice from '@/mixins/separatePrice'
 import { tr } from '@/services/lang'
 export default {
     layout: "index",
-     middleware({ route, redirect }) {
+    middleware({ route, redirect }) {
       if (!route.query.data.order_id) {
         return redirect(`/${route.params.store_slug}/complete-info`)
       }

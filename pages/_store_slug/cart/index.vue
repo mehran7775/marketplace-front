@@ -28,7 +28,7 @@
                   <div class="name_icon"><span v-text="item.name"></span></div>
                 </div>
                 <div class="price_item_cart mr-1">
-                  <span v-text="item.price"></span
+                  <span v-text="separate(item.price)"></span
                   ><span class="pr-1" v-text="lang.price"></span>
                 </div>
                 <div
@@ -92,9 +92,6 @@ export default {
     return {
       items: null,
       whole_price: 0,
-      discount: 40000,
-      taxation: 0,
-      end_price: 0,
     };
   },
   head() {
