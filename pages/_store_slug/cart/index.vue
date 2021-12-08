@@ -127,10 +127,11 @@ export default {
     compute_whole_price(items) {
       let sum = 0;
       items.forEach((element) => {
-        while( element.price.includes(",")){
+        while(element.price.includes(",")){
           element.price=element.price.replace(",", "")
         }
-      sum += parseInt(element.price.replace(",", "")) * element.count;
+        sum += parseInt(element.price) * element.count
+        
       });
       return sum;
     },

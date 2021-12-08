@@ -1,15 +1,15 @@
 <template>
   <div class="position-relative d-flex justify-content-center" @focusin="boxSearch=true">
     <div :class="['mx-auto search d-flex justify-content-center align-items-center',
-    searchProducts && searchProducts.length > 0 ? 'rounded is-products-searching pt-2' : null
+    searchProducts && searchProducts ? 'rounded is-products-searching pt-2' : null
     ]">
     <input type="search" v-model="search" placeholder="جستجو محصول ..." id="boxSearch"/>
     <fa icon="search" :title="lang.svg.search" class="fa-lg ml-2 mr-3"></fa>
     
     </div>
-    <div v-if="boxSearch && searchProducts && searchProducts.length > 0 " id="content-search" @blure="boxSearch=false"
+    <div v-if="boxSearch && searchProducts" id="content-search" @blure="boxSearch=false"
       class="position-absolute rounded" dir="ltr">
-      <ul class="mt-4 p-0 m-0 list-unstyled">
+      <ul v-if="searchProducts.length > 0 " class="mt-4 p-0 m-0 list-unstyled">
         <li v-for="product in searchProducts" v-bind:key="product.id">
           <nuxt-link dir="rtl" class="d-block py-3 pr-3 bg-white d-flex align-items-center" :to="`/${$route.params.store_slug}/${product.id}`">
             <img width="24" height="24" :src="product.thumbnail" :alt="product.title">
@@ -17,6 +17,9 @@
           </nuxt-link>
         </li>
       </ul>
+      <div v-else class="w-100 text-center pt-3">
+        <p >موردی پیدا نشد</p>
+      </div>
     </div>
   </div>
 </template>
@@ -76,15 +79,8 @@ export default {
           "searchProducts"
         ]),
     },
-    beforeRouteEnter (to, from, next) {
-      console.log('g')
-      next(vm => {
-        // access to component instance via `vm`
-      })
-    },
     mounted(){
       let vm=this
-      
       window.addEventListener('click', function(event) {
         if(document.getElementById('boxSearch')){
           if (!document.getElementById('boxSearch').contains(event.target)) {
@@ -140,10 +136,10 @@ export default {
   z-index: 999;
   overflow-x: hidden;
   overflow-y: auto;
-   ul{
+   ul,div{
     min-width: 314px;
     @include mx_medium {
-      min-width: 232px;
+    min-width: 232px;
     }
     li a{
       box-shadow:  0 0 3px 0 $border;
