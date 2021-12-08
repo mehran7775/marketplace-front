@@ -1,7 +1,7 @@
 <template>
   <div class="position-relative d-flex justify-content-center" @focusin="boxSearch=true">
     <div :class="['mx-auto search d-flex justify-content-center align-items-center',
-    searchProducts && searchProducts ? 'rounded is-products-searching pt-2' : null
+    searchProducts && searchProducts ? 'rounded pt-2' : null
     ]">
     <input type="search" v-model="search" placeholder="جستجو محصول ..." id="boxSearch"/>
     <fa icon="search" :title="lang.svg.search" class="fa-lg ml-2 mr-3"></fa>
@@ -155,8 +155,5 @@ export default {
 ::-webkit-scrollbar {
   // width: 3px!important;
   display: none;
-}
-.is-products-searching{
-
 }
 </style>
