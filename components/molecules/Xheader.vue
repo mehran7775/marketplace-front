@@ -82,11 +82,6 @@ export default {
     },
     ...mapGetters(["detail"])
   },
-  methods:{
-    startStory(){
-      // console.log(34)
-    }
-  },
 
 };
 </script>

@@ -137,27 +137,14 @@
                                             </small>
                                         </div>
                                         <div class="col-sm col-md-6 my-2">
-                                    <textarea
-                                        rows="4"
-                                        class="form-control"
-                                        id="lows"
-                                        ref="logo"
-                                        v-model="formData.shop_terms"
-                                        placeholder="قوانین و مقررات فروشگاه">
-                                    </textarea>
+                                        <client-only placeholder="loading...">
+                                            <ckeditor-nuxt v-model="formData.shop_terms" :config="editorConfig"  />
+                                        </client-only>
                                         </div>
                                         <div class="col-sm col-md-6 my-2">
-                                            <textarea
-                                                rows="4"
-                                                type="text"
-                                                class="form-control"
-                                                id="description"
-                                                ref="description"
-                                                placeholder="توضیحات"
-                                                v-model="formData.description"
-                                            >
-
-                                            </textarea>
+                                        <client-only placeholder="loading...">
+                                             <ckeditor-nuxt  v-model="formData.description" :config="editorConfig2"  />
+                                        </client-only>
                                         </div>
                                         <div class="col-md-3"
                                              v-if="imagePreviewURL"
@@ -209,6 +196,41 @@
                                                         </label>
                                                         ایمیل
 
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="m-auto pt-2 pr-2">
+                                                <hr>
+                                                <label class="my-2">نمایش اطلاعات</label>
+                                                <div class="w-100 text-right">
+
+                                                    <div class="my-3">
+                                                        <label class="switch">
+                                                            <input type="checkbox" v-model="formData.show_phone_option">
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                        شماره تلفن
+                                                    </div>
+                                                </div>
+                                                <div class="w-100 text-right">
+                                                    <div class="my-3">
+                                                        <label class="switch">
+                                                            <input type="checkbox" v-model="formData.show_email_option">
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                        ایمیل
+                                                    </div>
+                                                </div>
+                                                <div class="w-100 text-right">
+                                                    <div class="my-3">
+                                                        <label class="switch">
+                                                            <input type="checkbox" v-model="formData.show_province_option">
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                        استان
                                                     </div>
                                                 </div>
                                             </div>
@@ -370,8 +392,6 @@
             </div>
 
         </div>
-
-
     </div>
 </template>
 
@@ -414,6 +434,9 @@ export default {
                 address_option: false,
                 email_option: false,
                 phone_option: false,
+                show_phone_option: false,
+                show_email_option: false,
+                show_province_option: false,
                 shop_terms: null,
                 shipping_region: null,
                 own_city_delivery_time: null,
@@ -434,11 +457,31 @@ export default {
                 logo: null,
                 logo_size: null,
                 name_option: false,
-            }
+            },
+            editorConfig: {
+                removePlugins: ['Title'],
+                placeholder:"قوانین و مقررات فروشگاه",
+                language:{
+                    ui: 'en',
+                    content: 'fa'
+                },
+                contentsLangDirection:'rtl',      
+            },
+            editorConfig2: {
+
+                removePlugins: ['Title'],
+                placeholder:"توضیحات",
+                language:{
+                    ui: 'en',
+                    content: 'fa'
+                },
+                contentsLangDirection:'rtl',      
+            },
         };
     },
     components: {
         PageTitle,
+        'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
     },
     methods: {
         onFileChange(payload) {
@@ -627,4 +670,19 @@ input[type="file"]::-webkit-file-upload-button {
 .custom-file-label::after {
     display: none;
 }
+.custom-block-indent-a {
+    margin-left: 10%;
+}
+
+.custom-block-indent-b {
+    margin-left: 20%;
+}
+
+.custom-block-indent-c {
+    margin-left: 30%;
+}
+.ck-editor__editable {
+    min-height: 70px;
+   }
+
 </style>

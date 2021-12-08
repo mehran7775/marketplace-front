@@ -230,12 +230,12 @@
                                     </textarea>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-12 col-sm-2">
                                         <div class="m-auto pt-2 pr-2">
                                             <img :src="formData.logo"  style="width: 100%;border-radius: 10px"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-12 col-sm-5">
                                         <div class="m-auto pt-2 pr-2">
                                             <hr>
                                             <label class="my-2">اطلاعات مورد نیاز از مشتری</label>
@@ -275,6 +275,40 @@
                                                     </label>
                                                     ایمیل
 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-5">
+                                        <div class="m-auto pt-2 pr-2">
+                                            <hr>
+                                            <label class="my-2">نمایش اطلاعات</label>
+                                            <div class="w-100 text-right">
+
+                                                <div class="my-3">
+                                                    <label class="switch">
+                                                        <input type="checkbox" v-model="formData.show_phone_option">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                    شماره تلفن
+                                                </div>
+                                            </div>
+                                            <div class="w-100 text-right">
+                                                <div class="my-3">
+                                                    <label class="switch">
+                                                        <input type="checkbox" v-model="formData.show_email_option">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                    ایمیل
+                                                </div>
+                                            </div>
+                                            <div class="w-100 text-right">
+                                                <div class="my-3">
+                                                    <label class="switch">
+                                                        <input type="checkbox" v-model="formData.show_province_option">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                    استان
                                                 </div>
                                             </div>
                                         </div>
@@ -440,6 +474,9 @@ export default {
                 address_option: false,
                 email_option: false,
                 phone_option: false,
+                show_phone_option: false,
+                show_email_option: false,
+                show_province_option: false,
                 shop_terms: null,
             },
             one: 1,
