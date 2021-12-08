@@ -42,14 +42,14 @@
                             <div class="row">
                                 <h2 class="font-weight-bold h6 text-right">صورتحساب خرید</h2>
                             </div>
-                            <div class="row my-1">
+                            <div class="row my-1 productsInfo">
                                 <div class="col-12 rounded py-2" v-for="product in dataPayment.products" :key="product.id">
                                     <div class="row mt-1">
                                         <div class="col-12">
                                             <div class="row">
                                                 <div class="d-flex justify-content-between w-100">
                                                     <div v-text="product.title"></div>
-                                                    <div v-text="`${separate(product.price)} ${lang.price}`"></div>
+                                                    <div class="pl-1" v-text="`${separate(product.price)} ${lang.price}`"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -195,6 +195,10 @@ export default {
     .icon-getway {
         padding-right: 6rem;
         padding-left: 6rem;
+    }
+    .productsInfo{
+        max-height: 180px;
+        overflow-y: auto;
     }
 }
 </style>

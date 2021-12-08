@@ -113,12 +113,12 @@ export default {
     });
   },
   methods: {
-    async setItems() {
+    setItems() {
       const cart = JSON.parse(localStorage.getItem("cart"));
       if (cart && cart[this.$nuxt.$route.params.store_slug]) {
         if (cart[this.$nuxt.$route.params.store_slug].length > 0) {
           this.items = cart[this.$nuxt.$route.params.store_slug];
-          this.whole_price = await this.compute_whole_price(this.items);
+          this.whole_price = this.compute_whole_price(this.items);
           return;
         }
       }
