@@ -22,6 +22,7 @@
                 :price="product.price"
                 :id="product.id"
                 :quantity="product.quantity"
+                :is_multiple="product.is_multiple"
               ></Xitem>
             </slide>
           </carousel>
@@ -36,6 +37,7 @@
               :price="product.price"
               :id="product.id"
               :quantity="product.quantity"
+              :is_multiple="product.is_multiple"
             ></Xitem>
           </client-only>
         </div>

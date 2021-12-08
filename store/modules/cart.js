@@ -15,15 +15,7 @@ const actions = {
         cart[$nuxt.$route.params.store_slug] = cart[$nuxt.$route.params.store_slug] || []
         if (product.quantity > 0 ) {
             if (!cart[$nuxt.$route.params.store_slug].some((el) => el.id == product.id)) {
-              const newObj = {
-                id: product.id,
-                name: product.name,
-                price: product.price,
-                count: 1,
-                img:product.img,
-                quantity:product.quantity,
-              }
-              cart[$nuxt.$route.params.store_slug].push(newObj)
+              cart[$nuxt.$route.params.store_slug].push( product )
             } else {
               commit(
                 "open_toast",
@@ -85,20 +77,32 @@ const actions = {
     plusProduct({commit}, pid){
         let cart = JSON.parse(localStorage.getItem("cart"))
         const p = cart[$nuxt.$route.params.store_slug].find(({ id }) => id === pid)
-        if(p.count >= p.quantity){
+        if(p.is_multiple){
+          if(p.count >= p.quantity){
+            commit(
+              "open_toast",
+              {
+                msg: "تعداد محصول برابر با حداکثر موجودی است",
+                variant: "warning",
+              },
+              { root: true }
+            )
+            return
+          }
+          p.count++
+          localStorage.setItem('cart',JSON.stringify(cart))
+          $nuxt.$emit('refresh-cart',null, { once:true })
+        }else{
           commit(
             "open_toast",
             {
-              msg: "تعداد محصول برابر با حداکثر موجودی است",
+              msg: "بیشتراز یک عدد ازاین محصول قابل خرید نیست",
               variant: "warning",
             },
             { root: true }
           )
-          return
         }
-        p.count++
-        localStorage.setItem('cart',JSON.stringify(cart))
-        $nuxt.$emit('refresh-cart',null, { once:true })
+        
     }
 };
 

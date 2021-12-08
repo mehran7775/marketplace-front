@@ -3,8 +3,8 @@
         <app-header></app-header>
         <mobile-header></mobile-header>
         
-        <sidebar :InAnticipationShops="InAnticipationShops"></sidebar>
-        <mobile-aside :InAnticipationShops="InAnticipationShops"></mobile-aside>
+        <sidebar :inAnticipationShops="inAnticipationShops" :inMyAnticipationShops="inMyAnticipationShops"></sidebar>
+        <mobile-aside :inAnticipationShops="inAnticipationShops" :inMyAnticipationShops="inMyAnticipationShops"></mobile-aside>
         <div id="app_content">
             <div class="container" style="padding-top: 5rem">
                 <Nuxt/>
@@ -22,7 +22,8 @@ import { storeService } from "~/services/apiServices";
 export default {
     data(){
        return{
-           InAnticipationShops:null
+           inMyAnticipationShops:null,
+           inAnticipationShops:null,
        } 
     },
     head() {
@@ -38,16 +39,17 @@ export default {
         appHeader,
     },
 
-    created(){
-        storeService.getAll( this.$cookies.get('token'),{
-            'query[status]' : 0
-        } )
-        .then(res => {
-           this.InAnticipationShops = res.data.data.data.length
-        }).catch(e => {
+    async created(){
+        try{
+            const res = await storeService.getMyWaiting(this.$cookies.get('token'))
+            this.inMyAnticipationShops = res.data.data.badge_count
+            const { data } = await storeService.getAllWaiting(this.$cookies.get('token'))
+            this.inAnticipationShops = data.data.badge_count
+           
+           
+        }catch(e){
             console.log(e)
-        })
-
+        }
     }
 
 }

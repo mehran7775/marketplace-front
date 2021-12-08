@@ -28,7 +28,7 @@
                   <div class="name_icon"><span v-text="item.name"></span></div>
                 </div>
                 <div class="price_item_cart mr-1">
-                  <span v-text="item.price"></span
+                  <span v-text="separate(item.price)"></span
                   ><span class="pr-1" v-text="lang.price"></span>
                 </div>
                 <div
@@ -92,9 +92,6 @@ export default {
     return {
       items: null,
       whole_price: 0,
-      discount: 40000,
-      taxation: 0,
-      end_price: 0,
     };
   },
   head() {
@@ -116,12 +113,12 @@ export default {
     });
   },
   methods: {
-    async setItems() {
+    setItems() {
       const cart = JSON.parse(localStorage.getItem("cart"));
       if (cart && cart[this.$nuxt.$route.params.store_slug]) {
         if (cart[this.$nuxt.$route.params.store_slug].length > 0) {
           this.items = cart[this.$nuxt.$route.params.store_slug];
-          this.whole_price = await this.compute_whole_price(this.items);
+          this.whole_price = this.compute_whole_price(this.items);
           return;
         }
       }
@@ -130,10 +127,11 @@ export default {
     compute_whole_price(items) {
       let sum = 0;
       items.forEach((element) => {
-        while( element.price.includes(",")){
+        while(element.price.includes(",")){
           element.price=element.price.replace(",", "")
         }
-      sum += parseInt(element.price.replace(",", "")) * element.count;
+        sum += parseInt(element.price) * element.count
+        
       });
       return sum;
     },

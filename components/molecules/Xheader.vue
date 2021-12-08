@@ -1,7 +1,7 @@
 <template>
   <header class="d-flex flex-column-reverse align-items-center d-md-flex flex-md-row">
     <div class="d-flex align-items-center" id="brand_index">
-      <Xbrand :logo="detail.logo" :showStory="() => triggerStory=true"></Xbrand>
+      <Xbrand :logo="detail.logo" :showStory="() => triggerStory = true"></Xbrand>
       <div class="text-right">
         <div id="name_brand">
           <h1 class="mr-4 h4 text-dark font-weight-bold" v-text="detail.fa_name ? detail.fa_name : 'فروشگاه من'"></h1>
@@ -54,48 +54,13 @@
       </div>
     </div>
     <transition name="fade">
-      <div v-if="triggerStory" id="story">
-        <div class="float-left mt-3 ml-5">
-          <span class="text-white">
-            <fa  @click="triggerStory=false" :icon="['fa', 'times']" class="text-muted fa-3x closeStory"/>
-          </span>
-        </div>
-        <div class="hv-center">
-          <div class="story rounded">
-            <carousel
-              :rtl="true"
-              v-bind="options"
-              pagination-color="#dee2e6"
-              pagination-active-color="#00c1a4"
-              pagination-padding="2"
-            >
-              <slide class="img-wrapper p-4">
-                <div class="d-flex align-items-center">
-                  <img class="rounded-circle" width="48" height="48" :src="detail.logo" :alt="`لوگوی فروشگاه ${detail.fa_name}`">
-                  <h2 class="h5 font-weight-bold">توضیحات فروشگاه:</h2>
-                </div>
-                <div class="py-4 px-4">
-                  <p v-text="detail.description"></p>
-                </div>
-              </slide>
-              <slide class="img-wrapper p-4">
-              <div class="d-flex align-items-center">
-                  <img class="rounded-circle" width="48" height="48" :src="detail.logo" :alt="`لوگوی فروشگاه ${detail.fa_name}`">
-                  <h2 class="h5 font-weight-bold">قوانین فروشگاه:</h2>
-                </div>
-                <div class="py-4 px-4">
-                  <p v-text="detail.description"></p>
-                </div>
-              </slide>
-            </carousel>
-          </div>
-        </div>
-      </div>
+      <LazyMoleculesXstory v-if="triggerStory" :destroy="(value) => triggerStory= value" />
     </transition>
   </header>
 </template>
 
 <script>
+
 import { tr } from "@/services/lang";
 import { mapGetters } from 'vuex'
 
@@ -106,18 +71,9 @@ export default {
         default: true
       },
   },
-  data(){
+ data(){
     return{
-      triggerStory: false,
-      options: {
-        loop: false,
-        paginationEnabled: false,
-        perPage: 1,
-        centerMode: true,
-        navigationEnabled:true,
-        navigationNextLabel:'',
-        navigationPrevLabel:'',
-      },
+      triggerStory:false
     }
   },
   computed: {
@@ -126,6 +82,7 @@ export default {
     },
     ...mapGetters(["detail"])
   },
+
 };
 </script>
 
@@ -186,34 +143,5 @@ header {
   text-decoration: none;
   color: inherit;
   }
-}
-#story{
-  position:absolute;
-  left:0;
-  top:0;
-  width:100%;
-  height: 100%;
-  background: $back_dark;
-  z-index: 9999;
-  .story{
-    width: 70vw;
-    height: 80vh;
-    background-color: aqua;
-    background-color: $white;
-
-    .img-wrapper {
-      height: 80vh;
-    }
-  }
-  .closeStory:hover{
-    color: white!important;
-  }
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
 }
 </style>

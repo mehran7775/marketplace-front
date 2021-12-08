@@ -131,6 +131,8 @@ export default {
         price: this.product.price,
         img: this.product.thumbnails[0],
         quantity: this.product.quantity,
+        is_multiple: this.product.is_multiple,
+        count: 1
       });
     },
   },

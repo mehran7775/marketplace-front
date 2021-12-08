@@ -2,11 +2,12 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-        <Nuxt/>
+        <transition name="fade">
+          <Nuxt/>
+        </transition>
       </div>
     </div>
     <MoleculesXsidebarBottom />
-    <!-- <LazyMoleculesStory v-if="triggerStory"/>    -->
   </div>
 </template>
 

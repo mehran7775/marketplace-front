@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="hv-center">
-      <Nuxt />
+      <transition name="fade">
+        <Nuxt />
+      </transition>
     </div>
   </div>
 </template>

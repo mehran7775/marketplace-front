@@ -91,16 +91,21 @@ body {
                 margin-bottom: 50px;
             }
         }
-        // .VueCarousel-navigation-next,.VueCarousel-navigation-prev{
-        //     color: whitesmoke!important;
-        // }
         .VueCarousel-navigation-next::after {
             content: url('@/assets/images/icons/arrow-25-24.png');
           }
           .VueCarousel-navigation-prev::after {
             content: url('@/assets/images/icons/arrow-89-24.png');
             
+        }
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s;
           }
+        .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+            opacity: 0;
+        }
+          
+
     }
 }
 
