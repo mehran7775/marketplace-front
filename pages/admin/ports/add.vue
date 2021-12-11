@@ -20,7 +20,17 @@
                             <b-form-select v-model="form.status" :options="PortStatus.portStatus">
                             </b-form-select>
                         </b-form-group>
-                        <b-button type="submit" variant="primary">ثبت پورت</b-button>
+                        <Xbutton
+                        is_submit
+                        class="rounded-0"
+                        text="ثبت پورت"
+                        :variant="'primary'"
+                        :disable="btnDisable"
+                        >
+                            <template #spinner>
+                                <b-spinner v-show="laodingSpinner" small ></b-spinner>
+                            </template>            
+                        </Xbutton>
                     </b-form>
                 </div>
             </div>
@@ -45,16 +55,24 @@ export default {
                 payment_company: 'paystar',
                 port_type: 'PF',
                 status: 1
-            }
+            },
+            btnDisable: false,
+            laodingSpinner: false
+
         }
     },
     methods: {
         onSubmit(event) {
                 event.preventDefault()
+                this.btnDisable= true
+                this.laodingSpinner= true
                 api.post('gateway/port/create', this.form).then(response => {
                        this.message =  response.data.message
                     }).catch(({response}) => {
                     this.message = response.data.message
+                }).finally(() => {
+                    this.btnDisable= false
+                    this.laodingSpinner= false
                 })
         },
     }

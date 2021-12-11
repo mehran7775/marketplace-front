@@ -45,7 +45,7 @@
           </Xbutton>
           <div class="text-center mt-3">
             <span>هنوز ثبت نام نکرده اید؟</span>
-            <router-link to="/signup">کلیک کنید</router-link>
+            <router-link to="/register">کلیک کنید</router-link>
           </div>
         </template>
       </Xform>  
@@ -85,8 +85,6 @@ export default {
               login_with_verification_code: false,
             })
             .then((res) => {
-              this.btnDisable= false
-              this.laodingLogin= false
               if (res.status === 200) {
                 this.$cookies.set("token-buyer", res.data.data.api.token);
                 authService.currentUser(res.data.data.api.token)
@@ -111,8 +109,6 @@ export default {
               }
             })
             .catch(e => {
-              this.btnDisable= false
-              this.laodingLogin= false
               if (e.response.status === 401){
                 this.$store.commit("open_toast",{
                     msg: e.response.data.message,
@@ -124,6 +120,9 @@ export default {
               if (e.response.status === 400) {
                 this.$refs.validationObserver.setErrors(e.response.data.data);
               }
+            }).finally(() =>{
+              this.btnDisable= false
+              this.laodingLogin= false
             })
         } else {
           return;
