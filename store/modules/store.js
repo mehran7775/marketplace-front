@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
+import { storeService } from '~/services/apiServices';
 const state = {
   
 }
@@ -17,9 +17,7 @@ const mutations = {
 }
 
 const actions = {
-    get_store_index() {
-
-    },
+    
 };
 
 

@@ -6,7 +6,9 @@ export default{
         return axios.post('/order/create',payload)
     },
     orderPayment(payload){
-        console.log(payload)
         return axios.post(`pay/order/${payload.oId}`, payload.data)
+    },
+    getPaymentReceipt(payload){
+        return axios.get(`pay/receipt/${ payload }`)
     }
 }

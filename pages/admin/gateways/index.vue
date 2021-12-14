@@ -16,12 +16,30 @@
                 </div>
                 <div class="col-sm my-2">
                     <div>
-                        <button :class="query ? 'btn btn-success mr-2' : 'btn btn-success btn-block'" style="border-radius: 10px;"
-                                @click="get_data(gateways.first_page_url)">اعمال فیلتر
-                        </button>
-                        <button class="btn btn-danger mr-3" style="border-radius: 10px;"
-                                @click="reset_and_get" v-if="query">حذف فیلتر
-                        </button>
+                        <Xbutton
+                        :on_click="()=> get_data(gateways.first_page_url)"
+                        :class="query ? 'mr-2' : 'btn-block'"
+                        text="اعمال فیلتر"
+                        variant="success"
+                        :disable="btnDisableAction"
+                        >
+                            <template #spinner>
+                                <b-spinner v-show="laodingSpinnerAction" small ></b-spinner>
+                            </template>            
+                        </Xbutton>
+                        <Xbutton
+                        v-if="query"
+                        :on_click="()=> reset_and_get()"
+                        class="mr-3"
+                        variant="danger"
+                        text="حذف فیلتر"
+                        :disable="btnDisableRemove"
+                        style="border-radius: 10px;"
+                        >
+                            <template #spinner>
+                                <b-spinner v-show="laodingSpinnerRemove" small ></b-spinner>
+                            </template>            
+                        </Xbutton>
                     </div>
                 </div>
             </div>
@@ -114,7 +132,11 @@ export default {
             filter_status : null,
             gateways: null,
             per_page: 15,
-            gateway_status : null
+            gateway_status : null,
+            btnDisableAction: false,
+            laodingSpinnerAction: false,
+            btnDisableRemove: false,
+            laodingSpinnerRemove: false,
         }
     },
     computed: {
@@ -140,13 +162,28 @@ export default {
             this.filter_title = null;
             this.filter_status = null;
         },
-        async get_data(url) {
-            let res = await api.getUrl(url + this.query + '&perpage=' + this.per_page)
-            this.gateways = res.data.data
+        async get_data(url, removeFilter=null) {
+            if(removeFilter){
+                this.btnDisableRemove= true
+                this.laodingSpinnerRemove= true
+            }else{
+                this.btnDisableAction= true
+                this.laodingSpinnerAction= true
+            }
+            this.btnDisableAction= true
+            this.laodingSpinnerAction= true
+            let res= await api.getUrl(url + this.query + '&perpage=' + this.per_page)
+            .finally(() => {
+                this.btnDisableAction= false
+                this.laodingSpinnerAction= false
+                this.btnDisableRemove= false
+                this.laodingSpinnerRemove= false
+            })
+            this.gateways= res.data.data
         },
         reset_and_get() {
             this.resetQuery();
-            this.get_data(this.gateways.path + '?page=1');
+            this.get_data(this.gateways.path + '?page=1', 'removeFilter');
         },
     },
     async created() {

@@ -30,7 +30,7 @@ export default {
     ])
 
   },
-  async asyncData({ route, error, store }) {
+  async asyncData({ route, error }) {
     try {
       const { data } = await productService.getProducts(route.params.store_slug)
       return {

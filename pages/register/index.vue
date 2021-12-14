@@ -191,8 +191,6 @@ export default {
           };
             authService.registerCustomer(data)
             .then((res) => {
-              this.btnDisable= false
-              this.laodingLogin= false
               this.$store.commit("user/setToState",{
                 name: 'phone_number',
                 data: data.phone
@@ -212,8 +210,6 @@ export default {
               }
             })
             .catch((e) => {
-              this.btnDisable= false
-              this.laodingLogin= false
               if (e.response.data.status === "error") {
                   this.$refs.validationObserver.setErrors(e.response.data.data);
                   return;
@@ -227,7 +223,11 @@ export default {
                   { root: true }
                 );
               }
-            });
+            })
+            .finally(() =>{
+              this.btnDisable= false
+              this.laodingLogin= false
+            })
         } else {
           return;
         }

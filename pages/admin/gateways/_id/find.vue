@@ -1,8 +1,17 @@
 <template>
     <div>
         <page-title title_text="ویرایش درگاه">
-            <div @click="updateGateway">
-                <Xbutton class="px-4" text="ذخیره تغییرات"></Xbutton>
+            <div>
+                <Xbutton
+                :on_click="()=> updateGateway()"
+                class="px-4"
+                text="ذخیره تغییرات"
+                :disable="btnDisable"
+                >
+                    <template #spinner>
+                        <b-spinner v-show="laodingSpinner" small ></b-spinner>
+                    </template>            
+                </Xbutton>
             </div>
         </page-title>
         <div class="alert alert-info" role="alert" v-if="message">
@@ -61,7 +70,9 @@ export default {
             gateway: null,
             form: {
                 status : null,
-            }
+            },
+            btnDisable: false,
+            laodingSpinner: false
         }
     },
     methods: {
@@ -73,13 +84,18 @@ export default {
                 })
         },
         updateGateway(){
+            this.btnDisable= true
+            this.laodingSpinner= true
             api.post('gateway/change-status/' + this.$route.params.id , {
                 status : this.form.status
             })
-                .then(response => {
-                    this.message = response.data.message
-                }).catch(({response}) => {
-                this.error = response.data.data[Object.keys(response.data.data)[0]]
+            .then(response => {
+                this.message = response.data.message
+            }).catch(({response}) => {
+            this.error = response.data.data[Object.keys(response.data.data)[0]]
+            }).finally(()=> {
+                this.btnDisable= false
+                this.laodingSpinner= false
             })
         }
     },

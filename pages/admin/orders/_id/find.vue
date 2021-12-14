@@ -1,9 +1,19 @@
 <template>
     <div>
         <page-title title_text="جزییات سفارش">
-            <div @click="updateOrder">
+            <Xbutton
+                :on_click="()=> updateOrder()"
+                class="px-4"
+                text="ذخیره تغییرات"
+                :disable="btnDisable"
+                >
+                    <template #spinner>
+                        <b-spinner v-show="laodingSpinner" small ></b-spinner>
+                    </template>            
+                </Xbutton>
+            <!-- <div @click="updateOrder">
                 <Xbutton class="px-4" text="ذخیره تغییرات"></Xbutton>
-            </div>
+            </div> -->
         </page-title>
         <div class="alert alert-info" role="alert" v-if="message">
             {{ message }}
@@ -134,7 +144,9 @@ export default {
             order : null,
             form : {
                 status : null
-            }
+            },
+            btnDisable: false,
+            laodingSpinner: false
         }
     },
     methods : {
@@ -146,13 +158,18 @@ export default {
             })
         },
         updateOrder(){
+            this.btnDisable= true
+            this.laodingSpinner= true
             api.put('order/change-status/' + this.$route.params.id , {
                 status : this.form.status
             })
-                .then(response => {
-                    this.message = response.data.message
-                }).catch(({response}) => {
-                this.error = response.data.data[Object.keys(response.data.data)[0]]
+            .then(response => {
+                this.message = response.data.message
+            }).catch(({response}) => {
+            this.error = response.data.data[Object.keys(response.data.data)[0]]
+            }).finally(()=>{
+                this.btnDisable= false
+                this.laodingSpinner= false
             })
         }
     },

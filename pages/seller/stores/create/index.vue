@@ -373,14 +373,17 @@
                                         </button>
                                     </div>
                                     <div class="mr-auto">
-                                        <button
-                                            @click="createStore"
-                                            type="submit"
-                                            class="btn btn-success px-4"
-                                            style="border-radius: 10px"
+                                        <Xbutton
+                                        :on_click="createStore"
+                                        class="btn btn-success px-4"
+                                        style="border-radius: 10px"
+                                        text="ثبت فروشگاه"
+                                        :disable="btnDisable"
                                         >
-                                            <span>ثبت فروشگاه</span>
-                                        </button>
+                                            <template #spinner>
+                                                <b-spinner v-show="laodingSpinner" small  class="float-left"></b-spinner>
+                                            </template>            
+                                        </Xbutton>
                                     </div>
                                 </div>
                             </div>
@@ -477,6 +480,8 @@ export default {
                 },
                 contentsLangDirection:'rtl',      
             },
+            btnDisable: false,
+            laodingSpinner: false
         };
     },
     components: {
@@ -619,11 +624,16 @@ export default {
                         }
                     }
                 }
+                this.btnDisable= true
+                this.laodingSpinner= true
                 api.post('store/create', form_data, this.$cookies.get('token')).then(response => {
                     this.message = response.data.message
                     this.$router.push('/')
                 }).catch(({response}) => {
                     this.error = response.data.data[Object.keys(response.data.data)[0]]
+                }).finally(()=>{
+                    this.btnDisable= false
+                    this.laodingSpinner= false
                 })
             }
 

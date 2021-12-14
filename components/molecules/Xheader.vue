@@ -34,7 +34,7 @@
           </nuxt-link>
         </template>
         <template v-else>
-          <nuxt-link :to="`/signin`">
+          <nuxt-link :to="`/login`">
             <span
               ><fa
                 icon="user"
