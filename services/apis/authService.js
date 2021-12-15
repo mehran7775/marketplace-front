@@ -8,6 +8,9 @@ export default{
     loginCustomer(payload){
         return axios.post('/customer/login',payload)
     },
+    verifyLogin(pyload){
+        return axios.post(`/customer/verify`,pyload)
+    },
     currentUser(payload){
         return axios.get('/customer/current',{
             headers:{

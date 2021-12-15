@@ -7,6 +7,14 @@
         <button class="btn btn-success mt-2 mr-2" @click="verify_code()">
           ارسال
         </button>
+        <Xbutton text='ارسال'  :on_click="()=> verify_code()"
+        class="btn btn-success mt-2 mr-2"
+        :disable="btnDisable"
+         >
+          <template #spinner>
+              <b-spinner v-show="laodingSpinner" small ></b-spinner>
+          </template>   
+         </Xbutton>
         <div v-if="errors.length > 0" class="text-center pt-3">
           <p
             v-for="error in errors"
@@ -24,6 +32,7 @@
 </template>
 
 <script>
+import { authServices } from '@/services/apiServices'
 import { mapState } from "vuex";
 export default {
   middleware: "guest",
@@ -31,6 +40,9 @@ export default {
     return {
       errors: [],
       error: "",
+      btnDisable: false,
+      laodingSpinner: false
+
     };
   },
   computed: mapState({
@@ -45,19 +57,12 @@ export default {
       try {
         this.errors = [];
         this.error = "";
-        const res = await this.$nuxt.context.$axios.post(
-          "/customer/verify",
-          data
-        );
+        this.btnDisable= true
+        this.laodingSpinner= true
+        const res= await authServices.verifyLogin(data)
         if (res.status === 200) {
           this.$cookies.set("token-buyer", res.data.data.api.token);
-          const res_current=await this.$nuxt.context.$axios.get('/customer/current',
-          {
-            headers: {
-              "authorization" : "Bearer " + res.data.data.api.token
-            }
-          }
-          )
+          const res_current= await authServices.currentUser( res.data.data.api.token )
           if(res_current.status === 200){
             this.$store.commit("user/setToState", {
               name: 'current_user',
@@ -65,6 +70,8 @@ export default {
             },{ root:true })
             this.$store.commit('user/deleteFromState', "phone_number")
           }
+          this.btnDisable= false
+          this.laodingSpinner= false
           this.$router.replace("/panel-customer")
           this.$store.commit(
             "open_toast",
@@ -76,6 +83,8 @@ export default {
           );
         }
       } catch (e) {
+        this.btnDisable= false
+        this.laodingSpinner= false
         if (e.response.data.status === "error") {
           Object.keys(e.response.data.data).forEach((element) => {
             this.errors.push(e.response.data.data[element][0]);
