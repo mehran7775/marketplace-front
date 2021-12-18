@@ -1,11 +1,14 @@
 <template>
   <div class="row">
-    <MoleculesXheader
-    ></MoleculesXheader>
-    <div class="w-100 body-hv-fit">
-      <MoleculesXlables v-if="products" :products="products">
-      </MoleculesXlables>
-      <p v-else>محصولی وجود ندارد</p>
+    <div class="container-xl">
+      <div class="row">
+        <div class="w-100 body-hv-fit">
+          <MoleculesXlables v-if="products" :products="products">
+          </MoleculesXlables>
+          <p v-else>محصولی وجود ندارد</p>
+        </div>
+      </div>
+    
     </div>
   </div>
 </template>

@@ -1,7 +1,5 @@
 <template>
   <div class="row">
-    <MoleculesXheader
-    ></MoleculesXheader>
     <div class="container body-hv-fit">
       <div class="row h-100">
         <div class="col h-100">

@@ -1,5 +1,9 @@
 <template>
   <div class="container-fluid">
+    <div class="row" id="header-layout">
+      <MoleculesXheader
+      ></MoleculesXheader>
+    </div>
     <div class="row">
       <div class="col">
         <transition name="fade">
@@ -74,6 +78,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#header-layout{
+  background-color: $white;
+  @include medium {
+    box-shadow: 0 0 6px 0 $silver;
+    border-bottom: 1px solid $silver;
+  }
+
+}
 #setting_index2 {
   position: fixed;
   bottom: 0;

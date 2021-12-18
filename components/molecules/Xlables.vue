@@ -59,7 +59,7 @@ export default {
           [576, 3],
           [768, 3],
           [992, 4],
-          [1200, 5],
+          [1200, 4],
         ],
       },
       per_page: 3,
@@ -82,7 +82,7 @@ export default {
 
   .grid-container {
     display: grid;
-    grid-template-columns: 33.1% 33.1% 33.1%;
+    grid-template-columns: 33.3% 33.3% 33.3%;
     grid-gap: 1px;
     background: $border;
     padding: 1px;

@@ -4,12 +4,9 @@
       <div class="form-group">
         <label class="font-weight-bold">کد تایید را وارد کنید</label>
         <input type="text" name="code" class="form-control" ref="code" />
-        <button class="btn btn-success mt-2 mr-2" @click="verify_code()">
-          ارسال
-        </button>
         <Xbutton text='ارسال'  :on_click="()=> verify_code()"
         class="btn btn-success mt-2 mr-2"
-        :disable="btnDisable"
+        :disabled="btnDisable"
          >
           <template #spinner>
               <b-spinner v-show="laodingSpinner" small ></b-spinner>
@@ -32,7 +29,7 @@
 </template>
 
 <script>
-import { authServices } from '@/services/apiServices'
+import { authService } from '@/services/apiServices'
 import { mapState } from "vuex";
 export default {
   middleware: "guest",
@@ -51,7 +48,7 @@ export default {
   methods: {
     async verify_code() {
       const data = {
-        phone: this.phone_number,
+        phone: this.$route.query.phone_number,
         code: this.$refs.code.value,
       };
       try {
@@ -59,16 +56,15 @@ export default {
         this.error = "";
         this.btnDisable= true
         this.laodingSpinner= true
-        const res= await authServices.verifyLogin(data)
+        const res= await authService.verifyLogin(data)
         if (res.status === 200) {
           this.$cookies.set("token-buyer", res.data.data.api.token);
-          const res_current= await authServices.currentUser( res.data.data.api.token )
+          const res_current= await authService.currentUser( res.data.data.api.token )
           if(res_current.status === 200){
             this.$store.commit("user/setToState", {
               name: 'current_user',
-              data: res.data.data
-            },{ root:true })
-            this.$store.commit('user/deleteFromState', "phone_number")
+              data: res_current.data.data
+            },{root: true})
           }
           this.btnDisable= false
           this.laodingSpinner= false

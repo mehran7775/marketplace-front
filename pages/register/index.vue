@@ -191,13 +191,7 @@ export default {
           };
             authService.registerCustomer(data)
             .then((res) => {
-              this.$store.commit("user/setToState",{
-                name: 'phone_number',
-                data: data.phone
-              }, {
-                root: true,
-              });
-              this.$router.push("/verify_login");
+              this.$router.push({path:"/verify_login",query: { phone_number: this.form.phone}});
               if (res.status === 200) {
                 this.$store.commit(
                   "open_toast",

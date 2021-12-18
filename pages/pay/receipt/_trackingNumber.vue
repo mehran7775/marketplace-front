@@ -1,6 +1,8 @@
 <template>
     <client-only>
-        <div v-if="onClient" class="position-relative w-100 vh-100" id="body-receipt">
+       <div class="container-xl">
+            <div class="row">
+                <div v-if="onClient" class="position-relative w-100 vh-100" id="body-receipt">
             <div id="receipt" class="rounded">
                 <div class="col-11 m-auto py-1">
                     <div class="row py-1">
@@ -96,7 +98,7 @@
                                         </tr>
                                         <tr v-for="product in detail.data.products" :key="product.id">
                                             <td class="pt-1">
-                                                <img class="bg-danger" width="60" height="60" :src="product.thumbnails[0]" alt="لوگو پی استار" />
+                                                <img width="60" height="60" :src="product.thumbnails[0]" alt="لوگو پی استار" />
                                             </td>
                                             <td class="pt-1" v-text="product.title"></td>
                                             <td class="pt-1" v-text="`${separate(product.price)} ریال`"></td>
@@ -158,7 +160,9 @@
                     </div> 
                 </div>
             </div>
-        </div>
+            </div>
+            </div>
+       </div>
     </client-only>
 </template>
 

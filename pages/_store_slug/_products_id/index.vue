@@ -1,66 +1,61 @@
 <template>
-  <div class="row">
-    <MoleculesXheader
-      :setDetail="false"
-    ></MoleculesXheader>
-    <div id="product" class="container body-hv-fit">
-      <div class="row mt-0 mt-sm-3 mt-md-5">
-        <div class="col">
-          <div v-if="product" class="row mt-0 mt-sm-3 mt-md-5">
-            <div class="col-12 mx-auto p-5 bg-white rounded">
-              <div class="d-flex justify-content-end">
-                <Xbutton
-                  class="px-4"
-                  :text="lang.btn.buy"
-                  :on_click="add_item"
-                ></Xbutton>
-              </div>
-              <div class="product w-100 mt-5" dir="ltr">
-                <client-only>
-                  <carousel
-                    :rtl="true"
-                    v-bind="options"
-                    pagination-color="#dee2e6"
-                    pagination-active-color="#00c1a4"
-                    pagination-padding="2"
-                  >
-                    <slide
-                      v-for="thumbnail in product.thumbnails"
-                      :key="thumbnail"
-                      class="img-wrapper text-center"
-                    >
-                      <img
-                        :src="thumbnail ? thumbnail : '/images/default-image.png'"
-                        alt="عکس محصول"
-                      />
-                    </slide>
-                  </carousel>
-                </client-only>
-              </div>
+  <div id="product" class="container body-hv-fit">
+    <div class="row mt-0 mt-sm-3 mt-md-5">
+      <div class="col">
+        <div v-if="product" class="row mt-0 mt-sm-3 mt-md-5">
+          <div class="col-12 mx-auto p-5 bg-white rounded">
+            <div class="d-flex justify-content-end">
+              <Xbutton
+                class="px-4"
+                :text="lang.btn.buy"
+                :on_click="add_item"
+              ></Xbutton>
             </div>
-            <div class="col-12">
-              <div
-                class="row flex-sm-column text-right py-4 px-5"
-                id="detail-product"
-              >
-                <div class="d-flex justify-content-between w-100">
-                  <h2 v-text="product.title" class="h4 font-weight-bold"></h2>
-                   <div>
-                    <span id="price" class="font-weight-bold">
-                      <span v-text="product.price"></span>
-                      <span v-text="lang.price"></span>
-                    </span>
-                  </div>
-                </div>
-                  <p class="text-justify px-1 pt-2" v-text="product.description">
-                  </p>
-              </div>
+            <div class="product w-100 mt-5" dir="ltr">
+              <client-only>
+                <carousel
+                  :rtl="true"
+                  v-bind="options"
+                  pagination-color="#dee2e6"
+                  pagination-active-color="#00c1a4"
+                  pagination-padding="2"
+                >
+                  <slide
+                    v-for="thumbnail in product.thumbnails"
+                    :key="thumbnail"
+                    class="img-wrapper text-center"
+                  >
+                    <img
+                      :src="thumbnail ? thumbnail : '/images/default-image.png'"
+                      alt="عکس محصول"
+                    />
+                  </slide>
+                </carousel>
+              </client-only>
             </div>
           </div>
-          <div v-else class="row">
-            <div class="col-6 m-auto text-center p-5">
-              <span class="font-weight-bold">محصول پیدا نشد</span>
+          <div class="col-12">
+            <div
+              class="row flex-sm-column text-right py-4 px-5"
+              id="detail-product"
+            >
+              <div class="d-flex justify-content-between w-100">
+                <h2 v-text="product.title" class="h4 font-weight-bold"></h2>
+                  <div>
+                  <span id="price" class="font-weight-bold">
+                    <span v-text="product.price"></span>
+                    <span v-text="lang.price"></span>
+                  </span>
+                </div>
+              </div>
+                <p class="text-justify px-1 pt-2" v-text="product.description">
+                </p>
             </div>
+          </div>
+        </div>
+        <div v-else class="row">
+          <div class="col-6 m-auto text-center p-5">
+            <span class="font-weight-bold">محصول پیدا نشد</span>
           </div>
         </div>
       </div>
