@@ -10,11 +10,7 @@
               class="col-12 col-md-6 py-3 row_item_cart"
             >
               <div class="row justify-content-between align-items-center">
-                <div class="d-flex align-items-center detail_item_cart">
-                  <div class="count mx-4">
-                    <strong class="ml-2" v-text="item.count"></strong
-                    ><fa icon="times"></fa>
-                  </div>
+                <div class="d-flex align-items-center detail_item_cart pr-2">
                   <div class="icon_item ml-2">
                     <img
                       :src="item.img"
@@ -33,10 +29,12 @@
                   class="d-flex justify-content-center p-1"
                   id="change-count-product"
                 >
-                  <span @click="minusProduct(item.id)" class="mx-1"
+                  <span @click="minusProduct(item.id)"
                     ><fa icon="minus" class="m-auto"></fa
                   ></span>
-                  <span @click="plusProduct(item.id)" class="mx-1"
+                   <strong class="mx-3" v-text="item.count"></strong
+                    >
+                  <span @click="plusProduct(item.id)"
                     ><fa icon="plus" class="m-auto"></fa
                   ></span>
                 </div>
@@ -61,7 +59,7 @@
                 <div class="col-12 col-md-6 text-center continue-buy">
                   <button
                     class="btn btn-success px-5 mt-3 mt-md-0"
-                    @click="continue_buy"
+                    @click="continue_buy()"
                   >
                     ادامه خرید
                   </button>
@@ -104,11 +102,12 @@ export default {
       ],
     };
   },
-  mounted() {
+  async mounted() {
     this.setItems();
     this.$nuxt.$on("refresh-cart", () => {
       this.setItems();
     });
+
   },
   methods: {
     setItems() {

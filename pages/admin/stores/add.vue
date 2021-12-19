@@ -27,7 +27,16 @@
                             <b-form-select class="form-control" v-model="form.status" :options="GatewayStatus.gatewayStatus">
                             </b-form-select>
                         </b-form-group>
-                        <b-button type="submit" variant="primary">ثبت پورت</b-button>
+                        <Xbutton
+                        is_submit
+                        text="ثبت پورت"
+                        :variant="'primary'"
+                        :disable="btnDisable"
+                        >
+                            <template #spinner>
+                                <b-spinner v-show="laodingSpinner" small ></b-spinner>
+                            </template>            
+                        </Xbutton>
                     </b-form>
                 </div>
             </div>
@@ -54,7 +63,9 @@ export default {
                 status: 1
             },
             ports : [],
-            port_config : null
+            port_config : null,
+            btnDisable:false,
+            laodingSpinner:false
         }
     },
     watch : {
@@ -78,10 +89,16 @@ export default {
             try {
                 event.preventDefault()
                 this.form.port_id = this.port.id
+                  this.btnDisable= true
+                  this.laodingSpinner= true
                 let res = await this.$axios.post('gateway/create', this.form)
                 alert(res.data.message)
+                this.btnDisable= false
+                  this.laodingSpinner= false
             } catch (e) {
                 alert(e.message)
+                this.btnDisable= false
+                  this.laodingSpinner= false
             }
         },
         async getPorts(){

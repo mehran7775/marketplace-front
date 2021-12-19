@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import { storeService } from '~/services/apiServices';
 const state = {
   
 }

@@ -315,9 +315,17 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <button @click="updateSetting" class="btn btn-primary">
-                                    ذخیره تغییرات
-                                </button>
+                                <Xbutton
+                                :on_click="()=> updateSetting()"
+                                class="btn"
+                                :variant="'primary'"
+                                text="ذخیره تغییرات"
+                                :disable="btnDisable"
+                                >
+                                    <template #spinner>
+                                        <b-spinner v-show="laodingSpinner" small ></b-spinner>
+                                    </template>            
+                                </Xbutton>
                             </div>
                             <hr>
                             <div class="bg-white py-4 my-2 px-5" style="border-radius: 10px;">
@@ -375,9 +383,17 @@
                                     </b-col>
                                 </b-form-row>
                                 <hr>
-                                <button @click="updateShippingSetting" class="btn btn-primary">
-                                    ذخیره تغییرات
-                                </button>
+                                <Xbutton
+                                :on_click="()=> updateShippingSetting()"
+                                class="btn"
+                                :variant="'primary'"
+                                text="ذخیره تغییرات"
+                                :disable="btnDisable"
+                                >
+                                    <template #spinner>
+                                        <b-spinner v-show="laodingSpinner" small ></b-spinner>
+                                    </template>            
+                                </Xbutton>
                             </div>
                         </b-tab>
                         <b-tab title="تنظیمات درگاه" >
@@ -418,9 +434,17 @@
                                     </div>
                                 </template>
                                 <hr>
-                                <button @click="updateGatewaySetting" class="btn btn-primary">
-                                    ذخیره تغییرات
-                                </button>
+                                <Xbutton
+                                :on_click="()=> updateGatewaySetting()"
+                                class="btn"
+                                :variant="'primary'"
+                                text="ذخیره تغییرات"
+                                :disable="btnDisable"
+                                >
+                                    <template #spinner>
+                                        <b-spinner v-show="laodingSpinner" small ></b-spinner>
+                                    </template>            
+                                </Xbutton>
                             </div>
                         </b-tab>
                         <!--<b-tab title="وضعیت درگاه" >
@@ -483,7 +507,9 @@ export default {
             zero: 0,
             store: {
                 shipping_setting: {}
-            }
+            },
+            btnDisable:false,
+            laodingSpinner:false
         }
     },
     created() {
@@ -552,6 +578,8 @@ export default {
                 })
         },
         updateShippingSetting() {
+            this.btnDisable= true
+            this.laodingSpinner= true
             api.post('store/update-shipping/' + this.$route.params.id, this.store.shipping_setting)
                 .then(response => {
                     this.message = response.data.message
@@ -561,6 +589,9 @@ export default {
                 if (!response.data.data[Object.keys(response.data.data)[0]]){
                     this.error = response.data.message
                 }
+            }).finally(()=>{
+                this.btnDisable= false
+                this.laodingSpinner= false
             })
         },
         getGateways() {
@@ -609,13 +640,17 @@ export default {
                     }
                 }
             }
-
+            this.btnDisable= true
+            this.laodingSpinner= true
             api.post('store/update-gateways/' + this.$route.params.id, form_data, this.$cookies.get('token'))
                 .then(response => {
                     this.message = response.data.message
                     this.getData()
                 }).catch(({response}) => {
                 this.error = response.data.data[Object.keys(response.data.data)[0]]
+            }).finally(()=>{
+                this.btnDisable= false
+                this.laodingSpinner= false
             })
         },
         getData() {
@@ -649,6 +684,8 @@ export default {
                     }
                 }
             }
+            this.btnDisable= true
+            this.laodingSpinner= true
             api.post('store/update/' + this.$route.params.id, form_data, this.$cookies.get('token'))
                 .then(response => {
                     this.message = response.data.message
@@ -658,6 +695,9 @@ export default {
                 if (!response.data.data[Object.keys(response.data.data)[0]]){
                     this.error = response.data.message
                 }
+            }).finally(()=>{
+                this.btnDisable= false
+                this.laodingSpinner= false
             })
         }
     }
