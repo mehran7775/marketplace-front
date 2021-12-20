@@ -50,4 +50,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.container-xl{
+  @include xlarge{
+    max-width: 1400px;
+  }
+}
 </style>

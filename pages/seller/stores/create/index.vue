@@ -143,7 +143,7 @@
                                         </div>
                                         <div class="col-sm col-md-6 my-2">
                                         <client-only placeholder="loading...">
-                                             <ckeditor-nuxt  v-model="formData.description" :config="editorConfig2"  />
+                                            <ckeditor-nuxt  v-model="formData.description" :config="editorConfig2"  />
                                         </client-only>
                                         </div>
                                         <div class="col-md-3"
@@ -462,20 +462,20 @@ export default {
                 name_option: false,
             },
             editorConfig: {
-                removePlugins: ['Title'],
+                removePlugins: ['Title','Table','PageBreak','Subscript','SuperScript','CodeBlock','Code','Strikethrough','ChemType'],
                 placeholder:"قوانین و مقررات فروشگاه",
                 language:{
-                    ui: 'en',
+                    ui: 'fa',
                     content: 'fa'
                 },
                 contentsLangDirection:'rtl',      
             },
             editorConfig2: {
 
-                removePlugins: ['Title'],
+                removePlugins: ['Title','Table','PageBreak','Subscript','SuperScript','CodeBlock','Code','Strikethrough','ChemType'],
                 placeholder:"توضیحات",
                 language:{
-                    ui: 'en',
+                    ui: 'fa',
                     content: 'fa'
                 },
                 contentsLangDirection:'rtl',      

@@ -36,17 +36,9 @@
                                         />
                                     </div>
                                     <div class="col-4 col-md-4 my-2">
-                                    <textarea
-                                        type="text"
-                                        class="form-control"
-                                        id="description"
-                                        ref="description"
-                                        placeholder="توضیحات"
-
-                                        v-model="formData.description"
-                                    >
-
-                                            </textarea>
+                                    <client-only placeholder="loading...">
+                                        <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  ref="description"/>
+                                    </client-only>
                                     </div>
                                     <div class="col-4 col-md-4 my-2">
                                         <select
@@ -133,14 +125,10 @@
                                         </div>
                                     </div>
                                     <div class="col-8 my-2">
-                                    <textarea
-                                        rows="6"
-                                        class="form-control"
-                                        id="lows"
-                                        ref="logo"
-                                        v-model="formData.shop_terms"
-                                        placeholder="قوانین و مقررات فروشگاه">
-                                    </textarea>
+                                          <client-only placeholder="loading...">
+                                            <ckeditor-nuxt v-model="formData.shop_terms" :config="editorConfig2"   id="lows"
+                                            ref="logo"/>
+                                        </client-only>
                                     </div>
                                 </div>
                                 <div class="row justify-content-around align-content-center pb-3">
@@ -206,28 +194,16 @@
                                     </div>
 
                                     <div class="col-sm col-md-6 my-2">
-                                            <textarea
-                                                rows="4"
-                                                type="text"
-                                                class="form-control"
-                                                id="description"
-                                                ref="description"
-                                                placeholder="توضیحات"
-
-                                                v-model="formData.description"
-                                            >
-
-                                            </textarea>
+                                        <client-only placeholder="loading...">
+                                            <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  id="description"
+                                                ref="description"/>
+                                        </client-only>
                                     </div>
                                     <div class="col-sm col-md-6 my-2">
-                                    <textarea
-                                        rows="4"
-                                        class="form-control"
-                                        id="lows"
-                                        ref="logo"
-                                        v-model="formData.shop_terms"
-                                        placeholder="قوانین و مقررات فروشگاه">
-                                    </textarea>
+                                        <client-only placeholder="loading...">
+                                            <ckeditor-nuxt v-model="formData.shop_terms" :config="editorConfig2"   id="lows"
+                                            ref="logo"/>
+                                        </client-only>
                                     </div>
 
                                     <div class="col-12 col-sm-2">
@@ -468,6 +444,9 @@ import StoreStatus from "~/constants/StoreStatus";
 export default {
     components: {PageTitle},
     layout: "main-content",
+    components:{
+        'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
+    },
     data() {
         return {
             provinces,
@@ -509,7 +488,39 @@ export default {
                 shipping_setting: {}
             },
             btnDisable:false,
-            laodingSpinner:false
+            laodingSpinner:false,
+            editorConfig: {
+                removePlugins: ['Title','Table','PageBreak','Subscript','SuperScript','CodeBlock','Code','Strikethrough','ChemType'],
+                placeholder:"توضیحات",
+                language:{
+                    ui: 'fa',
+                    content: 'fa'
+                },
+                contentsLangDirection:'rtl',
+                smiley_path : '@/assets/ckeditor/smiley/images',
+                smiley_images : [
+                    'regular_smile.png','sad_smile.png','wink_smile.png','teeth_smile.png','confused_smile.png','tongue_smile.png',
+                    'embarrassed_smile.png','omg_smile.png','whatchutalkingabout_smile.png','angry_smile.png','angel_smile.png','shades_smile.png',
+                    'devil_smile.png','cry_smile.png','lightbulb.png','thumbs_down.png','thumbs_up.png','heart.png',
+                    'broken_heart.png','kiss.png','envelope.png'
+                ],
+                smiley_descriptions : [
+                    ':)', ':(', ';)', ':D', ':/', ':P', ':*)', ':-o',
+                    ':|', '>:(', 'o:)', '8-)', '>:-)', ';(', '', '', '',
+                    '', '', ':-*', ''
+                ],
+                smiley_columns : 6
+
+            },
+             editorConfig2: {
+                removePlugins: ['Title','Table','PageBreak','Subscript','SuperScript','CodeBlock','Code','Strikethrough','ChemType'],
+                placeholder:"قوانین و مقررات فروشگاه",
+                language:{
+                    ui: 'fa',
+                    content: 'fa'
+                },
+                contentsLangDirection:'rtl',      
+            },
         }
     },
     created() {
