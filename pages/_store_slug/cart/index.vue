@@ -177,7 +177,7 @@ export default {
       'detail',
     ]),
     user_data() {
-      return this.$store.state.user.current_user;
+      return this.$store.state.user.current_user
     },
     lang() {
       return tr();

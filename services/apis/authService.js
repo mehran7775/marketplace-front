@@ -14,7 +14,7 @@ export default{
     currentUser(payload){
         return axios.get('/customer/current',{
             headers:{
-                authorization: "Bearer " + payload
+                'Authorization': "Bearer " + payload
             }
         })
     }

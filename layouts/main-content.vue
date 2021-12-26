@@ -62,4 +62,11 @@ export default {
         height: auto;
     }
 }
+.vueSelect{
+    border-radius: 15px!important;
+}
+.vueSelect .vs__selected-options{
+    padding: 3px 0;
+}
+
 </style>
