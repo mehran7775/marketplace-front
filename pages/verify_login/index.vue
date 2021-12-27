@@ -61,12 +61,8 @@ export default {
         if (res.status === 200) {
           this.$cookies.set("token-buyer", res.data.data.api.token);
           const res_current= await authService.currentUser( res.data.data.api.token )
-          console.log(res_current)
           if(res_current.status == 200){
-            this.$store.commit("user/setToState", {
-              name: 'current_user',
-              data: res_current.data.data
-            })
+            localStorage.setItem('userDetail',JSON.stringify(res_current.data.data))
           }
           this.btnDisable= false
           this.laodingSpinner= false

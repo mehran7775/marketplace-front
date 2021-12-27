@@ -177,7 +177,11 @@ export default {
       'detail',
     ]),
     user_data() {
-      return this.$store.state.user.current_user
+      if(localStorage.getItem('userDetail')){
+        return JSON.parse(localStorage.getItem('userDetail'))
+      }else{
+        return null
+      }
     },
     lang() {
       return tr();
