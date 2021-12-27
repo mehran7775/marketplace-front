@@ -100,6 +100,39 @@
                                     </div>
                                 </b-form-group>
                             </div>
+                            <div class="col-sm">
+                                 <b-form-group
+                                    id="gParent_id"
+                                    class="font-weight-bold"
+                                    label="انتخاب دسته بندی"
+                                    label-for="parent_id"
+                                >
+                                    <v-select
+                                    :filterable="false"
+                                    dir="rtl"
+                                    placeholder="دسته بندی را انتخاب کنید"
+                                    :options="option"
+                                    v-model="formData.parent_id"
+                                    @search="onSearch"
+                                     multiple="true"
+                                    class="vueSelect"
+                                    >
+                                    <template slot="no-options">
+                                        دسته مورد نظر را وارد کنید
+                                    </template>
+                                    <template slot="option" slot-scope="option">
+                                        <div class="d-flex align-items-center">
+                                        {{ option.title }}
+                                        </div>
+                                    </template>
+                                    <template slot="selected-option" slot-scope="option">
+                                        <div class="selected d-flex align-items-center">
+                                        {{ option.title }}
+                                        </div>
+                                    </template>
+                                    </v-select>
+                                </b-form-group>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-sm">
@@ -119,6 +152,7 @@
 
 <script>
 import PageTitle from "~/components/main/pageTitle";
+import { userService, categoryService } from "@/services/apiServices";
 import api from "~/services/api";
 
 export default {
@@ -140,13 +174,15 @@ export default {
                 discount_percent: 0,
                 discount_max_amount: 0,
                 image: null,
-                description: null
+                description: null,
+                parent_id:null
             },
             errors: {
                 title: null,
                 image: null,
                 quantity: null
-            }
+            },
+            option: [],
         }
     },
     methods: {
@@ -208,6 +244,29 @@ export default {
                 pieces.splice(ii, 0, ",");
             }
             return pieces.join("");
+        },
+        onSearch(search, loading) {
+            if (search.length) {
+                loading(true);
+                this.search(loading, search, this);
+            }
+        },
+         async search(loading, search, vm) {
+            await categoryService.searchCategory({
+                    userId: this.user.id,
+                    search: search,
+                    token: this.$cookies.get("token"),
+                })
+                .then((res) => {
+                    this.option = res.data;
+                    this.optionUpdate= res.data
+                })
+                .catch((e) => {
+                    console.log(e);
+                })
+                .finally(() => {
+                    loading(false);
+                });
         },
     }
 }

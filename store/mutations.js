@@ -9,5 +9,5 @@ export default{
             type:payload.variant,
             toastClassName:"toast-body"
         });
-    }
+    },
 }

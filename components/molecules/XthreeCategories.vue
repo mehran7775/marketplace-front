@@ -1,7 +1,7 @@
 <template>
   <div :style="nodeMargin">
     <b-alert variant="light" show class="d-flex justify-content-between mb-1 border border-whitesmoke">
-      {{ node.label }}
+      {{ node.title }}
      <div class="operation">
         <fa icon="edit" class="edit cursor_pointer"
           @click="editItem()"
@@ -11,11 +11,11 @@
         ></fa>
      </div>
     </b-alert>
-    <div v-if="hasChildren">
+    <div v-if="node.children_recursive && node.children_recursive.length> 0">
       <TreeNode
-        v-for="child in node.children"
-        :key="child.id"
-        :node="child"
+        v-for="category in node.children_recursive"
+        :key="category.id"
+        :node="category"
         :spacing="spacing + 10"
       />
     </div>
@@ -41,17 +41,19 @@ export default {
         'margin-right': `${this.spacing}px`
       }
     },
-    hasChildren() {
-      const { children } = this.node
-      return children && children.length > 0
-    }
   },
   methods:{
     editItem(){
-      console.log(this.node)
+       this.$nuxt.$emit('actionCategory',{
+        type:'edit',
+        item:this.node
+      })
     },
     removeItem(){
-      console.log(this.node)
+      this.$nuxt.$emit('actionCategory',{
+        type:'delete',
+        item:this.node
+      })
     }
   }
 }
