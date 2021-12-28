@@ -208,6 +208,9 @@ export default {
             }
             api.post('product/update/' + this.$route.params.id, form_data, this.$cookies.get('token')).then(response => {
                 this.message = response.data.message
+                 this.$router.push(
+              "/" + this.$route.params.store_slug + "/admin/products"
+            );
             }).catch(({response}) => {
                 this.error = response.data.data[Object.keys(response.data.data)[0]]
             })

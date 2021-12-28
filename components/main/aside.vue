@@ -58,8 +58,6 @@
 
 <script>
 import aside_menu from "@/components/main/aside.js";
-import api from "~/services/api";
-
 export default {
    props:{
     inAnticipationShops:{
@@ -72,15 +70,15 @@ export default {
   data() {
     return {
       menu: aside_menu,
-        user : null
     }
   },
-  created() {
-      api.get('user/current', this.$cookies.get('token'))
-          .then(res => {
-              this.user = res.data.data
-          })
-  }
+ computed: {
+    user() {
+      if(process.client){
+        return JSON.parse(localStorage.getItem("currentUser"));
+      }
+    },
+  },
 }
 </script>
 

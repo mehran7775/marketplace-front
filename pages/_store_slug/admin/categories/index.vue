@@ -51,6 +51,7 @@
                       v-model="form.parent_id"
                       @search="onSearch"
                       class="vueSelect"
+                      label="categories"
                     >
                       <template slot="no-options">
                         دسته مورد نظر را وارد کنید
@@ -162,7 +163,7 @@
                     >
                       <b-form-input
                         id="etitle"
-                        :value="categoryItem.title"
+                        v-model="categoryItem.title"
                         placeholder="نام دسته را وارد کنید"
                         :state="errors[0] ? false : valid ? true : null"
                       ></b-form-input>
@@ -233,12 +234,12 @@
 
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { userService, categoryService } from "@/services/apiServices";
+import { categoryService } from "@/services/apiServices";
+import $lodash from 'lodash'
 export default {
   data() {
     return {
       onClient: false,
-      user: null,
       form: {
         title: "",
         parent_id: null,
@@ -254,27 +255,29 @@ export default {
       loadingSpinnerCategory: false,
       option: [],
       optionUpdate:[],
-      categoryItem: null,
+      categoryItem: {},
     };
   },
   components: {
     ValidationProvider,
     ValidationObserver,
   },
+  computed:{
+    user(){
+      return JSON.parse(localStorage.getItem('currentUser'))
+    }
+  },
   layout: "main-content",
   async created() {
     if (process.client) {
       try {
-        const data = await userService.userCurrent(this.$cookies.get("token"));
-        this.user = data.data.data;
         this.getAllCategory();
         this.onClient = true;
       } catch (e) {
         console.log(e);
       }
         this.$nuxt.$on("actionCategory", async (payload) => {
-        this.categoryItem = payload.item; 
-        console.log(this.categoryItem)
+        Object.assign( this.categoryItem,payload.item)
         if (payload.type === "edit") {
           this.optionUpdate=[]
           this.formUpdate.parent_id= ''
@@ -307,7 +310,6 @@ export default {
           userId: this.user.id,
           token: this.$cookies.get("token"),
         });
-        console.log(res);
         this.categories = res.data.data;
       } catch (e) {
         console.log(e);
@@ -323,7 +325,6 @@ export default {
             parent_id: this.form.parent_id ? this.form.parent_id.id : null,
             token: this.$cookies.get("token"),
           };
-          console.log(data)
           categoryService.createCategory(data)
             .then(() => {
               this.getAllCategory();
@@ -355,16 +356,15 @@ export default {
         this.search(loading, search, this);
       }
     },
-    async search(loading, search, vm) {
-      await categoryService
-        .searchCategory({
-          userId: this.user.id,
+    search:$lodash.debounce((loading, search, vm) =>{
+        categoryService.searchCategory({
+          userId: vm.user.id,
           search: search,
-          token: this.$cookies.get("token"),
+          token: vm.$cookies.get("token"),
         })
         .then((res) => {
-          this.option = res.data;
-          this.optionUpdate= res.data
+          vm.option = res.data;
+          vm.optionUpdate = res.data;
         })
         .catch((e) => {
           console.log(e);
@@ -372,7 +372,7 @@ export default {
         .finally(() => {
           loading(false);
         });
-    },
+     },450),
     async confirmDeleteCategory() {
       try {
         this.btnDisableCategory = true;
