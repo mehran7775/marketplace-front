@@ -34,6 +34,11 @@ const userStatus = [
         value: 6,
         variant : 'danger'
     },
+    {
+        text: 'حذف شده',
+        value: 7,
+        variant : 'danger'
+    },
 ]
 
 const getStatus = function(status){

@@ -16,7 +16,6 @@
         alt="تصویر محصول"
       />
     </nuxt-link>
-    <div v-if="quantity < 1" class="my-1"><span class="text-danger">ناموجود</span></div>
     <div id="box_hover">
       <div v-if="is_hover" class="d-flex justify-content-center">
         <Xbutton
@@ -39,10 +38,16 @@
 
       </div>
       <div v-if="!is_hover" class="price">
-        <span v-text="price"></span>
-        <strong>
-          <span v-text="lang.price"></span>
-        </strong>
+        <template v-if="quantity > 1">
+           <span v-text="price"></span>
+           <strong>
+            <span v-text="lang.price"></span>
+          </strong>
+        </template>
+        <template v-else>
+          <span class="text-danger font-weight-bold">ناموجود</span>
+        </template>
+       
       </div>
     </div>
   </div>

@@ -15,7 +15,7 @@
                         <b-tab title="اطلاعات فروشگاه" active>
                             <div class="bg-white py-4 my-2 px-5" style="border-radius: 10px;">
                                 <div v-if="false" class="row justify-content-around align-content-center pb-3">
-                                    <div class="col-4 col-md-4 my-2">
+                                    <div class="col-12 col-md-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -25,7 +25,7 @@
                                             v-model="formData.fa_name"
                                         />
                                     </div>
-                                    <div class="col-4 col-md-4 my-2">
+                                    <div class="col-12 col-md-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -35,12 +35,12 @@
                                             v-model="formData.en_name"
                                         />
                                     </div>
-                                    <div class="col-4 col-md-4 my-2">
+                                    <div class="col-12 col-md-4 my-2">
                                     <client-only placeholder="loading...">
                                         <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  ref="description"/>
                                     </client-only>
                                     </div>
-                                    <div class="col-4 col-md-4 my-2">
+                                    <div class="col-12 col-md-4 my-2">
                                         <select
                                             type="text"
                                             class="form-control"
@@ -54,7 +54,7 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="col-4 col-md-4 my-2">
+                                    <div class="col-12 col-md-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -64,7 +64,7 @@
                                             v-model="formData.city"
                                         />
                                     </div>
-                                    <div class="col-4 col-md-4 my-2">
+                                    <div class="col-12 col-md-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -78,11 +78,8 @@
 
                                         <b-form-file
                                             placeholder="لوگو" class="form-control"
-                                            v-model="formData.logo"></b-form-file>
-
-                                        <b-link class="btn btn-link" target="_blank" :href="formData.logo">دانلود لوگو
-                                        </b-link>
-
+                                            v-model="formData.logo">
+                                        </b-form-file>
                                         <div class="m-auto pt-2 pr-2">
                                             <div class="w-100 text-right">
                                                 <div class="my-3">
@@ -132,7 +129,7 @@
                                     </div>
                                 </div>
                                 <div class="row justify-content-around align-content-center pb-3">
-                                    <div class="col-sm col-md-4 my-2">
+                                    <div class="col-12 col-lg-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -142,7 +139,7 @@
                                             v-model="formData.fa_name"
                                         />
                                     </div>
-                                    <div class="col-sm col-md-4 my-2">
+                                    <div class="col-12 col-lg-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -152,7 +149,7 @@
                                             v-model="formData.en_name"
                                         />
                                     </div>
-                                    <div class="col-sm col-md-4 my-2">
+                                    <div class="col-12 col-lg-4 my-2">
                                         <select
                                             type="text"
                                             class="form-control"
@@ -163,7 +160,7 @@
                                            <option :key="item.key" v-for="item in provinces" :value="item.id">{{ item.value }}</option>
                                         </select>
                                     </div>
-                                    <div class="col-sm col-md-4 my-2">
+                                    <div class="col-12 col-lg-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -173,7 +170,7 @@
                                             v-model="formData.city"
                                         />
                                     </div>
-                                    <div class="col-sm col-md-4 my-2">
+                                    <div class="col-12 col-lg-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -183,16 +180,37 @@
                                             v-model="formData.phone_number"
                                         />
                                     </div>
-                                    <div class="col-sm col-md-4 my-2">
-
-                                        <b-form-file
-                                            placeholder="لوگو" class="form-control"
-                                            accept="image/*"
-                                            v-model="formData.logo"></b-form-file>
-
-                                        <b-link class="btn btn-link" target="_blank" :href="formData.logo">دانلود لوگو</b-link>
+                                    <div class="col-12 col-lg-4 my-3">
+                                        <div class="row">
+                                            <div class="d-flex align-items-center mr-4 ">
+                                                <div class="pb-4">
+                                                    <b-form-file
+                                                        v-model="formData.logo"
+                                                        accept="image/*"
+                                                        class="rounded"
+                                                        style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
+                                                        placeholder="یک فایل انتخاب کنید"
+                                                        plain
+                                                        @change="onFileChange"
+                                                    ></b-form-file>
+                                                    <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
+                                                            این فیلد الزامی است.</small>
+                                                    <small v-if="validation_errors.logo_size" class="text-danger px-2">
+                                                            حجم لوگو نباید بیشتر از یک مگابایت باشد
+                                                    </small>
+                                                    <small v-if="validation_errors.logo_type" class="text-danger px-2">
+                                                            فرمت لوگو معتبر نمی باشد
+                                                    </small>
+                                                </div>
+                                                 <div class="m-auto pt-2 pr-2">
+                                                     <img width="80" height="50"
+                                                    :src="urlLogo ? urlLogo :formData.logo"
+                                                    class="rounded"
+                                                    style="max-width:80px;max-height:50px"/>
+                                                 </div>
+                                            </div>
+                                        </div>
                                     </div>
-
                                     <div class="col-sm col-md-6 my-2">
                                         <client-only placeholder="loading...">
                                             <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  id="description"
@@ -204,12 +222,6 @@
                                             <ckeditor-nuxt v-model="formData.shop_terms" :config="editorConfig2"   id="lows"
                                             ref="logo"/>
                                         </client-only>
-                                    </div>
-
-                                    <div class="col-12 col-sm-2">
-                                        <div class="m-auto pt-2 pr-2">
-                                            <img :src="formData.logo"  style="width: 100%;border-radius: 10px"/>
-                                        </div>
                                     </div>
                                     <div class="col-12 col-sm-5">
                                         <div class="m-auto pt-2 pr-2">
@@ -442,9 +454,9 @@ import {provinces} from "~/constants/Provinces";
 import PageTitle from "~/components/main/pageTitle";
 import StoreStatus from "~/constants/StoreStatus";
 export default {
-    components: {PageTitle},
     layout: "main-content",
     components:{
+        PageTitle,
         'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
     },
     data() {
@@ -482,6 +494,7 @@ export default {
                 show_province_option: false,
                 shop_terms: null,
             },
+            urlLogo:null,
             one: 1,
             zero: 0,
             store: {
@@ -521,6 +534,11 @@ export default {
                 },
                 contentsLangDirection:'rtl',      
             },
+            validation_errors:{
+                logo: null,
+                logo_size: null,
+                logo_type: null,
+            }
         }
     },
     created() {
@@ -530,6 +548,27 @@ export default {
         this.getData()
     },
     methods: {
+        onFileChange(payload) {
+            this.validation_errors.logo_size=false
+            this.validation_errors.logo_type=false
+            this.validation_errors.logo_size=false
+            const file = payload.target.files[0]; // use it in case of normal HTML input
+             if (file) {
+                if(file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/svg+xml' || file.type === 'image/webp'){
+                    if(file.size >  ((1024 * 1024) * 1)){
+                        this.validation_errors.logo_size =true
+                        this.urlLogo=null
+                        return
+                    }
+                    this.urlLogo = URL.createObjectURL(file);
+                    URL.revokeObjectURL(file); // free memory
+                }else{
+                    this.validation_errors.logo_type= true
+                     this.urlLogo=null
+                }
+               
+            }
+        },
         isSelected(gateway){
             if (gateway.type == 'PF'){
                 let key = gateway.port_config.sequence
@@ -677,9 +716,6 @@ export default {
                 })
         },
         updateSetting() {
-            if (typeof this.formData.logo === 'string') {
-                this.formData.logo = null
-            }
             let form_data = new FormData();
             for (let key in this.formData) {
                 if (this.formData[key] === true || this.formData[key] === false) {
@@ -714,3 +750,6 @@ export default {
     }
 }
 </script>
+<style scoped>
+
+</style>

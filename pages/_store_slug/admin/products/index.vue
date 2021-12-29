@@ -1,6 +1,7 @@
 <template>
    <client-only v-if="onClient">
         <div>
+     
             <page-title title_text="محصولات" icon="product">
                 <nuxt-link to="products/create" class="btn btn-success shadow-sm mx-2 px-4 py-2"
                         style="border-radius: 20px; border-color: #bbb;">
@@ -16,7 +17,8 @@
                         <input class="form-control" placeholder="قیمت" v-model="filter_price">
                     </div>
                     <div class="col-sm my-2">
-                        <select class="form-control" v-model="filter_status">
+                        <select class="form-control" id="selectState" v-model="filter_status">
+                            <option :value="null">وضعیت</option>
                             <option v-for="status in ProductStatus.productStatus" :value="status.value">{{status.text}}</option>
                         </select>
                     </div>
@@ -33,7 +35,6 @@
                 </div>
             </div>
             <div class="bg-white shadow-sm py-3 my-2" style="border-radius: 10px;" v-if="products">
-
                 <div class="px-3">
                     <div class="table-responsive">
                         <table class="table  table-responsive table-borderless text-center">
@@ -64,11 +65,11 @@
                                     </b-badge>
                                 </td>
                                 <td>
-                                    <nuxt-link class="btn p-0 m-0 text-danger" :to="'products/' + product.id + '/find'">
-                                    <fa icon="edit" class="edit cursor_pointer fa-lg" title="ویرایش"ة
+                                    <nuxt-link class="btn p-0 m-0 text-danger" :to="'products/' + product.id + '/find'" v-b-tooltip.hover title="جزئیات">
+                                    <fa icon="edit" class="edit cursor_pointer fa-lg" 
                                     ></fa>
                                     </nuxt-link>
-                                    <b-button variant="link" class="p-0 m-0" v-b-modal="'my-modal' + index" title="تغییر وضعیت">
+                                    <b-button variant="link" class="p-0 m-0" v-b-modal="'my-modal' + index" v-b-tooltip.hover title="تغییر وضعیت">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"  fill="#bbb"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zm0-7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
                                     </b-button>
 
@@ -85,9 +86,12 @@
                                             </b-button>
                                         </b-form-group>
                                     </b-modal>
-                                    <fa icon="pencil-alt" class="edit cursor_pointer fa-lg" title="ویرایش سریع"
+                                    <span v-b-tooltip.hover title="ویرایش سریع">
+                                        <fa icon="pencil-alt" class="edit cursor_pointer fa-lg" 
                                         @click="triggerEditProduct(product)"
-                                    ></fa>
+                                        ></fa>
+                                    </span>
+                                 
                                     
                                 </td>
                             </tr>
@@ -145,7 +149,7 @@
                         <b-form-group
                         id="gPrice"
                         class="font-weight-bold"
-                        label="قیمت"
+                        label="قیمت     (ریال)"
                         label-for="uprice"
                         >
                         <b-form-input

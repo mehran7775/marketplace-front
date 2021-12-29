@@ -61,7 +61,7 @@
                             <div v-show="wizard.current_step === 1">
                                 <div class="col w-100" id="record_getway">
                                     <div class="row justify-content-around align-content-center pb-3">
-                                        <div class="col-md-4 col-sm-12 my-2">
+                                        <div class="col-12 col-lg-4 my-2">
                                             <input
                                                 type="text"
                                                 class="form-control"
@@ -73,7 +73,7 @@
                                             <small v-if="validation_errors.fa_name" class="text-danger px-2">تکمیل این
                                                 فیلد الزامی است.</small>
                                         </div>
-                                        <div class="col-sm col-md-4 my-2">
+                                        <div class="col-12 col-lg-4 my-2">
                                             <input
                                                 type="text"
                                                 class="form-control"
@@ -85,7 +85,7 @@
                                             <small v-if="validation_errors.en_name" class="text-danger px-2">تکمیل این
                                                 فیلد الزامی است.</small>
                                         </div>
-                                        <div class="col-sm col-md-4 my-2">
+                                        <div class="col-12 col-lg-4 my-2">
                                             <select
                                                 type="text"
                                                 class="form-control"
@@ -100,7 +100,7 @@
                                             <small v-if="validation_errors.province" class="text-danger px-2">تکمیل این
                                                 فیلد الزامی است.</small>
                                         </div>
-                                        <div class="col-sm col-md-4 my-2">
+                                        <div class="col-12 col-lg-4 my-2">
                                             <input
                                                 type="text"
                                                 class="form-control"
@@ -112,7 +112,7 @@
                                             <small v-if="validation_errors.city" class="text-danger px-2">تکمیل این فیلد
                                                 الزامی است.</small>
                                         </div>
-                                        <div class="col-sm col-md-4 my-2">
+                                        <div class="col-12 col-lg-4 my-2">
                                             <input
                                                 type="text"
                                                 class="form-control"
@@ -124,17 +124,37 @@
                                             <small v-if="validation_errors.phone_number" class="text-danger px-2">تکمیل
                                                 این فیلد الزامی است.</small>
                                         </div>
-                                        <div class="col-sm col-md-4 my-2">
-                                            <b-form-file id="logo"
-                                                         ref="logo" placeholder=" انتخاب فایل لوگو" class="form-control"
-                                                         accept="image/*"
-                                                         @change="onFileChange"
-                                                         v-model="formData.logo"></b-form-file>
-                                            <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
-                                                این فیلد الزامی است.</small>
-                                            <small v-if="validation_errors.logo_size" class="text-danger px-2">
-                                                حجم لوگو نباید بیشتر از یک مگ باشد
-                                            </small>
+                                        <div class="col-12 col-lg-4 my-2">
+                                          <div class="row">
+                                                <div class="d-flex align-items-center mr-4">
+                                                    <div>
+                                                    <b-form-file
+                                                        v-model="formData.logo"
+                                                        id="logo"
+                                                        ref="logo" placeholder=" انتخاب فایل لوگو" class="rounded mb-0 mb-md-4"
+                                                        accept="image/*"
+                                                        style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
+                                                        @change="onFileChange"
+                                                        plain
+                                                    ></b-form-file>
+                                                    <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
+                                                        این فیلد الزامی است.</small>
+                                                    <small v-if="validation_errors.logo_size" class="text-danger px-2">
+                                                        حجم لوگو نباید بیشتر از یک مگابایت باشد
+                                                    </small>
+                                                    <small v-if="validation_errors.logo_type" class="text-danger px-2">
+                                                        فرمت لوگو معتبر نمی باشد
+                                                    </small>
+                                                </div>
+                                            
+                                                <div v-if="imagePreviewURL" class="mx-auto pt-2 pr-2">
+                                                    <img width="80" height="50"
+                                                        :src="imagePreviewURL"
+                                                        class="rounded m-auto"
+                                                        style="max-width:80px;max-height:50px"/>
+                                                </div>
+                                            </div>
+                                        </div>   
                                         </div>
                                         <div class="col-sm col-md-6 my-2">
                                         <client-only placeholder="loading...">
@@ -145,16 +165,6 @@
                                         <client-only placeholder="loading...">
                                             <ckeditor-nuxt  v-model="formData.description" :config="editorConfig2"  />
                                         </client-only>
-                                        </div>
-                                        <div class="col-md-3"
-                                             v-if="imagePreviewURL"
-                                        >
-                                            <div class="m-auto pt-2 pr-2">
-                                                <img
-
-                                                    :src="imagePreviewURL"
-                                                    style="width: 100%;border-radius: 10px"/>
-                                            </div>
                                         </div>
                                         <div :class="imagePreviewURL ? 'col-md-9' : 'col-md-12'">
                                             <div class="m-auto pt-2 pr-2">
@@ -459,6 +469,7 @@ export default {
                 phone_number: null,
                 logo: null,
                 logo_size: null,
+                logo_type: null,
                 name_option: false,
             },
             editorConfig: {
@@ -490,13 +501,30 @@ export default {
     },
     methods: {
         onFileChange(payload) {
+            this.validation_errors.logo_size=false
+            this.validation_errors.logo_type=false
+            this.validation_errors.logo_size=false
             const file = payload.target.files[0]; // use it in case of normal HTML input
-            if (file) {
-                this.imagePreviewURL = URL.createObjectURL(file);
-                URL.revokeObjectURL(file); // free memory
+             if (file) {
+                if(file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/svg+xml' || file.type === 'image/webp'){
+                    if(file.size >  ((1024 * 1024) * 1)){
+                        this.validation_errors.logo_size =true
+                        this.imagePreviewURL = null
+                        return
+                    }
+                    this.imagePreviewURL = URL.createObjectURL(file);
+                    URL.revokeObjectURL(file); // free memory
+                }else{
+                    this.validation_errors.logo_type= true
+                    this.imagePreviewURL = null
+                }
+               
             } else {
                 this.imagePreviewURL =  null
             }
+      
+           
+            
         },
         getGateways() {
             api.getUrl('https://core.paystar.ir/api/gateway/user-gateways-data', this.$cookies.get('token'))
@@ -567,6 +595,10 @@ export default {
             }
             if (this.formData.logo && (this.formData.logo.size > ((1024 * 1024) * 1))) {
                 this.validation_errors.logo_size = true
+                res = false
+            }
+            if (this.formData.logo && (this.formData.logo.type !== 'image/jpeg' || this.formData.logo.type !== 'image/png' || this.formData.logo.type !== 'image/svg+xml' || this.formData.logo.type !== 'image/webp')) {
+                this.validation_errors.logo_type = true
                 res = false
             }
             if (!this.formData.province) {
@@ -649,7 +681,7 @@ export default {
 ;
 </script>
 
-<style>
+<style scoped>
 .filter_green {
     filter: invert(68%) sepia(25%) saturate(7218%) hue-rotate(130deg) brightness(91%) contrast(101%);
 }
@@ -664,11 +696,6 @@ export default {
     cursor: pointer;
     min-width: 200px;
 }
-
-input[type="file"]::-webkit-file-upload-button {
-    visibility: hidden;
-}
-
 .custom-file-label {
     border: none;
     background: url('/images/icons/file_upload_black_24dp.svg');

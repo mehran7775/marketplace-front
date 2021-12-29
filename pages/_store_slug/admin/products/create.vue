@@ -96,13 +96,22 @@
               <div class="col-sm">
                 <b-form-group label="تصویر محصول">
                    <b-form-file
-                    v-model="formData.image"
+                   v-model="formData.image"
                     accept="image/*"
                     class="px-5 rounded"
                     style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
                     placeholder="یک فایل انتخاب کنید"
                     plain
+                    @change="changeFile"
                   ></b-form-file>
+                    <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
+                            این فیلد الزامی است.</small>
+                    <small v-if="validation_errors.logo_size" class="text-danger px-2">
+                            حجم عکس نباید بیشتر از پنج مگابایت باشد
+                    </small>
+                    <small v-if="validation_errors.logo_type" class="text-danger px-2">
+                            فرمت عکس معتبر نمی باشد
+                    </small>
                   <small v-if="errors.image" class="text-danger px-2">{{
                     errors.image
                   }}</small>
@@ -221,6 +230,11 @@ export default {
         image: null,
         quantity: null,
       },
+      validation_errors:{
+          logo: null,
+          logo_size: null,
+          logo_type: null,
+      },
       option: [],
     };
   },
@@ -232,6 +246,29 @@ export default {
     },
   },
   methods: {
+    changeFile(payload){
+          this.validation_errors.logo_size=false
+            this.validation_errors.logo_type=false
+            this.validation_errors.logo_size=false
+            const file = payload.target.files[0]; // use it in case of normal HTML input
+             if (file) {
+                if(file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/svg+xml' || file.type === 'image/webp'){
+                    if(file.size >  ((1024 * 1024) * 5)){
+                        this.validation_errors.logo_size =true
+                        this.formData.image= null
+                        return
+                    }
+                    this.imagePreviewURL = URL.createObjectURL(file);
+                    URL.revokeObjectURL(file); // free memory
+                }else{
+                    this.validation_errors.logo_type= true
+                    this.formData.image= null
+                }
+               
+            } else {
+                this.imagePreviewURL =  null
+            }
+    },
     validate() {
       let res = true;
       if (!this.formData.title) {
@@ -245,6 +282,10 @@ export default {
       if (this.formData.image && this.formData.image.size > 1024 * 1024 * 5) {
         this.errors.image = "تصویر محصول نباید بیشتر از ۵ مگ باشد";
         res = false;
+      }
+      if (this.formData.image && (this.formData.image.type !== 'image/jpeg' || this.formData.image.type !== 'image/png' || this.formData.image.type !== 'image/svg+xml' || this.formData.image.type !== 'image/webp')) {
+          this.validation_errors.logo_type = true
+          res = false
       }
       if (!this.formData.quantity) {
         this.errors.quantity = "تعداد محصول الزامی است";
@@ -335,7 +376,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 #create_product .custom-file-label {
   border: none;
   background: none;
