@@ -1,4 +1,5 @@
 import axios from "~/plugins/axios";
+// import Coockie from 'cookie-universal-nuxt'
 
 export default{
     getProducts(payload){
@@ -17,6 +18,7 @@ export default{
 
 
     updateProduct(payload){
+        // console.log('token',Coockie.get('token'))
         return axios.post(`product/update/${payload.data.id}`,payload.data,{
             headers:{
                 'Authorization': `Bearer ${payload.token}`

@@ -32,9 +32,19 @@
             </div>
             <div class="row">
               <div class="col-sm">
-                <b-form-group label="قیمت">
+                <b-form-group label="قیمت خط خورده">     
+                    <b-form-input maxlength="15" type="text" v-model="strikethroughPrice" />
+                       <small class="text-success px-2">
+                    {{ moneyFormat(strikethroughPrice) }}
+                    ریال
+                  </small>
+                </b-form-group>
+              </div>
+              <div class="col-sm">
+                <b-form-group label="قیمت فروش">
                   <input
-                    type="number"
+                    maxlength="15"
+                    type="text"
                     class="form-control"
                     v-model="formData.price"
                   />
@@ -44,43 +54,19 @@
                   </small>
                 </b-form-group>
               </div>
-              <div class="col-sm">
-                <b-form-group label=" امکان انتخاب چند محصول توسط مشتری">
-                  <div class="form-control">
-                    <label class="switch">
-                      <input type="checkbox" v-model="formData.is_multiple" />
-                      <span class="slider round"></span>
-                    </label>
-                  </div>
-                </b-form-group>
-              </div>
             </div>
-            <div class="row">
-              <div class="col-sm">
-                <b-form-group label="میزان تخفیف">
-                  <input
-                    type="number"
-                    class="form-control"
-                    v-model="formData.discount_amount"
-                  />
-                  <small class="text-success px-2">
-                    {{ moneyFormat(formData.discount_amount) }}
-                    ریال
-                  </small>
-                </b-form-group>
-              </div>
+            <div class="row">              
               <div class="col-sm">
                 <b-form-group label="درصد تخفیف">
                   <input
+                  readonly
                     type="number"
                     class="form-control"
-                    v-model="formData.discount_percent"
+                    :value="discount_percent"
                   />
                 </b-form-group>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-sm">
+               <div class="col-sm">
                 <b-form-group label="حداکثر میزان تخفیف">
                   <input
                     type="number"
@@ -93,29 +79,50 @@
                   </small>
                 </b-form-group>
               </div>
-              <div class="col-sm">
-                <b-form-group label="تصویر محصول">
-                   <b-form-file
-                   v-model="formData.image"
-                    accept="image/*"
-                    class="px-5 rounded"
-                    style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
-                    placeholder="یک فایل انتخاب کنید"
-                    plain
-                    @change="changeFile"
-                  ></b-form-file>
-                    <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
-                            این فیلد الزامی است.</small>
-                    <small v-if="validation_errors.logo_size" class="text-danger px-2">
-                            حجم عکس نباید بیشتر از پنج مگابایت باشد
-                    </small>
-                    <small v-if="validation_errors.logo_type" class="text-danger px-2">
-                            فرمت عکس معتبر نمی باشد
-                    </small>
-                  <small v-if="errors.image" class="text-danger px-2">{{
-                    errors.image
-                  }}</small>
+            </div>
+            <div class="row">
+             
+                  <div class="col-sm">
+                <b-form-group label=" امکان انتخاب چند محصول توسط مشتری">
+                  <div class="form-control">
+                    <label class="switch">
+                      <input type="checkbox" v-model="formData.is_multiple" />
+                      <span class="slider round"></span>
+                    </label>
+                  </div>
                 </b-form-group>
+              </div>
+              <div class="col-sm">
+                  <div class="d-flex">
+                    <b-form-group label="تصویر محصول">
+                      <b-form-file
+                        v-model="formData.image"
+                        accept="image/*"
+                        class="px-5 rounded"
+                        style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
+                        placeholder="یک فایل انتخاب کنید"
+                        plain
+                        @change="changeFile"
+                      ></b-form-file>
+                        <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
+                                این فیلد الزامی است.</small>
+                        <small v-if="validation_errors.logo_size" class="text-danger px-2">
+                                حجم عکس نباید بیشتر از پنج مگابایت باشد
+                        </small>
+                        <small v-if="validation_errors.logo_type" class="text-danger px-2">
+                                فرمت عکس معتبر نمی باشد
+                        </small>
+                      <small v-if="errors.image" class="text-danger px-2">{{
+                        errors.image
+                      }}</small>
+                    </b-form-group>
+                    <div v-show="imagePreviewURL" class="m-auto pt-2 pr-2">
+                        <img width="80" height="50"
+                      :src="imagePreviewURL"
+                      class="rounded"
+                      style="max-width:80px;max-height:50px"/>
+                    </div>
+                  </div>
               </div>
             </div>
             <div class="row">
@@ -183,10 +190,12 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-sm">
+              <div class="col-12">
                 <b-form-group label="توضیحات محصول">
-                  <textarea class="form-control" v-model="formData.description">
-                  </textarea>
+                  <client-only placeholder="loading...">
+                        <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  id="description"
+                            ref="description"/>
+                    </client-only>
                 </b-form-group>
               </div>
             </div>
@@ -204,7 +213,10 @@ import api from "~/services/api";
 import $lodash from 'lodash'
 export default {
   name: "create",
-  components: { PageTitle },
+  components: { 
+    PageTitle ,
+    'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
+  },
   layout: "main-content",
   data() {
     return {
@@ -218,13 +230,13 @@ export default {
         is_multiple: false,
         quantity: 0,
         discount_amount: 0,
-        discount_percent: 0,
         discount_max_amount: 0,
         image: null,
         description: null,
         parent_id: null,
         code:''
       },
+      strikethroughPrice:0,
       errors: {
         title: null,
         image: null,
@@ -236,6 +248,29 @@ export default {
           logo_type: null,
       },
       option: [],
+      editorConfig: {
+          removePlugins: ['Title','Table','PageBreak','Subscript','SuperScript','CodeBlock','Code','Strikethrough','ChemType'],
+          placeholder:"توضیحات",
+          language:{
+              ui: 'fa',
+              content: 'fa'
+          },
+          contentsLangDirection:'rtl',
+          smiley_path : '@/assets/ckeditor/smiley/images',
+          smiley_images : [
+              'regular_smile.png','sad_smile.png','wink_smile.png','teeth_smile.png','confused_smile.png','tongue_smile.png',
+              'embarrassed_smile.png','omg_smile.png','whatchutalkingabout_smile.png','angry_smile.png','angel_smile.png','shades_smile.png',
+              'devil_smile.png','cry_smile.png','lightbulb.png','thumbs_down.png','thumbs_up.png','heart.png',
+              'broken_heart.png','kiss.png','envelope.png'
+          ],
+          smiley_descriptions : [
+              ':)', ':(', ';)', ':D', ':/', ':P', ':*)', ':-o',
+              ':|', '>:(', 'o:)', '8-)', '>:-)', ';(', '', '', '',
+              '', '', ':-*', ''
+          ],
+          smiley_columns : 6
+
+      },
     };
   },
   computed: {
@@ -244,6 +279,13 @@ export default {
             return JSON.parse(localStorage.getItem("currentUser"));
         }
     },
+    discount_percent(){
+      let x= (this.strikethroughPrice -this.formData.price)
+      if(this.strikethroughPrice!==0){
+        return (x/ this.strikethroughPrice)* 100
+      }
+      return 0
+    }
   },
   methods: {
     changeFile(payload){
@@ -252,7 +294,8 @@ export default {
             this.validation_errors.logo_size=false
             const file = payload.target.files[0]; // use it in case of normal HTML input
              if (file) {
-                if(file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/svg+xml' || file.type === 'image/webp'){
+               const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
+                if(acceptedImageTypes.includes(file.type)){
                     if(file.size >  ((1024 * 1024) * 5)){
                         this.validation_errors.logo_size =true
                         this.formData.image= null
@@ -275,25 +318,30 @@ export default {
         this.errors.title = "عنوان الزامی است";
         res = false;
       }
-      if (!this.formData.image) {
-        this.errors.image = "تصویر محصول الزامی است";
-        res = false;
-      }
-      if (this.formData.image && this.formData.image.size > 1024 * 1024 * 5) {
-        this.errors.image = "تصویر محصول نباید بیشتر از ۵ مگ باشد";
-        res = false;
-      }
-      if (this.formData.image && (this.formData.image.type !== 'image/jpeg' || this.formData.image.type !== 'image/png' || this.formData.image.type !== 'image/svg+xml' || this.formData.image.type !== 'image/webp')) {
-          this.validation_errors.logo_type = true
-          res = false
-      }
       if (!this.formData.quantity) {
         this.errors.quantity = "تعداد محصول الزامی است";
         res = false;
       }
+      if (!this.formData.image) {
+        this.errors.image = "تصویر محصول الزامی است";
+        res = false;
+      }
+      else{
+        if (this.formData.image && this.formData.image.size > 1024 * 1024 * 5) {
+        this.errors.image = "تصویر محصول نباید بیشتر از ۵ مگ باشد";
+        res = false;
+        }
+        const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
+        if (!acceptedImageTypes.includes(this.formData.image.type)) {
+            this.validation_errors.logo_type = true
+            res = false
+        }
+      }
+     
       return res;
     },
     createProduct() {
+      console.log(this.discount_percent)
       if (this.validate()) {
         let form_data = new FormData();
         for (let key in this.formData) {
@@ -325,6 +373,7 @@ export default {
             }
         }
         form_data.append("categories",categories())
+        form_data.append('discount_percent',this.discount_percent)
         api
           .post("product/create", form_data, this.$cookies.get("token"))
           .then((response) => {
@@ -376,7 +425,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #create_product .custom-file-label {
   border: none;
   background: none;

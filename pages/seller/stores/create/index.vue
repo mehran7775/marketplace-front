@@ -156,17 +156,17 @@
                                             </div>
                                         </div>   
                                         </div>
-                                        <div class="col-sm col-md-6 my-2">
+                                        <div class="col-12 my-2">
                                         <client-only placeholder="loading...">
                                             <ckeditor-nuxt v-model="formData.shop_terms" :config="editorConfig"  />
                                         </client-only>
                                         </div>
-                                        <div class="col-sm col-md-6 my-2">
+                                        <div class="col-12 my-2">
                                         <client-only placeholder="loading...">
                                             <ckeditor-nuxt  v-model="formData.description" :config="editorConfig2"  />
                                         </client-only>
                                         </div>
-                                        <div :class="imagePreviewURL ? 'col-md-9' : 'col-md-12'">
+                                        <div class="col-12">
                                             <div class="m-auto pt-2 pr-2">
                                                 <hr>
                                                 <label class="my-2">اطلاعات مورد نیاز از مشتری</label>
@@ -209,8 +209,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
 
                                             <div class="m-auto pt-2 pr-2">
                                                 <hr>

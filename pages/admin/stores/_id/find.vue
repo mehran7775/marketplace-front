@@ -211,13 +211,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm col-md-6 my-2">
+                                    <div class="col-12 my-2">
                                         <client-only placeholder="loading...">
                                             <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  id="description"
                                                 ref="description"/>
                                         </client-only>
                                     </div>
-                                    <div class="col-sm col-md-6 my-2">
+                                    <div class="col-12 my-2">
                                         <client-only placeholder="loading...">
                                             <ckeditor-nuxt v-model="formData.shop_terms" :config="editorConfig2"   id="lows"
                                             ref="logo"/>
@@ -554,7 +554,8 @@ export default {
             this.validation_errors.logo_size=false
             const file = payload.target.files[0]; // use it in case of normal HTML input
              if (file) {
-                if(file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/svg+xml' || file.type === 'image/webp'){
+                 const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
+                if(acceptedImageTypes.includes(file.type)){
                     if(file.size >  ((1024 * 1024) * 1)){
                         this.validation_errors.logo_size =true
                         this.urlLogo=null
@@ -568,6 +569,29 @@ export default {
                 }
                
             }
+        },
+          validate(){
+            let spy = this.validation_errors
+            Object.keys(spy).forEach(function (key) {
+                spy[key] = null
+            });
+            let res = true
+            if(this.formData.logo){
+                if (this.formData.logo.size > ((1024 * 1024) * 1)) {
+                    this.validation_errors.logo_size = true
+                    res = false
+                }
+                 const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
+                 if(!acceptedImageTypes.includes(this.formData.logo.type)){
+                    this.validation_errors.logo_type = true
+                    res = false
+                }
+            }else{
+                 this.validation_errors.logo= true
+                res = false
+            }
+         
+            return res
         },
         isSelected(gateway){
             if (gateway.type == 'PF'){
@@ -716,36 +740,40 @@ export default {
                 })
         },
         updateSetting() {
-            let form_data = new FormData();
-            for (let key in this.formData) {
-                if (this.formData[key] === true || this.formData[key] === false) {
-                    if (this.formData[key] === true) {
-                        form_data.append(key, 1);
-                    }
-                    if (this.formData[key] === false) {
-                        form_data.append(key, 0);
-                    }
-                } else {
-                    if (this.formData[key] !== null) {
-                        form_data.append(key, this.formData[key]);
+            if(!this.validate()){
+
+            }else{
+                 let form_data = new FormData();
+                for (let key in this.formData) {
+                    if (this.formData[key] === true || this.formData[key] === false) {
+                        if (this.formData[key] === true) {
+                            form_data.append(key, 1);
+                        }
+                        if (this.formData[key] === false) {
+                            form_data.append(key, 0);
+                        }
+                    } else {
+                        if (this.formData[key] !== null) {
+                            form_data.append(key, this.formData[key]);
+                        }
                     }
                 }
+                this.btnDisable= true
+                this.laodingSpinner= true
+                api.post('store/update/' + this.$route.params.id, form_data, this.$cookies.get('token'))
+                    .then(response => {
+                        this.message = response.data.message
+                    //this.getData()
+                    }).catch(({response}) => {
+                    this.error = response.data.data[Object.keys(response.data.data)[0]]
+                    if (!response.data.data[Object.keys(response.data.data)[0]]){
+                        this.error = response.data.message
+                    }
+                }).finally(()=>{
+                    this.btnDisable= false
+                    this.laodingSpinner= false
+                })
             }
-            this.btnDisable= true
-            this.laodingSpinner= true
-            api.post('store/update/' + this.$route.params.id, form_data, this.$cookies.get('token'))
-                .then(response => {
-                    this.message = response.data.message
-                   //this.getData()
-                }).catch(({response}) => {
-                this.error = response.data.data[Object.keys(response.data.data)[0]]
-                if (!response.data.data[Object.keys(response.data.data)[0]]){
-                    this.error = response.data.message
-                }
-            }).finally(()=>{
-                this.btnDisable= false
-                this.laodingSpinner= false
-            })
         }
     }
 }

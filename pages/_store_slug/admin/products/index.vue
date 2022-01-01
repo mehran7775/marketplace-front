@@ -66,7 +66,7 @@
                                 </td>
                                 <td>
                                     <nuxt-link class="btn p-0 m-0 text-danger" :to="'products/' + product.id + '/find'" v-b-tooltip.hover title="جزئیات">
-                                    <fa icon="edit" class="edit cursor_pointer fa-lg" 
+                                    <fa icon="edit" class="ficon cursor_pointer fa-lg" 
                                     ></fa>
                                     </nuxt-link>
                                     <b-button variant="link" class="p-0 m-0" v-b-modal="'my-modal' + index" v-b-tooltip.hover title="تغییر وضعیت">
@@ -87,8 +87,13 @@
                                         </b-form-group>
                                     </b-modal>
                                     <span v-b-tooltip.hover title="ویرایش سریع">
-                                        <fa icon="pencil-alt" class="edit cursor_pointer fa-lg" 
+                                        <fa icon="pencil-alt" class="ficon cursor_pointer fa-lg" 
                                         @click="triggerEditProduct(product)"
+                                        ></fa>
+                                    </span>
+                                     <span v-b-tooltip.hover title="حذف">
+                                        <fa icon="trash" class="ficon cursor_pointer fa-lg" 
+                                        @click="triggerDeleteProduct(product)"
                                         ></fa>
                                     </span>
                                  
@@ -106,107 +111,142 @@
                             :perpage="per_page"></pagination>
             </div>
             <template>
-            <b-modal
+                <b-modal
+                    dir="rtl"
+                    id="updateProduct"
+                    centered
+                    title="ویرایش محصول"
+                    hide-footer
+                >
+                    <ValidationObserver ref="formUpdateProduct">
+                    <b-form @submit.prevent="updateProduct()">
+                        <ValidationProvider
+                            vid="title"
+                            v-slot="{ valid, errors }"
+                            rules="required"
+                            name="عنوان"
+                        >
+                            <b-form-group
+                            id="gTitle"
+                            class="font-weight-bold"
+                            label="نام دسته"
+                            label-for="utitle"
+                            >
+                            <b-form-input
+                                id="utitle"
+                                v-model="productUpdate.title"
+                                placeholder="عنوان را وارد کنید"
+                                :state="errors[0] ? false : valid ? true : null"
+                            ></b-form-input>
+                            <b-form-invalid-feedback
+                                class="pr-2"
+                                id="inputLiveFeedback"
+                                >{{ errors[0] }}</b-form-invalid-feedback
+                            >
+                            </b-form-group>
+                        </ValidationProvider>
+                        <ValidationProvider
+                            vid="price"
+                            v-slot="{ valid, errors }"
+                            rules="required"
+                            name="قیمت"
+                        >
+                            <b-form-group
+                            id="gPrice"
+                            class="font-weight-bold"
+                            label="قیمت     (ریال)"
+                            label-for="uprice"
+                            >
+                            <b-form-input
+                                id="uprice"
+                                v-model="productUpdate.price"
+                                placeholder="قیمت را وارد کنید"
+                                :state="errors[0] ? false : valid ? true : null"
+                            ></b-form-input>
+                            <b-form-invalid-feedback
+                                class="pr-2"
+                                id="inputLiveFeedback"
+                                >{{ errors[0] }}</b-form-invalid-feedback
+                            >
+                            </b-form-group>
+                        </ValidationProvider>
+                        <ValidationProvider
+                            vid="quantity"
+                            v-slot="{ valid, errors }"
+                            rules="required"
+                            name="تعداد"
+                        >
+                            <b-form-group
+                            id="gQuantity"
+                            class="font-weight-bold"
+                            label="تعداد"
+                            label-for="uquantity"
+                            >
+                            <b-form-input
+                                id="uquantity"
+                                v-model="productUpdate.quantity"
+                                placeholder="تعداد را وارد کنید"
+                                :state="errors[0] ? false : valid ? true : null"
+                            ></b-form-input>
+                            <b-form-invalid-feedback
+                                class="pr-2"
+                                id="inputLiveFeedback"
+                                >{{ errors[0] }}</b-form-invalid-feedback
+                            >
+                            </b-form-group>
+                        </ValidationProvider>
+                        <Xbutton
+                            is_submit
+                            class="px-5 w-100"
+                            text="ثبت"
+                            :disable="btnDisable"
+                            >
+                            <template #spinner>
+                                <b-spinner
+                                v-show="loadingSpinner"
+                                small
+                                class="float-left"
+                                ></b-spinner>
+                            </template>
+                            </Xbutton>
+                    </b-form>
+                    </ValidationObserver>
+                </b-modal>
+                <b-modal
                 dir="rtl"
-                id="updateProduct"
+                id="deleteProductModal"
                 centered
-                title="ویرایش دسته بندی"
-                hide-footer
+                title="حذف محصول"
             >
-                <ValidationObserver ref="formUpdateProduct">
-                <b-form @submit.prevent="updateProduct()">
-                    <ValidationProvider
-                        vid="title"
-                        v-slot="{ valid, errors }"
-                        rules="required"
-                        name="عنوان"
-                    >
-                        <b-form-group
-                        id="gTitle"
-                        class="font-weight-bold"
-                        label="نام دسته"
-                        label-for="utitle"
-                        >
-                        <b-form-input
-                            id="utitle"
-                            v-model="productUpdate.title"
-                            placeholder="عنوان را وارد کنید"
-                            :state="errors[0] ? false : valid ? true : null"
-                        ></b-form-input>
-                        <b-form-invalid-feedback
-                            class="pr-2"
-                            id="inputLiveFeedback"
-                            >{{ errors[0] }}</b-form-invalid-feedback
-                        >
-                        </b-form-group>
-                    </ValidationProvider>
-                    <ValidationProvider
-                        vid="price"
-                        v-slot="{ valid, errors }"
-                        rules="required"
-                        name="قیمت"
-                    >
-                        <b-form-group
-                        id="gPrice"
-                        class="font-weight-bold"
-                        label="قیمت     (ریال)"
-                        label-for="uprice"
-                        >
-                        <b-form-input
-                            id="uprice"
-                            v-model="productUpdate.price"
-                            placeholder="قیمت را وارد کنید"
-                            :state="errors[0] ? false : valid ? true : null"
-                        ></b-form-input>
-                        <b-form-invalid-feedback
-                            class="pr-2"
-                            id="inputLiveFeedback"
-                            >{{ errors[0] }}</b-form-invalid-feedback
-                        >
-                        </b-form-group>
-                    </ValidationProvider>
-                    <ValidationProvider
-                        vid="quantity"
-                        v-slot="{ valid, errors }"
-                        rules="required"
-                        name="تعداد"
-                    >
-                        <b-form-group
-                        id="gQuantity"
-                        class="font-weight-bold"
-                        label="تعداد"
-                        label-for="uquantity"
-                        >
-                        <b-form-input
-                            id="uquantity"
-                            v-model="productUpdate.quantity"
-                            placeholder="تعداد را وارد کنید"
-                            :state="errors[0] ? false : valid ? true : null"
-                        ></b-form-input>
-                        <b-form-invalid-feedback
-                            class="pr-2"
-                            id="inputLiveFeedback"
-                            >{{ errors[0] }}</b-form-invalid-feedback
-                        >
-                        </b-form-group>
-                    </ValidationProvider>
-                    <Xbutton
-                        is_submit
-                        class="px-5 w-100"
-                        text="ثبت"
-                        :disable="btnDisable"
-                        >
-                        <template #spinner>
-                            <b-spinner
-                            v-show="loadingSpinner"
-                            small
-                            class="float-left"
-                            ></b-spinner>
-                        </template>
-                        </Xbutton>
-                </b-form>
-                </ValidationObserver>
-            </b-modal>
+                <p class="my-4">
+                 آیا می خواهید این محصول  
+                <!-- <span
+                    class="text-success font-weight-bold"
+                   :value="productDe.title"
+                ></span> -->
+                را حذف کنید؟
+                </p>
+                <template #modal-footer>
+                <Xbutton
+                    text="انصراف"
+                    :on_click="() => $bvModal.hide('deleteProductModal')"
+                    variant="info"
+                ></Xbutton>
+                <Xbutton
+                    text="تایید"
+                    :disable="btnDisable"
+                    :on_click="() => deleteProduct()"
+                >
+                    <template #spinner>
+                    <b-spinner
+                        v-show="loadingSpinner"
+                        small
+                        class="float-left"
+                    ></b-spinner>
+                    </template>
+                </Xbutton>
+                </template>
+                </b-modal>
             </template>
         </div>
    </client-only>
@@ -243,7 +283,11 @@ export default {
             product_status : null,
             productUpdate:{},
             btnDisable:false,
+            loadingSpinner:false,
+            productDe:{},
+            btnDisable:false,
             loadingSpinner:false
+
         }
     },
     components: {
@@ -308,6 +352,7 @@ export default {
                         this.productUpdate.price=this.productUpdate.price.replace(",", "")
                     }
                     this.productUpdate.store_id= this.$route.params.store_slug
+                    console.log(this.productUpdate)
                     try{
                         const res= await productService.updateProduct({
                             data:this.productUpdate,
@@ -333,6 +378,13 @@ export default {
                 }
             })
            
+        },
+        triggerDeleteProduct(product){
+            Object.assign(this.productDe, product)
+            this.$bvModal.show('deleteProductModal')
+        },
+       deleteProduct(){
+           console.log(this.productDe)
         }
     },
     async created() {
@@ -349,7 +401,7 @@ export default {
 table > tbody > tr:not(:last-child) > td {
     border-bottom: 1px solid #dedede;
 }
-.edit{
+.ficon{
     color: rgb(144, 146, 150)!important;
     
 }

@@ -80,10 +80,33 @@
 
                                         </div>
                                         <div class="col-sm">
-                                            <b-form-group label="تصویر محصول">
-                                                <b-form-file placeholder="تصویر محصول" class="form-control"
-                                                             v-model="formData.image"></b-form-file>
-                                            </b-form-group>
+                                            <div class="d-flex">
+                                                <b-form-group label="تصویر محصول">
+                                                <b-form-file
+                                                    v-model="formData.image"
+                                                    accept="image/*"
+                                                    class="px-5 rounded"
+                                                    style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
+                                                    placeholder="یک فایل انتخاب کنید"
+                                                    plain
+                                                    @change="onFileChange"
+                                                ></b-form-file>
+                                                    <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
+                                                            این فیلد الزامی است.</small>
+                                                    <small v-if="validation_errors.logo_size" class="text-danger px-2">
+                                                            حجم عکس نباید بیشتر از پنج مگابایت باشد
+                                                    </small>
+                                                    <small v-if="validation_errors.logo_type" class="text-danger px-2">
+                                                            فرمت عکس معتبر نمی باشد
+                                                    </small>
+                                                </b-form-group>
+                                                <div class="m-auto pt-2 pr-2">
+                                                    <img width="80" height="50"
+                                                    :src="urlLogo ? urlLogo :formData.thumbnails"
+                                                    class="rounded"
+                                                    style="max-width:80px;max-height:50px"/>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -162,6 +185,7 @@
 import api from "~/services/api";
 import PageTitle from "~/components/main/pageTitle";
 import DashboardBox from "~/components/dashboard-box";
+import { validate } from 'vee-validate';
 
 export default {
     components: {DashboardBox, PageTitle},
@@ -181,14 +205,70 @@ export default {
                 discount_percent: 0,
                 discount_max_amount: 0,
                 image: null,
-                description: null
+                description: null,
+                
+            },
+            urlLogo:null,
+               validation_errors:{
+                logo: null,
+                logo_size: null,
+                logo_type: null,
             },
             statistics: {}
         }
     },
     methods: {
+        onFileChange(payload) {
+            this.validation_errors.logo_size=false
+            this.validation_errors.logo_type=false
+            this.validation_errors.logo_size=false
+            const file = payload.target.files[0]; // use it in case of normal HTML input
+             if (file) {
+                const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
+                if(acceptedImageTypes.includes(file.type)){
+                    if(file.size >  ((1024 * 1024) * 5)){
+                        this.validation_errors.logo_size =true
+                        this.urlLogo=null
+                        this.formData.image=null
+                        return
+                    }
+                    this.urlLogo = URL.createObjectURL(file);
+                    URL.revokeObjectURL(file); // free memory
+                }else{
+                    this.validation_errors.logo_type= true
+                     this.urlLogo=null
+                     this.formData.image=null
+                }
+               
+            }
+        },
+         validate(){
+            let spy = this.validation_errors
+            Object.keys(spy).forEach(function (key) {
+                spy[key] = null
+            });
+            let res = true
+            if(this.formData.image){
+                if (this.formData.image.size > ((1024 * 1024) * 5)) {
+                    this.validation_errors.logo_size = true
+                    res = false
+                }
+                 const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
+                 if(!acceptedImageTypes.includes(this.formData.image.type)){
+                    this.validation_errors.logo_type = true
+                    res = false
+                }
+            }else{
+                 this.validation_errors.logo= true
+                res = false
+            }
+         
+            return res
+        },
         updateProduct() {
-            let form_data = new FormData();
+            if(!this.validate()){
+            }else{
+                let form_data = new FormData();
             for (let key in this.formData) {
                 if (this.formData[key] === true || this.formData[key] === false) {
                     if (this.formData[key] === true) {
@@ -214,6 +294,8 @@ export default {
             }).catch(({response}) => {
                 this.error = response.data.data[Object.keys(response.data.data)[0]]
             })
+            }
+            
         },
         getProduct() {
             api.get('product/find/' + this.$route.params.id, this.$cookies.get('token'))
@@ -223,6 +305,7 @@ export default {
                     this.formData.quantity = res.data.data.quantity
                     this.formData.is_multiple = res.data.data.is_multiple == 1 ? true : false
                     this.formData.unlimited = res.data.data.unlimited == 1 ? true : false
+                    this.formData.thumbnails= res.data.data.thumbnails
                 })
         },
         getStatistics() {

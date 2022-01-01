@@ -4,11 +4,21 @@
         </page-title>
         <div class="bg-white shadow-sm p-3 my-3" style="border-radius: 10px;">
             <div class="row">
-                <div class="col-sm my-2">
+                <div class="col-12 col-sm-6 col-lg-4 my-2">
                     <input class="form-control" placeholder="کد رهگیری" v-model="filter_tracking_number">
                 </div>
-                <div class="col-sm my-2">
+                  <div class="col-12 col-sm-6 col-lg-4 my-2">
+                    <input class="form-control" placeholder="نام" v-model="filter_name">
+                </div>
+                  <div class="col-12 col-sm-6 col-lg-4 my-2">
+                    <input class="form-control" placeholder="موبایل" v-model="filter_phone_number">
+                </div>
+                  <div class="col-12 col-sm-6 col-lg-4 my-2">
+                    <input class="form-control" placeholder="ایمیل" v-model="filter_email">
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 my-2">
                     <select class="form-control" v-model="filter_status">
+                        <option :value="null">وضعیت</option>
                         <option v-for="status in OrderStatus.orderStatus" :value="status.value">
                             {{status.text}}
                         </option>
@@ -111,6 +121,10 @@ export default {
             OrderStatus,
             filter_tracking_number: null,
             filter_status : null,
+            filter_name : null,
+            filter_email : null,
+            filter_phone_number: null,
+
             orders: null,
             per_page: 15,
             tnDisableAction: false,
@@ -127,6 +141,15 @@ export default {
             }
             if (this.filter_status != null) {
                 res = res + '&query[status]=' + this.filter_status;
+            }
+             if (this.filter_name != null) {
+                res = res + '&query[name]=' + this.filter_name;
+            }
+             if (this.filter_phone_number != null) {
+                res = res + '&query[phone_number]=' + this.filter_phone_number;
+            }
+             if (this.filter_email != null) {
+                res = res + '&query[email]=' + this.filter_email;
             }
             return res;
         }

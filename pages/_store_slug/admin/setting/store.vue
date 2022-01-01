@@ -101,19 +101,19 @@
                         </div>
                     </div>
                 </div>
-               <div class="col-sm col-md-6 my-2">
+               <div class="col-12 my-2">
                     <client-only placeholder="loading...">
                         <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  id="description"
                             ref="description"/>
                     </client-only>
                 </div>
-                <div class="col-sm col-md-6 my-2">
+                <div class="col-12 my-2">
                     <client-only placeholder="loading...">
                         <ckeditor-nuxt v-model="formData.shop_terms" :config="editorConfig2"   id="lows"
                         ref="logo"/>
                     </client-only>
                 </div>
-                <div class="col-md-9">
+                <div class="col">
                     <div class="m-auto pt-2 pr-2">
                         <hr>
                         <label class="my-2">اطلاعات مورد نیاز از مشتری</label>
@@ -156,6 +156,39 @@
                             </div>
                         </div>
                     </div>
+                    <div class="m-auto pt-2 pr-2">
+                        <hr>
+                        <label class="my-2">نمایش اطلاعات</label>
+                        <div class="w-100 text-right">
+
+                            <div class="my-3">
+                                <label class="switch">
+                                    <input type="checkbox" v-model="formData.show_phone_option">
+                                    <span class="slider round"></span>
+                                </label>
+                                شماره تلفن
+                            </div>
+                        </div>
+                        <div class="w-100 text-right">
+                            <div class="my-3">
+                                <label class="switch">
+                                    <input type="checkbox" v-model="formData.show_email_option">
+                                    <span class="slider round"></span>
+                                </label>
+                                ایمیل
+                            </div>
+                        </div>
+                        <div class="w-100 text-right">
+                            <div class="my-3">
+                                <label class="switch">
+                                    <input type="checkbox" v-model="formData.show_province_option">
+                                    <span class="slider round"></span>
+                                </label>
+                                استان
+                            </div>
+                        </div>
+                    </div>
+                     
                 </div>
             </div>
         </div>
@@ -202,7 +235,7 @@ export default {
             btnDisable: false,
             laodingSpinner: false,
              urlLogo:null,
-                editorConfig: {
+            editorConfig: {
                 removePlugins: ['Title','Table','PageBreak','Subscript','SuperScript','CodeBlock','Code','Strikethrough','ChemType'],
                 placeholder:"توضیحات",
                 language:{
@@ -246,7 +279,8 @@ export default {
             this.validation_errors.logo_size=false
             const file = payload.target.files[0]; // use it in case of normal HTML input
              if (file) {
-                if(file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/svg+xml' || file.type === 'image/webp'){
+                 const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
+                if(acceptedImageTypes.includes(file.type)){
                     if(file.size >  ((1024 * 1024) * 1)){
                         this.validation_errors.logo_size =true
                         this.urlLogo=null
@@ -267,6 +301,19 @@ export default {
                 spy[key] = null
             });
             let res = true
+            if(this.formData.logo){
+                const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
+                if (this.formData.logo && (this.formData.logo.size > ((1024 * 1024) * 1))) {
+                this.validation_errors.logo_size = true
+                res = false
+                }else if(!acceptedImageTypes.includes(this.formData.logo.size.type)){
+                    this.validation_errors.logo_type = true
+                    res = false
+                }
+            }else{
+                 this.validation_errors.logo = true
+                res = false
+            }
             if (this.formData.logo && (this.formData.logo.size > ((1024 * 1024) * 1))) {
                 this.validation_errors.logo_size = true
                 res = false
