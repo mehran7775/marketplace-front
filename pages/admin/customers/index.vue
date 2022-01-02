@@ -152,6 +152,8 @@ export default {
             this.filter_first_name = null;
             this.filter_last_name = null;
             this.filter_status = null;
+            this.filter_phone_number = null;
+            this.filter_registered_at = null;
         },
         async get_data(url, removeFilter= null) {
             if(removeFilter){

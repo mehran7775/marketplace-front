@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <client-only v-if="onClient">
+     <div>
     <page-title title_text="افزودن محصول جدید" icon="product">
       <button
         class="btn btn-success shadow-sm mx-2 px-4 py-2"
@@ -28,6 +29,11 @@
                     errors.title
                   }}</small>
                 </b-form-group>
+              </div>
+               <div class="col-sm">
+                  <b-form-group label="کد محصول">
+                    <input class="form-control" v-model="formData.code"/>
+                  </b-form-group>
               </div>
             </div>
             <div class="row">
@@ -67,66 +73,6 @@
                 </b-form-group>
               </div>
                <div class="col-sm">
-                <b-form-group label="حداکثر میزان تخفیف">
-                  <input
-                    type="number"
-                    class="form-control"
-                    v-model="formData.discount_max_amount"
-                  />
-                  <small class="text-success px-2">
-                    {{ moneyFormat(formData.discount_max_amount) }}
-                    ریال
-                  </small>
-                </b-form-group>
-              </div>
-            </div>
-            <div class="row">
-             
-                  <div class="col-sm">
-                <b-form-group label=" امکان انتخاب چند محصول توسط مشتری">
-                  <div class="form-control">
-                    <label class="switch">
-                      <input type="checkbox" v-model="formData.is_multiple" />
-                      <span class="slider round"></span>
-                    </label>
-                  </div>
-                </b-form-group>
-              </div>
-              <div class="col-sm">
-                  <div class="d-flex">
-                    <b-form-group label="تصویر محصول">
-                      <b-form-file
-                        v-model="formData.image"
-                        accept="image/*"
-                        class="px-5 rounded"
-                        style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
-                        placeholder="یک فایل انتخاب کنید"
-                        plain
-                        @change="changeFile"
-                      ></b-form-file>
-                        <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
-                                این فیلد الزامی است.</small>
-                        <small v-if="validation_errors.logo_size" class="text-danger px-2">
-                                حجم عکس نباید بیشتر از پنج مگابایت باشد
-                        </small>
-                        <small v-if="validation_errors.logo_type" class="text-danger px-2">
-                                فرمت عکس معتبر نمی باشد
-                        </small>
-                      <small v-if="errors.image" class="text-danger px-2">{{
-                        errors.image
-                      }}</small>
-                    </b-form-group>
-                    <div v-show="imagePreviewURL" class="m-auto pt-2 pr-2">
-                        <img width="80" height="50"
-                      :src="imagePreviewURL"
-                      class="rounded"
-                      style="max-width:80px;max-height:50px"/>
-                    </div>
-                  </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm">
                 <b-form-group label="تعداد">
                   <input
                     type="number"
@@ -138,9 +84,66 @@
                   }}</small>
                 </b-form-group>
               </div>
+            </div>
+            <div class="row my-3">
+              <div class="col-12 col-xl-3">
+                    <div class="d-flex">
+                      <b-form-group label="تصویر محصول">
+                        <b-form-file
+                          v-model="formData.image"
+                          accept="image/*"
+                          class="px-5 rounded"
+                          style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
+                          placeholder="یک فایل انتخاب کنید"
+                          plain
+                          @change="changeFile"
+                          multiple
+                        ></b-form-file>
+                          <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
+                                  این فیلد الزامی است.</small>
+                          <small v-if="validation_errors.logo_size" class="text-danger px-2">
+                                  حجم عکس نباید بیشتر از پنج مگابایت باشد
+                          </small>
+                          <small v-if="validation_errors.logo_type" class="text-danger px-2">
+                                  فرمت عکس معتبر نمی باشد
+                          </small>
+                        <small v-if="errors.image" class="text-danger px-2">{{
+                          errors.image
+                        }}</small>
+                      </b-form-group>
+                    </div>
+              </div>
+              <div class="col-12 col-xl-9 border border-whitesmok">
+                  <div v-show="imagePreviewURL" class="m-auto p-auto pt-1">
+                          <img width="80" height="50"
+                        :src="imagePreviewURL"
+                        class="rounded"
+                        style="max-width:80px;max-height:50px"/>
+                      </div>
+              </div>
+            </div>
+            <div class="row">
+               <div class="col-12 col-lg-6">
+                <b-form-group
+                id="gParent_id"
+                label="انتخاب دسته بندی"
+                label-for="parent_id"
+                >
+                <div class="w-100 bg-whitesmok border" id="categories">
+                  <MoleculesXtreeCategories
+                      v-for="category in categories"
+                      :key="category.id"
+                      :node="category"
+                      type="createProducts"
+                      :trnaspireCategories="(value)=>{formData.categories= value}"
+                  />
+                 
+                </div>
+                </b-form-group>
+              </div>
               <div class="col-sm">
                 <b-form-group label="تعداد محصول نامحدود است">
-                  <div class="form-control">
+                  <div class="">
                     <label class="switch">
                       <input type="checkbox" v-model="formData.unlimited" />
                       <span class="slider round"></span>
@@ -148,47 +151,17 @@
                   </div>
                 </b-form-group>
               </div>
-            </div>
-            <div class="row">
               <div class="col-sm">
-                <b-form-group
-                id="gParent_id"
-                label="انتخاب دسته بندی"
-                label-for="parent_id"
-                >
-                <v-select
-                    :filterable="false"
-                    dir="rtl"
-                    placeholder="دسته بندی را انتخاب کنید"
-                    :options="option"
-                    v-model="formData.parent_id"
-                    @search="onSearch"
-                    multiple
-                    class="vueSelect"
-                    label="categories"
-                >
-                    <template slot="no-options">
-                    دسته مورد نظر را وارد کنید
-                    </template>
-                    <template slot="option" slot-scope="option">
-                    <div class="d-flex align-items-center">
-                        {{ option.title }}
-                    </div>
-                    </template>
-                    <template slot="selected-option" slot-scope="option">
-                    <div class="selected d-flex align-items-center">
-                        {{ option.title }}
-                    </div>
-                    </template>
-                </v-select>
+                <b-form-group label=" امکان انتخاب چند محصول توسط مشتری">
+                  <div class="">
+                    <label class="switch">
+                      <input type="checkbox" v-model="formData.is_multiple" />
+                      <span class="slider round"></span>
+                    </label>
+                  </div>
                 </b-form-group>
               </div>
-              <div class="col-sm">
-                  <b-form-group label="کد محصول">
-                    <input class="form-control" v-model="formData.code"/>
-                  </b-form-group>
-              </div>
-            </div>
+            </div> 
             <div class="row">
               <div class="col-12">
                 <b-form-group label="توضیحات محصول">
@@ -204,13 +177,15 @@
       </div>
     </div>
   </div>
+  </client-only>
+ 
 </template>
 
 <script>
 import PageTitle from "~/components/main/pageTitle";
 import { categoryService } from "@/services/apiServices";
 import api from "~/services/api";
-import $lodash from 'lodash'
+import { mapState } from 'vuex'
 export default {
   name: "create",
   components: { 
@@ -218,8 +193,16 @@ export default {
     'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
   },
   layout: "main-content",
+  created(){
+    if(process.client){
+      this.getAllCategory() 
+      this.onClient= true
+    }
+  },
   data() {
     return {
+      onClient:false,
+      categories: null,
       message: null,
       error: null,
       formData: {
@@ -231,10 +214,10 @@ export default {
         quantity: 0,
         discount_amount: 0,
         discount_max_amount: 0,
-        image: null,
+        image: [],
         description: null,
         parent_id: null,
-        code:''
+        code:'',
       },
       strikethroughPrice:0,
       errors: {
@@ -247,7 +230,7 @@ export default {
           logo_size: null,
           logo_type: null,
       },
-      option: [],
+      // option: [],
       editorConfig: {
           removePlugins: ['Title','Table','PageBreak','Subscript','SuperScript','CodeBlock','Code','Strikethrough','ChemType'],
           placeholder:"توضیحات",
@@ -271,13 +254,12 @@ export default {
           smiley_columns : 6
 
       },
+      imagePreviewURL:[]
     };
   },
   computed: {
     user() {
-        if(process.client){
-            return JSON.parse(localStorage.getItem("currentUser"));
-        }
+         return JSON.parse(localStorage.getItem("currentUser"));
     },
     discount_percent(){
       let x= (this.strikethroughPrice -this.formData.price)
@@ -285,32 +267,46 @@ export default {
         return (x/ this.strikethroughPrice)* 100
       }
       return 0
-    }
+    },
+    ...mapState({
+       selectedCategories: state => state.selectedCategories
+    })
   },
   methods: {
+    async getAllCategory() {
+      try {
+        const res = await categoryService.getAllCategory({
+          userId: this.user.id,
+          token: this.$cookies.get("token"),
+        });
+        this.categories = res.data.data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
     changeFile(payload){
-          this.validation_errors.logo_size=false
-            this.validation_errors.logo_type=false
-            this.validation_errors.logo_size=false
-            const file = payload.target.files[0]; // use it in case of normal HTML input
-             if (file) {
-               const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
-                if(acceptedImageTypes.includes(file.type)){
-                    if(file.size >  ((1024 * 1024) * 5)){
-                        this.validation_errors.logo_size =true
-                        this.formData.image= null
-                        return
-                    }
-                    this.imagePreviewURL = URL.createObjectURL(file);
-                    URL.revokeObjectURL(file); // free memory
-                }else{
-                    this.validation_errors.logo_type= true
+      this.validation_errors.logo_size=false
+        this.validation_errors.logo_type=false
+        this.validation_errors.logo_size=false
+        const file = payload.target.files[0]; // use it in case of normal HTML input
+          if (file) {
+            const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
+            if(acceptedImageTypes.includes(file.type)){
+                if(file.size >  ((1024 * 1024) * 5)){
+                    this.validation_errors.logo_size =true
                     this.formData.image= null
+                    return
                 }
-               
-            } else {
-                this.imagePreviewURL =  null
+                this.imagePreviewURL.push = URL.createObjectURL(file);
+                URL.revokeObjectURL(file); // free memory
+            }else{
+                this.validation_errors.logo_type= true
+                this.formData.image= null
             }
+            
+        } else {
+            this.imagePreviewURL =  null
+        }
     },
     validate() {
       let res = true;
@@ -341,7 +337,6 @@ export default {
       return res;
     },
     createProduct() {
-      console.log(this.discount_percent)
       if (this.validate()) {
         let form_data = new FormData();
         for (let key in this.formData) {
@@ -361,18 +356,7 @@ export default {
         if (this.formData.image) {
           form_data.append("images[0]", this.formData.image);
         }
-         const categories= ()=>{
-            let data=[]
-            if(this.formData.parent_id){
-                this.formData.parent_id.forEach(element => {
-                    data.push(element.id)
-                });
-                return data
-            }else{
-                return null
-            }
-        }
-        form_data.append("categories",categories())
+        form_data.append("categories",this.selectedCategories)
         form_data.append('discount_percent',this.discount_percent)
         api
           .post("product/create", form_data, this.$cookies.get("token"))
@@ -398,29 +382,29 @@ export default {
       }
       return pieces.join("");
     },
-    onSearch(search, loading) {
-      if (search.length) {
-        loading(true);
-        this.search(loading, search, this);
-      }
-    },
-    search: $lodash.debounce((loading, search, vm) =>{
-        categoryService.searchCategory({
-          userId: vm.user.id,
-          search: search,
-          token: vm.$cookies.get("token"),
-        })
-        .then((res) => {
-          vm.option = res.data;
-          vm.optionUpdate = res.data;
-        })
-        .catch((e) => {
-          console.log(e);
-        })
-        .finally(() => {
-          loading(false);
-        });
-     },450),
+    // onSearch(search, loading) {
+    //   if (search.length) {
+    //     loading(true);
+    //     this.search(loading, search, this);
+    //   }
+    // },
+    // search: $lodash.debounce((loading, search, vm) =>{
+    //     categoryService.searchCategory({
+    //       userId: vm.user.id,
+    //       search: search,
+    //       token: vm.$cookies.get("token"),
+    //     })
+    //     .then((res) => {
+    //       vm.option = res.data;
+    //       vm.optionUpdate = res.data;
+    //     })
+    //     .catch((e) => {
+    //       console.log(e);
+    //     })
+    //     .finally(() => {
+    //       loading(false);
+    //     });
+    //  },450),
   },
 };
 </script>
@@ -433,5 +417,9 @@ export default {
 
 #create_product .custom-file-label::after {
   display: none;
+}
+#categories{
+  height: 120px;
+  overflow-y: auto;
 }
 </style>

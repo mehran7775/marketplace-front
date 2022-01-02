@@ -1,7 +1,6 @@
 <template>
    <client-only v-if="onClient">
         <div>
-     
             <page-title title_text="محصولات" icon="product">
                 <nuxt-link to="products/create" class="btn btn-success shadow-sm mx-2 px-4 py-2"
                         style="border-radius: 20px; border-color: #bbb;">
@@ -217,13 +216,13 @@
                 id="deleteProductModal"
                 centered
                 title="حذف محصول"
-            >
+                >
                 <p class="my-4">
                  آیا می خواهید این محصول  
-                <!-- <span
-                    class="text-success font-weight-bold"
-                   :value="productDe.title"
-                ></span> -->
+                 <!-- <span
+                class="text-success font-weight-bold"
+                v-text="productDe ? productDe.title : ''"
+              ></span> -->
                 را حذف کنید؟
                 </p>
                 <template #modal-footer>
@@ -315,6 +314,13 @@ export default {
             return res;
         }
     },
+    async created() {
+        if(process.client){
+            this.getProduct()
+            this.onClient=true
+        }
+        
+    },
     methods: {
         async getProduct(){
             let res = await api.get('product/' + this.$route.params.store_slug + '?perpage=' + this.per_page, this.$cookies.get('token'))
@@ -341,7 +347,10 @@ export default {
         },
         triggerEditProduct(product){
             Object.assign(this.productUpdate,product)
-            this.$bvModal.show('updateProduct')
+            setTimeout(() => {
+                 this.$bvModal.show('updateProduct')
+            }, 500);
+           
         },
         async updateProduct(){
             this.$refs.formUpdateProduct.validate().then(async (success) =>{
@@ -383,16 +392,31 @@ export default {
             Object.assign(this.productDe, product)
             this.$bvModal.show('deleteProductModal')
         },
-       deleteProduct(){
-           console.log(this.productDe)
+       async deleteProduct(){
+           try{
+               const res= await productService.deleteProduct(
+                    {
+                        id: this.productDe.id,
+                        token : this.$cookies.get('token')
+                    }
+                )
+                console.log(res)
+                if(res.status === 200){
+                    this.$bvModal.hide('deleteProductModal')
+                    this.$store.commit("open_toast", {
+                    msg: res.data.message,
+                    variant: "success",
+                    });
+                    this.getProduct()
+                }
+           }catch(e){
+               console.log(e)
+                this.$store.commit("open_toast", {
+                   msg:e.response.data.message,
+                  variant: "error",
+                });
+           }
         }
-    },
-    async created() {
-        if(process.client){
-            this.getProduct()
-            this.onClient=true
-        }
-        
     }
 }
 </script>

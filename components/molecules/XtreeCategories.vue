@@ -1,22 +1,35 @@
 <template>
   <div :style="nodeMargin">
-    <b-alert variant="light" show class="d-flex justify-content-between mb-1 border border-whitesmoke">
+    <div v-show="type == 'showCategories'">
+      <b-alert variant="light" show class="d-flex justify-content-between mb-1 border border-whitesmoke">
       {{ node.title }}
      <div class="operation">
-        <fa icon="edit" class="edit cursor_pointer"
+       <span v-b-tooltip.hover title="ویرایش">
+           <fa icon="edit" class="edit cursor_pointer"
           @click="editItem()"
         ></fa>
-        <fa icon="trash" class="trash cursor_pointer"
-          @click="removeItem()"
-        ></fa>
+       </span>
+        <span v-b-tooltip.hover title="ویرایش">
+          <fa icon="trash" class="trash cursor_pointer"
+            @click="removeItem()"
+          ></fa>
+        </span>
      </div>
-    </b-alert>
+      </b-alert>
+    </div>
+    <div v-show="type == 'createProducts'">
+        <b-alert variant="light" show class="d-flex justify-content-start align-items-center py-1 mr-0 my-0">
+          <input type="checkbox" :value="node.id" name="categories[]" v-model="categories">
+          <span class="mr-1" v-text="node.title"></span>
+        </b-alert>
+    </div>
     <div v-if="node.children_recursive && node.children_recursive.length> 0">
       <TreeNode
         v-for="category in node.children_recursive"
         :key="category.id"
         :node="category"
         :spacing="spacing + 10"
+        :type="type"
       />
     </div>
   </div>
@@ -33,7 +46,10 @@ export default {
     spacing: {
       type: Number,
       default: 0
-    }
+    },
+    type:{
+      type:String
+    },
   },
   computed: {
     nodeMargin() {
@@ -41,6 +57,14 @@ export default {
         'margin-right': `${this.spacing}px`
       }
     },
+    categories: {
+       get () { return this.$store.state.selectedCategories },
+       set (value) {
+         this.$store.commit('setToState', {
+          name: 'selectedCategories',
+          data: value
+       })} 
+    }
   },
   methods:{
     editItem(){

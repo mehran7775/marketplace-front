@@ -96,10 +96,11 @@
         <div class="row mt-4">
           <div><h5 class="font-weight-bold mr-4">دسته بندی های شما</h5></div>
           <div class="p-3 w-100 m-auto">
-            <MoleculesXthreeCategories
+            <MoleculesXtreeCategories
               v-for="category in categories"
               :key="category.id"
               :node="category"
+              type="showCategories"
             />
           </div>
         </div>
@@ -114,8 +115,10 @@
               آیا می خواهید دسته
               <span
                 class="text-success font-weight-bold"
-                v-text="categoryItem ? categoryItem.title : ''"
-              ></span>
+              
+              >
+              {{titleDelete}}
+              </span>
               را حذف کنید؟
             </p>
             <template #modal-footer>
@@ -256,6 +259,7 @@ export default {
       option: [],
       optionUpdate:[],
       categoryItem: {},
+      
     };
   },
   components: {
@@ -265,10 +269,13 @@ export default {
   computed:{
     user(){
       return JSON.parse(localStorage.getItem('currentUser'))
+    },
+    titleDelete(){
+      return this.categoryItem.title ? this.categoryItem.title : 'موردنظر' 
     }
   },
   layout: "main-content",
-  async created() {
+  created() {
     if (process.client) {
       try {
         this.getAllCategory();
@@ -277,8 +284,9 @@ export default {
         console.log(e);
       }
         this.$nuxt.$on("actionCategory", async (payload) => {
-        Object.assign( this.categoryItem,payload.item)
+        
         if (payload.type === "edit") {
+          Object.assign( this.categoryItem,payload.item)
           this.optionUpdate=[]
           this.formUpdate.parent_id= ''
           if(this.categoryItem.parent_id){
@@ -295,8 +303,10 @@ export default {
          
           }
           this.$bvModal.show("updateCatagoryModal");
-         
-        } else {
+       
+        }
+        if(payload.type === 'delete') {
+           this.categoryItem= payload.item
           this.$bvModal.show("deleteCatagoryModal");
         }
        

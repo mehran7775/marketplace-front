@@ -226,18 +226,7 @@ export default {
       btnDisable:false,
     };
   },
-  watch:{
-    errorsApi(){
-      this.$refs.completeInfoForm.setErrors(this.errorsApi)
-    }
-  },
-  created(){
-    this.$store.commit('user/setToState',{
-      name:'errorsApi',
-      data:''
-    })
-  },
-  components: {
+    components: {
     ValidationProvider,
     ValidationObserver,
   },
@@ -298,7 +287,6 @@ export default {
     provinces() {
       return provinces;
     },
-    ...mapGetters("user",["errorsApi"]),
     lang(){
       return tr()
     },

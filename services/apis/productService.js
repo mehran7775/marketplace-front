@@ -24,5 +24,12 @@ export default{
                 'Authorization': `Bearer ${payload.token}`
             }
         })
+    },
+    deleteProduct(payload){
+        return axios.post(`product/delete/${payload.id}`, null, {
+            headers:{
+                'Authorization': `Bearer ${payload.token}`
+            }
+        })
     }
 }
