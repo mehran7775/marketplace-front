@@ -98,7 +98,6 @@ export default [
         url: '/admin/categories',
         title: 'دسته بندی ها',
         in_store: true,
-        manager : 'store-manager',
         need_auth: false,
         icon: '\n' +
             '\'<svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="#a0a0a0" viewBox="0 0 24 24">\\n\' +\n' +

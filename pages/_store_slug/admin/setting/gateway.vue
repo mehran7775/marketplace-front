@@ -1,36 +1,38 @@
 <template>
-    <div id="edit_store">
-        <page-title title_text="ویرایش درگاه های متصل به فروشگاه" icon="product">
-            <div @click="updateSetting">
-                <Xbutton variant="success" v-text="'بروزرسانی تنظیمات'"></Xbutton>
+    <client-only v-if="onClient">
+        <div id="edit_store">
+            <page-title title_text="ویرایش درگاه های متصل به فروشگاه" icon="product">
+                <div @click="updateSetting">
+                    <Xbutton variant="success" v-text="'بروزرسانی تنظیمات'"></Xbutton>
+                </div>
+            </page-title>
+            <div class="alert alert-info" role="alert" v-if="message">
+                {{ message }}
             </div>
-        </page-title>
-        <div class="alert alert-info" role="alert" v-if="message">
-            {{ message }}
-        </div>
-        <div class="alert alert-danger" role="alert" v-if="error">
-            {{ error }}
-        </div>
-        <div class="bg-white shadow-sm py-4 my-2 px-5" style="border-radius: 10px;">
-            <template v-for="port in ports"  v-if="port_types.includes(port.type)">
-                <hr>
-                {{port.fa_name + ' ' +  PortTypes.getType(port.type)}}
-                <hr>
-                <div class="row">
-                    <div v-if="gateway.type === port.type" class="col-sm my-2" v-for="gateway in gateways">
-                        <div :class="formData.gateways.includes(gateway) ? 'card  border-primary' : 'card'" style="width: 18rem;cursor: pointer;" @click="addGateway(gateway,port.id)">
-                            <div :class="'card-body'">
-                                <h5 class="card-title">{{ gateway.title }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">{{ GatewayTypes.getType(gateway.type) }}</h6>
-                                <hr>
-                                <span class="text-success" v-if="isSelected(gateway)">ثبت شده</span>
+            <div class="alert alert-danger" role="alert" v-if="error">
+                {{ error }}
+            </div>
+            <div class="bg-white shadow-sm py-4 my-2 px-5" style="border-radius: 10px;">
+                <template v-for="port in ports"  v-if="port_types.includes(port.type)">
+                    <hr>
+                    {{port.fa_name + ' ' +  PortTypes.getType(port.type)}}
+                    <hr>
+                    <div class="row">
+                        <div v-if="gateway.type === port.type" class="col-sm my-2" v-for="gateway in gateways">
+                            <div :class="formData.gateways.includes(gateway) ? 'card  border-primary' : 'card'" style="width: 18rem;cursor: pointer;" @click="addGateway(gateway,port.id)">
+                                <div :class="'card-body'">
+                                    <h5 class="card-title">{{ gateway.title }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ GatewayTypes.getType(gateway.type) }}</h6>
+                                    <hr>
+                                    <span class="text-success" v-if="isSelected(gateway)">ثبت شده</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </template>
+                </template>
+            </div>
         </div>
-    </div>
+    </client-only>
 </template>
 
 <script>
@@ -44,6 +46,7 @@ export default {
     layout: "main-content",
     data() {
         return {
+            onClient:false,
             port_types : [
 
             ],
@@ -59,10 +62,13 @@ export default {
             selected_gateways : []
         }
     },
-    created() {
-        this.getData()
-        this.getPorts()
-        this.getGateways()
+    async created() {
+        if(process.client){
+           await this.getData()
+           await this.getPorts()
+           await this.getGateways()
+           this.onClient= true
+        }
 
     },
     methods: {

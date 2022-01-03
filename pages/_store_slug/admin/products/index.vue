@@ -316,7 +316,7 @@ export default {
     },
     async created() {
         if(process.client){
-            this.getProduct()
+            await this.getProduct()
             this.onClient=true
         }
         

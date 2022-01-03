@@ -275,10 +275,10 @@ export default {
     }
   },
   layout: "main-content",
-  created() {
+  async created() {
     if (process.client) {
       try {
-        this.getAllCategory();
+        await this.getAllCategory();
         this.onClient = true;
       } catch (e) {
         console.log(e);

@@ -41,7 +41,10 @@
                       <span class="ml-2 badge-counter bg-success text-white d-flex justify-content-center" v-if="inMyAnticipationShops && item.url === '/'" v-text="inMyAnticipationShops"></span>
                         </nuxt-link>
                     </li>
+
+                    
                 </template>
+                
             </ul>
         </div>
     </div>
