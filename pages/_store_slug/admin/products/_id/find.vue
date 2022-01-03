@@ -158,11 +158,11 @@
                                             </dashboard-box>
                                         </div>
                                         <div class=" col-md-4 col-sm my-3">
-                                            <dashboard-box :number="statistics.price_sum" title="کل مبلغ فروش">
+                                            <dashboard-box :number="statistics.total_sell_price" title="کل مبلغ فروش">
                                             </dashboard-box>
                                         </div>
                                         <div class=" col-md-4 col-sm my-3">
-                                            <dashboard-box :number="statistics.views_count" title="تعداد مشاهده">
+                                            <dashboard-box :number="statistics.views_count? statistics.views_count : 0" title="تعداد بازدید">
                                             </dashboard-box>
                                         </div>
                                         <div class="col-md-4 col-sm my-3">

@@ -296,7 +296,7 @@
                                                         <input type="checkbox" v-model="formData.show_province_option">
                                                         <span class="slider round"></span>
                                                     </label>
-                                                    استان
+                                                    موقعیت فروشگاه (استان و شهر)
                                                 </div>
                                             </div>
                                         </div>

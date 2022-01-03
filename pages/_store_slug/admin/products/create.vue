@@ -90,14 +90,15 @@
                     <div class="d-flex">
                       <b-form-group label="تصویر محصول">
                         <b-form-file
-                          v-model="formData.image"
                           accept="image/*"
                           class="px-5 rounded"
                           style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
                           placeholder="یک فایل انتخاب کنید"
                           plain
-                          @change="changeFile"
+                          name="images[]"
+                          @change="selectFiles"
                           multiple
+                          ref="inputFile"
                         ></b-form-file>
                           <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
                                   این فیلد الزامی است.</small>
@@ -113,13 +114,21 @@
                       </b-form-group>
                     </div>
               </div>
-              <div class="col-12 col-xl-9 border border-whitesmok">
-                  <div v-show="imagePreviewURL" class="m-auto p-auto pt-1">
-                          <img width="80" height="50"
-                        :src="imagePreviewURL"
-                        class="rounded"
-                        style="max-width:80px;max-height:50px"/>
+              <div class="col-12 col-xl-9">
+                <div class="row mx-1 border border-whitesmok rounded pb-2 px-1 d-flex justify-content-start align-items-start">
+                  <template v-if="images.length > 0">
+                    <div v-for="(image, index) in images" class="image-result mr-2 mb-1" :key="index">
+                      <fa icon="times" class="fa-lg cursor_pointer delete_item position-relative" @click="removeImage(image)"></fa>
+                      <div class="d-flex flex-column align-items-center" style="height:78px;width:58px;">
+                          <img height="58" :class="[image.selected? 'selectedImage': null,'rounded w-100']" :src="image.preview" @click="selectMainPicture(image)">
+                          <small style="height:17px; margin-top:3px;" v-show="image.selected">تصویر اصلی</small>
                       </div>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <p class="my-4 mr-2">عکس های انتخابی شما</p>
+                  </template>
+                </div>
               </div>
             </div>
             <div class="row">
@@ -186,6 +195,7 @@ import PageTitle from "~/components/main/pageTitle";
 import { categoryService } from "@/services/apiServices";
 import api from "~/services/api";
 import { mapState } from 'vuex'
+import { image } from 'vee-validate/dist/rules';
 export default {
   name: "create",
   components: { 
@@ -214,7 +224,6 @@ export default {
         quantity: 0,
         discount_amount: 0,
         discount_max_amount: 0,
-        image: [],
         description: null,
         parent_id: null,
         code:'',
@@ -254,8 +263,17 @@ export default {
           smiley_columns : 6
 
       },
-      imagePreviewURL:[]
+      images: [],
+      // defaultSelectedImage: 0
     };
+  },
+  watch:{
+    images(value){
+      if(value.length >= 1){
+        value[0].selected= true
+      }
+    }
+
   },
   computed: {
     user() {
@@ -284,56 +302,59 @@ export default {
         console.log(e);
       }
     },
-    changeFile(payload){
-      this.validation_errors.logo_size=false
-        this.validation_errors.logo_type=false
-        this.validation_errors.logo_size=false
-        const file = payload.target.files[0]; // use it in case of normal HTML input
-          if (file) {
-            const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
-            if(acceptedImageTypes.includes(file.type)){
-                if(file.size >  ((1024 * 1024) * 5)){
-                    this.validation_errors.logo_size =true
-                    this.formData.image= null
-                    return
-                }
-                this.imagePreviewURL.push = URL.createObjectURL(file);
-                URL.revokeObjectURL(file); // free memory
-            }else{
-                this.validation_errors.logo_type= true
-                this.formData.image= null
+    selectFiles(event){
+      if(this.images.length > 8 || event.target.files.length > 8){
+        this.$store.commit('open_toast',{
+          msg: 'حداکثر تعداد عکس های قابل آپلود هشت عدد می باشد',
+          variant: 'warning'
+        })
+        return
+      }
+      this.validation_errors.logo_size= false
+      this.validation_errors.logo_type= false
+      this.validation_errors.logo_size= false
+      let selectedFiles= event.target.files
+      const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
+        for(let i= 0; i< selectedFiles.length; i++){
+          if(acceptedImageTypes.includes(selectedFiles[i].type)){
+            if(selectedFiles[i].size > ((1024 * 1024) * 5)){
+               this.validation_errors.logo_size =true
+               event.target.value= ''
+               break
             }
-            
-        } else {
-            this.imagePreviewURL =  null
+            let img = {
+            file : selectedFiles[i],
+            preview: null,
+            selected: false
+            }
+            let reader = new FileReader()
+            reader.addEventListener('load',()=>{
+              img.preview= reader.result,
+              this.images.push(img)
+            })
+            reader.readAsDataURL(selectedFiles[i]);
+          }else{
+            this.validation_errors.logo_type= true
+            event.target.value= ''
+            break
+          }
         }
     },
     validate() {
       let res = true;
       if (!this.formData.title) {
-        this.errors.title = "عنوان الزامی است";
-        res = false;
+        this.errors.title = 'عنوان الزامی است'
+        res = false
       }
       if (!this.formData.quantity) {
-        this.errors.quantity = "تعداد محصول الزامی است";
-        res = false;
+        this.errors.quantity = 'تعداد محصول الزامی است'
+        res = false
       }
-      if (!this.formData.image) {
+
+      if (this.images.length <= 0) {
         this.errors.image = "تصویر محصول الزامی است";
         res = false;
-      }
-      else{
-        if (this.formData.image && this.formData.image.size > 1024 * 1024 * 5) {
-        this.errors.image = "تصویر محصول نباید بیشتر از ۵ مگ باشد";
-        res = false;
-        }
-        const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
-        if (!acceptedImageTypes.includes(this.formData.image.type)) {
-            this.validation_errors.logo_type = true
-            res = false
-        }
-      }
-     
+      }     
       return res;
     },
     createProduct() {
@@ -353,9 +374,10 @@ export default {
             }
           }
         }
-        if (this.formData.image) {
-          form_data.append("images[0]", this.formData.image);
-        }
+        this.images.forEach(element => {
+          delete element.preview
+        });
+        form_data.append('images',this.images)
         form_data.append("categories",this.selectedCategories)
         form_data.append('discount_percent',this.discount_percent)
         api
@@ -382,35 +404,23 @@ export default {
       }
       return pieces.join("");
     },
-    // onSearch(search, loading) {
-    //   if (search.length) {
-    //     loading(true);
-    //     this.search(loading, search, this);
-    //   }
-    // },
-    // search: $lodash.debounce((loading, search, vm) =>{
-    //     categoryService.searchCategory({
-    //       userId: vm.user.id,
-    //       search: search,
-    //       token: vm.$cookies.get("token"),
-    //     })
-    //     .then((res) => {
-    //       vm.option = res.data;
-    //       vm.optionUpdate = res.data;
-    //     })
-    //     .catch((e) => {
-    //       console.log(e);
-    //     })
-    //     .finally(() => {
-    //       loading(false);
-    //     });
-    //  },450),
+    removeImage(image){
+      this.images.splice(this.images.indexOf(image),1)
+      this.$refs.inputFile.value= ""
+    },
+    selectMainPicture(image){
+      this.images.forEach(element => {
+        element.selected= false
+      });
+      image.selected= true
+
+    }
   },
 };
 </script>
 
-<style scoped>
-#create_product .custom-file-label {
+<style scoped lang="scss">
+#create_product .custom-file-label { 
   border: none;
   background: none;
 }
@@ -421,5 +431,17 @@ export default {
 #categories{
   height: 120px;
   overflow-y: auto;
+}
+.delete_item{
+  right: 43px;
+  top: 19px;
+  color: whitesmoke;
+  &:hover{
+    color: $white!important;
+  }
+}
+.selectedImage{
+  border:2px solid $success;
+  box-shadow: 0 0 2px 0 $success;
 }
 </style>
