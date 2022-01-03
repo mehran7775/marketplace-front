@@ -95,6 +95,18 @@ export default [
 
     },
     {
+        url: '/admin/categories',
+        title: 'دسته بندی ها',
+        in_store: true,
+        manager : 'store-manager',
+        need_auth: false,
+        icon: '\n' +
+            '\'<svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="#a0a0a0" viewBox="0 0 24 24">\\n\' +\n' +
+            '            \'              <path d="M0 0h24v24H0z" fill="none"/>\\n\' +\n' +
+            '            \'              <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>\\n\' +\n' +
+            '            \'            </svg>'
+    },
+    {
         url: '/admin/setting/shipping',
         title: 'تنظیمات ارسال',
         in_store: true,
@@ -131,5 +143,6 @@ export default [
             '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#a0a0a0"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"/></svg>'
 
     },
+
 
 ]

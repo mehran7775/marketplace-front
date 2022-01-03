@@ -41,6 +41,13 @@ export default {
         },
         '~/plugins/veevalidate',
         '~/plugins/roles',
+        {
+            src:'~/plugins/vue-select',
+            mode: 'client',
+            ssr: false
+        },
+        '~/plugins/lodash',
+       
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components

@@ -15,7 +15,7 @@
                         <b-tab title="اطلاعات فروشگاه" active>
                             <div class="bg-white py-4 my-2 px-5" style="border-radius: 10px;">
                                 <div v-if="false" class="row justify-content-around align-content-center pb-3">
-                                    <div class="col-4 col-md-4 my-2">
+                                    <div class="col-12 col-md-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -25,7 +25,7 @@
                                             v-model="formData.fa_name"
                                         />
                                     </div>
-                                    <div class="col-4 col-md-4 my-2">
+                                    <div class="col-12 col-md-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -35,20 +35,12 @@
                                             v-model="formData.en_name"
                                         />
                                     </div>
-                                    <div class="col-4 col-md-4 my-2">
-                                    <textarea
-                                        type="text"
-                                        class="form-control"
-                                        id="description"
-                                        ref="description"
-                                        placeholder="توضیحات"
-
-                                        v-model="formData.description"
-                                    >
-
-                                            </textarea>
+                                    <div class="col-12 col-md-4 my-2">
+                                    <client-only placeholder="loading...">
+                                        <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  ref="description"/>
+                                    </client-only>
                                     </div>
-                                    <div class="col-4 col-md-4 my-2">
+                                    <div class="col-12 col-md-4 my-2">
                                         <select
                                             type="text"
                                             class="form-control"
@@ -62,7 +54,7 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="col-4 col-md-4 my-2">
+                                    <div class="col-12 col-md-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -72,7 +64,7 @@
                                             v-model="formData.city"
                                         />
                                     </div>
-                                    <div class="col-4 col-md-4 my-2">
+                                    <div class="col-12 col-md-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -86,11 +78,8 @@
 
                                         <b-form-file
                                             placeholder="لوگو" class="form-control"
-                                            v-model="formData.logo"></b-form-file>
-
-                                        <b-link class="btn btn-link" target="_blank" :href="formData.logo">دانلود لوگو
-                                        </b-link>
-
+                                            v-model="formData.logo">
+                                        </b-form-file>
                                         <div class="m-auto pt-2 pr-2">
                                             <div class="w-100 text-right">
                                                 <div class="my-3">
@@ -133,18 +122,14 @@
                                         </div>
                                     </div>
                                     <div class="col-8 my-2">
-                                    <textarea
-                                        rows="6"
-                                        class="form-control"
-                                        id="lows"
-                                        ref="logo"
-                                        v-model="formData.shop_terms"
-                                        placeholder="قوانین و مقررات فروشگاه">
-                                    </textarea>
+                                          <client-only placeholder="loading...">
+                                            <ckeditor-nuxt v-model="formData.shop_terms" :config="editorConfig2"   id="lows"
+                                            ref="logo"/>
+                                        </client-only>
                                     </div>
                                 </div>
                                 <div class="row justify-content-around align-content-center pb-3">
-                                    <div class="col-sm col-md-4 my-2">
+                                    <div class="col-12 col-lg-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -154,7 +139,7 @@
                                             v-model="formData.fa_name"
                                         />
                                     </div>
-                                    <div class="col-sm col-md-4 my-2">
+                                    <div class="col-12 col-lg-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -164,7 +149,7 @@
                                             v-model="formData.en_name"
                                         />
                                     </div>
-                                    <div class="col-sm col-md-4 my-2">
+                                    <div class="col-12 col-lg-4 my-2">
                                         <select
                                             type="text"
                                             class="form-control"
@@ -175,7 +160,7 @@
                                            <option :key="item.key" v-for="item in provinces" :value="item.id">{{ item.value }}</option>
                                         </select>
                                     </div>
-                                    <div class="col-sm col-md-4 my-2">
+                                    <div class="col-12 col-lg-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -185,7 +170,7 @@
                                             v-model="formData.city"
                                         />
                                     </div>
-                                    <div class="col-sm col-md-4 my-2">
+                                    <div class="col-12 col-lg-4 my-2">
                                         <input
                                             type="text"
                                             class="form-control"
@@ -195,45 +180,48 @@
                                             v-model="formData.phone_number"
                                         />
                                     </div>
-                                    <div class="col-sm col-md-4 my-2">
-
-                                        <b-form-file
-                                            placeholder="لوگو" class="form-control"
-                                            accept="image/*"
-                                            v-model="formData.logo"></b-form-file>
-
-                                        <b-link class="btn btn-link" target="_blank" :href="formData.logo">دانلود لوگو</b-link>
-                                    </div>
-
-                                    <div class="col-sm col-md-6 my-2">
-                                            <textarea
-                                                rows="4"
-                                                type="text"
-                                                class="form-control"
-                                                id="description"
-                                                ref="description"
-                                                placeholder="توضیحات"
-
-                                                v-model="formData.description"
-                                            >
-
-                                            </textarea>
-                                    </div>
-                                    <div class="col-sm col-md-6 my-2">
-                                    <textarea
-                                        rows="4"
-                                        class="form-control"
-                                        id="lows"
-                                        ref="logo"
-                                        v-model="formData.shop_terms"
-                                        placeholder="قوانین و مقررات فروشگاه">
-                                    </textarea>
-                                    </div>
-
-                                    <div class="col-12 col-sm-2">
-                                        <div class="m-auto pt-2 pr-2">
-                                            <img :src="formData.logo"  style="width: 100%;border-radius: 10px"/>
+                                    <div class="col-12 col-lg-4 my-3">
+                                        <div class="row">
+                                            <div class="d-flex align-items-center mr-4 ">
+                                                <div class="pb-4">
+                                                    <b-form-file
+                                                        v-model="formData.logo"
+                                                        accept="image/*"
+                                                        class="rounded"
+                                                        style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
+                                                        placeholder="یک فایل انتخاب کنید"
+                                                        plain
+                                                        @change="onFileChange"
+                                                    ></b-form-file>
+                                                    <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
+                                                            این فیلد الزامی است.</small>
+                                                    <small v-if="validation_errors.logo_size" class="text-danger px-2">
+                                                            حجم لوگو نباید بیشتر از یک مگابایت باشد
+                                                    </small>
+                                                    <small v-if="validation_errors.logo_type" class="text-danger px-2">
+                                                            فرمت لوگو معتبر نمی باشد
+                                                    </small>
+                                                </div>
+                                                 <div class="m-auto pt-2 pr-2">
+                                                     <img width="80" height="50"
+                                                    :src="urlLogo ? urlLogo :formData.logo"
+                                                    class="rounded"
+                                                    style="max-width:80px;max-height:50px"/>
+                                                 </div>
+                                            </div>
                                         </div>
+                                    </div>
+                                    <div class="col-12 my-2">
+                                        <client-only placeholder="loading...">
+                                            <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  id="description"
+                                                ref="description"/>
+                                        </client-only>
+                                    </div>
+                                    <div class="col-12 my-2">
+                                        <client-only placeholder="loading...">
+                                            <ckeditor-nuxt v-model="formData.shop_terms" :config="editorConfig2"   id="lows"
+                                            ref="logo"/>
+                                        </client-only>
                                     </div>
                                     <div class="col-12 col-sm-5">
                                         <div class="m-auto pt-2 pr-2">
@@ -308,16 +296,24 @@
                                                         <input type="checkbox" v-model="formData.show_province_option">
                                                         <span class="slider round"></span>
                                                     </label>
-                                                    استان
+                                                    موقعیت فروشگاه (استان و شهر)
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <hr>
-                                <button @click="updateSetting" class="btn btn-primary">
-                                    ذخیره تغییرات
-                                </button>
+                                <Xbutton
+                                :on_click="()=> updateSetting()"
+                                class="btn"
+                                :variant="'primary'"
+                                text="ذخیره تغییرات"
+                                :disable="btnDisable"
+                                >
+                                    <template #spinner>
+                                        <b-spinner v-show="laodingSpinner" small ></b-spinner>
+                                    </template>            
+                                </Xbutton>
                             </div>
                             <hr>
                             <div class="bg-white py-4 my-2 px-5" style="border-radius: 10px;">
@@ -375,9 +371,17 @@
                                     </b-col>
                                 </b-form-row>
                                 <hr>
-                                <button @click="updateShippingSetting" class="btn btn-primary">
-                                    ذخیره تغییرات
-                                </button>
+                                <Xbutton
+                                :on_click="()=> updateShippingSetting()"
+                                class="btn"
+                                :variant="'primary'"
+                                text="ذخیره تغییرات"
+                                :disable="btnDisable"
+                                >
+                                    <template #spinner>
+                                        <b-spinner v-show="laodingSpinner" small ></b-spinner>
+                                    </template>            
+                                </Xbutton>
                             </div>
                         </b-tab>
                         <b-tab title="تنظیمات درگاه" >
@@ -418,9 +422,17 @@
                                     </div>
                                 </template>
                                 <hr>
-                                <button @click="updateGatewaySetting" class="btn btn-primary">
-                                    ذخیره تغییرات
-                                </button>
+                                <Xbutton
+                                :on_click="()=> updateGatewaySetting()"
+                                class="btn"
+                                :variant="'primary'"
+                                text="ذخیره تغییرات"
+                                :disable="btnDisable"
+                                >
+                                    <template #spinner>
+                                        <b-spinner v-show="laodingSpinner" small ></b-spinner>
+                                    </template>            
+                                </Xbutton>
                             </div>
                         </b-tab>
                         <!--<b-tab title="وضعیت درگاه" >
@@ -442,8 +454,11 @@ import {provinces} from "~/constants/Provinces";
 import PageTitle from "~/components/main/pageTitle";
 import StoreStatus from "~/constants/StoreStatus";
 export default {
-    components: {PageTitle},
     layout: "main-content",
+    components:{
+        PageTitle,
+        'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
+    },
     data() {
         return {
             provinces,
@@ -479,10 +494,50 @@ export default {
                 show_province_option: false,
                 shop_terms: null,
             },
+            urlLogo:null,
             one: 1,
             zero: 0,
             store: {
                 shipping_setting: {}
+            },
+            btnDisable:false,
+            laodingSpinner:false,
+            editorConfig: {
+                removePlugins: ['Title','Table','PageBreak','Subscript','SuperScript','CodeBlock','Code','Strikethrough','ChemType'],
+                placeholder:"توضیحات",
+                language:{
+                    ui: 'fa',
+                    content: 'fa'
+                },
+                contentsLangDirection:'rtl',
+                smiley_path : '@/assets/ckeditor/smiley/images',
+                smiley_images : [
+                    'regular_smile.png','sad_smile.png','wink_smile.png','teeth_smile.png','confused_smile.png','tongue_smile.png',
+                    'embarrassed_smile.png','omg_smile.png','whatchutalkingabout_smile.png','angry_smile.png','angel_smile.png','shades_smile.png',
+                    'devil_smile.png','cry_smile.png','lightbulb.png','thumbs_down.png','thumbs_up.png','heart.png',
+                    'broken_heart.png','kiss.png','envelope.png'
+                ],
+                smiley_descriptions : [
+                    ':)', ':(', ';)', ':D', ':/', ':P', ':*)', ':-o',
+                    ':|', '>:(', 'o:)', '8-)', '>:-)', ';(', '', '', '',
+                    '', '', ':-*', ''
+                ],
+                smiley_columns : 6
+
+            },
+             editorConfig2: {
+                removePlugins: ['Title','Table','PageBreak','Subscript','SuperScript','CodeBlock','Code','Strikethrough','ChemType'],
+                placeholder:"قوانین و مقررات فروشگاه",
+                language:{
+                    ui: 'fa',
+                    content: 'fa'
+                },
+                contentsLangDirection:'rtl',      
+            },
+            validation_errors:{
+                logo: null,
+                logo_size: null,
+                logo_type: null,
             }
         }
     },
@@ -493,6 +548,51 @@ export default {
         this.getData()
     },
     methods: {
+        onFileChange(payload) {
+            this.validation_errors.logo_size=false
+            this.validation_errors.logo_type=false
+            this.validation_errors.logo_size=false
+            const file = payload.target.files[0]; // use it in case of normal HTML input
+             if (file) {
+                 const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
+                if(acceptedImageTypes.includes(file.type)){
+                    if(file.size >  ((1024 * 1024) * 1)){
+                        this.validation_errors.logo_size =true
+                        this.urlLogo=null
+                        return
+                    }
+                    this.urlLogo = URL.createObjectURL(file);
+                    URL.revokeObjectURL(file); // free memory
+                }else{
+                    this.validation_errors.logo_type= true
+                     this.urlLogo=null
+                }
+               
+            }
+        },
+          validate(){
+            let spy = this.validation_errors
+            Object.keys(spy).forEach(function (key) {
+                spy[key] = null
+            });
+            let res = true
+            if(this.formData.logo){
+                if (this.formData.logo.size > ((1024 * 1024) * 1)) {
+                    this.validation_errors.logo_size = true
+                    res = false
+                }
+                 const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
+                 if(!acceptedImageTypes.includes(this.formData.logo.type)){
+                    this.validation_errors.logo_type = true
+                    res = false
+                }
+            }else{
+                 this.validation_errors.logo= true
+                res = false
+            }
+         
+            return res
+        },
         isSelected(gateway){
             if (gateway.type == 'PF'){
                 let key = gateway.port_config.sequence
@@ -552,6 +652,8 @@ export default {
                 })
         },
         updateShippingSetting() {
+            this.btnDisable= true
+            this.laodingSpinner= true
             api.post('store/update-shipping/' + this.$route.params.id, this.store.shipping_setting)
                 .then(response => {
                     this.message = response.data.message
@@ -561,6 +663,9 @@ export default {
                 if (!response.data.data[Object.keys(response.data.data)[0]]){
                     this.error = response.data.message
                 }
+            }).finally(()=>{
+                this.btnDisable= false
+                this.laodingSpinner= false
             })
         },
         getGateways() {
@@ -609,13 +714,17 @@ export default {
                     }
                 }
             }
-
+            this.btnDisable= true
+            this.laodingSpinner= true
             api.post('store/update-gateways/' + this.$route.params.id, form_data, this.$cookies.get('token'))
                 .then(response => {
                     this.message = response.data.message
                     this.getData()
                 }).catch(({response}) => {
                 this.error = response.data.data[Object.keys(response.data.data)[0]]
+            }).finally(()=>{
+                this.btnDisable= false
+                this.laodingSpinner= false
             })
         },
         getData() {
@@ -631,35 +740,44 @@ export default {
                 })
         },
         updateSetting() {
-            if (typeof this.formData.logo === 'string') {
-                this.formData.logo = null
-            }
-            let form_data = new FormData();
-            for (let key in this.formData) {
-                if (this.formData[key] === true || this.formData[key] === false) {
-                    if (this.formData[key] === true) {
-                        form_data.append(key, 1);
-                    }
-                    if (this.formData[key] === false) {
-                        form_data.append(key, 0);
-                    }
-                } else {
-                    if (this.formData[key] !== null) {
-                        form_data.append(key, this.formData[key]);
+            if(!this.validate()){
+
+            }else{
+                 let form_data = new FormData();
+                for (let key in this.formData) {
+                    if (this.formData[key] === true || this.formData[key] === false) {
+                        if (this.formData[key] === true) {
+                            form_data.append(key, 1);
+                        }
+                        if (this.formData[key] === false) {
+                            form_data.append(key, 0);
+                        }
+                    } else {
+                        if (this.formData[key] !== null) {
+                            form_data.append(key, this.formData[key]);
+                        }
                     }
                 }
+                this.btnDisable= true
+                this.laodingSpinner= true
+                api.post('store/update/' + this.$route.params.id, form_data, this.$cookies.get('token'))
+                    .then(response => {
+                        this.message = response.data.message
+                    //this.getData()
+                    }).catch(({response}) => {
+                    this.error = response.data.data[Object.keys(response.data.data)[0]]
+                    if (!response.data.data[Object.keys(response.data.data)[0]]){
+                        this.error = response.data.message
+                    }
+                }).finally(()=>{
+                    this.btnDisable= false
+                    this.laodingSpinner= false
+                })
             }
-            api.post('store/update/' + this.$route.params.id, form_data, this.$cookies.get('token'))
-                .then(response => {
-                    this.message = response.data.message
-                   //this.getData()
-                }).catch(({response}) => {
-                this.error = response.data.data[Object.keys(response.data.data)[0]]
-                if (!response.data.data[Object.keys(response.data.data)[0]]){
-                    this.error = response.data.message
-                }
-            })
         }
     }
 }
 </script>
+<style scoped>
+
+</style>

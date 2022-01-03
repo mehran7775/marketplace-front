@@ -22,6 +22,7 @@
                         text="اعمال فیلتر"
                         variant="success"
                         :disable="btnDisableAction"
+                        style="border-radius: 10px;"
                         >
                             <template #spinner>
                                 <b-spinner v-show="laodingSpinnerAction" small ></b-spinner>

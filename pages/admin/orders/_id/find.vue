@@ -10,10 +10,7 @@
                     <template #spinner>
                         <b-spinner v-show="laodingSpinner" small ></b-spinner>
                     </template>            
-                </Xbutton>
-            <!-- <div @click="updateOrder">
-                <Xbutton class="px-4" text="ذخیره تغییرات"></Xbutton>
-            </div> -->
+            </Xbutton>
         </page-title>
         <div class="alert alert-info" role="alert" v-if="message">
             {{ message }}

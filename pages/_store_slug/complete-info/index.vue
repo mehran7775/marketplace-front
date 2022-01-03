@@ -1,7 +1,5 @@
 <template>
   <div class="row">
-    <MoleculesXheader
-    ></MoleculesXheader>
     <div class="container body-hv-fit">
       <div class="row">
         <div class="col-10 m-auto col-md-7">
@@ -228,18 +226,7 @@ export default {
       btnDisable:false,
     };
   },
-  watch:{
-    errorsApi(){
-      this.$refs.completeInfoForm.setErrors(this.errorsApi)
-    }
-  },
-  created(){
-    this.$store.commit('user/setToState',{
-      name:'errorsApi',
-      data:''
-    })
-  },
-  components: {
+    components: {
     ValidationProvider,
     ValidationObserver,
   },
@@ -300,7 +287,6 @@ export default {
     provinces() {
       return provinces;
     },
-    ...mapGetters("user",["errorsApi"]),
     lang(){
       return tr()
     },

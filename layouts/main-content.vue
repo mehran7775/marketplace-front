@@ -18,7 +18,7 @@ import sidebar from "@/components/main/aside.vue";
 import appHeader from "@/components/main/header";
 import MobileAside from '@/components/main/mobile-aside'
 import MobileHeader from '@/components/main/mobile-header'
-import { storeService } from "~/services/apiServices";
+import { userService,storeService } from "~/services/apiServices";
 export default {
     data(){
        return{
@@ -40,16 +40,20 @@ export default {
     },
 
     async created(){
-        try{
-            const res = await storeService.getMyWaiting(this.$cookies.get('token'))
-            this.inMyAnticipationShops = res.data.data.badge_count
-            const { data } = await storeService.getAllWaiting(this.$cookies.get('token'))
-            this.inAnticipationShops = data.data.badge_count
+         if(process.client){
+            const userCurrent = await userService.userCurrent(this.$cookies.get("token"));
+            localStorage.setItem('currentUser',JSON.stringify(userCurrent.data.data))
+            try{
+                const res = await storeService.getMyWaiting(this.$cookies.get('token'))
+                this.inMyAnticipationShops = res.data.data.badge_count
+                const { data } = await storeService.getAllWaiting(this.$cookies.get('token'))
+                this.inAnticipationShops = data.data.badge_count
+            }catch(e){
+                console.log(e)
+            }
            
-           
-        }catch(e){
-            console.log(e)
         }
+       
     }
 
 }
@@ -62,4 +66,11 @@ export default {
         height: auto;
     }
 }
+.vueSelect{
+    border-radius: 15px!important;
+}
+.vueSelect .vs__selected-options{
+    padding: 3px 0;
+}
+
 </style>

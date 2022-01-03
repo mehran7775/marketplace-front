@@ -4,9 +4,14 @@
       <div class="form-group">
         <label class="font-weight-bold">کد تایید را وارد کنید</label>
         <input type="text" name="code" class="form-control" ref="code" />
-        <button class="btn btn-success mt-2 mr-2" @click="verify_code()">
-          ارسال
-        </button>
+        <Xbutton text='ارسال'  :on_click="()=> verify_code()"
+        class="btn btn-success mt-2 mr-2"
+        :disabled="btnDisable"
+         >
+          <template #spinner>
+              <b-spinner v-show="laodingSpinner" small ></b-spinner>
+          </template>   
+         </Xbutton>
         <div v-if="errors.length > 0" class="text-center pt-3">
           <p
             v-for="error in errors"
@@ -24,6 +29,7 @@
 </template>
 
 <script>
+import { authService } from '@/services/apiServices'
 import { mapState } from "vuex";
 export default {
   middleware: "guest",
@@ -31,6 +37,9 @@ export default {
     return {
       errors: [],
       error: "",
+      btnDisable: false,
+      laodingSpinner: false
+
     };
   },
   computed: mapState({
@@ -39,32 +48,24 @@ export default {
   methods: {
     async verify_code() {
       const data = {
-        phone: this.phone_number,
+        phone: this.$route.query.phone_number,
         code: this.$refs.code.value,
       };
       try {
         this.errors = [];
         this.error = "";
-        const res = await this.$nuxt.context.$axios.post(
-          "/customer/verify",
-          data
-        );
+        this.btnDisable= true
+        this.laodingSpinner= true
+        const res= await authService.verifyLogin(data)
+        console.log(res)
         if (res.status === 200) {
           this.$cookies.set("token-buyer", res.data.data.api.token);
-          const res_current=await this.$nuxt.context.$axios.get('/customer/current',
-          {
-            headers: {
-              "authorization" : "Bearer " + res.data.data.api.token
-            }
+          const res_current= await authService.currentUser( res.data.data.api.token )
+          if(res_current.status == 200){
+            localStorage.setItem('userDetail',JSON.stringify(res_current.data.data))
           }
-          )
-          if(res_current.status === 200){
-            this.$store.commit("user/setToState", {
-              name: 'current_user',
-              data: res.data.data
-            },{ root:true })
-            this.$store.commit('user/deleteFromState', "phone_number")
-          }
+          this.btnDisable= false
+          this.laodingSpinner= false
           this.$router.replace("/panel-customer")
           this.$store.commit(
             "open_toast",
@@ -76,6 +77,8 @@ export default {
           );
         }
       } catch (e) {
+        this.btnDisable= false
+        this.laodingSpinner= false
         if (e.response.data.status === "error") {
           Object.keys(e.response.data.data).forEach((element) => {
             this.errors.push(e.response.data.data[element][0]);

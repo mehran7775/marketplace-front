@@ -1,19 +1,28 @@
 <template>
     <div>
+      <client-only v-if="onClient">
+
         <page-title title_text="مشتریان" icon="customer">
 
         </page-title>
 
         <div class="bg-white shadow-sm p-3 my-3" style="border-radius: 10px;">
             <div class="row">
-                <div class="col-sm my-2">
+                <div class="col-12 col-sm-6 col-lg-4 my-2">
                     <input class="form-control" placeholder="نام" v-model="filter_first_name">
                 </div>
-                <div class="col-sm my-2">
+                <div class="col-12 col-sm-6 col-lg-4 my-2">
                     <input class="form-control" placeholder="نام خانوادگی" v-model="filter_last_name">
                 </div>
-                <div class="col-sm my-2">
+                <div class="col-12 col-sm-6 col-lg-4 my-2">
+                    <input class="form-control" placeholder="شماره موبایل" v-model="filter_phone_number">
+                </div>
+                 <div class="col-12 col-sm-6 col-lg-4 my-2">
+                    <input class="form-control" placeholder="تاریخ عضویت" v-model="filter_registered_at">
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 my-2">
                     <select class="form-control" v-model="filter_status">
+                        <option :value="null">وضعیت</option>
                         <option v-for="status in CustomerStatus.userStatus" :value="status.value">
                             {{status.text}}
                         </option>
@@ -22,7 +31,7 @@
                 <div class="col-sm my-2">
                     <div>
                         <Xbutton
-                        :on_click="()=> get_data(gateways.first_page_url)"
+                        :on_click="()=> get_data(customers.first_page_url)"
                         :class="query ? 'mr-2' : 'btn-block'"
                         text="اعمال فیلتر"
                         variant="success"
@@ -59,6 +68,7 @@
                             <th scope="col" style="background-color: #eee;">نام</th>
                             <th scope="col" style="background-color: #eee;">نام خانوادگی</th>
                             <th scope="col" style="background-color: #eee;">تلفن</th>
+                            <th scope="col" style="background-color: #eee;">تاریخ عضویت</th>
                             <th scope="col" style="background-color: #eee;">وضعیت</th>
                             <th scope="col" style="background-color: #eee;border-radius: 16px 0px 0px 16px;">جزییات</th>
                         </tr>
@@ -69,6 +79,7 @@
                             <td>{{customer.first_name}}</td>
                             <td>{{customer.last_name}}</td>
                             <td>{{customer.phone}}</td>
+                            <td v-text="customer.registered_at? customer.registered_at : '-'"></td>
                             <td><b-badge :variant="CustomerStatus.getStatus(customer.status).variant">{{CustomerStatus.getStatus(customer.status).text}}</b-badge></td>
                             <td><nuxt-link :to="'/admin/customers/' + customer.id + '/find'">
                                 <span class="special-tooltip btn btn-sm btn-clean btn-icon btn-icon-sm">
@@ -85,6 +96,7 @@
 
             <pagination :data="customers" :get_data="get_data" :perpage="per_page"></pagination>
         </div>
+      </client-only>
     </div>
 </template>
 
@@ -99,12 +111,15 @@ export default {
     layout : "main-content",
     data(){
         return {
+            onClient:false,
             CustomerStatus,
             customers : null,
             per_page : 15,
             filter_status : null,
             filter_first_name : null,
             filter_last_name : null,
+            filter_phone_number : null,
+            filter_registered_at : null,
             btnDisableAction: false,
             laodingSpinnerAction: false,
             btnDisableRemove: false,
@@ -123,6 +138,12 @@ export default {
             if (this.filter_status != null) {
                 res = res + '&query[status]=' + this.filter_status;
             }
+              if (this.filter_registered_at != null) {
+                res = res + '&query[registered_at]=' + this.filter_registered_at
+            }
+              if (this.filter_phone_number != null) {
+                res = res + '&query[phone_number]=' + this.filter_phone_number;
+            }
             return res;
         }
     },
@@ -131,6 +152,8 @@ export default {
             this.filter_first_name = null;
             this.filter_last_name = null;
             this.filter_status = null;
+            this.filter_phone_number = null;
+            this.filter_registered_at = null;
         },
         async get_data(url, removeFilter= null) {
             if(removeFilter){
@@ -140,7 +163,7 @@ export default {
                 this.btnDisableAction= true
                 this.laodingSpinnerAction= true
             }
-           
+           console.log(this.query)
             let res= await api.getUrl(url + this.query + '&perpage=' + this.per_page)
             .finally(()=> {
                 this.btnDisableAction= false
@@ -157,12 +180,17 @@ export default {
         },
     },
     async created(){
-        let res = await api.get('customer/all' + '?perpage=' + this.per_page)
-        this.customers = res.data.data
+        if(process.client){
+            let res = await api.get('customer/all' + '?perpage=' + this.per_page)
+            this.customers = res.data.data
+            this.onClient= true
+        }
     }
 }
 </script>
 
 <style scoped>
-
+thead,tbody{
+    width: 100%;
+}
 </style>

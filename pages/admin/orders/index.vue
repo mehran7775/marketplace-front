@@ -4,11 +4,27 @@
         </page-title>
         <div class="bg-white shadow-sm p-3 my-3" style="border-radius: 10px;">
             <div class="row">
-                <div class="col-sm my-2">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <input class="form-control" placeholder="کد رهگیری" v-model="filter_tracking_number">
                 </div>
-                <div class="col-sm my-2">
+                  <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <input class="form-control" placeholder="نام مشتری" v-model="filter_name">
+                </div>
+                  <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <input class="form-control" placeholder="موبایل مشتری" v-model="filter_phone_number">
+                </div>
+                  <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <input class="form-control" placeholder="ایمیل مشتری" v-model="filter_email">
+                </div>
+                  <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <input class="form-control" placeholder="از تاریخ" v-model="filter_from_date">
+                </div>
+                   <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <input class="form-control" placeholder="تا تاریخ" v-model="filter_to_date">
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <select class="form-control" v-model="filter_status">
+                        <option :value="null">وضعیت</option>
                         <option v-for="status in OrderStatus.orderStatus" :value="status.value">
                             {{status.text}}
                         </option>
@@ -111,6 +127,11 @@ export default {
             OrderStatus,
             filter_tracking_number: null,
             filter_status : null,
+            filter_name : null,
+            filter_email : null,
+            filter_phone_number: null,
+            filter_from_date: null,
+            filter_to_date: null,
             orders: null,
             per_page: 15,
             tnDisableAction: false,
@@ -128,6 +149,21 @@ export default {
             if (this.filter_status != null) {
                 res = res + '&query[status]=' + this.filter_status;
             }
+             if (this.filter_name != null) {
+                res = res + '&query[name]=' + this.filter_name;
+            }
+             if (this.filter_phone_number != null) {
+                res = res + '&query[phone_number]=' + this.filter_phone_number;
+            }
+             if (this.filter_email != null) {
+                res = res + '&query[email]=' + this.filter_email;
+            }
+            if(this.filter_from_date != null){
+                res = res + '&query[from_date]=' + this.filter_from_date;
+            }
+             if(this.filter_to_date != null){
+                res = res + '&query[to_date]=' + this.filter_to_date;
+            }
             return res;
         }
     },
@@ -135,6 +171,11 @@ export default {
         resetQuery() {
             this.filter_tracking_number = null;
             this.filter_status = null;
+            this.filter_name = null;
+            this.filter_phone_number = null;
+            this.filter_email = null;
+            this.filter_from_date = null;
+            this.filter_to_date = null;
         },
         async get_data(url, removeFilter= null) {
              if(removeFilter){
