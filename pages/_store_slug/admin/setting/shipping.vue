@@ -1,65 +1,67 @@
 <template>
-    <div>
-        <page-title title_text="تنظیمات ارسال" icon="product">
-            <div @click="updateSetting">
-                <Xbutton variant="success"  v-text="'بروزرسانی تنظیمات'"></Xbutton>
+    <client-only v-if="onClient">
+        <div>
+            <page-title title_text="تنظیمات ارسال" icon="product">
+                <div @click="updateSetting">
+                    <Xbutton variant="success"  v-text="'بروزرسانی تنظیمات'"></Xbutton>
+                </div>
+            </page-title>
+            <div class="alert alert-info" role="alert" v-if="message">
+                {{ message }}
             </div>
-        </page-title>
-        <div class="alert alert-info" role="alert" v-if="message">
-            {{ message }}
+            <div class="alert alert-danger" role="alert" v-if="error">
+                {{ error }}
+            </div>
+            <div class="bg-white shadow-sm py-4 my-2 px-5" style="border-radius: 10px;">
+                <b-form-row>
+                    <b-col col="sm">
+                        <b-form-group label="منطقه ارسال">
+                            <select class="form-control" v-model="store.shipping_setting.shipping_region">
+                                <option :value="zero">استان خودم</option>
+                                <option :value="one">سراسر کشور</option>
+                            </select>
+                        </b-form-group>
+                    </b-col>
+                </b-form-row>
+                <b-form-row>
+                    <b-col col="sm">
+                        <b-form-group label="زمان ارسال شهر خود (روز)">
+                            <b-form-input type="number"
+                                        v-model="store.shipping_setting.own_city_delivery_time"></b-form-input>
+                        </b-form-group>
+                    </b-col>
+                    <b-col col="sm">
+                        <b-form-group label="زمان ارسال سایر شهر ها (روز)">
+                            <b-form-input type="number"
+                                        v-model="store.shipping_setting.other_cities_delivery_time"></b-form-input>
+                        </b-form-group>
+                    </b-col>
+                </b-form-row>
+                <b-form-row>
+                    <b-col col="sm">
+                        <b-form-group label="هزینه ارسال شهر خود (ریال)">
+                            <b-form-input type="number"
+                                        v-model="store.shipping_setting.own_city_shipping_cost"></b-form-input>
+                            <small class="text-success px-2">
+                                {{moneyFormat(store.shipping_setting.own_city_shipping_cost)}}
+                                ریال
+                            </small>
+                        </b-form-group>
+                    </b-col>
+                    <b-col col="sm">
+                        <b-form-group label="هزینه ارسال سایر شهر ها (ریال)">
+                            <b-form-input type="number"
+                                        v-model="store.shipping_setting.other_cities_shipping_cost"></b-form-input>
+                            <small class="text-success px-2">
+                                {{moneyFormat(store.shipping_setting.other_cities_shipping_cost)}}
+                                ریال
+                            </small>
+                        </b-form-group>
+                    </b-col>
+                </b-form-row>
+            </div>
         </div>
-        <div class="alert alert-danger" role="alert" v-if="error">
-            {{ error }}
-        </div>
-        <div class="bg-white shadow-sm py-4 my-2 px-5" style="border-radius: 10px;">
-            <b-form-row>
-                <b-col col="sm">
-                    <b-form-group label="منطقه ارسال">
-                        <select class="form-control" v-model="store.shipping_setting.shipping_region">
-                            <option :value="zero">استان خودم</option>
-                            <option :value="one">سراسر کشور</option>
-                        </select>
-                    </b-form-group>
-                </b-col>
-            </b-form-row>
-            <b-form-row>
-                <b-col col="sm">
-                    <b-form-group label="زمان ارسال شهر خود (روز)">
-                        <b-form-input type="number"
-                                      v-model="store.shipping_setting.own_city_delivery_time"></b-form-input>
-                    </b-form-group>
-                </b-col>
-                <b-col col="sm">
-                    <b-form-group label="زمان ارسال سایر شهر ها (روز)">
-                        <b-form-input type="number"
-                                      v-model="store.shipping_setting.other_cities_delivery_time"></b-form-input>
-                    </b-form-group>
-                </b-col>
-            </b-form-row>
-            <b-form-row>
-                <b-col col="sm">
-                    <b-form-group label="هزینه ارسال شهر خود (ریال)">
-                        <b-form-input type="number"
-                                      v-model="store.shipping_setting.own_city_shipping_cost"></b-form-input>
-                        <small class="text-success px-2">
-                            {{moneyFormat(store.shipping_setting.own_city_shipping_cost)}}
-                            ریال
-                        </small>
-                    </b-form-group>
-                </b-col>
-                <b-col col="sm">
-                    <b-form-group label="هزینه ارسال سایر شهر ها (ریال)">
-                        <b-form-input type="number"
-                                      v-model="store.shipping_setting.other_cities_shipping_cost"></b-form-input>
-                        <small class="text-success px-2">
-                            {{moneyFormat(store.shipping_setting.other_cities_shipping_cost)}}
-                            ریال
-                        </small>
-                    </b-form-group>
-                </b-col>
-            </b-form-row>
-        </div>
-    </div>
+    </client-only>
 </template>
 
 <script>
@@ -72,6 +74,7 @@ export default {
     layout: "main-content",
     data() {
         return {
+            onClient:false,
             message: null,
             error: null,
             one : 1,
@@ -81,8 +84,11 @@ export default {
             }
         }
     },
-    created() {
-        this.getData()
+    async created() {
+        if(process.client){
+         await this.getData()
+         this.onClient= true
+        }
     },
     methods: {
         getData(){

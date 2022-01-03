@@ -1,5 +1,6 @@
 <template>
-    <div id="edit_store">
+    <client-only v-if="onClient">
+        <div id="edit_store">
         <page-title title_text="ویرایش فروشگاه" icon="product">
             <div @click="updateSetting">
                 <Xbutton
@@ -192,7 +193,8 @@
                 </div>
             </div>
         </div>
-    </div>
+        </div>
+    </client-only>
 </template>
 
 <script>
@@ -209,6 +211,7 @@ export default {
     
     data() {
         return {
+            onClient:false,
             provinces,
             store: {},
             message: null,
@@ -269,8 +272,11 @@ export default {
             },
         }
     },
-    created() {
-        this.getData()
+    async created() {
+        if(process.client){
+            await this.getData()
+            this.onClient= true
+        }
     },
     methods: {
           onFileChange(payload) {

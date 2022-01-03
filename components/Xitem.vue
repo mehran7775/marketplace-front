@@ -8,7 +8,7 @@
     <h5 v-text="title" class="d-none d-md-block font-weight-bold px-3 text-dark mb-0 mb-md-1"></h5>
     <h6 v-text="title" class="d-md-none font-weight-bold px-3 text-dark mb-0 mb-md-1"></h6>
     <nuxt-link
-      :to="`${$route.params.store_slug}/${id}`"
+      :to="`/${$route.params.store_slug}/${id}`"
       class="d-flex align-items-center justify-content-center"
     >
       <img

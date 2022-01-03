@@ -41,7 +41,7 @@ const actions = {
           commit(
             "open_toast",
             {
-              msg: "درحال حاظر موجودی محصول کافی نمی باشد",
+              msg: "درحال حاضر موجودی محصول کافی نمی باشد",
               variant: "error",
             },
             { root: true }

@@ -1,4 +1,5 @@
 <template>
+  <client-only v-if="onclient">
     <div>
         <page-title title_text="سفارشات" icon="order">
         </page-title>
@@ -7,19 +8,19 @@
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <input class="form-control" placeholder="کد رهگیری" v-model="filter_tracking_number">
                 </div>
-                  <div class="col-12 col-sm-6 col-lg-3 my-2">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <input class="form-control" placeholder="نام مشتری" v-model="filter_name">
                 </div>
-                  <div class="col-12 col-sm-6 col-lg-3 my-2">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <input class="form-control" placeholder="موبایل مشتری" v-model="filter_phone_number">
                 </div>
-                  <div class="col-12 col-sm-6 col-lg-3 my-2">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <input class="form-control" placeholder="ایمیل مشتری" v-model="filter_email">
                 </div>
-                  <div class="col-12 col-sm-6 col-lg-3 my-2">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <input class="form-control" placeholder="از تاریخ" v-model="filter_from_date">
                 </div>
-                   <div class="col-12 col-sm-6 col-lg-3 my-2">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <input class="form-control" placeholder="تا تاریخ" v-model="filter_to_date">
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
@@ -105,6 +106,7 @@
             <pagination v-if="orders.next_page_url || orders.prev_page_url" :data="orders" :get_data="get_data" :perpage="per_page"></pagination>
         </div>
     </div>
+  </client-only>
 </template>
 
 <script>
@@ -124,6 +126,7 @@ export default {
     layout: "main-content",
     data() {
         return {
+            onclient:false,
             OrderStatus,
             filter_tracking_number: null,
             filter_status : null,
@@ -200,8 +203,11 @@ export default {
         },
     },
     async created() {
-        let res = await api.get('order' + '?perpage=' + this.per_page,this.$cookies.get('token'))
-        this.orders = res.data.data
+        if(process.client){
+            let res = await api.get('order' + '?perpage=' + this.per_page,this.$cookies.get('token'))
+            this.orders = res.data.data
+            this.onclient= true
+        }
     }
 }
 </script>

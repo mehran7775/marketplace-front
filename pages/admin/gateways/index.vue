@@ -1,5 +1,6 @@
 <template>
-    <div>
+   <client-only v-if="onClient">
+        <div>
         <page-title title_text="درگاه ها" icon="gateway">
         </page-title>
         <div class="bg-white shadow-sm p-3 my-3" style="border-radius: 10px;">
@@ -106,7 +107,8 @@
 
             <pagination v-if="gateways.next_page_url || gateways.prev_page_url" :data="gateways" :get_data="get_data" :perpage="per_page"></pagination>
         </div>
-    </div>
+        </div>
+   </client-only>
 </template>
 
 <script>
@@ -126,6 +128,7 @@ export default {
     layout: "main-content",
     data() {
         return {
+            onClient:false,
             GatewayStatus,
             filter_title: null,
             filter_from_date: null,
@@ -188,8 +191,11 @@ export default {
         },
     },
     async created() {
-        let res = await api.get('gateway/all' + '?perpage=' + this.per_page)
-        this.gateways = res.data.data
+        if(process.client){
+            let res = await api.get('gateway/all' + '?perpage=' + this.per_page)
+            this.gateways = res.data.data
+            this.onClient= true
+        }
     }
 }
 </script>
