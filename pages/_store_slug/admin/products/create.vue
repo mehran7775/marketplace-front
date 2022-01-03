@@ -1,7 +1,7 @@
 <template>
   <client-only v-if="onClient">
      <div>
-    <page-title title_text="افزودن محصول جدید" icon="product">
+    <!-- <page-title title_text="افزودن محصول جدید" icon="product"> -->
       <button
         class="btn btn-success shadow-sm mx-2 px-4 py-2"
         @click="createProduct"
@@ -10,7 +10,7 @@
       >
         ثبت محصول
       </button>
-    </page-title>
+    <!-- </page-title> -->
     <div class="alert alert-info" role="alert" v-if="message">
       {{ message }}
     </div>
@@ -203,9 +203,9 @@ export default {
     'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
   },
   layout: "main-content",
-  created(){
+  async created(){
     if(process.client){
-      this.getAllCategory() 
+      await this.getAllCategory() 
       this.onClient= true
     }
   },

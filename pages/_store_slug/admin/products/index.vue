@@ -1,12 +1,10 @@
 <template>
    <client-only v-if="onClient">
         <div>
-            <page-title title_text="محصولات" icon="product">
-                <nuxt-link to="products/create" class="btn btn-success shadow-sm mx-2 px-4 py-2"
-                        style="border-radius: 20px; border-color: #bbb;">
-                    <span class="pr-2">ثبت محصول جدید</span>
-                </nuxt-link>
-            </page-title>
+            <nuxt-link to="products/create" class="btn btn-success shadow-sm mx-2 px-4 py-2"
+                    style="border-radius: 20px; border-color: #bbb;">
+                <span class="pr-2">ثبت محصول جدید</span>
+            </nuxt-link>
             <div class="bg-white shadow-sm p-3 my-3" style="border-radius: 10px;">
                 <div class="row">
                     <div class="col-sm my-2">
@@ -254,7 +252,6 @@
 <script>
 import pagination from "~/components/pagination";
 import CustomerStatus from "~/constants/CustomerStatus";
-import PageTitle from "~/components/main/pageTitle";
 import api from "~/services/api";
 //import datePicker from 'vue-persian-datetime-picker'
 import ProductStatus from "~/constants/ProductStatus";
@@ -263,7 +260,6 @@ import { ValidationProvider, ValidationObserver } from "vee-validate";
 export default {
     name: "index",
     components: {
-        PageTitle,
         pagination,
         //datePicker
     },

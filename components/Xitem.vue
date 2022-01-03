@@ -32,13 +32,13 @@
           variant="success"
           :text="lang.btn.add"
           :on_click="add_item"
-          :disabled="quantity < 1 ? true : false"
+          :disabled="quantity >= 1 || quantity == 'نامحدود' ? false : true"
           class="mx-1"
         ></Xbutton>
 
       </div>
       <div v-if="!is_hover" class="price">
-        <template v-if="quantity > 1">
+        <template v-if="quantity >= 1 || quantity == 'نامحدود' ">
            <span v-text="price"></span>
            <strong>
             <span v-text="lang.price"></span>
