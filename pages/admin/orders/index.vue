@@ -81,7 +81,7 @@
                                 <tbody>
                                 <tr v-for="(order, index) in orders.data" :key="index">
                                     <td>{{ order.id }}</td>
-                                    <td>{{ order.customer.first_name }}</td>
+                                    <td>{{ order.customer_info }}</td>
                                     <td>{{ order.tracking_number }}</td>
                                     <td>{{ order.payment_price }}</td>
                                     <td>{{ order.created_at }}</td>
