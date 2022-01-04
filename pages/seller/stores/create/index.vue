@@ -303,7 +303,7 @@
                                             />
                                             <small class="text-success px-2">
                                                 {{ moneyFormat(formData.own_city_shipping_cost) }}
-                                                ریال
+                                                تومان
                                             </small>
                                         </div>
                                         <div class="col-sm col-md-4 my-2">
@@ -317,7 +317,7 @@
                                             />
                                             <small class="text-success px-2">
                                                 {{ moneyFormat(formData.other_cities_shipping_cost) }}
-                                                ریال
+                                                تومان
                                             </small>
                                         </div>
                                     </div>
@@ -656,6 +656,8 @@ export default {
                 }
                 this.btnDisable= true
                 this.laodingSpinner= true
+                form_data.set('own_city_shipping_cost',this.formData.own_city_shipping_cost+'0')
+                form_data.set('other_cities_shipping_cost',this.formData.other_cities_shipping_cost+'0')
                 api.post('store/create', form_data, this.$cookies.get('token')).then(response => {
                     this.message = response.data.message
                     this.$router.push('/')

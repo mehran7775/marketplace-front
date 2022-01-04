@@ -1,200 +1,206 @@
 <template>
-    <client-only v-if="onClient">
-        <div id="edit_store">
-        <page-title title_text="ویرایش فروشگاه" icon="product">
-            <div @click="updateSetting">
-                <Xbutton
-                :disable="btnDisable"
-                 variant="success" v-text="'بروزرسانی تنظیمات'">
-                    <template #spinner>
-                        <b-spinner v-show="laodingSpinner" small ></b-spinner>
-                    </template>  
-                 </Xbutton>
-            </div>
-        </page-title>
-        <div class="alert alert-info" role="alert" v-if="message">
-            {{ message }}
-        </div>
-        <div class="alert alert-danger" role="alert" v-if="error">
-            {{ error }}
-        </div>
-        <div class="bg-white shadow-sm py-4 my-2 px-5" style="border-radius: 10px;">
-            <div class="row justify-content-around align-content-center pb-3">
-                <div class="col-12 col-lg-4 my-2">
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="title"
-                        ref="title"
-                        placeholder="عنوان فارسی"
-                        v-model="formData.fa_name"
-                    />
-                </div>
-                <div class="col-12 col-lg-4 my-2">
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="name"
-                        ref="name"
-                        placeholder="نام انگلیسی"
-                        v-model="formData.en_name"
-                    />
-                </div>
-                <div class="col-12 col-lg-4 my-2">
-                    <select
-                        type="text"
-                        class="form-control"
-                        placeholder="استان"
-                        v-model="formData.province"
-                    >
-                        <option :value="null">انتخاب استان</option>
-                        <option :key="item.key" v-for="item in provinces" :value="item.id">{{ item.value }}</option>
-                    </select>
-                </div>
-                <div class="col-12 col-lg-4 my-2">
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="city"
-                        ref="city"
-                        placeholder="شهر"
-                        v-model="formData.city"
-                    />
-                </div>
-                <div class="col-12 col-lg-4 my-2">
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="phone_number"
-                        ref="phone_number"
-                        placeholder="شماره همراه"
-                        v-model="formData.phone_number"
-                    />
-                </div>
-                <div class="col-12 col-lg-4 my-2">
-                    <div class="row">
-                        <div class="d-flex align-items-center mr-4 ">
-                            <div class="pb-4">
-                                <b-form-file
-                                    v-model="formData.logo"
-                                    accept="image/*"
-                                    class="rounded"
-                                    style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
-                                    placeholder="یک فایل انتخاب کنید"
-                                    plain
-                                    @change="onFileChange"
-                                ></b-form-file>
-                                <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
-                                        این فیلد الزامی است.</small>
-                                <small v-if="validation_errors.logo_size" class="text-danger px-2">
-                                        حجم لوگو نباید بیشتر از یک مگابایت باشد
-                                </small>
-                                <small v-if="validation_errors.logo_type" class="text-danger px-2">
-                                        فرمت لوگو معتبر نمی باشد
-                                </small>
+  <div>
+    <client-only >
+       <div class="w-100">
+            <div v-if="onClient" class="w-100">
+                <div id="edit_store">
+                    <page-title title_text="ویرایش فروشگاه" icon="product">
+                        <div @click="updateSetting">
+                            <Xbutton
+                            :disable="btnDisable"
+                                variant="success" v-text="'بروزرسانی تنظیمات'">
+                                <template #spinner>
+                                    <b-spinner v-show="laodingSpinner" small ></b-spinner>
+                                </template>  
+                                </Xbutton>
+                        </div>
+                    </page-title>
+                    <div class="alert alert-info" role="alert" v-if="message">
+                        {{ message }}
+                    </div>
+                    <div class="alert alert-danger" role="alert" v-if="error">
+                        {{ error }}
+                    </div>
+                    <div class="bg-white shadow-sm py-4 my-2 px-5" style="border-radius: 10px;">
+                        <div class="row justify-content-around align-content-center pb-3">
+                            <div class="col-12 col-lg-4 my-2">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="title"
+                                    ref="title"
+                                    placeholder="عنوان فارسی"
+                                    v-model="formData.fa_name"
+                                />
                             </div>
-                                <div class="m-auto pt-2 pr-2">
-                                    <img width="80" height="50"
-                                :src="urlLogo ? urlLogo :formData.logo"
-                                class="rounded"
-                                style="max-width:80px;max-height:50px"/>
+                            <div class="col-12 col-lg-4 my-2">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="name"
+                                    ref="name"
+                                    placeholder="نام انگلیسی"
+                                    v-model="formData.en_name"
+                                />
+                            </div>
+                            <div class="col-12 col-lg-4 my-2">
+                                <select
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="استان"
+                                    v-model="formData.province"
+                                >
+                                    <option :value="null">انتخاب استان</option>
+                                    <option :key="item.key" v-for="item in provinces" :value="item.id">{{ item.value }}</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg-4 my-2">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="city"
+                                    ref="city"
+                                    placeholder="شهر"
+                                    v-model="formData.city"
+                                />
+                            </div>
+                            <div class="col-12 col-lg-4 my-2">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="phone_number"
+                                    ref="phone_number"
+                                    placeholder="شماره همراه"
+                                    v-model="formData.phone_number"
+                                />
+                            </div>
+                            <div class="col-12 col-lg-4 my-2">
+                                <div class="row">
+                                    <div class="d-flex align-items-center mr-4 ">
+                                        <div class="pb-4">
+                                            <b-form-file
+                                                v-model="formData.logo"
+                                                accept="image/*"
+                                                class="rounded"
+                                                style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
+                                                placeholder="یک فایل انتخاب کنید"
+                                                plain
+                                                @change="onFileChange"
+                                            ></b-form-file>
+                                            <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
+                                                    این فیلد الزامی است.</small>
+                                            <small v-if="validation_errors.logo_size" class="text-danger px-2">
+                                                    حجم لوگو نباید بیشتر از یک مگابایت باشد
+                                            </small>
+                                            <small v-if="validation_errors.logo_type" class="text-danger px-2">
+                                                    فرمت لوگو معتبر نمی باشد
+                                            </small>
+                                        </div>
+                                            <div class="m-auto pt-2 pr-2">
+                                                <img width="80" height="50"
+                                            :src="urlLogo ? urlLogo :formData.logo"
+                                            class="rounded"
+                                            style="max-width:80px;max-height:50px"/>
+                                            </div>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="col-12 my-2">
+                                <client-only placeholder="loading...">
+                                    <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  id="description"
+                                        ref="description"/>
+                                </client-only>
+                            </div>
+                            <div class="col-12 my-2">
+                                <client-only placeholder="loading...">
+                                    <ckeditor-nuxt v-model="formData.shop_terms" :config="editorConfig2"   id="lows"
+                                    ref="logo"/>
+                                </client-only>
+                            </div>
+                            <div class="col">
+                                <div class="m-auto pt-2 pr-2">
+                                    <hr>
+                                    <label class="my-2">اطلاعات مورد نیاز از مشتری</label>
+                                    <div class="w-100 text-right">
+
+                                        <div class="my-3">
+                                            <label class="switch">
+                                                <input type="checkbox" v-model="formData.name_option">
+                                                <span class="slider round"></span>
+                                            </label>
+                                            نام و نام خانوادگی
+                                        </div>
+                                    </div>
+                                    <div class="w-100 text-right">
+                                        <div class="my-3">
+                                            <label class="switch">
+                                                <input type="checkbox" v-model="formData.phone_option">
+                                                <span class="slider round"></span>
+                                            </label>
+                                            شماره موبایل
+                                        </div>
+                                    </div>
+                                    <div class="w-100 text-right">
+                                        <div class="my-3">
+                                            <label class="switch">
+                                                <input type="checkbox" v-model="formData.address_option">
+                                                <span class="slider round"></span>
+                                            </label>
+                                            آدرس
+                                        </div>
+                                    </div>
+                                    <div class="w-100 text-right">
+                                        <div class="my-3">
+                                            <label class="switch">
+                                                <input type="checkbox" v-model="formData.email_option">
+                                                <span class="slider round"></span>
+                                            </label>
+                                            ایمیل
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-auto pt-2 pr-2">
+                                    <hr>
+                                    <label class="my-2">نمایش اطلاعات</label>
+                                    <div class="w-100 text-right">
+
+                                        <div class="my-3">
+                                            <label class="switch">
+                                                <input type="checkbox" v-model="formData.show_phone_option">
+                                                <span class="slider round"></span>
+                                            </label>
+                                            شماره تلفن
+                                        </div>
+                                    </div>
+                                    <div class="w-100 text-right">
+                                        <div class="my-3">
+                                            <label class="switch">
+                                                <input type="checkbox" v-model="formData.show_email_option">
+                                                <span class="slider round"></span>
+                                            </label>
+                                            ایمیل
+                                        </div>
+                                    </div>
+                                    <div class="w-100 text-right">
+                                        <div class="my-3">
+                                            <label class="switch">
+                                                <input type="checkbox" v-model="formData.show_province_option">
+                                                <span class="slider round"></span>
+                                            </label>
+                                            موقعیت فروشگاه (استان و شهر)
+                                        </div>
+                                    </div>
+                                </div>
+                                    
+                            </div>
                         </div>
                     </div>
-                </div>
-               <div class="col-12 my-2">
-                    <client-only placeholder="loading...">
-                        <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  id="description"
-                            ref="description"/>
-                    </client-only>
-                </div>
-                <div class="col-12 my-2">
-                    <client-only placeholder="loading...">
-                        <ckeditor-nuxt v-model="formData.shop_terms" :config="editorConfig2"   id="lows"
-                        ref="logo"/>
-                    </client-only>
-                </div>
-                <div class="col">
-                    <div class="m-auto pt-2 pr-2">
-                        <hr>
-                        <label class="my-2">اطلاعات مورد نیاز از مشتری</label>
-                        <div class="w-100 text-right">
-
-                            <div class="my-3">
-                                <label class="switch">
-                                    <input type="checkbox" v-model="formData.name_option">
-                                    <span class="slider round"></span>
-                                </label>
-                                نام و نام خانوادگی
-                            </div>
-                        </div>
-                        <div class="w-100 text-right">
-                            <div class="my-3">
-                                <label class="switch">
-                                    <input type="checkbox" v-model="formData.phone_option">
-                                    <span class="slider round"></span>
-                                </label>
-                                شماره موبایل
-                            </div>
-                        </div>
-                        <div class="w-100 text-right">
-                            <div class="my-3">
-                                <label class="switch">
-                                    <input type="checkbox" v-model="formData.address_option">
-                                    <span class="slider round"></span>
-                                </label>
-                                آدرس
-                            </div>
-                        </div>
-                        <div class="w-100 text-right">
-                            <div class="my-3">
-                                <label class="switch">
-                                    <input type="checkbox" v-model="formData.email_option">
-                                    <span class="slider round"></span>
-                                </label>
-                                ایمیل
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="m-auto pt-2 pr-2">
-                        <hr>
-                        <label class="my-2">نمایش اطلاعات</label>
-                        <div class="w-100 text-right">
-
-                            <div class="my-3">
-                                <label class="switch">
-                                    <input type="checkbox" v-model="formData.show_phone_option">
-                                    <span class="slider round"></span>
-                                </label>
-                                شماره تلفن
-                            </div>
-                        </div>
-                        <div class="w-100 text-right">
-                            <div class="my-3">
-                                <label class="switch">
-                                    <input type="checkbox" v-model="formData.show_email_option">
-                                    <span class="slider round"></span>
-                                </label>
-                                ایمیل
-                            </div>
-                        </div>
-                        <div class="w-100 text-right">
-                            <div class="my-3">
-                                <label class="switch">
-                                    <input type="checkbox" v-model="formData.show_province_option">
-                                    <span class="slider round"></span>
-                                </label>
-                                موقعیت فروشگاه (استان و شهر)
-                            </div>
-                        </div>
-                    </div>
-                     
                 </div>
             </div>
-        </div>
-        </div>
+       </div>
     </client-only>
+  </div>
 </template>
 
 <script>

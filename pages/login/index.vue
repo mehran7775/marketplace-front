@@ -3,7 +3,8 @@
     <ValidationObserver ref="validationObserver">
       <Xform>
         <template #content>
-          <ValidationProvider vid="outh_param" :name="lang.label.username" rules="required|min:3"   v-slot="{ valid, errors }">
+          <div>
+               <ValidationProvider vid="outh_param" :name="lang.label.username" rules="required|min:3"   v-slot="{ valid, errors }">
             <b-form-group
             :label="lang.label.username"
             >
@@ -46,6 +47,7 @@
           <div class="text-center mt-3">
             <span>هنوز ثبت نام نکرده اید؟</span>
             <router-link to="/register">کلیک کنید</router-link>
+          </div>
           </div>
         </template>
       </Xform>  

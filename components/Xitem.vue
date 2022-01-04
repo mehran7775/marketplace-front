@@ -39,10 +39,12 @@
       </div>
       <div v-if="!is_hover" class="price">
         <template v-if="quantity >= 1 || quantity == 'نامحدود' ">
-           <span v-text="price"></span>
-           <strong>
-            <span v-text="lang.price"></span>
-          </strong>
+           <span>
+              <span v-text="price"></span>
+              <strong>
+                <span v-text="lang.price"></span>
+              </strong>
+           </span>
         </template>
         <template v-else>
           <span class="text-danger font-weight-bold">ناموجود</span>
