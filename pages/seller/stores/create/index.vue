@@ -72,6 +72,7 @@
                                             />
                                             <small v-if="validation_errors.fa_name" class="text-danger px-2">تکمیل این
                                                 فیلد الزامی است.</small>
+                                                <small v-if="api_errors.fa_name" v-text="api_errors.fa_name"></small>
                                         </div>
                                         <div class="col-12 col-lg-4 my-2">
                                             <input
@@ -84,6 +85,7 @@
                                             />
                                             <small v-if="validation_errors.en_name" class="text-danger px-2">تکمیل این
                                                 فیلد الزامی است.</small>
+                                            <small v-if="api_errors.en_name" v-text="api_errors.en_name"></small>
                                         </div>
                                         <div class="col-12 col-lg-4 my-2">
                                             <select
@@ -99,6 +101,7 @@
                                             </select>
                                             <small v-if="validation_errors.province" class="text-danger px-2">تکمیل این
                                                 فیلد الزامی است.</small>
+                                            <small v-if="api_errors.fa_name" v-text="api_errors.province"></small>
                                         </div>
                                         <div class="col-12 col-lg-4 my-2">
                                             <input
@@ -111,6 +114,7 @@
                                             />
                                             <small v-if="validation_errors.city" class="text-danger px-2">تکمیل این فیلد
                                                 الزامی است.</small>
+                                            <small v-if="api_errors.city" v-text="api_errors.city"></small>
                                         </div>
                                         <div class="col-12 col-lg-4 my-2">
                                             <input
@@ -123,15 +127,17 @@
                                             />
                                             <small v-if="validation_errors.phone_number" class="text-danger px-2">تکمیل
                                                 این فیلد الزامی است.</small>
+                                            <small v-if="api_errors.phone_number" v-text="api_errors.phone_number"></small>
                                         </div>
                                         <div class="col-12 col-lg-4 my-2">
                                           <div class="row">
                                                 <div class="d-flex align-items-center mr-4">
                                                     <div>
+                                                    <label for="logo">انتخاب فایل لوگو</label>
                                                     <b-form-file
                                                         v-model="formData.logo"
                                                         id="logo"
-                                                        ref="logo" placeholder=" انتخاب فایل لوگو" class="rounded mb-0 mb-md-4"
+                                                        ref="logo" placeholder="انتخاب فایل لوگو" class="rounded mb-0 mb-md-4"
                                                         accept="image/*"
                                                         style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
                                                         @change="onFileChange"
@@ -145,6 +151,7 @@
                                                     <small v-if="validation_errors.logo_type" class="text-danger px-2">
                                                         فرمت لوگو معتبر نمی باشد
                                                     </small>
+                                                    <small v-if="api_errors.logo" v-text="api_errors.logo"></small>
                                                 </div>
                                             
                                                 <div v-if="imagePreviewURL" class="mx-auto pt-2 pr-2">
@@ -159,11 +166,13 @@
                                         <div class="col-12 my-2">
                                         <client-only placeholder="loading...">
                                             <ckeditor-nuxt v-model="formData.shop_terms" :config="editorConfig"  />
+                                            <small v-if="api_errors.shop_terms" v-text="api_errors.shop_terms"></small>
                                         </client-only>
                                         </div>
                                         <div class="col-12 my-2">
                                         <client-only placeholder="loading...">
                                             <ckeditor-nuxt  v-model="formData.description" :config="editorConfig2"  />
+                                            <small v-if="api_errors.description" v-text="api_errors.description"></small>
                                         </client-only>
                                         </div>
                                         <div class="col-12">
@@ -179,6 +188,7 @@
                                                         </label>
                                                         نام و نام خانوادگی
                                                     </div>
+                                                    <small v-if="api_errors.name_option" v-text="api_errors.name_option"></small>
                                                 </div>
                                                 <div class="w-100 text-right">
                                                     <div class="my-3">
@@ -188,6 +198,7 @@
                                                         </label>
                                                         شماره موبایل
                                                     </div>
+                                                    <small v-if="api_errors.phone_option" v-text="api_errors.phone_option"></small>
                                                 </div>
                                                 <div class="w-100 text-right">
                                                     <div class="my-3">
@@ -197,6 +208,7 @@
                                                         </label>
                                                         آدرس
                                                     </div>
+                                                    <small v-if="api_errors.address_option" v-text="api_errors.address_option"></small>
                                                 </div>
                                                 <div class="w-100 text-right">
                                                     <div class="my-3">
@@ -207,12 +219,13 @@
                                                         ایمیل
 
                                                     </div>
+                                                    <small v-if="api_errors.email_option" v-text="api_errors.email_option"></small>
                                                 </div>
                                             </div>
 
                                             <div class="m-auto pt-2 pr-2">
                                                 <hr>
-                                                <label class="my-2">نمایش اطلاعات</label>
+                                                <label class="my-2">اطلاعات زیر در صفحه عمومی فروشگاه نمایش داده شوند</label>
                                                 <div class="w-100 text-right">
 
                                                     <div class="my-3">
@@ -222,6 +235,7 @@
                                                         </label>
                                                         شماره تلفن
                                                     </div>
+                                                    <small v-if="api_errors.show_phone_option" v-text="api_errors.show_phone_option"></small>
                                                 </div>
                                                 <div class="w-100 text-right">
                                                     <div class="my-3">
@@ -231,6 +245,7 @@
                                                         </label>
                                                         ایمیل
                                                     </div>
+                                                    <small v-if="api_errors.show_email_option" v-text="api_errors.show_email_option"></small>
                                                 </div>
                                                 <div class="w-100 text-right">
                                                     <div class="my-3">
@@ -240,6 +255,7 @@
                                                         </label>
                                                         موقعیت فروشگاه (استان و شهر)
                                                     </div>
+                                                    <small v-if="api_errors.show_province_option" v-text="api_errors.show_province_option"></small>
                                                 </div>
                                             </div>
                                         </div>
@@ -271,6 +287,7 @@
                                                 <option value="0">استان خودم</option>
                                                 <option value="1">سراسر کشور</option>
                                             </select>
+                                            <small v-if="api_errors.shipping_region" v-text="api_errors.shipping_region"></small>
                                         </div>
                                         <div class="col-sm col-md-4 my-2">
                                             <input
@@ -281,6 +298,7 @@
                                                 placeholder="زمان ارسال شهر خود (روز)"
                                                 v-model="formData.own_city_delivery_time"
                                             />
+                                            <small v-if="api_errors.own_city_delivery_time" v-text="api_errors.own_city_delivery_time"></small>
                                         </div>
                                         <div class="col-sm col-md-4 my-2">
                                             <input
@@ -291,6 +309,7 @@
                                                 placeholder="زمان ارسال سایر شهر ها (روز)"
                                                 v-model="formData.other_cities_delivery_time"
                                             />
+                                            <small v-if="api_errors.other_cities_delivery_time" v-text="api_errors.other_cities_delivery_time"></small>
                                         </div>
                                         <div class="col-sm col-md-4 my-2">
                                             <input
@@ -298,13 +317,14 @@
                                                 class="form-control"
                                                 id="cost_send_self"
                                                 ref="cost_send_self"
-                                                placeholder="هزینه ارسال شهر خود (ریال)"
+                                                placeholder="هزینه ارسال شهر خود (تومان)"
                                                 v-model="formData.own_city_shipping_cost"
                                             />
                                             <small class="text-success px-2">
                                                 {{ moneyFormat(formData.own_city_shipping_cost) }}
                                                 تومان
                                             </small>
+                                            <small v-if="api_errors.own_city_shipping_cost" v-text="api_errors.own_city_shipping_cost"></small>
                                         </div>
                                         <div class="col-sm col-md-4 my-2">
                                             <input
@@ -312,13 +332,14 @@
                                                 class="form-control"
                                                 id="cost_send_others"
                                                 ref="cost_send_others"
-                                                placeholder="هزینه ارسال سایر شهر ها (ریال)"
+                                                placeholder="هزینه ارسال سایر شهر ها (تومان)"
                                                 v-model="formData.other_cities_shipping_cost"
                                             />
                                             <small class="text-success px-2">
                                                 {{ moneyFormat(formData.other_cities_shipping_cost) }}
                                                 تومان
                                             </small>
+                                            <small v-if="api_errors.other_cities_shipping_cost" v-text="api_errors.other_cities_shipping_cost"></small>
                                         </div>
                                     </div>
                                 </div>
@@ -366,6 +387,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <small v-if="api_errors.gateways" v-text="api_errors.gateways"></small>
                                     </div>
                                 </template>
                                 <hr>
@@ -471,7 +493,7 @@ export default {
                 name_option: false,
             },
             editorConfig: {
-                removePlugins: ['Title','Table','PageBreak','Subscript','SuperScript','CodeBlock','Code','Strikethrough','ChemType'],
+                removePlugins: ['Title','Table','PageBreak','Subscript','Superscript','CodeBlock','Code','Strikethrough','ChemType','MathType','Specialcharacters'],
                 placeholder:"قوانین و مقررات فروشگاه",
                 language:{
                     ui: 'fa',
@@ -481,7 +503,7 @@ export default {
             },
             editorConfig2: {
 
-                removePlugins: ['Title','Table','PageBreak','Subscript','SuperScript','CodeBlock','Code','Strikethrough','ChemType'],
+                removePlugins: ['Title','Table','PageBreak','Subscript','Superscript','CodeBlock','Code','Strikethrough','ChemType','MathType','Specialcharacters'],
                 placeholder:"توضیحات",
                 language:{
                     ui: 'fa',
@@ -490,7 +512,38 @@ export default {
                 contentsLangDirection:'rtl',      
             },
             btnDisable: false,
-            laodingSpinner: false
+            laodingSpinner: false,
+            api_errors:{
+                fa_name:'',
+                en_name:'',
+                province:'',
+                city:'',
+                phone_number:'',
+                logo:'',
+                shop_terms:'',
+                description:'',
+                name_option:'',
+                phone_option:'',
+                address_option:'',
+                email_option:'',
+                show_phone_option:'',
+                show_email_option:'',
+                show_province_option:'',
+                shipping_region:'',
+                own_city_delivery_time:'',
+                other_cities_delivery_time:'',
+                own_city_shipping_cost:'',
+                other_cities_shipping_cost:'',
+                gateways:'',
+
+            },
+            current_step:{
+                1:['fa_name','en_name','province','city','phone_number','logo','shop_terms','description','name_option','phone_option','address_option','email_option','show_phone_option',
+                    'show_email_option','show_province_option'
+                ],
+                2:['shipping_region','own_city_delivery_time','other_cities_delivery_time','own_city_shipping_cost','other_cities_shipping_cost'],
+                3:['gateways']
+            }
         };
     },
     components: {
@@ -502,16 +555,17 @@ export default {
             this.validation_errors.logo_size=false
             this.validation_errors.logo_type=false
             this.validation_errors.logo_size=false
-            const file = payload.target.files[0]; // use it in case of normal HTML input
+            const file = payload.target.files[0];
              if (file) {
-                if(file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/svg+xml' || file.type === 'image/webp'){
+                 const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
+                if(acceptedImageTypes.includes(file.type)){
                     if(file.size >  ((1024 * 1024) * 1)){
                         this.validation_errors.logo_size =true
                         this.imagePreviewURL = null
                         return
                     }
                     this.imagePreviewURL = URL.createObjectURL(file);
-                    URL.revokeObjectURL(file); // free memory
+                    URL.revokeObjectURL(file); 
                 }else{
                     this.validation_errors.logo_type= true
                     this.imagePreviewURL = null
@@ -570,6 +624,7 @@ export default {
             }
         },
         validate() {
+            const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
             let spy = this.validation_errors
             Object.keys(spy).forEach(function (key) {
                 spy[key] = null
@@ -587,6 +642,14 @@ export default {
                 this.validation_errors.en_name = true
                 res = false
             }
+            if (!this.formData.province) {
+                this.validation_errors.province = true
+                res = false
+            }
+            if (!this.formData.city) {
+                this.validation_errors.city = true
+                res = false
+            }
             if (!this.formData.logo) {
                 this.validation_errors.logo = true
                 res = false
@@ -595,16 +658,8 @@ export default {
                 this.validation_errors.logo_size = true
                 res = false
             }
-            if (this.formData.logo && (this.formData.logo.type !== 'image/jpeg' || this.formData.logo.type !== 'image/png' || this.formData.logo.type !== 'image/svg+xml' || this.formData.logo.type !== 'image/webp')) {
+            if (this.formData.logo && !acceptedImageTypes.includes(this.formData.logo.type)) {
                 this.validation_errors.logo_type = true
-                res = false
-            }
-            if (!this.formData.province) {
-                this.validation_errors.province = true
-                res = false
-            }
-            if (!this.formData.city) {
-                this.validation_errors.city = true
                 res = false
             }
             return res
@@ -658,11 +713,30 @@ export default {
                 this.laodingSpinner= true
                 form_data.set('own_city_shipping_cost',this.formData.own_city_shipping_cost+'0')
                 form_data.set('other_cities_shipping_cost',this.formData.other_cities_shipping_cost+'0')
+                // form_data.set('phone_number','')
                 api.post('store/create', form_data, this.$cookies.get('token')).then(response => {
                     this.message = response.data.message
                     this.$router.push('/')
                 }).catch(({response}) => {
                     this.error = response.data.data[Object.keys(response.data.data)[0]]
+                    Object.keys(response.data.data).forEach(key =>{
+                        if(this.current_step[1].includes(key)){
+                            this.wizard.current_step= 1
+                            this.api_errors[key] = response.data.data[key][0]
+                            throw new Error()
+                        }
+                        else if(this.current_step[2].includes(key)){
+                           this.wizard.current_step= 2 
+                           this.api_errors[key] = response.data.data[key][0]
+                           throw new Error()
+
+                        }else if(this.current_step[3].includes(key)){
+                            this.wizard.current_step= 3
+                            this.api_errors[key] = response.data.data[key][0]
+                            throw new Error()
+
+                        }
+                    })
                 }).finally(()=>{
                     this.btnDisable= false
                     this.laodingSpinner= false
@@ -721,5 +795,7 @@ export default {
 .ck-editor__editable {
     min-height: 70px;
    }
-
+small{
+    color:red;
+}
 </style>

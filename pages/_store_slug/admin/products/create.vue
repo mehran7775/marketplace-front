@@ -16,9 +16,9 @@
           <div class="alert alert-info" role="alert" v-if="message">
             {{ message }}
           </div>
-          <div class="alert alert-danger" role="alert" v-if="error">
+          <!-- <div class="alert alert-danger" role="alert" v-if="error">
             {{ error }}
-          </div>
+          </div> -->
           <div class="row">
             <div class="col-12">
               <div class="card">
@@ -40,16 +40,7 @@
                   </div>
                   <div class="row">
                     <div class="col-sm">
-                      <b-form-group label="قیمت خط خورده">     
-                          <b-form-input maxlength="15" type="text" v-model="strikethroughPrice" />
-                            <small class="text-success px-2">
-                          {{ moneyFormat(strikethroughPrice) }}
-                          تومان
-                        </small>
-                      </b-form-group>
-                    </div>
-                    <div class="col-sm">
-                      <b-form-group label="قیمت فروش">
+                      <b-form-group label="قیمت خط خورده">
                         <input
                           maxlength="15"
                           type="text"
@@ -58,6 +49,15 @@
                         />
                         <small class="text-success px-2">
                           {{ moneyFormat(formData.price) }}
+                          تومان
+                        </small>
+                      </b-form-group>
+                    </div>
+                         <div class="col-sm">
+                      <b-form-group label="قیمت فروش">     
+                          <b-form-input maxlength="15" type="text" v-model="strikethroughPrice" />
+                            <small class="text-success px-2">
+                          {{ moneyFormat(strikethroughPrice) }}
                           تومان
                         </small>
                       </b-form-group>
@@ -147,7 +147,6 @@
                             :key="category.id"
                             :node="category"
                             type="createProducts"
-                            :trnaspireCategories="(value)=>{formData.categories= value}"
                         />
                       
                       </div>
@@ -179,8 +178,8 @@
                       <b-form-group label="توضیحات محصول">
                         <client-only placeholder="loading...">
                               <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  id="description"
-                                  ref="description"/>
-                          </client-only>
+                              ref="description"/>
+                        </client-only>
                       </b-form-group>
                     </div>
                   </div>
@@ -211,6 +210,10 @@ export default {
   async created(){
     if(process.client){
       await this.getAllCategory() 
+       this.$store.commit('setToState',{
+        name:'selectedCategories',
+        data:[]
+      })
       this.onClient= true
     }
   },
@@ -227,7 +230,6 @@ export default {
         unlimited: false,
         is_multiple: false,
         quantity: 0,
-        discount_amount: 0,
         discount_max_amount: 0,
         description: null,
         parent_id: null,
@@ -244,9 +246,9 @@ export default {
           logo_size: null,
           logo_type: null,
       },
-      // option: [],
       editorConfig: {
-          removePlugins: ['Title','Table','PageBreak','Subscript','SuperScript','CodeBlock','Code','Strikethrough','ChemType'],
+          removePlugins: ['Title','Table','PageBreak','Subscript','Superscript','CodeBlock','Code','Strikethrough','ChemType','MathType','Specialcharacters'],
+          // removeButtons : ['Superscript'],
           placeholder:"توضیحات",
           language:{
               ui: 'fa',
@@ -265,7 +267,8 @@ export default {
               ':|', '>:(', 'o:)', '8-)', '>:-)', ';(', '', '', '',
               '', '', ':-*', ''
           ],
-          smiley_columns : 6
+          smiley_columns : 6,
+          height :'500'
 
       },
       images: [],
@@ -287,9 +290,9 @@ export default {
       if(this.strikethroughPrice == ''){
         return 0
       }
-      let x= (this.strikethroughPrice -this.formData.price)
+      let x= (this.formData.price - this.strikethroughPrice)
       if(this.strikethroughPrice!==0 || !isNaN(this.strikethroughPrice)){
-        const p= (x/ this.strikethroughPrice)* 100
+        const p= (x/ this.formData.price)* 100
         let rounded = Math.round((p + Number.EPSILON) * 100) / 100;
         return rounded
       }
@@ -312,7 +315,7 @@ export default {
       }
     },
     selectFiles(event){
-      if(this.images.length > 8 || event.target.files.length > 8){
+      if(this.images.length >= 8 || event.target.files.length >= 8){
         this.$store.commit('open_toast',{
           msg: 'حداکثر تعداد عکس های قابل آپلود هشت عدد می باشد',
           variant: 'warning'
@@ -389,6 +392,7 @@ export default {
           delete element.preview
         });
         form_data.set('price',this.formData.price+'0')
+        form_data.set('phone_number','')
         form_data.append('images',this.images)
         form_data.append("categories",this.selectedCategories)
         form_data.append('discount_percent',this.discount_percent)
@@ -426,9 +430,11 @@ export default {
         element.selected= false
       });
       image.selected= true
-
     }
   },
+  destroyed(){
+    this.$store.commit('deleteFromState','selectedCategories')
+  }
 };
 </script>
 
@@ -457,4 +463,5 @@ export default {
   border:2px solid $success;
   box-shadow: 0 0 2px 0 $success;
 }
+
 </style>

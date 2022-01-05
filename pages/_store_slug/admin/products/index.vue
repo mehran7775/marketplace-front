@@ -202,7 +202,7 @@
                     title="حذف محصول"
                     >
                     <p class="my-4">
-                    آیا می خواهید این محصول  
+                    آیا می خواهید محصول  
                     <span
                         class="text-success font-weight-bold"
                         v-text="titleDelete"

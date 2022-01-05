@@ -162,7 +162,7 @@
                                 </div>
                                 <div class="m-auto pt-2 pr-2">
                                     <hr>
-                                    <label class="my-2">نمایش اطلاعات</label>
+                                    <label class="my-2">اطلاعات زیر در صفحه عمومی فروشگاه نمایش داده شوند</label>
                                     <div class="w-100 text-right">
 
                                         <div class="my-3">
@@ -245,7 +245,7 @@ export default {
             laodingSpinner: false,
              urlLogo:null,
             editorConfig: {
-                removePlugins: ['Title','Table','PageBreak','Subscript','SuperScript','CodeBlock','Code','Strikethrough','ChemType'],
+                removePlugins: ['Title','Table','PageBreak','Subscript','Superscript','CodeBlock','Code','Strikethrough','ChemType','MathType','Specialcharacters'],
                 placeholder:"توضیحات",
                 language:{
                     ui: 'fa',
@@ -268,7 +268,7 @@ export default {
 
             },
              editorConfig2: {
-                removePlugins: ['Title','Table','PageBreak','Subscript','SuperScript','CodeBlock','Code','Strikethrough','ChemType'],
+                removePlugins: ['Title','Table','PageBreak','Subscript','Superscript','CodeBlock','Code','Strikethrough','ChemType','MathType','Specialcharacters'],
                 placeholder:"قوانین و مقررات فروشگاه",
                 language:{
                     ui: 'fa',

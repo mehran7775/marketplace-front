@@ -73,28 +73,40 @@
                                         </b-badge>
                                     </td>
                                     <td>
-                                        <nuxt-link class="btn p-0 m-0 text-danger" :to="'gateways/' + gateway.id + '/find'">
+                                        <nuxt-link class="btn p-0 m-0 text-danger" :to="'gateways/' + gateway.id + '/find'" v-b-tooltip.hover title="جزئیات">
                                         <span class="special-tooltip btn btn-sm btn-clean btn-icon btn-icon-sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" fill="#bbb"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M12 4C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
                                         </span>
                                         </nuxt-link>
                                         <!--begin modal-->
-                                        <b-button variant="link" class="p-0 m-0" v-b-modal="'my-modal' + index">
+                                        <b-button variant="link" class="p-0 m-0" v-b-modal="'my-modal' + index" v-b-tooltip.hover title="تغییر وضعیت">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"  fill="#bbb"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zm0-7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
                                         </b-button>
 
                                         <b-modal hide-footer hide-header-close :id="'my-modal' + index" title="تغییر وضعیت درگاه">
                                             <b-form-group>
                                                 <select class="form-control" v-model="gateway_status">
-                                                    <option v-for="status in GatewayStatus.gatewayStatus" :value="status.value">
+                                                    <!-- <option></option> -->
+                                                    <option v-for="status in GatewayStatus.gatewayStatus" :key="status.value" :value="status.value" >
                                                         {{status.text}}
                                                     </option>
                                                 </select>
                                             </b-form-group>
                                             <b-form-group>
-                                                <b-button variant="primary" @click="changeGatewayStatus(gateway_status,gateway.id)">
+                                                <!-- <b-button variant="primary" @click="changeGatewayStatus(gateway_status,gateway.id,index)">
                                                     تغییر وضعیت
-                                                </b-button>
+                                                </b-button> -->
+                                                <Xbutton
+                                                    :on_click="()=> changeGatewayStatus(gateway_status,gateway.id,index)"
+                                                    variant="primary"
+                                                    text=" تغییر وضعیت"
+                                                    :disable="btnCangeStatus"
+                                                    class="rounded"
+                                                  >
+                                                    <template #spinner>
+                                                        <b-spinner v-show="laodingSpinnerCahngeStatus" small ></b-spinner>
+                                                    </template>            
+                                                </Xbutton>
                                             </b-form-group>
                                         </b-modal>
                                         <!-- end modal -->
@@ -140,11 +152,13 @@ export default {
             filter_status : null,
             gateways: null,
             per_page: 15,
-            gateway_status : null,
+            gateway_status : 1,
             btnDisableAction: false,
             laodingSpinnerAction: false,
             btnDisableRemove: false,
             laodingSpinnerRemove: false,
+            btnCangeStatus: false,
+            laodingSpinnerCahngeStatus: false,
         }
     },
     computed: {
@@ -160,11 +174,23 @@ export default {
         }
     },
     methods: {
-        async changeGatewayStatus(status,id){
-            await api.post('gateway/change-status/' + id , {
-                status : status
-            })
-            await this.get_data(this.gateways.path + '?page=1');
+        async changeGatewayStatus(status,id, index){
+             this.btnCangeStatus= true
+            this.laodingSpinnerCahngeStatus= true
+            try{
+                await api.post('gateway/change-status/' + id , {
+                    status : status
+                })
+                await this.get_data(this.gateways.path + '?page=1');
+
+            }catch(e){
+
+            }finally{
+                
+                this.btnCangeStatus= false
+                this.laodingSpinnerCahngeStatus= false
+                this.$bvModal.hide(`my-modal${index}`)
+            }
         },
         resetQuery() {
             this.filter_title = null;
