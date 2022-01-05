@@ -9,7 +9,7 @@
                 class="px-4"
                 :text="lang.btn.buy"
                 :on_click="add_item"
-                :disabled="product.quantity > 1 ? false : true"
+                :disabled="product.quantity >= 1 || product.quantity == 'نامحدود' ? false : true"
               ></Xbutton>
             </div>
             <div class="product w-100 mt-5" dir="ltr">
@@ -42,7 +42,7 @@
             >
               <div class="d-flex justify-content-between w-100">
                 <h2 v-text="product.title" class="h4 font-weight-bold"></h2>
-                  <div v-if="product.quantity > 1">
+                  <div v-if="product.quantity >= 1 || product.quantity == 'نامحدود'">
                     <span id="price" class="font-weight-bold">
                       <span v-text="product.price"></span>
                       <span v-text="lang.price"></span>

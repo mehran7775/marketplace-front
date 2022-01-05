@@ -1,5 +1,7 @@
 <template>
     <div>
+      <client-only>
+       <div v-if="onClient">
         <app-header></app-header>
         <mobile-header></mobile-header>
         
@@ -10,6 +12,8 @@
                 <Nuxt/>
             </div>
         </div>
+       </div>
+      </client-only>
     </div>
 </template>
 
@@ -22,6 +26,7 @@ import { userService,storeService } from "~/services/apiServices";
 export default {
     data(){
        return{
+           onClient:false,
            inMyAnticipationShops:null,
            inAnticipationShops:null,
        } 
@@ -43,6 +48,7 @@ export default {
          if(process.client){
             const userCurrent = await userService.userCurrent(this.$cookies.get("token"));
             localStorage.setItem('currentUser',JSON.stringify(userCurrent.data.data))
+            this.onClient= true
             try{
                 const res = await storeService.getMyWaiting(this.$cookies.get('token'))
                 this.inMyAnticipationShops = res.data.data.badge_count

@@ -19,7 +19,8 @@
         <div class="mt-4" id="sidebar_menu">
             <ul class="list-unstyled">
                 <template>
-                    <li v-if="!item.in_store && ($can('manage' , item.manager) || !item.manager)" v-for="(item, index) in menu" :key="index" :class="item.url == $route.fullPath ? 'sidebar_active_item sidebar_item' : 'sidebar_item'">
+                  <div>
+                      <li v-if="!item.in_store && ($can('manage' , item.manager) || !item.manager)" v-for="(item, index) in menu" :key="index" :class="item.url == $route.fullPath ? 'sidebar_active_item sidebar_item' : 'sidebar_item'">
                         <nuxt-link :to="(item.in_store) ? ('/' + $route.params.store_slug + item.url) : (item.url)" class="d-flex align-items-center justify-content-between">
                            <div>
                               <span v-html="item.icon"></span>
@@ -29,9 +30,11 @@
                       <span class="ml-2 badge-counter bg-success text-white d-flex justify-content-center" v-if="inMyAnticipationShops && item.url === '/'" v-text="inMyAnticipationShops"></span>
                         </nuxt-link>
                     </li>
+                  </div>
                 </template>
                 <template v-if="$route.params.store_slug">
-                    <li v-if="item.in_store && ($can('manage' , item.manager) || !item.manager)" v-for="(item, index) in menu" :key="index" :class="'/' + $route.params.store_slug + item.url == $route.fullPath ? 'sidebar_active_item sidebar_item' : 'sidebar_item'">
+                   <div class="mt-4">
+                      <li v-if="item.in_store && ($can('manage' , item.manager) || !item.manager)" v-for="(item, index) in menu" :key="index" :class="'/' + $route.params.store_slug + item.url == $route.fullPath ? 'sidebar_active_item sidebar_item' : 'sidebar_item'">
                         <nuxt-link :to="'/' + $route.params.store_slug + item.url" class="d-flex align-items-center justify-content-between">
                             <div>
                               <span v-html="item.icon"></span>
@@ -41,6 +44,7 @@
                       <span class="ml-2 badge-counter bg-success text-white d-flex justify-content-center" v-if="inMyAnticipationShops && item.url === '/'" v-text="inMyAnticipationShops"></span>
                         </nuxt-link>
                     </li>
+                   </div>
 
                     
                 </template>

@@ -4,7 +4,8 @@
       <ValidationObserver ref="validationObserver" >
         <Xform :sub_form="do_register">
           <template #content>
-            <ValidationProvider vid="first_name" :name="lang.label.fname" rules="required|min:3"  v-slot="{ valid, errors }">
+            <div>
+              <ValidationProvider vid="first_name" :name="lang.label.fname" rules="required|min:3"  v-slot="{ valid, errors }">
               <b-form-group :label="lang.label.fname">
                   <b-form-input
                     v-model="form.first_name"
@@ -138,6 +139,7 @@
                 <b-spinner v-show="laodingLogin" small  class="float-left"></b-spinner>
               </template>            
             </Xbutton>
+            </div>
           </template>
         </Xform>
       </ValidationObserver>

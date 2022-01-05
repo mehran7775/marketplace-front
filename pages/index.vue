@@ -10,7 +10,9 @@
         </div>
         <div class="row">
             <template v-if="stores">
-                <div v-for="store in stores" :key="store.id" class="col-lg-4 col-md col-sm my-2">
+              <div class="col">
+                  <div class="row">
+                       <div v-for="store in stores" :key="store.id" class="col-lg-4 col-md col-sm my-2">
                     <div class="h-100 bg-white shadow-sm border p-3 m-2"
                          style="border-color: rgb(187, 187, 187) !important; border-radius: 10px;">
                         <div class="d-flex align-items-center">
@@ -42,7 +44,10 @@
                             </nuxt-link>
                         </div>
                     </div>
-                </div>
+                    </div>
+                  </div>
+                   
+              </div>
             </template>
         </div>
     </div>
