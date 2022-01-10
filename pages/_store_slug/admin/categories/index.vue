@@ -196,7 +196,7 @@
                             dir="rtl"
                             placeholder="دسته اصلی را وارد کنید"
                             :options="optionUpdate"
-                            v-model="formUpdate"
+                            v-model="formUpdate.parent_id"
                             @search="onSearch"
                             item-text="title"
                             item-value="parent_id"
@@ -302,8 +302,6 @@ export default {
         if (payload.type === "edit") {
           Object.assign(this.categoryItem, payload.item);
           this.optionUpdate = [];
-          this.formUpdate.parent_id = "";
-
           if (this.categoryItem.parent_id) {
             await categoryService
               .findCategory({
@@ -316,9 +314,14 @@ export default {
                   id: res.data.data.id,
                 });
 
-                this.formUpdate.title = res.data.data.title;
-                this.formUpdate.parent_id = res.data.data.id;
+                this.formUpdate['title'] = res.data.data.title
+                this.formUpdate['parent_id'] = {
+                  'title' : res.data.data.title ,
+                  'parent_id': res.data.data.id
+                }
               });
+          }else{
+            this.formUpdate.parent_id= null
           }
 
           this.$bvModal.show("updateCatagoryModal");
@@ -352,10 +355,13 @@ export default {
             parent_id: this.form.parent_id ? this.form.parent_id.id : null,
             token: this.$cookies.get("token"),
           };
-          categoryService
-            .createCategory(data)
-            .then(() => {
+          categoryService.createCategory(data)
+            .then((res) => {
               this.getAllCategory();
+              this.$store.commit("open_toast", {
+                msg: res.data.message,
+                variant: "success",
+              });
             })
             .catch((e) => {
               if (e.response.data.status == "error") {
@@ -439,9 +445,7 @@ export default {
           const payload = {
             data: {
               title: document.getElementById("etitle").value,
-              parent_id: this.formUpdate.parent_id
-                ? this.formUpdate.parent_id
-                : null,
+              parent_id: this.formUpdate.parent_id?.id
             },
             categoryId: this.categoryItem.id,
             token: this.$cookies.get("token"),
