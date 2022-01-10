@@ -117,7 +117,7 @@
                                     ref="logo"/>
                                 </client-only>
                             </div>
-                            <div class="col">
+                            <div class="col-12 col-md-6">
                                 <div class="m-auto pt-2 pr-2">
                                     <hr>
                                     <label class="my-2">اطلاعات مورد نیاز از مشتری</label>
@@ -159,8 +159,10 @@
 
                                         </div>
                                     </div>
-                                </div>
-                                <div class="m-auto pt-2 pr-2">
+                                </div>        
+                            </div>
+                            <div class="col-12 col-md-6">
+                                 <div class="m-auto pt-2 pr-2">
                                     <hr>
                                     <label class="my-2">اطلاعات زیر در صفحه عمومی فروشگاه نمایش داده شوند</label>
                                     <div class="w-100 text-right">
@@ -192,7 +194,69 @@
                                         </div>
                                     </div>
                                 </div>
-                                    
+                            </div>
+                            <div class="col-12">
+                                <div id="social-items" class="p-1">
+                                            <hr>
+                                            <label class="my-2">شبکه های اجتماعی شما(اختیاری)</label>
+                                            <div class="form-group p-1">
+                                                <label for="instagram">
+                                                    <fa :icon="['fab','instagram']" class="fa-lg"></fa>
+                                                    <span>اینستاگرام</span>
+                                                </label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="instagram"
+                                                        ref="instagram"
+                                                        placeholder="شناسه اینستاگرام"
+                                                        v-model="formData.instagram_id"
+                                                    />
+                                            </div>
+                                            <div class="form-group p-1">
+                                                <label for="whatsapp">
+                                                    <fa :icon="['fab','whatsapp']" class="fa-lg"></fa>
+                                                    <span>واتساپ</span>
+                                                </label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="whatsapp"
+                                                        ref="whatsapp"
+                                                        placeholder="شماره تلفن"
+                                                        v-model="formData.whatsapp_phone"
+                                                    />
+                                            </div>
+                                            <div class="form-group p-1">
+                                                <label for="telegram">
+                                                    <fa :icon="['fab','telegram']" class="fa-lg"></fa>
+                                                    <span>تلگرام</span>
+                                                </label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="telegram"
+                                                        ref="telegram"
+                                                        placeholder="شناسه تلگرام"
+                                                        v-model="formData.telegram_id"
+                                                    />
+                                            </div>
+                                            <div class="form-group p-1">
+                                                <label for="aparat">
+                                                    <svg fill="rgb(102, 102, 102)" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="18px" height="18px"><path d="M 15.173828 2.609375 C 11.917119 2.5264688 8.94875 4.7335781 8.1875 8.0332031 L 7.078125 12.837891 C 10.172125 7.7938906 15.497719 4.4664844 21.386719 3.8964844 L 16.582031 2.7871094 C 16.110656 2.6782344 15.639072 2.6212187 15.173828 2.609375 z M 24 7 C 14.628921 7 7 14.628928 7 24 C 7 33.371072 14.628921 41 24 41 C 33.371079 41 41 33.371072 41 24 C 41 14.628928 33.371079 7 24 7 z M 35.162109 7.078125 C 40.206109 10.172125 43.533516 15.497719 44.103516 21.386719 L 45.212891 16.582031 C 46.083891 12.811031 43.737797 9.0575 39.966797 8.1875 L 35.162109 7.078125 z M 24 10 C 31.74976 10 38 16.250245 38 24 C 38 31.749755 31.74976 38 24 38 C 16.25024 38 10 31.749755 10 24 C 10 16.250245 16.25024 10 24 10 z M 20.228516 13.697266 A 3.5 3.5 0 1 0 20.228516 20.697266 A 3.5 3.5 0 1 0 20.228516 13.697266 z M 30.802734 16.728516 A 3.5 3.5 0 1 0 30.802734 23.728516 A 3.5 3.5 0 1 0 30.802734 16.728516 z M 24 22.001953 A 1.999 1.999 0 1 0 24 25.998047 A 1.999 1.999 0 1 0 24 22.001953 z M 17.197266 24.271484 A 3.5 3.5 0 1 0 17.197266 31.271484 A 3.5 3.5 0 1 0 17.197266 24.271484 z M 3.8964844 26.615234 L 2.7871094 31.419922 C 1.9171094 35.190922 4.2622031 38.943453 8.0332031 39.814453 L 12.837891 40.923828 C 7.7948906 37.829828 4.4664844 32.504234 3.8964844 26.615234 z M 27.771484 27.302734 A 3.5 3.5 0 1 0 27.771484 34.302734 A 3.5 3.5 0 1 0 27.771484 27.302734 z M 40.923828 35.162109 C 37.829828 40.205109 32.504234 43.533516 26.615234 44.103516 L 31.419922 45.212891 C 35.190922 46.082891 38.943453 43.737797 39.814453 39.966797 L 40.923828 35.162109 z"/></svg>
+                                                    <span>آپارات</span>
+                                                </label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="aparat"
+                                                        ref="aparat"
+                                                        placeholder="شناسه آپارات"
+                                                        v-model="formData.aparat_id"
+                                                    />
+                                            </div>
+                                            
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -235,6 +299,10 @@ export default {
                 email_option: false,
                 phone_option: false,
                 shop_terms: null,
+                instagram_id:'',
+                whatsapp_phone:'',
+                telegram_id:'',
+                aparat_id:'',
             },
              validation_errors:{
                 logo: null,
@@ -332,14 +400,17 @@ export default {
             }
             return res
         },
-        getData() {
-            api.get('store/find/' + this.$route.params.store_slug, this.$cookies.get('token'))
+         getData() {
+             api.get('store/find/' + this.$route.params.store_slug, this.$cookies.get('token'))
                 .then(res => {
                     this.store = res.data.data
-                    for (let key in Object.keys(this.formData)) {
-                        key = Object.keys(this.formData)[key]
+                    for (let key in this.formData) {
                         this.formData[key] = this.store[key]
                     }
+                    this.formData.instagram_id= res.data.data.social_page['instagram_id'] ? res.data.data.social_page['instagram_id'] : ''
+                    this.formData.whatsapp_phone= res.data.data.social_page['whatsapp_phone'] ? res.data.data.social_page['whatsapp_phone'] : '' 
+                    this.formData.telegram_id= res.data.data.social_page['telegram_id'] ? res.data.data.social_page['telegram_id'] : ''
+                    this.formData.aparat_id= res.data.data.social_page['aparat_id'] ? res.data.data.social_page['aparat_id'] : ''
                 })
         },
         updateSetting() {
@@ -379,7 +450,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #edit_store .custom-file-label {
     border: none;
     background: none;
@@ -387,5 +458,13 @@ export default {
 
 #edit_store .custom-file-label::after {
     display: none;
+}
+#social-items{
+    width: 50%;
+}
+@media screen and (max-width:768px) {
+    #social-items{
+        width: 100%;
+    }
 }
 </style>

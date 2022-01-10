@@ -13,6 +13,7 @@
                                 <tr>
                                     <th scope="col" style="background-color: #eee;  border-radius: 0 16px 16px 0;">#</th>
                                     <th scope="col" style="background-color: #eee;">عنوان</th>
+                                    <th scope="col" style="background-color: #eee;">نام فروشنده</th>
                                     <th scope="col" style="background-color: #eee;">تاریخ ثبت</th>
                                     <th scope="col" style="background-color: #eee;">وضعیت</th>
                                     <th scope="col" style="background-color: #eee; border-radius: 16px 0px 0px 16px;" >عملیات</th>
@@ -22,6 +23,10 @@
                                 <tr v-for="(store, index) in stores.data" :key="index">
                                     <td>{{ store.id }}</td>
                                     <td>{{ store.fa_name }}</td>
+                                    <td>
+                                        <!-- admin/users/pq93n/find -->
+                                        <nuxt-link :to="`/admin/users/${ store.seller_id }/find`" class="text-info">{{ store.seller_name }}</nuxt-link>
+                                    </td>
                                     <td>{{ store.create_at }}</td>
                                     <td>
                                         <b-badge :variant="StoreStatus.getStatus(store.status).variant">
@@ -128,5 +133,7 @@ export default {
 <style>
 table > tbody > tr:not(:last-child) > td {
     border-bottom: 1px solid #dedede;
+    
 }
+
 </style>

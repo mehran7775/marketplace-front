@@ -33,6 +33,11 @@ export default {
       default: null,
     },
   },
+  head() {
+    return {
+      title: `فروشگاه ساز پی استار`,
+    }
+  },
   data() {
     return {
       pageNotFound: "این صفحه پیدا نشد",

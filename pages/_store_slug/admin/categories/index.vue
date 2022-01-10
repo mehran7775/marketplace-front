@@ -1,7 +1,7 @@
 <template>
   <div>
     <client-only>
-     <div class="w-100">
+      <div class="w-100">
         <div v-if="onClient" class="w-100">
           <div class="row">
             <div class="col-12">
@@ -12,7 +12,9 @@
                 <div id="form" class="py-3 px-4 w-100">
                   <ValidationObserver ref="createFormCategory">
                     <b-form @submit.prevent="createCategory()">
-                      <legend class="h5 font-weight-bold">ایجاد دسته بندی</legend>
+                      <legend class="h5 font-weight-bold">
+                        ایجاد دسته بندی
+                      </legend>
                       <div class="px-5 pt-3 d-flex flex-wrap">
                         <ValidationProvider
                           vid="title"
@@ -64,7 +66,10 @@
                                 {{ option.title }}
                               </div>
                             </template>
-                            <template slot="selected-option" slot-scope="option">
+                            <template
+                              slot="selected-option"
+                              slot-scope="option"
+                            >
                               <div class="selected d-flex align-items-center">
                                 {{ option.title }}
                               </div>
@@ -97,7 +102,9 @@
             </div>
             <div class="col-12">
               <div class="row mt-4">
-                <div><h5 class="font-weight-bold mr-4">دسته بندی های شما</h5></div>
+                <div>
+                  <h5 class="font-weight-bold mr-4">دسته بندی های شما</h5>
+                </div>
                 <div class="p-3 w-100 m-auto">
                   <MoleculesXtreeCategories
                     v-for="category in categories"
@@ -116,11 +123,8 @@
                 >
                   <p class="my-4">
                     آیا می خواهید دسته
-                    <span
-                      class="text-success font-weight-bold"
-                    
-                    >
-                    {{titleDelete}}
+                    <span class="text-success font-weight-bold">
+                      {{ titleDelete }}
                     </span>
                     را حذف کنید؟
                   </p>
@@ -188,11 +192,14 @@
                         >
                           <v-select
                             :filterable="false"
+                            id="input-select"
                             dir="rtl"
                             placeholder="دسته اصلی را وارد کنید"
                             :options="optionUpdate"
-                            v-model="formUpdate.parent_id"
+                            v-model="formUpdate"
                             @search="onSearch"
+                            item-text="title"
+                            item-value="parent_id"
                             class="vueSelect"
                           >
                             <template slot="no-options">
@@ -203,7 +210,10 @@
                                 {{ optionUpdate.title }}
                               </div>
                             </template>
-                            <template slot="selected-option" slot-scope="optionUpdate">
+                            <template
+                              slot="selected-option"
+                              slot-scope="optionUpdate"
+                            >
                               <div class="selected d-flex align-items-center">
                                 {{ optionUpdate.title }}
                               </div>
@@ -235,8 +245,8 @@
             </div>
           </div>
         </div>
-     </div>
-  </client-only>
+      </div>
+    </client-only>
   </div>
 </template>
     
@@ -244,7 +254,7 @@
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { categoryService } from "@/services/apiServices";
-import $lodash from 'lodash'
+import $lodash from "lodash";
 export default {
   data() {
     return {
@@ -253,7 +263,7 @@ export default {
         title: "",
         parent_id: null,
       },
-      formUpdate:{
+      formUpdate: {
         title: "",
         parent_id: null,
       },
@@ -263,22 +273,21 @@ export default {
       btnDisableCategory: false,
       loadingSpinnerCategory: false,
       option: [],
-      optionUpdate:[],
+      optionUpdate: [],
       categoryItem: {},
-      
     };
   },
   components: {
     ValidationProvider,
     ValidationObserver,
   },
-  computed:{
-    user(){
-      return JSON.parse(localStorage.getItem('currentUser'))
+  computed: {
+    user() {
+      return JSON.parse(localStorage.getItem("currentUser"));
     },
-    titleDelete(){
-      return this.categoryItem.title ? this.categoryItem.title : 'موردنظر' 
-    }
+    titleDelete() {
+      return this.categoryItem.title ? this.categoryItem.title : "موردنظر";
+    },
   },
   layout: "main-content",
   async created() {
@@ -289,33 +298,35 @@ export default {
       } catch (e) {
         console.log(e);
       }
-        this.$nuxt.$on("actionCategory", async (payload) => {
-        
+      this.$nuxt.$on("actionCategory", async (payload) => {
         if (payload.type === "edit") {
-          Object.assign( this.categoryItem,payload.item)
-          this.optionUpdate=[]
-          this.formUpdate.parent_id= ''
-          if(this.categoryItem.parent_id){
-             await categoryService.findCategory({
-            categoryId: this.categoryItem.parent_id,
-            token: this.$cookies.get("token")
-          }).then((res)=>{            
-            this.optionUpdate.push({
-              title:res.data.data.title, 
-              id:res.data.data.id, 
-            })
-             this.formUpdate.parent_id= res.data.data.id
-          })
-         
+          Object.assign(this.categoryItem, payload.item);
+          this.optionUpdate = [];
+          this.formUpdate.parent_id = "";
+
+          if (this.categoryItem.parent_id) {
+            await categoryService
+              .findCategory({
+                categoryId: this.categoryItem.parent_id,
+                token: this.$cookies.get("token"),
+              })
+              .then((res) => {
+                this.optionUpdate.push({
+                  title: res.data.data.title,
+                  id: res.data.data.id,
+                });
+
+                this.formUpdate.title = res.data.data.title;
+                this.formUpdate.parent_id = res.data.data.id;
+              });
           }
+
           this.$bvModal.show("updateCatagoryModal");
-       
         }
-        if(payload.type === 'delete') {
-           this.categoryItem= payload.item
+        if (payload.type === "delete") {
+          this.categoryItem = payload.item;
           this.$bvModal.show("deleteCatagoryModal");
         }
-       
       });
     }
   },
@@ -341,7 +352,8 @@ export default {
             parent_id: this.form.parent_id ? this.form.parent_id.id : null,
             token: this.$cookies.get("token"),
           };
-          categoryService.createCategory(data)
+          categoryService
+            .createCategory(data)
             .then(() => {
               this.getAllCategory();
             })
@@ -372,8 +384,9 @@ export default {
         this.search(loading, search, this);
       }
     },
-    search:$lodash.debounce((loading, search, vm) =>{
-        categoryService.searchCategory({
+    search: $lodash.debounce((loading, search, vm) => {
+      categoryService
+        .searchCategory({
           userId: vm.user.id,
           search: search,
           token: vm.$cookies.get("token"),
@@ -388,7 +401,7 @@ export default {
         .finally(() => {
           loading(false);
         });
-     },450),
+    }, 450),
     async confirmDeleteCategory() {
       try {
         this.btnDisableCategory = true;
@@ -417,27 +430,30 @@ export default {
         });
       }
     },
-    updateCategory(){
+    updateCategory() {
       this.$refs.updateFormCategory.validate().then((success) => {
         if (success) {
           this.loadingSpinnerCategory = true;
           this.btnDisableCategory = true;
+          console.log(document.getElementById("etitle").value,this.formUpdate.parent_id)
           const payload = {
-            data:{
-              title: document.getElementById('etitle').value,
-              parent_id: this.formUpdate.parent_id ? this.formUpdate.parent_id.id : null,
+            data: {
+              title: document.getElementById("etitle").value,
+              parent_id: this.formUpdate.parent_id
+                ? this.formUpdate.parent_id
+                : null,
             },
-            categoryId:this.categoryItem.id,
+            categoryId: this.categoryItem.id,
             token: this.$cookies.get("token"),
           };
-          categoryService.updateCategory(payload)
+          categoryService
+            .updateCategory(payload)
             .then((res) => {
               this.getAllCategory();
-               this.$store.commit("open_toast", {
-                  msg: res.data.message,
-                  variant: "success",
-                });
-
+              this.$store.commit("open_toast", {
+                msg: res.data.message,
+                variant: "success",
+              });
             })
             .catch((e) => {
               if (e.response.data.status == "error") {
@@ -460,7 +476,7 @@ export default {
             });
         }
       });
-    }
+    },
   },
 };
 </script>    

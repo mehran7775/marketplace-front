@@ -10,5 +10,8 @@ export default{
     },
     getPaymentReceipt(payload){
         return axios.get(`pay/receipt/${ payload }`)
+    },
+    getPublicOrder(payload){
+        return axios.get(`/pay/public-receipt/${payload}`)
     }
 }

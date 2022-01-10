@@ -5,32 +5,6 @@
         <Xform :sub_form="do_register">
           <template #content>
             <div>
-              <ValidationProvider vid="first_name" :name="lang.label.fname" rules="required|min:3"  v-slot="{ valid, errors }">
-              <b-form-group :label="lang.label.fname">
-                  <b-form-input
-                    v-model="form.first_name"
-                    ref="first_name"
-                    type="text"
-                    placeholder="مثال: علی"
-                    :state="errors[0] ? false : (valid ? true : null)"
-                  ></b-form-input>
-                  <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
-              </b-form-group>
-            </ValidationProvider>
-            <ValidationProvider vid="last_name" :name="lang.label.lname" rules="required|min:3"  v-slot="{ valid, errors }">
-              <b-form-group
-              :label="lang.label.lname"
-              >
-                  <b-form-input
-                    v-model="form.last_name"
-                    ref="last_name"
-                    type="text"
-                    placeholder="مثال: ابراهیمی"
-                    :state="errors[0] ? false : (valid ? true : null)"
-                  ></b-form-input>
-                  <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
-              </b-form-group>
-            </ValidationProvider>
             <ValidationProvider vid="phone" :name="lang.label.phone" rules="required|regPhone"  v-slot="{ valid, errors }">
               <b-form-group
               :label="lang.label.phone"
@@ -46,68 +20,7 @@
                 <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
               </b-form-group>
             </ValidationProvider>
-            <ValidationProvider vid="email" :name="lang.label.email" rules="required|email"  v-slot="{ valid, errors }">
-              <b-form-group
-              :label="lang.label.email" 
-              >
-                  <b-form-input
-                    v-model="form.email"
-                    ref="email"
-                    type="text"
-                    placeholder="example@gmail.com"
-                    :state="errors[0] ? false : (valid ? true : null)"
-                  />
-                  <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
-              </b-form-group>
-            </ValidationProvider>
-            <ValidationProvider vid="province" :name="lang.label.province" rules="required" v-slot="{ valid, errors }">
-              <b-form-group id="provinceGroup" :label="lang.label.province" label-for="province">
-                <b-form-select
-                  id="province"
-                  :state="errors[0] ? false : (valid && form.selected != null ? true : null)"
-                  v-model="form.selected"
-                  ref="province"
-                  :class="['form-control', !form.selected && !errors[0] ? 'pr-4' : null]"
-                >
-                <option :value="null">انتخاب استان</option>
-                <option
-                  v-for="province in provinces"
-                  :key="province.id"
-                  :value="province.id"
-                  v-text="province.value"
-                ></option>
-                </b-form-select>
-                <b-form-invalid-feedback id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
-              </b-form-group>
-            </ValidationProvider>
-            <ValidationProvider vid="city" :name="lang.label.city" rules="required|min:2"  v-slot="{ valid, errors }">
-              <b-form-group
-              :label="lang.label.city"
-              >
-                  <b-form-input
-                    v-model="form.city"
-                    ref="city"
-                    type="text"
-                    placeholder="مثال: تهران"
-                    :state="errors[0] ? false : (valid ? true : null)"
-                  />
-                <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
-              </b-form-group>
-            </ValidationProvider>
-            <ValidationProvider vid="address" :name="lang.label.address" rules="required|min:10"  v-slot="{ valid, errors }">
-              <b-form-group
-              :label="lang.label.address"
-              >
-                  <b-form-input
-                    v-model="form.address"
-                    ref="address"
-                    type="text"
-                    placeholder="مثال: تهران-میدان انقلاب-خیابان آزادی-پلاک30"
-                    :state="errors[0] ? false : (valid ? true : null)"
-                  />
-                  <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
-              </b-form-group>
-            </ValidationProvider>
+        
             <ValidationProvider
               rules="required|min:6|max:20"
                 v-slot="{ valid, errors }"
@@ -117,7 +30,6 @@
               <b-form-group
               :label="lang.label.password"
               >
-              
                   <b-form-input
                     v-model="form.password"
                     ref="city"
@@ -131,9 +43,10 @@
             </ValidationProvider>
             <Xbutton
               is_submit
-              class="btn-sign m-auto w-100"
+              class="btn-sign mx-auto w-100 mt-3"
               text="ثبت نام"
               :disable="btnDisable"
+              id="register-button"
             >
               <template #spinner>
                 <b-spinner v-show="laodingLogin" small  class="float-left"></b-spinner>
@@ -247,19 +160,17 @@ export default {
   border-radius: 10px;
   box-shadow: 1px 1px 12px 0 $secondary;
   padding: 30px;
-  @include medium{
-    max-width: 550px;
-    min-width: 500px;
-  }
-  max-width: 350px;
+   max-width: 350px;
   min-width: 330px;
   overflow-y: auto;
-  height: 90vh;
-  direction: ltr;
   
+  direction: ltr;
+  #register-button{
+    border-radius: 12px;
+  }
   ::-webkit-inner-spin-button,
   ::-webkit-outer-spin-button { 
-	-webkit-appearance: none;
-}
+	  -webkit-appearance: none;
+  }
 }
 </style>

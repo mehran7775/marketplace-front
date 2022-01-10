@@ -200,6 +200,7 @@ import { categoryService } from "@/services/apiServices";
 import api from "~/services/api";
 import { mapState } from 'vuex'
 import { image } from 'vee-validate/dist/rules';
+import axios from '~/plugins/axios'
 export default {
   name: "create",
   components: { 
@@ -371,6 +372,7 @@ export default {
     },
     createProduct() {
       if (this.validate()) {
+        console.log(this.images)
         let form_data = new FormData();
         for (let key in this.formData) {
           if (this.formData[key] === true || this.formData[key] === false) {
@@ -397,8 +399,13 @@ export default {
         form_data.append("categories",this.selectedCategories)
         form_data.append('discount_percent',this.discount_percent)
         
-        api
-          .post("product/create", form_data, this.$cookies.get("token"))
+        axios
+          .post("product/create", form_data,{
+            headers:{
+              'Authorization' : 'Bearer '+ this.$cookies.get("token"),
+              'Content-Type': 'multipart/form-data'
+            }
+          })
           .then((response) => {
             this.message = response.data.message;
             this.$router.push(

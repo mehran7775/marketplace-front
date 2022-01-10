@@ -9,13 +9,16 @@
                     </nuxt-link>
                     <div class="bg-white shadow-sm p-3 my-3" style="border-radius: 10px;">
                         <div class="row">
-                            <div class="col-sm my-2">
+                            <div class="col-12 col-sm-6 col-lg-3 my-2">
                                 <input class="form-control" placeholder="عنوان محصول" v-model="filter_title">
                             </div>
-                            <div class="col-sm my-2">
+                            <div class="col-12 col-sm-6 col-lg-3 my-2">
                                 <input class="form-control" placeholder="قیمت" v-model="filter_price">
                             </div>
-                            <div class="col-sm my-2">
+                            <div class="col-12 col-sm-6 col-lg-3 my-2">
+                                <input class="form-control" placeholder="تاریخ ایجاد" v-model="filter_created_at">
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-3 my-2">
                                 <select class="form-control" id="selectState" v-model="filter_status">
                                     <option :value="null">وضعیت</option>
                                     <option v-for="status in ProductStatus.productStatus" :value="status.value">{{status.text}}</option>
@@ -23,12 +26,25 @@
                             </div>
                             <div class="col-sm my-2">
                                 <div>
-                                    <button :class="query ? 'btn btn-success mr-2' : 'btn btn-success btn-block'" style="border-radius: 10px;"
-                                            @click="get_data(products.first_page_url)">اعمال فیلتر
-                                    </button>
-                                    <button class="btn btn-danger mr-3" style="border-radius: 10px;"
-                                            @click="reset_and_get" v-if="query">حذف فیلتر
-                                    </button>
+                                <Xbutton
+                                :on_click="()=> get_data(products.first_page_url)"
+                                :class="query ? 'mr-2' : null"
+                                text="اعمال فیلتر"
+                                variant="success"
+                                :disable="btnDisableAction"
+                                >
+                                    <template #spinner>
+                                        <b-spinner v-show="laodingSpinnerAction" small ></b-spinner>
+                                    </template>            
+                                </Xbutton>
+                                <Xbutton
+                                v-if="query"
+                                :on_click="()=> reset_and_get()"
+                                class="mr-3"
+                                text="حذف فیلتر"
+                                variant="danger"
+                                >
+                                </Xbutton>
                                 </div>
                             </div>
                         </div>
@@ -44,6 +60,7 @@
                                         <th scope="col" style="background-color: #eee;">تصویر</th>
                                         <th scope="col" style="background-color: #eee;">تعداد</th>
                                         <th scope="col" style="background-color: #eee;">قیمت (ریال)</th>
+                                        <th scope="col" style="background-color: #eee;">تاریخ ایجاد</th>
                                         <th scope="col" style="background-color: #eee;">وضعیت</th>
                                         <th scope="col" style="background-color: #eee; border-radius: 16px 0px 0px 16px;">عملیات
                                         </th>
@@ -58,6 +75,7 @@
                                         </td>
                                         <td>{{ product.quantity }}</td>
                                         <td>{{ product.price }}</td>
+                                        <td v-text="product.created_at">-</td>
                                         <td>
                                             <b-badge :variant="ProductStatus.getStatus(product.status).variant">
                                                     {{ProductStatus.getStatus(product.status).text}}
@@ -263,10 +281,9 @@ export default {
             onClient:false,
             ProductStatus,
             filter_title: null,
-            filter_from_date: null,
-            filter_to_date: null,
             filter_price : null,
             filter_status: null,
+            filter_created_at: null,
             products: null,
             per_page: 15,
             product_status : null,
@@ -274,9 +291,9 @@ export default {
             btnDisable:false,
             loadingSpinner:false,
             productDe:{},
-            btnDisable:false,
-            loadingSpinner:false,
-            tr:false
+            tr:false,
+            btnDisableAction:false,
+            laodingSpinnerAction:false
 
         }
     },
@@ -287,20 +304,17 @@ export default {
     computed: {
         query() {
             let res = '';
-            if (this.filter_title != null) {
+            if (this.filter_title) {
                 res = res + '&query[title]=' + this.filter_title;
             }
-            if (this.filter_status != null) {
+            if (this.filter_status) {
                 res = res + '&query[status]=' + this.filter_status;
             }
-            if (this.filter_from_date != null) {
-                res = res + '&query[from_date]=' + this.filter_from_date;
-            }
-            if (this.filter_to_date != null) {
-                res = res + '&query[to_date]=' + this.filter_to_date;
-            }
-            if (this.filter_price != null) {
+            if (this.filter_price) {
                 res = res + '&query[price]=' + this.filter_price;
+            }
+            if (this.filter_created_at) {
+                res = res + '&query[created_at]=' + this.filter_created_at;
             }
             return res;
         },
@@ -317,12 +331,17 @@ export default {
         resetQuery() {
             this.filter_title = null;
             this.filter_status = null;
-            this.filter_from_date = null;
-            this.filter_to_date = null;
             this.filter_price = null
+            this.filter_created_at = null
         },
         async get_data(url) {
-            let res = await api.getUrl(url + this.query + '&perpage=' + this.per_page, this.$cookies.get('token'))
+            this.btnDisableAction= true
+            this.laodingSpinnerAction= true
+            const res = await api.getUrl(url + this.query + '&perpage=' + this.per_page, this.$cookies.get('token'))
+            .finally(()=>{
+                this.btnDisableAction= false
+                this.laodingSpinnerAction= false
+            })
             this.products = res.data.data
         },
         reset_and_get() {

@@ -97,7 +97,7 @@ export default {
                         data: res.data.data
                       },{ root: true }
                     );
-                    this.$router.replace("/panel-customer");
+                    this.$router.replace("/customers");
                     this.$store.commit(
                       "open_toast",{
                         msg: res.data.message,

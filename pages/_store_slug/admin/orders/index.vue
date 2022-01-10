@@ -7,24 +7,52 @@
                 </page-title>
                 <div class="bg-white shadow-sm p-3 my-3" style="border-radius: 10px;">
                     <div class="row">
-                        <div class="col-sm my-2">
+                        <div class="col-12 col-sm-6 col-lg-3 my-2">
                             <input class="form-control" placeholder="کد رهگیری" v-model="filter_tracking_number">
                         </div>
-                        <div class="col-sm my-2">
+                        <div class="col-12 col-sm-6 col-lg-3 my-2">
+                            <input class="form-control" placeholder="اطلاعات مشتری" v-model="filter_customer_detail">
+                        </div>
+                        <div class="col-12 col-sm-6 col-lg-3 my-2">
+                            <input class="form-control" placeholder="از تاریخ" v-model="filter_from_date">
+                        </div>
+                        <div class="col-12 col-sm-6 col-lg-3 my-2">
+                            <input class="form-control" placeholder="تا تاریخ" v-model="filter_to_date">
+                        </div>
+                        <div class="col-12 col-sm-6 col-lg-3 my-2">
                             <select class="form-control" v-model="filter_status">
+                                <option :value="null">وضعیت</option>
                                 <option v-for="status in OrderStatus.orderStatus" :value="status.value">
                                     {{status.text}}
                                 </option>
                             </select>
                         </div>
                         <div class="col-sm my-2">
-                            <div>
-                                <button :class="query ? 'btn btn-success mr-2' : 'btn btn-success btn-block'" style="border-radius: 10px;"
-                                        @click="get_data(orders.first_page_url)">اعمال فیلتر
-                                </button>
-                                <button class="btn btn-danger mr-3" style="border-radius: 10px;"
-                                        @click="reset_and_get" v-if="query">حذف فیلتر
-                                </button>
+                             <div>
+                                <Xbutton
+                                :on_click="()=> get_data(orders.first_page_url)"
+                                :class="[query ? 'mr-2' : null,'px-3']"
+                                text="اعمال فیلتر"
+                                variant="success"
+                                :disable="btnDisableAction"
+                                
+                                >
+                                    <template #spinner>
+                                        <b-spinner v-show="laodingSpinnerAction" small ></b-spinner>
+                                    </template>            
+                                </Xbutton>
+                                <Xbutton
+                                v-if="query"
+                                :on_click="()=> reset_and_get()"
+                                class="mr-3 px-3"
+                                text="حذف فیلتر"
+                                variant="danger"
+                                :disable="btnDisableRemove"
+                                >
+                                    <template #spinner>
+                                        <b-spinner v-show="laodingSpinnerRemove" small ></b-spinner>
+                                    </template>            
+                                </Xbutton>
                             </div>
                         </div>
                     </div>
@@ -98,10 +126,15 @@ export default {
         return {
             onClient:false,
             OrderStatus,
-            filter_tracking_number: null,
+              filter_tracking_number: null,
             filter_status : null,
+            filter_customer_detail: null,
+            filter_from_date: null,
+            filter_to_date: null,
             orders: null,
-            per_page: 15
+            per_page: 15,
+            btnDisableAction:false,
+            laodingSpinnerAction:false
         }
     },
      async created() {
@@ -115,11 +148,20 @@ export default {
     computed: {
         query() {
             let res = '';
-            if (this.filter_tracking_number != null) {
+            if (this.filter_tracking_number) {
                 res = res + '&query[tracking_number]=' + this.filter_tracking_number;
             }
-            if (this.filter_status != null) {
+            if (this.filter_status) {
                 res = res + '&query[status]=' + this.filter_status;
+            }
+             if (this.filter_customer_detail) {
+                res = res + '&query[customer_detail]=' + this.filter_customer_detail;
+            }
+            if(this.filter_from_date ){
+                res = res + '&query[from_date]=' + this.filter_from_date;
+            }
+             if(this.filter_to_date){
+                res = res + '&query[to_date]=' + this.filter_to_date;
             }
             return res;
         }
@@ -128,9 +170,18 @@ export default {
         resetQuery() {
             this.filter_tracking_number = null;
             this.filter_status = null;
+            this.filter_customer_detail = null;
+            this.filter_from_date = null;
+            this.filter_to_date = null;
         },
         async get_data(url) {
+            this.btnDisableAction = true
+            this.laodingSpinnerAction = true
             let res = await api.getUrl(url + this.query + '&perpage=' + this.per_page,this.$cookies.get('token'))
+            .finally(() => {
+                this.btnDisableAction = false
+                this.laodingSpinnerAction = false
+            })
             this.orders = res.data.data
         },
         reset_and_get() {

@@ -1,8 +1,8 @@
 <template>
-   <div id="body-receipt">
+    <div id="body-receipt">
         <client-only>
-          <template v-if="onClient">
-                <div class="container-xl">
+            <template v-if="onClient">
+                 <div class="container-xl">
                     <div class="row">
                         <div class="position-relative w-100">
                             <div id="receipt" class="py-2">
@@ -143,7 +143,7 @@
                                             <span  class="mr-5" v-text="`${separate(detail.data.payment_price)} ریال`"></span>
                                         </div>
                                     </div>
-                                    <div class="row my-4">
+                                    <!-- <div class="row my-4">
                                         <div v-if="detail.data.status != 2" class="m-auto text-danger d-flex">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <fa icon="times" class="fa-2x"></fa>
@@ -159,69 +159,47 @@
                                             <Xbutton text="بازگشت به فروشگاه" :on_click="() => goToStore()" class="mr-5"/>
                                         </div>
                                     
-                                    </div> 
+                                    </div>  -->
                                 </div>
                             </div>
                         </div>
                     </div>
             </div>
-          </template>
+            </template>
         </client-only>
-   </div>
+                <!-- 1640503871 -->
+    </div>
 </template>
 
 <script>
 import { orderService } from "@/services/apiServices";
 import separatePrice from '@/mixins/separatePrice'
-export default {
-     head() {
-    return {
-      title: `فروشگاه ساز پی استار`,
-    }
-  },
-  mixins:[separatePrice],
-  head() {
-    return {
-      title: "صفحه رسید",
-    };
-  },
-  data(){
-      return{
-        onClient: false,
-        detail: {}
-      }
-  }, 
-   async created(){
-      if(process.client){
-        try {
-            const res = await orderService.getPaymentReceipt(this.$route.params.trackingNumber)
-            this.detail= res.data
-            this.onClient= true
-        } catch (e) {
-            console.log(e);
-        }
-      }
-  },
-  methods:{
-    doPayment(){
-        this.$store.dispatch('payment/doPayment',{
-            gId:{ 
-                gateway_id: this.detail.data.gateway_id
-            },
-            oId:{
-                order_id: this.detail.data.order_id
-            }
-        })
-    },
-    goToStore(){
-        const a = document.createElement("a");
-        a.href = `https://shop.paystar.ir/@${this.detail.data.store.slug}`
-        document.body.appendChild(a)
-        a.click()
 
+export default {
+    head() {
+        return {
+        title: `فروشگاه ساز پی استار`,
+        }
+    },
+    mixins:[ separatePrice ],
+    data(){
+        return{
+            onClient: false,
+            detail: {}
+        }
+    },
+    async created(){
+        if(process.client){
+            try{
+                const res= await orderService.getPublicOrder( this.$route.params.tracking_number )
+                this.detail= res.data
+                this.onClient= true
+            }catch(e) {
+                console.log(e)
+            }
+        }
     }
-  },
-};
+}
 </script>
 
 <style scoped lang="scss">

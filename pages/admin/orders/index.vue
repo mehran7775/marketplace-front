@@ -11,13 +11,7 @@
                             <input class="form-control" placeholder="کد رهگیری" v-model="filter_tracking_number">
                         </div>
                         <div class="col-12 col-sm-6 col-lg-3 my-2">
-                            <input class="form-control" placeholder="نام مشتری" v-model="filter_name">
-                        </div>
-                        <div class="col-12 col-sm-6 col-lg-3 my-2">
-                            <input class="form-control" placeholder="موبایل مشتری" v-model="filter_phone_number">
-                        </div>
-                        <div class="col-12 col-sm-6 col-lg-3 my-2">
-                            <input class="form-control" placeholder="ایمیل مشتری" v-model="filter_email">
+                            <input class="form-control" placeholder="اطلاعات مشتری" v-model="filter_customer_detail">
                         </div>
                         <div class="col-12 col-sm-6 col-lg-3 my-2">
                             <input class="form-control" placeholder="از تاریخ" v-model="filter_from_date">
@@ -33,14 +27,15 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="col-sm my-2">
+                        <div class="col my-2">
                             <div>
                                 <Xbutton
                                 :on_click="()=> get_data(orders.first_page_url)"
-                                :class="query ? 'mr-2' : 'btn-block'"
+                                :class="[query ? 'mr-2' : null,'px-3']"
                                 text="اعمال فیلتر"
                                 variant="success"
                                 :disable="btnDisableAction"
+                                
                                 >
                                     <template #spinner>
                                         <b-spinner v-show="laodingSpinnerAction" small ></b-spinner>
@@ -49,7 +44,7 @@
                                 <Xbutton
                                 v-if="query"
                                 :on_click="()=> reset_and_get()"
-                                class="mr-3"
+                                class="mr-3 px-3"
                                 text="حذف فیلتر"
                                 variant="danger"
                                 :disable="btnDisableRemove"
@@ -134,9 +129,7 @@ export default {
             OrderStatus,
             filter_tracking_number: null,
             filter_status : null,
-            filter_name : null,
-            filter_email : null,
-            filter_phone_number: null,
+            filter_customer_detail: null,
             filter_from_date: null,
             filter_to_date: null,
             orders: null,
@@ -151,25 +144,19 @@ export default {
     computed: {
         query() {
             let res = '';
-            if (this.filter_tracking_number != null) {
+            if (this.filter_tracking_number) {
                 res = res + '&query[tracking_number]=' + this.filter_tracking_number;
             }
-            if (this.filter_status != null) {
+            if (this.filter_status) {
                 res = res + '&query[status]=' + this.filter_status;
             }
-             if (this.filter_name != null) {
-                res = res + '&query[customer_detail]=' + this.filter_name;
+             if (this.filter_customer_detail) {
+                res = res + '&query[customer_detail]=' + this.filter_customer_detail;
             }
-             if (this.filter_phone_number != null) {
-                res = res + '&query[customer_detail]=' + this.filter_phone_number;
-            }
-             if (this.filter_email != null) {
-                res = res + '&query[customer_detail]=' + this.filter_email;
-            }
-            if(this.filter_from_date != null){
+            if(this.filter_from_date ){
                 res = res + '&query[from_date]=' + this.filter_from_date;
             }
-             if(this.filter_to_date != null){
+             if(this.filter_to_date){
                 res = res + '&query[to_date]=' + this.filter_to_date;
             }
             return res;
@@ -179,9 +166,7 @@ export default {
         resetQuery() {
             this.filter_tracking_number = null;
             this.filter_status = null;
-            this.filter_name = null;
-            this.filter_phone_number = null;
-            this.filter_email = null;
+            this.filter_customer_detail = null;
             this.filter_from_date = null;
             this.filter_to_date = null;
         },

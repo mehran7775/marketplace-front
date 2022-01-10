@@ -102,7 +102,7 @@
                                                         <div v-for="(image, index) in images" class="image-result mr-2 mb-1" :key="index">
                                                             <fa icon="times" class="fa-lg cursor_pointer delete_item position-relative" @click="removeImage(image)"></fa>
                                                             <div class="d-flex flex-column align-items-center" style="height:78px;width:58px;">
-                                                            <img height="58" :class="[image.selected? 'selectedImage': null,'rounded w-100']" :src="image.preview" @click="selectMainPicture(image)">
+                                                            <img height="58" :class="[image.selected? 'selectedImage': null,'rounded w-100']" :src="image.thumbnail" @click="selectMainPicture(image)">
                                                             <small style="height:17px; margin-top:3px;" v-show="image.selected">تصویر اصلی</small>
                                                             </div>
                                                         </div>
@@ -122,12 +122,12 @@
                                                     label-for="parent_id"
                                                     >
                                                     <div class="w-100 bg-whitesmok border" id="categories">
-                                                        <!-- <MoleculesXtreeCategories
+                                                        <MoleculesXtreeCategories
                                                             v-for="category in categories"
                                                             :key="category.id"
                                                             :node="category"
                                                             type="createProducts"
-                                                        /> -->
+                                                        />
                                                     
                                                     </div>
                                                     </b-form-group>
@@ -217,6 +217,8 @@ import api from "~/services/api";
 import PageTitle from "~/components/main/pageTitle";
 import DashboardBox from "~/components/dashboard-box";
 import { validate } from 'vee-validate';
+import { categoryService } from "@/services/apiServices";
+import { mapState } from 'vuex'
 
 export default {
     components: {
@@ -228,6 +230,7 @@ export default {
         return {
             message: null,
             error: null,
+             categories: null,
             formData: {
                 title: null,
                 store_id: this.$route.params.store_slug,
@@ -240,15 +243,15 @@ export default {
                 code:''
                 
             },
-            strikethroughPrice:0,
-            validation_errors:{
+            strikethroughPrice : 0,
+            validation_errors: {
                 logo: null,
                 logo_size: null,
                 logo_type: null,
             },
-            statistics: {},
-            images:[],
-            editorConfig: {
+            statistics : {},
+            images : [],
+            editorConfig : {
                 removePlugins: ['Title','Table','PageBreak','Subscript','Superscript','CodeBlock','Code','Strikethrough','ChemType','MathType','Specialcharacters'],
                 placeholder:"توضیحات",
                 language:{
@@ -286,13 +289,16 @@ export default {
             }
             return 0
         },
+        user() {
+         return JSON.parse(localStorage.getItem("currentUser"));
+        },
+        ...mapState({
+            selectedCategories : state => state.selectedCategories
+        })
     },
     async mounted() {
-        this.$store.commit('setToState',{
-            name:'selectedCategories',
-            data:[]
-         })
         await this.getProduct()
+        await this.getAllCategory()
         this.getStatistics()
     },
     watch:{
@@ -313,12 +319,23 @@ export default {
     destroyed(){
         this.$store.commit('deleteFromState','selectedCategories')
     },
-      methods: {
+    methods: {
+        async getAllCategory() {
+            try {
+                const res = await categoryService.getAllCategory({
+                userId: this.user.id,
+                token: this.$cookies.get("token"),
+                });
+                this.categories = res.data.data;
+            } catch (e) {
+                console.log(e);
+            }
+        },
         selectFiles(event){
             if(this.images.length >= 8 || event.target.files.length >= 8){
                 this.$store.commit('open_toast',{
-                msg: 'حداکثر تعداد عکس های قابل آپلود هشت عدد می باشد',
-                variant: 'warning'
+                    msg: 'حداکثر تعداد عکس های قابل آپلود هشت عدد می باشد',
+                    variant: 'warning'
                 })
                 return
             }
@@ -335,14 +352,14 @@ export default {
                 break
                 }
                 let img = {
-                file : selectedFiles[i],
-                preview: null,
-                selected: false
+                    file : selectedFiles[i],
+                    thumbnail: null,
+                    selected: false
                 }
                 let reader = new FileReader()
                 reader.addEventListener('load',()=>{
-                img.preview= reader.result,
-                this.images.push(img)
+                    img.thumbnail= reader.result,
+                    this.images.push(img)
                 })
                 reader.readAsDataURL(selectedFiles[i]);
             }else{
@@ -365,64 +382,80 @@ export default {
          
             return res
         },
-        updateProduct() {
-            if(!this.validate()){
-            }else{
-                let form_data = new FormData();
-            for (let key in this.formData) {
-                if (this.formData[key] === true || this.formData[key] === false) {
-                    if (this.formData[key] === true) {
-                        form_data.append(key, 1);
-                    }
-                    if (this.formData[key] === false) {
-                        form_data.append(key, 0);
-                    }
-                } else {
-                    if (this.formData[key] !== null) {
-                        form_data.append(key, this.formData[key]);
-                    }
-                }
-            }
-            this.images.forEach(element => {
-                 delete element.preview
-            });
-            form_data.set('images',this.images)
-            form_data.set('price',this.formData.price+'0')
-            form_data.append('discount_percent',this.discount_percent)
-            api.post('product/update/' + this.$route.params.id, form_data, this.$cookies.get('token')).then(response => {
-                this.message = response.data.message
-                 this.$router.push(
-              "/" + this.$route.params.store_slug + "/admin/products"
-            );
-            }).catch(({response}) => {
-                this.error = response.data.data[Object.keys(response.data.data)[0]]
-            })
-            }
-            
-        },
-        async getProduct() {
+         async getProduct() {
             await api.get('product/find/' + this.$route.params.id, this.$cookies.get('token'))
                 .then(res => {
-                    console.log(res)
                     this.formData.title = res.data.data.title
                     this.formData.price = res.data.data.price
                     this.formData.quantity = res.data.data.quantity
                     this.formData.is_multiple = res.data.data.is_multiple == 1 ? true : false
                     this.formData.unlimited = res.data.data.unlimited == 1 ? true : false
-                    this.formData.discount_percent
-                    
-                    
+                    this.$store.commit('setToState', {
+                        name: 'selectedCategories',
+                        data: res.data.data.categories || [] 
+                    })
                     this.strikethroughPrice= res.data.data.price*5/100
                     res.data.data.thumbnails.forEach(element =>{
                         this.images.push(
                             {
-                                preview:element.thumbnail,
+                                thumbnail:element.thumbnail,
                                 selected:element.selected
                             }
                         )
                     })
                 })
         },
+        updateProduct() {
+            if(!this.validate()){
+            }else{
+                let form_data = new FormData();
+                for (let key in this.formData) {
+                    if (this.formData[key] === true || this.formData[key] === false) {
+                        if (this.formData[key] === true) {
+                            form_data.append(key, 1);
+                        }
+                        if (this.formData[key] === false) {
+                            form_data.append(key, 0);
+                        }
+                    } else {
+                        if (this.formData[key] !== null) {
+                            form_data.append(key, this.formData[key]);
+                        }
+                    }
+                }
+                const current_thumbnails = []
+                const new_thumbnails = []
+                const deepCopy = this.$lodash.cloneDeep(this.images);
+                deepCopy.forEach(element => {
+                    if(element.file){
+                        delete element.thumbnail
+                        new_thumbnails.push(element)
+                    }else{
+                    
+                        current_thumbnails.push(element)
+                    }
+                })
+                form_data.set('current_thumbnails',current_thumbnails)
+                form_data.set('new_thumbnails',new_thumbnails)
+                form_data.set('price',this.formData.price +'0')
+                form_data.append('discount_percent',this.discount_percent)
+                form_data.append("categories",this.selectedCategories)
+                api.post('product/update/' + this.$route.params.id, form_data, this.$cookies.get('token')).then(response => {
+                    this.message = response.data.message
+                    this.$router.push(
+                    "/" + this.$route.params.store_slug + "/admin/products"
+                    );
+                    this.$store.commit('open_toast',{
+                        msg: 'آپدیت با موفقیت انجام شد',
+                        variant: 'success'
+                    })
+                }).catch(({response}) => {
+                    this.error = response.data.data[Object.keys(response.data.data)[0]]
+                })
+            }
+            
+        },
+       
         getStatistics() {
             api.get('product/statistics/' + this.$route.params.id)
                 .then(res => {

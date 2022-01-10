@@ -107,6 +107,10 @@ body {
         .ck-editor__editable {
             min-height: 100px;
         }
+        .text-decoration{
+            padding-bottom: 5px;
+            border-bottom: 1px solid $border_whitesmoke;
+        }
     }
     .tooltip{
         @include mx_medium{

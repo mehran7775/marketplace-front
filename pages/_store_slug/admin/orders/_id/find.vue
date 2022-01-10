@@ -4,7 +4,17 @@
           <div class="w-100">
             <page-title title_text="جزییات سفارش">
             <div @click="updateOrder">
-                <Xbutton class="px-4" text="ذخیره تغییرات"></Xbutton>
+                <!-- <Xbutton class="px-4" text="ذخیره تغییرات"></Xbutton> -->
+                 <Xbutton
+                    :on_click="()=> updateOrder()"
+                    class="px-4"
+                    text="ذخیره تغییرات"
+                    :disable="btnDisable"
+                    >
+                        <template #spinner>
+                            <b-spinner v-show="laodingSpinner" small ></b-spinner>
+                        </template>            
+                </Xbutton>
             </div>
             </page-title>
             <div class="alert alert-info" role="alert" v-if="message">
@@ -20,25 +30,29 @@
                             <div class="row">
                                 <div class="col-sm mt-2">
                                     <label>شناسه</label>
-                                    <input disabled class="form-control" v-model="order.id"/>
+                                    <div class="border rounded p-2" v-text="order.id"></div>
                                 </div>
                                 <div class="col-sm mt-2">
                                     <label>کد رهگیری</label>
-                                    <input disabled class="form-control" v-model="order.tracking_number"/>
+                                    <div class="border rounded p-2" v-text="order.tracking_number"></div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm mt-2">
-                                    <label>مبلغ کل</label>
-                                    <input disabled class="form-control" v-model="order.payment_price"/>
+                                    <label>مبلغ کل سفارش(ریال)</label>
+                                    <div class="border rounded p-2" v-text="order.payment_price"></div>
+                                </div>
+                                <div v-if="order.register_date" class="col-sm mt-2">
+                                    <label>تاریخ ثبت سفارش</label>
+                                    <div class="border rounded p-2" v-text="order.register_date"></div>
                                 </div>
                                 <div class="col-sm mt-2">
                                     <label>
                                         وضعیت
                                     </label>
-                                    <select class="form-control" v-model="form.status">
-                                        <option v-for="status in OrderStatus.sellerStatus" :value="status.value">{{status.text}}</option>
-                                    </select>
+                                     <b-form-select v-model="form.status">
+                                         <option v-for="status in OrderStatus.sellerStatus" :value="status.value">{{status.text}}</option>
+                                     </b-form-select>
                                 </div>
                             </div>
                         </div>
@@ -57,23 +71,21 @@
                             <div class="row">
                                 <div class="col-sm mt-2" v-if="order.customer_data.name">
                                     <label>نام</label>
-                                    <input disabled class="form-control" v-model="order.customer_data.name"/>
+                                    <div class="border rounded p-2" v-text="order.customer_data.name"></div>
                                 </div>
                                 <div class="col-sm mt-2" v-if="order.customer_data.phone">
                                     <label>موبایل</label>
-                                    <input disabled class="form-control" v-model="order.customer_data.phone"/>
+                                    <div class="border rounded p-2" v-text="order.customer_data.phone"></div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm mt-2" v-if="order.customer_data.email">
                                     <label>ایمیل</label>
-                                    <input disabled class="form-control" v-model="order.customer_data.email"/>
+                                    <div class="border rounded p-2" v-text="order.customer_data.email"></div>
                                 </div>
                                 <div class="col-sm mt-2" v-if="order.customer_data.address">
-                                    <div class="col-sm mt-2">
-                                        <label>آدرس</label>
-                                        <input disabled class="form-control" v-model="order.customer_data.address"/>
-                                    </div>
+                                    <label>آدرس</label>
+                                    <div class="border rounded p-2" v-text="order.customer_data.address"></div>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +103,7 @@
                         <div class="card-body">
                             <div class="px-3">
                                 <div class="table-responsive">
-                                    <table class="table  table-responsive table-borderless text-center">
+                                    <table class="table table-responsive table-borderless text-center">
                                         <thead>
                                         <tr>
                                             <th scope="col" style="background-color: #eee;  border-radius: 0 16px 16px 0;">#</th>
@@ -148,7 +160,10 @@ export default {
             order : null,
             form : {
                 status : null
-            }
+            },
+            btnDisable:false,
+            laodingSpinner:false
+
         }
     },
     methods : {
@@ -160,13 +175,18 @@ export default {
             })
         },
         updateOrder(){
+            this.btnDisable = true
+            this.laodingSpinner = true
             api.put('order/change-status/' + this.$route.params.id , {
                 status : this.form.status
             })
-                .then(response => {
-                    this.message = response.data.message
-                }).catch(({response}) => {
-                this.error = response.data.data[Object.keys(response.data.data)[0]]
+            .then(response => {
+                this.message = response.data.message
+            }).catch(({response}) => {
+            this.error = response.data.data[Object.keys(response.data.data)[0]]
+            }).finally(() => {
+                this.btnDisable = false
+                this.laodingSpinner = false
             })
         }
     },
