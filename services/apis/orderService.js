@@ -13,5 +13,19 @@ export default{
     },
     getPublicOrder(payload){
         return axios.get(`/pay/public-receipt/${payload}`)
+    },
+
+
+
+    //*******************************************************************
+    //******************************Panel Customer***********************
+    //******************************************************************* */ */
+
+    getCustomersOrders(payload){
+        return axios.get('/order/customer-orders',{
+            headers:{
+                'Authorization' : `Bearer ${payload}`
+            }
+        })
     }
 }

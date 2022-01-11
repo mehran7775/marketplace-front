@@ -1,215 +1,210 @@
 <template>
-    <div>
-       <client-only>
-           <div class="w-100">
-                <page-title title_text="جزییات محصول" icon="product">
-                <button class="btn btn-success shadow-sm mx-2 px-4 py-2" @click="updateProduct" variant="primary"
-                        style="border-radius: 20px; border-color: #bbb;"
-                >
-                    ذخیره تغییرات
-                </button>
-                </page-title>
-                <div class="alert alert-info" role="alert" v-if="message">
-                    {{ message }}
-                </div>
-                <div class="alert alert-danger" role="alert" v-if="error">
-                    {{ error }}
-                </div>
-                <div class="shadow-sm bg-white rounded p-3">
-                    <b-tabs content-class="mt-3">
-                        <b-tab title="ویرایش محصول" active>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div>
-                                        <div class="mx-3" id="create_product">
-                                            <div class="row">
-                                                <div class="col-sm">
-                                                    <b-form-group label="عنوان">
-                                                        <input class="form-control" v-model="formData.title"/>
-                                                    </b-form-group>
-                                                </div>
-                                                 <div class="col-sm">
-                                                    <b-form-group label="کد محصول">
-                                                    <input class="form-control" v-model="formData.code"/>
-                                                    </b-form-group>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm">
-                                                    <b-form-group label="قیمت خط خورده">
-                                                        <input type="number" class="form-control" v-model="formData.price"/>
-                                                        <small class="text-success px-2">
-                                                            {{moneyFormat(formData.price)}}
-                                                            تومان
-                                                        </small>
-                                                    </b-form-group>
-                                                </div>
-                                                <div class="col-sm">
-                                                    <b-form-group label="قیمت فروش">
-                                                        <input type="number" class="form-control" v-model="strikethroughPrice"/>
-                                                        <small class="text-success px-2">
-                                                            {{ moneyFormat(strikethroughPrice) }}
-                                                            تومان
-                                                        </small>
-                                                    </b-form-group>
-                                                </div>
-                                               
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm">
-                                                    <b-form-group label="درصد تخفیف">
-                                                        <input type="number" class="form-control" readonly
-                                                            :value="discount_percent"/>
-                                                    </b-form-group>
-                                                </div>
-                                                 <div class="col-sm">
-                                                    <b-form-group label="تعداد">
-                                                        <input type="number" class="form-control" v-model="formData.quantity"/>
-                                                    </b-form-group>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12 col-xl-3">
-                                                    <div class="d-flex">
-                                                        <b-form-group label="تصویر محصول">
-                                                        <b-form-file
-                                                            accept="image/*"
-                                                            class="px-5 rounded"
-                                                            style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
-                                                            placeholder="یک فایل انتخاب کنید"
-                                                            plain
-                                                            name="images[]"
-                                                            @change="selectFiles"
-                                                            multiple
-                                                            ref="inputFileUpdate"
-                                                            id="inputFileUpdate"
-                                                        ></b-form-file>
-                                                            <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
-                                                                    این فیلد الزامی است.</small>
-                                                            <small v-if="validation_errors.logo_size" class="text-danger px-2">
-                                                                    حجم عکس نباید بیشتر از پنج مگابایت باشد
-                                                            </small>
-                                                            <small v-if="validation_errors.logo_type" class="text-danger px-2">
-                                                                    فرمت عکس معتبر نمی باشد
-                                                            </small>
-                                                           
-                                                        </b-form-group>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-xl-9">
-                                                    <div class="row mx-1 border border-whitesmok rounded pb-2 px-1 d-flex justify-content-start align-items-start">
-                                                        <template v-if="images.length > 0">
-                                                        <div v-for="(image, index) in images" class="image-result mr-2 mb-1" :key="index">
-                                                            <fa icon="times" class="fa-lg cursor_pointer delete_item position-relative" @click="removeImage(image)"></fa>
-                                                            <div class="d-flex flex-column align-items-center" style="height:78px;width:58px;">
-                                                            <img height="58" :class="[image.selected? 'selectedImage': null,'rounded w-100']" :src="image.thumbnail" @click="selectMainPicture(image)">
-                                                            <small style="height:17px; margin-top:3px;" v-show="image.selected">تصویر اصلی</small>
-                                                            </div>
-                                                        </div>
+    <div >
+        <page-title title_text="جزییات محصول" icon="product">
+        <button class="btn btn-success shadow-sm mx-2 px-4 py-2" @click="updateProduct" variant="primary"
+                style="border-radius: 20px; border-color: #bbb;"
+        >
+            ذخیره تغییرات
+        </button>
+        </page-title>
+        <div class="alert alert-info" role="alert" v-if="message">
+            {{ message }}
+        </div>
+        <div class="alert alert-danger" role="alert" v-if="error">
+            {{ error }}
+        </div>
+        <div class="shadow-sm bg-white rounded p-3">
+            <b-tabs content-class="mt-3">
+                <b-tab title="ویرایش محصول" active>
+                    <div class="row">
+                        <div class="col-12">
+                            <div>
+                                <div class="mx-3" id="create_product">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <b-form-group label="عنوان">
+                                                <input class="form-control" v-model="formData.title"/>
+                                            </b-form-group>
+                                        </div>
+                                            <div class="col-sm">
+                                            <b-form-group label="کد محصول">
+                                            <input class="form-control" v-model="formData.code"/>
+                                            </b-form-group>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <b-form-group label="قیمت خط خورده">
+                                                <input type="number" class="form-control" v-model="formData.price"/>
+                                                <small class="text-success px-2">
+                                                    {{moneyFormat(formData.price)}}
+                                                    تومان
+                                                </small>
+                                            </b-form-group>
+                                        </div>
+                                        <div class="col-sm">
+                                            <b-form-group label="قیمت فروش">
+                                                <input type="number" class="form-control" v-model="strikethroughPrice"/>
+                                                <small class="text-success px-2">
+                                                    {{ moneyFormat(strikethroughPrice) }}
+                                                    تومان
+                                                </small>
+                                            </b-form-group>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <b-form-group label="درصد تخفیف">
+                                                <input type="number" class="form-control" readonly
+                                                    :value="discount_percent"/>
+                                            </b-form-group>
+                                        </div>
+                                            <div class="col-sm">
+                                            <b-form-group label="تعداد">
+                                                <input type="number" class="form-control" v-model="formData.quantity"/>
+                                            </b-form-group>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-xl-3">
+                                            <div class="d-flex">
+                                                <b-form-group label="تصویر محصول">
+                                                <b-form-file
+                                                    accept="image/*"
+                                                    class="px-5 rounded"
+                                                    style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
+                                                    placeholder="یک فایل انتخاب کنید"
+                                                    plain
+                                                    name="images[]"
+                                                    @change="selectFiles"
+                                                    multiple
+                                                    ref="inputFileUpdate"
+                                                    id="inputFileUpdate"
+                                                ></b-form-file>
+                                                    <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
+                                                            این فیلد الزامی است.</small>
+                                                    <small v-if="validation_errors.logo_size" class="text-danger px-2">
+                                                            حجم عکس نباید بیشتر از پنج مگابایت باشد
+                                                    </small>
+                                                    <small v-if="validation_errors.logo_type" class="text-danger px-2">
+                                                            فرمت عکس معتبر نمی باشد
+                                                    </small>
                                                     
-                                                        </template>
-                                                        <template v-else>
-                                                        <p class="my-4 mr-2">عکس های انتخابی شما</p>
-                                                        </template>
+                                                </b-form-group>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-xl-9">
+                                            <div class="row mx-1 border border-whitesmok rounded pb-2 px-1 d-flex justify-content-start align-items-start">
+                                                <template v-if="images.length > 0">
+                                                <div v-for="(image, index) in images" class="image-result mr-2 mb-1" :key="index">
+                                                    <fa icon="times" class="fa-lg cursor_pointer delete_item position-relative" @click="removeImage(image)"></fa>
+                                                    <div class="d-flex flex-column align-items-center" style="height:78px;width:58px;">
+                                                    <img height="58" :class="[image.selected? 'selectedImage': null,'rounded w-100']" :src="image.thumbnail" @click="selectMainPicture(image)">
+                                                    <small style="height:17px; margin-top:3px;" v-show="image.selected">تصویر اصلی</small>
                                                     </div>
                                                 </div>
+                                            
+                                                </template>
+                                                <template v-else>
+                                                <p class="my-4 mr-2">عکس های انتخابی شما</p>
+                                                </template>
                                             </div>
-                                            <div class="row mt-4 mb-2">
-                                               <div class="col-12 col-lg-6">
-                                                    <b-form-group
-                                                    id="gParent_id"
-                                                    label="انتخاب دسته بندی"
-                                                    label-for="parent_id"
-                                                    >
-                                                    <div class="w-100 bg-whitesmok border" id="categories">
-                                                        <MoleculesXtreeCategories
-                                                            v-for="category in categories"
-                                                            :key="category.id"
-                                                            :node="category"
-                                                            type="createProducts"
-                                                        />
-                                                    
-                                                    </div>
-                                                    </b-form-group>
-                                                </div>
-                                                <div class="col-sm">
-                                                    <b-form-group label="تعداد محصول نامحدود است">
-                                                        <div>
-                                                            <label class="switch">
-                                                                <input type="checkbox" v-model="formData.unlimited">
-                                                                <span class="slider round"></span>
-                                                            </label>
-                                                        </div>
-                                                    </b-form-group>
-                                                </div>
-                                                <div class="col-sm">
-                                                    <b-form-group label=" امکان انتخاب چند محصول توسط مشتری">
-                                                        <div class="">
-                                                        <label class="switch">
-                                                            <input type="checkbox" v-model="formData.is_multiple" />
-                                                            <span class="slider round"></span>
-                                                        </label>
-                                                        </div>
-                                                    </b-form-group>
-                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-4 mb-2">
+                                        <div class="col-12 col-lg-6">
+                                            <b-form-group
+                                            id="gParent_id"
+                                            label="انتخاب دسته بندی"
+                                            label-for="parent_id"
+                                            >
+                                            <div class="w-100 bg-whitesmok border" id="categories">
+                                                <MoleculesXtreeCategories
+                                                    v-for="category in categories"
+                                                    :key="category.id"
+                                                    :node="category"
+                                                    type="createProducts"
+                                                />
+                                            
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm">  
-                                                    <b-form-group label="توضیحات محصول">
-                                                        <client-only placeholder="loading...">
-                                                            <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  id="description"
-                                                            ref="description"/>
-                                                        </client-only>
-                                                    </b-form-group>
+                                            </b-form-group>
+                                        </div>
+                                        <div class="col-sm">
+                                            <b-form-group label="تعداد محصول نامحدود است">
+                                                <div>
+                                                    <label class="switch">
+                                                        <input type="checkbox" v-model="formData.unlimited">
+                                                        <span class="slider round"></span>
+                                                    </label>
                                                 </div>
-                                            </div>
+                                            </b-form-group>
+                                        </div>
+                                        <div class="col-sm">
+                                            <b-form-group label=" امکان انتخاب چند محصول توسط مشتری">
+                                                <div class="">
+                                                <label class="switch">
+                                                    <input type="checkbox" v-model="formData.is_multiple" />
+                                                    <span class="slider round"></span>
+                                                </label>
+                                                </div>
+                                            </b-form-group>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm">  
+                                            <b-form-group label="توضیحات محصول">
+                                                <client-only placeholder="loading...">
+                                                    <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  id="description"
+                                                    ref="description"/>
+                                                </client-only>
+                                            </b-form-group>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </b-tab>
-                        <b-tab title="آمار محصول" >
-                            <div class="row">
-                                <div class="col-12">
-                                    <div>
-                                        <div class="mx-2">
-                                            <div class="row">
-                                                <div class="col-md-4 col-sm my-3">
-                                                    <dashboard-box :number="statistics.complete_orders" title="سفارشات تکمیل شده">
-                                                    </dashboard-box>
-                                                </div>
-                                                <div class="col-md-4 col-sm my-3">
-                                                    <dashboard-box :number="statistics.processing_orders" title="سفارشات در حال پردازش">
-                                                    </dashboard-box>
-                                                </div>
-                                                <div class="col-md-4 col-sm my-3">
-                                                    <dashboard-box :number="statistics.sales_count" title="تعداد فروش">
-                                                    </dashboard-box>
-                                                </div>
-                                                <div class=" col-md-4 col-sm my-3">
-                                                    <dashboard-box :number="statistics.total_sell_price" title="کل مبلغ فروش">
-                                                    </dashboard-box>
-                                                </div>
-                                                <div class=" col-md-4 col-sm my-3">
-                                                    <dashboard-box :number="statistics.views_count? statistics.views_count : 0" title="تعداد بازدید">
-                                                    </dashboard-box>
-                                                </div>
-                                                <div class="col-md-4 col-sm my-3">
-                                                    <dashboard-box :number="statistics.conversion_rates" title="نرخ تبدیل">
-                                                    </dashboard-box>
-                                                </div>
-                                            </div>
+                        </div>
+                    </div>
+                </b-tab>
+                <b-tab title="آمار محصول" >
+                    <div class="row">
+                        <div class="col-12">
+                            <div>
+                                <div class="mx-2">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm my-3">
+                                            <dashboard-box :number="statistics.complete_orders" title="سفارشات تکمیل شده">
+                                            </dashboard-box>
+                                        </div>
+                                        <div class="col-md-4 col-sm my-3">
+                                            <dashboard-box :number="statistics.processing_orders" title="سفارشات در حال پردازش">
+                                            </dashboard-box>
+                                        </div>
+                                        <div class="col-md-4 col-sm my-3">
+                                            <dashboard-box :number="statistics.sales_count" title="تعداد فروش">
+                                            </dashboard-box>
+                                        </div>
+                                        <div class=" col-md-4 col-sm my-3">
+                                            <dashboard-box :number="statistics.total_sell_price" title="کل مبلغ فروش">
+                                            </dashboard-box>
+                                        </div>
+                                        <div class=" col-md-4 col-sm my-3">
+                                            <dashboard-box :number="statistics.views_count? statistics.views_count : 0" title="تعداد بازدید">
+                                            </dashboard-box>
+                                        </div>
+                                        <div class="col-md-4 col-sm my-3">
+                                            <dashboard-box :number="statistics.conversion_rates" title="نرخ تبدیل">
+                                            </dashboard-box>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </b-tab>
-                    </b-tabs>
-                </div>
-           </div>
-       </client-only>
+                        </div>
+                    </div>
+                </b-tab>
+            </b-tabs>
+        </div>
     </div>
-
 </template>
 
 <script>
@@ -435,8 +430,8 @@ export default {
                         current_thumbnails.push(element)
                     }
                 })
-                form_data.set('current_thumbnails',current_thumbnails)
-                form_data.set('new_thumbnails',new_thumbnails)
+                form_data.set('current_thumbnails[]',current_thumbnails)
+                form_data.set('new_thumbnails[]',new_thumbnails)
                 form_data.set('price',this.formData.price +'0')
                 form_data.append('discount_percent',this.discount_percent)
                 form_data.append("categories",this.selectedCategories)

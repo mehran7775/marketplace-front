@@ -1,196 +1,191 @@
 <template>
   <div>
-      <client-only>
-        <div class="w-100">
-          <div v-if="onClient" class="w-100">
-                 <page-title title_text="افزودن محصول جدید" icon="product">
-          <button
-            class="btn btn-success shadow-sm mx-2 px-4 py-2"
-            @click="createProduct"
-            variant="primary"
-            style="border-radius: 20px; border-color: #bbb"
-          >
-            ثبت محصول
-          </button>
-          </page-title>
-          <div class="alert alert-info" role="alert" v-if="message">
-            {{ message }}
-          </div>
-          <!-- <div class="alert alert-danger" role="alert" v-if="error">
-            {{ error }}
-          </div> -->
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body" id="create_product">
-                  <div class="row">
-                    <div class="col-sm">
-                      <b-form-group label="عنوان">
-                        <input class="form-control" v-model="formData.title" />
-                        <small v-if="errors.title" class="text-danger px-2">{{
-                          errors.title
-                        }}</small>
-                      </b-form-group>
-                    </div>
-                    <div class="col-sm">
-                        <b-form-group label="کد محصول">
-                          <input class="form-control" v-model="formData.code"/>
-                        </b-form-group>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm">
-                      <b-form-group label="قیمت خط خورده">
-                        <input
-                          maxlength="15"
-                          type="text"
-                          class="form-control"
-                          v-model="formData.price"
-                        />
+      <page-title title_text="افزودن محصول جدید" icon="product">
+      <button
+        class="btn btn-success shadow-sm mx-2 px-4 py-2"
+        @click="createProduct"
+        variant="primary"
+        style="border-radius: 20px; border-color: #bbb"
+      >
+        ثبت محصول
+      </button>
+      </page-title>
+      <div class="alert alert-info" role="alert" v-if="message">
+        {{ message }}
+      </div>
+      <!-- <div class="alert alert-danger" role="alert" v-if="error">
+        {{ error }}
+      </div> -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body" id="create_product">
+              <div class="row">
+                <div class="col-sm">
+                  <b-form-group label="عنوان">
+                    <input class="form-control" v-model="formData.title" />
+                    <small v-if="errors.title" class="text-danger px-2">{{
+                      errors.title
+                    }}</small>
+                  </b-form-group>
+                </div>
+                <div class="col-sm">
+                    <b-form-group label="کد محصول">
+                      <input class="form-control" v-model="formData.code"/>
+                    </b-form-group>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm">
+                  <b-form-group label="قیمت خط خورده">
+                    <input
+                      maxlength="15"
+                      type="text"
+                      class="form-control"
+                      v-model="formData.price"
+                    />
+                    <small class="text-success px-2">
+                      {{ moneyFormat(formData.price) }}
+                      تومان
+                    </small>
+                  </b-form-group>
+                </div>
+                      <div class="col-sm">
+                  <b-form-group label="قیمت فروش">     
+                      <b-form-input maxlength="15" type="text" v-model="strikethroughPrice" />
                         <small class="text-success px-2">
-                          {{ moneyFormat(formData.price) }}
-                          تومان
-                        </small>
-                      </b-form-group>
-                    </div>
-                         <div class="col-sm">
-                      <b-form-group label="قیمت فروش">     
-                          <b-form-input maxlength="15" type="text" v-model="strikethroughPrice" />
-                            <small class="text-success px-2">
-                          {{ moneyFormat(strikethroughPrice) }}
-                          تومان
-                        </small>
-                      </b-form-group>
-                    </div>
-                  </div>
-                  <div class="row">              
-                    <div class="col-sm">
-                      <b-form-group label="درصد تخفیف">
-                        <input
-                        readonly
-                          type="number"
-                          class="form-control"
-                          :value="discount_percent"
-                        />
-                      </b-form-group>
-                    </div>
-                    <div class="col-sm">
-                      <b-form-group label="تعداد">
-                        <input
-                          type="number"
-                          class="form-control"
-                          v-model="formData.quantity"
-                        />
-                        <small v-if="errors.quantity" class="text-danger px-2">{{
-                          errors.quantity
-                        }}</small>
-                      </b-form-group>
-                    </div>
-                  </div>
-                  <div class="row my-3">
-                    <div class="col-12 col-xl-3">
-                          <div class="d-flex">
-                            <b-form-group label="تصویر محصول">
-                              <b-form-file
-                                accept="image/*"
-                                class="px-5 rounded"
-                                style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
-                                placeholder="یک فایل انتخاب کنید"
-                                plain
-                                name="images[]"
-                                @change="selectFiles"
-                                multiple
-                                ref="inputFile"
-                              ></b-form-file>
-                                <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
-                                        این فیلد الزامی است.</small>
-                                <small v-if="validation_errors.logo_size" class="text-danger px-2">
-                                        حجم عکس نباید بیشتر از پنج مگابایت باشد
-                                </small>
-                                <small v-if="validation_errors.logo_type" class="text-danger px-2">
-                                        فرمت عکس معتبر نمی باشد
-                                </small>
-                              <small v-if="errors.image" class="text-danger px-2">{{
-                                errors.image
-                              }}</small>
-                            </b-form-group>
-                          </div>
-                    </div>
-                    <div class="col-12 col-xl-9">
-                      <div class="row mx-1 border border-whitesmok rounded pb-2 px-1 d-flex justify-content-start align-items-start">
-                        <template v-if="images.length > 0">
-                          <div v-for="(image, index) in images" class="image-result mr-2 mb-1" :key="index">
-                            <fa icon="times" class="fa-lg cursor_pointer delete_item position-relative" @click="removeImage(image)"></fa>
-                            <div class="d-flex flex-column align-items-center" style="height:78px;width:58px;">
-                            <img height="58" :class="[image.selected? 'selectedImage': null,'rounded w-100']" :src="image.preview" @click="selectMainPicture(image)">
-                            <small style="height:17px; margin-top:3px;" v-show="image.selected">تصویر اصلی</small>
-                            </div>
-                          </div>
-                       
-                        </template>
-                        <template v-else>
-                          <p class="my-4 mr-2">عکس های انتخابی شما</p>
-                        </template>
+                      {{ moneyFormat(strikethroughPrice) }}
+                      تومان
+                    </small>
+                  </b-form-group>
+                </div>
+              </div>
+              <div class="row">              
+                <div class="col-sm">
+                  <b-form-group label="درصد تخفیف">
+                    <input
+                    readonly
+                      type="number"
+                      class="form-control"
+                      :value="discount_percent"
+                    />
+                  </b-form-group>
+                </div>
+                <div class="col-sm">
+                  <b-form-group label="تعداد">
+                    <input
+                      type="number"
+                      class="form-control"
+                      v-model="formData.quantity"
+                    />
+                    <small v-if="errors.quantity" class="text-danger px-2">{{
+                      errors.quantity
+                    }}</small>
+                  </b-form-group>
+                </div>
+              </div>
+              <div class="row my-3">
+                <div class="col-12 col-xl-3">
+                      <div class="d-flex">
+                        <b-form-group label="تصویر محصول">
+                          <b-form-file
+                            accept="image/*"
+                            class="px-5 rounded"
+                            style="width: max-content;box-shadow:0 0 0 0.5px whitesmoke;"
+                            placeholder="یک فایل انتخاب کنید"
+                            plain
+                            name="images[]"
+                            @change="selectFiles"
+                            multiple
+                            ref="inputFile"
+                          ></b-form-file>
+                            <small v-if="validation_errors.logo" class="text-danger px-2">تکمیل
+                                    این فیلد الزامی است.</small>
+                            <small v-if="validation_errors.logo_size" class="text-danger px-2">
+                                    حجم عکس نباید بیشتر از پنج مگابایت باشد
+                            </small>
+                            <small v-if="validation_errors.logo_type" class="text-danger px-2">
+                                    فرمت عکس معتبر نمی باشد
+                            </small>
+                          <small v-if="errors.image" class="text-danger px-2">{{
+                            errors.image
+                          }}</small>
+                        </b-form-group>
                       </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-12 col-lg-6">
-                      <b-form-group
-                      id="gParent_id"
-                      label="انتخاب دسته بندی"
-                      label-for="parent_id"
-                      >
-                      <div class="w-100 bg-whitesmok border" id="categories">
-                        <MoleculesXtreeCategories
-                            v-for="category in categories"
-                            :key="category.id"
-                            :node="category"
-                            type="createProducts"
-                        />
-                      
+                </div>
+                <div class="col-12 col-xl-9">
+                  <div class="row mx-1 border border-whitesmok rounded pb-2 px-1 d-flex justify-content-start align-items-start">
+                    <template v-if="images.length > 0">
+                      <div v-for="(image, index) in images" class="image-result mr-2 mb-1" :key="index">
+                        <fa icon="times" class="fa-lg cursor_pointer delete_item position-relative" @click="removeImage(image)"></fa>
+                        <div class="d-flex flex-column align-items-center" style="height:78px;width:58px;">
+                        <img height="58" :class="[image.selected? 'selectedImage': null,'rounded w-100']" :src="image.preview" @click="selectMainPicture(image)">
+                        <small style="height:17px; margin-top:3px;" v-show="image.selected">تصویر اصلی</small>
+                        </div>
                       </div>
-                      </b-form-group>
-                    </div>
-                    <div class="col-sm">
-                      <b-form-group label="تعداد محصول نامحدود است">
-                        <div class="">
-                          <label class="switch">
-                            <input type="checkbox" v-model="formData.unlimited" />
-                            <span class="slider round"></span>
-                          </label>
-                        </div>
-                      </b-form-group>
-                    </div>
-                    <div class="col-sm">
-                      <b-form-group label=" امکان انتخاب چند محصول توسط مشتری">
-                        <div class="">
-                          <label class="switch">
-                            <input type="checkbox" v-model="formData.is_multiple" />
-                            <span class="slider round"></span>
-                          </label>
-                        </div>
-                      </b-form-group>
-                    </div>
-                  </div> 
-                  <div class="row">
-                    <div class="col-12">
-                      <b-form-group label="توضیحات محصول">
-                        <client-only placeholder="loading...">
-                              <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  id="description"
-                              ref="description"/>
-                        </client-only>
-                      </b-form-group>
-                    </div>
+                    
+                    </template>
+                    <template v-else>
+                      <p class="my-4 mr-2">عکس های انتخابی شما</p>
+                    </template>
                   </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <b-form-group
+                  id="gParent_id"
+                  label="انتخاب دسته بندی"
+                  label-for="parent_id"
+                  >
+                  <div class="w-100 bg-whitesmok border" id="categories">
+                    <MoleculesXtreeCategories
+                        v-for="category in categories"
+                        :key="category.id"
+                        :node="category"
+                        type="createProducts"
+                    />
+                  
+                  </div>
+                  </b-form-group>
+                </div>
+                <div class="col-sm">
+                  <b-form-group label="تعداد محصول نامحدود است">
+                    <div class="">
+                      <label class="switch">
+                        <input type="checkbox" v-model="formData.unlimited" />
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </b-form-group>
+                </div>
+                <div class="col-sm">
+                  <b-form-group label=" امکان انتخاب چند محصول توسط مشتری">
+                    <div class="">
+                      <label class="switch">
+                        <input type="checkbox" v-model="formData.is_multiple" />
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </b-form-group>
+                </div>
+              </div> 
+              <div class="row">
+                <div class="col-12">
+                  <b-form-group label="توضیحات محصول">
+                    <client-only placeholder="loading...">
+                          <ckeditor-nuxt v-model="formData.description" :config="editorConfig"  id="description"
+                          ref="description"/>
+                    </client-only>
+                  </b-form-group>
                 </div>
               </div>
             </div>
           </div>
-          </div>
         </div>
-      </client-only>
+      </div>
   </div>
+    
  
 </template>
 
@@ -215,12 +210,10 @@ export default {
         name:'selectedCategories',
         data:[]
       })
-      this.onClient= true
     }
   },
   data() {
     return {
-      onClient:false,
       categories: null,
       message: null,
       error: null,
@@ -336,9 +329,9 @@ export default {
                break
             }
             let img = {
-            file : selectedFiles[i],
-            preview: null,
-            selected: false
+              file : selectedFiles[i],
+              preview: null,
+              selected: false
             }
             let reader = new FileReader()
             reader.addEventListener('load',()=>{
@@ -372,9 +365,12 @@ export default {
     },
     createProduct() {
       if (this.validate()) {
-        console.log(this.images)
         let form_data = new FormData();
         for (let key in this.formData) {
+          if (key == 'price') {
+            continue;
+          }
+
           if (this.formData[key] === true || this.formData[key] === false) {
             if (this.formData[key] === true) {
               form_data.append(key, 1);
@@ -393,20 +389,21 @@ export default {
         this.images.forEach(element => {
           delete element.preview
         });
-        form_data.set('price',this.formData.price+'0')
-        form_data.set('phone_number','')
-        form_data.append('images',this.images)
+        form_data.append('price',this.formData.price+'0')
+        form_data.append('phone_number','')
+        form_data.append('images[]', this.images)
         form_data.append("categories",this.selectedCategories)
         form_data.append('discount_percent',this.discount_percent)
-        
-        axios
-          .post("product/create", form_data,{
-            headers:{
-              'Authorization' : 'Bearer '+ this.$cookies.get("token"),
-              'Content-Type': 'multipart/form-data'
-            }
-          })
-          .then((response) => {
+        axios({
+          method: "post",
+          url: "product/create",
+          data: form_data,
+          headers: {
+            'Authorization' : 'Bearer '+ this.$cookies.get("token"),
+            'Content-Type': 'multipart/form-data'
+          },
+      })
+       .then((response) => {
             this.message = response.data.message;
             this.$router.push(
               "/" + this.$route.params.store_slug + "/admin/products"
@@ -415,6 +412,7 @@ export default {
           .catch(({ response }) => {
             this.error = response.data.data[Object.keys(response.data.data)[0]];
           });
+         
       }
     },
     moneyFormat(price) {

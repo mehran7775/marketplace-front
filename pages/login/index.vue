@@ -91,6 +91,9 @@ export default {
                 this.$cookies.set("token-buyer", res.data.data.api.token);
                 authService.currentUser(res.data.data.api.token)
                   .then((res) => {
+                     if(res.status == 200){
+                      localStorage.setItem('userDetail',JSON.stringify(res.data.data))
+                     }
                     this.$store.commit(
                       "user/setToState", {
                         name: 'current_user',
