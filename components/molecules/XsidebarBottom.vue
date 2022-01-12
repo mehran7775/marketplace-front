@@ -19,7 +19,7 @@
       </div>
       <div class="bottom_menu">
         <template v-if="$cookies.get('token-buyer')">
-          <nuxt-link :to="`/penel-customer`">
+          <nuxt-link to="/customers">
             <span
               ><fa
                 icon="user"
@@ -30,14 +30,12 @@
           </nuxt-link>
         </template>
         <template v-else>
-          <nuxt-link :to="`/login`">
-            <span
-              ><fa
-                icon="user"
-                class="mx-1 icom_bto_menu"
-                :title="lang.svg.signin"
-              ></fa
-            ></span>
+          <nuxt-link to="/login">
+            <span>
+                <fa :icon="['fas' , 'sign-in-alt']" class="mx-1"
+                  title="ورود"
+                  size="lg"></fa>
+            </span>
           </nuxt-link>
         </template>
       </div>

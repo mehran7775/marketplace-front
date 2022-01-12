@@ -1,50 +1,48 @@
 <template>
     <div>
-        <clien-only>
-            <div class="row">
-                <div class="col-12 p-5 mt-5">
-                    <div class="card">
-                        <div class="card-body">
-                            <b-form @submit="onSubmit">
-                                <b-form-group label="عنوان" label-for="input-1">
-                                    <b-form-input v-model="form.title"></b-form-input>
-                                </b-form-group>
-                                <b-form-group label="پورت" label-for="input-1">
-                                    <b-form-select  class="form-control" v-model="port" :options="ports">
-                                    </b-form-select>
-                                </b-form-group>
-                                <b-form-group label="شناسه درگاه پرداخت یاری" label-for="input-1" v-if="port && port.type == 'PF'">
-                                    <b-form-input v-model="port_config"></b-form-input>
-                                </b-form-group>
-                                <b-form-group label="توکن درگاه کارت به کارت" label-for="input-1"  v-if="port && port.type == 'Card'">
-                                    <b-form-input v-model="port_config"></b-form-input>
-                                </b-form-group>
-                                <b-form-group label="توکن درگاه تلفنی" label-for="input-1"  v-if="port && port.type == 'IVR'">
-                                    <b-form-input v-model="port_config"></b-form-input>
-                                </b-form-group>
-                                <b-form-group label="شماره ترمینال درگاه مستقیم" label-for="input-1"  v-if="port && port.type == 'Dedicated'">
-                                    <b-form-input v-model="port_config"></b-form-input>
-                                </b-form-group>
-                                <b-form-group label="وضعیت" label-for="input-1">
-                                    <b-form-select class="form-control" v-model="form.status" :options="GatewayStatus.gatewayStatus">
-                                    </b-form-select>
-                                </b-form-group>
-                                <Xbutton
-                                is_submit
-                                text="ثبت پورت"
-                                :variant="'primary'"
-                                :disable="btnDisable"
-                                >
-                                    <template #spinner>
-                                        <b-spinner v-show="laodingSpinner" small ></b-spinner>
-                                    </template>            
-                                </Xbutton>
-                            </b-form>
-                        </div>
+        <div class="row">
+            <div class="col-12 p-5 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <b-form @submit="onSubmit">
+                            <b-form-group label="عنوان" label-for="input-1">
+                                <b-form-input v-model="form.title"></b-form-input>
+                            </b-form-group>
+                            <b-form-group label="پورت" label-for="input-1">
+                                <b-form-select  class="form-control" v-model="port" :options="ports">
+                                </b-form-select>
+                            </b-form-group>
+                            <b-form-group label="شناسه درگاه پرداخت یاری" label-for="input-1" v-if="port && port.type == 'PF'">
+                                <b-form-input v-model="port_config"></b-form-input>
+                            </b-form-group>
+                            <b-form-group label="توکن درگاه کارت به کارت" label-for="input-1"  v-if="port && port.type == 'Card'">
+                                <b-form-input v-model="port_config"></b-form-input>
+                            </b-form-group>
+                            <b-form-group label="توکن درگاه تلفنی" label-for="input-1"  v-if="port && port.type == 'IVR'">
+                                <b-form-input v-model="port_config"></b-form-input>
+                            </b-form-group>
+                            <b-form-group label="شماره ترمینال درگاه مستقیم" label-for="input-1"  v-if="port && port.type == 'Dedicated'">
+                                <b-form-input v-model="port_config"></b-form-input>
+                            </b-form-group>
+                            <b-form-group label="وضعیت" label-for="input-1">
+                                <b-form-select class="form-control" v-model="form.status" :options="GatewayStatus.gatewayStatus">
+                                </b-form-select>
+                            </b-form-group>
+                            <Xbutton
+                            is_submit
+                            text="ثبت پورت"
+                            :variant="'primary'"
+                            :disable="btnDisable"
+                            >
+                                <template #spinner>
+                                    <b-spinner v-show="laodingSpinner" small ></b-spinner>
+                                </template>            
+                            </Xbutton>
+                        </b-form>
                     </div>
                 </div>
             </div>
-        </clien-only>
+        </div>
     </div>
 </template>
 

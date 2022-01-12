@@ -32,7 +32,7 @@
                   <span @click="minusProduct(item.id)"
                     ><fa icon="minus" class="m-auto"></fa
                   ></span>
-                   <strong class="mx-3" v-text="item.count"></strong
+                   <strong class="mx-2 mx-md-3" v-text="item.count"></strong
                     >
                   <span @click="plusProduct(item.id)"
                     ><fa icon="plus" class="m-auto"></fa
@@ -112,10 +112,10 @@ export default {
   methods: {
     setItems() {
       const cart = JSON.parse(localStorage.getItem("cart"));
-      if (cart && cart[this.$nuxt.$route.params.store_slug]) {
-        if (cart[this.$nuxt.$route.params.store_slug].length > 0) {
-          this.items = cart[this.$nuxt.$route.params.store_slug];
-          this.whole_price = this.compute_whole_price(this.items);
+      if (cart && cart[ this.$nuxt.$route.params.store_slug ]) {
+        if (cart[ this.$nuxt.$route.params.store_slug ].length > 0) {
+          this.items = cart[ this.$nuxt.$route.params.store_slug ];
+          this.whole_price = this.compute_whole_price( this.items );
           return;
         }
       }
@@ -199,7 +199,7 @@ export default {
     width: 53%;
   }
   .price_item_cart {
-    width: 26%;
+    width: 23%;
     color: $success;
     text-align: right;
   }

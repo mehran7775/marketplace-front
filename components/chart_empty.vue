@@ -2,7 +2,7 @@
     <div class="bg-white shadow-sm pt-2 pb-3 " style="border-radius: 20px;">
         <div class="d-flex align-items-center">
             <div class="px-4 d-flex align-items-center پml-auto">
-                <div class="p-2 ml-auto">آمار ماهانه</div>
+                <div class="p-2 ml-auto">نمودار بازدید ماهیانه</div>
             </div>
         </div>
         <hr>

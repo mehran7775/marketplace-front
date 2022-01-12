@@ -46,14 +46,19 @@ export default {
 
     async created(){
          if(process.client){
-            const userCurrent = await userService.userCurrent(this.$cookies.get("token"));
-            localStorage.setItem('currentUser',JSON.stringify(userCurrent.data.data))
-            this.onClient= true
+             console.log(this.$cookies.get("token"))
             try{
-                const res = await storeService.getMyWaiting(this.$cookies.get('token'))
-                this.inMyAnticipationShops = res.data.data.badge_count
-                const { data } = await storeService.getAllWaiting(this.$cookies.get('token'))
-                this.inAnticipationShops = data.data.badge_count
+                if(this.$cookies.get("token")){
+                    const userCurrent = await userService.userCurrent(this.$cookies.get("token"));
+                    localStorage.setItem('currentUser',JSON.stringify(userCurrent.data.data))
+                    const res = await storeService.getMyWaiting(this.$cookies.get('token'))
+                    this.onClient= true
+                    this.inMyAnticipationShops = res.data.data.badge_count
+                    const { data } = await storeService.getAllWaiting(this.$cookies.get('token'))
+                    this.inAnticipationShops = data.data.badge_count
+                }else{
+                    this.$router.replace('/landing')
+                }
             }catch(e){
                 console.log(e)
             }

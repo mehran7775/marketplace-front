@@ -19,7 +19,7 @@
     </div>
     <div v-show="type == 'createProducts'">
         <b-alert variant="light" show class="d-flex justify-content-start align-items-center py-1 mr-0 my-0">
-          <input type="checkbox" :value="node.id" name="categories[]" v-model="categories">
+          <input type="checkbox" checked :value="node.id" name="categories[]" v-model="categories">
           <span class="mr-1" v-text="node.title"></span>
         </b-alert>
     </div>

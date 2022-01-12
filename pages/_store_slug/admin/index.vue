@@ -1,6 +1,5 @@
 <template>
     <div>
-      <client-only>
         <div class="w-100">
             <page-title title_text="پیشخوان" icon="dashboard">
             </page-title>
@@ -99,7 +98,7 @@
                 </div>
             </div>
         </div>
-      </client-only>
+    
     </div>
 </template>
 

@@ -8,5 +8,12 @@ export default{
                 'Authorization': "Bearer " + payload
             }
         })
+    },
+    updateCustomer(payload){
+        return axios.put(`customer/update`,payload.data,{
+            headers:{
+                'Authorization': "Bearer " + payload.token
+            }
+        })
     }
 }
