@@ -100,8 +100,8 @@
                     </div>
                     <div class="card-body">
                         <div class="px-3">
-                            <div class="table-responsive">
-                                <table class="table table-responsive table-borderless text-center">
+                            <div>
+                                <table class="table table-borderless text-center">
                                     <thead>
                                     <tr>
                                         <th scope="col" style="background-color: #eee;  border-radius: 0 16px 16px 0;">#</th>

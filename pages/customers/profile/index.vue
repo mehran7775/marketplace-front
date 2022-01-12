@@ -91,17 +91,6 @@
                                     class="rounded-0" id="address"></b-form-input>
                                 </b-form-group>
                             </div>
-                            <div class="col-12 col-sm-6 col-md-4">
-                                <b-form-group
-                                label="رمز عبور :"
-                                label-for="password"
-                                label-align-sm="right"
-                                  
-                                >
-                                    <b-form-input  v-model="detail.password" 
-                                    class="rounded-0" id="password"></b-form-input>
-                                </b-form-group>
-                            </div>
                         </div>
                      </div>
                     </b-form-group>
@@ -117,6 +106,43 @@
                         </template>            
                     </Xbutton>
                 </b-card>
+                 <!-- <b-card bg-variant="light" class="w-100 bg-info mt-0 mt-md-5">
+                    <b-form-group
+                    label-cols-lg="12"
+                    label="تغییر رمز عبور"
+                    label-size="lg"
+                    label-class="font-weight-bold pt-0"
+                    class="mb-0"
+                    >
+                     <div class="p-3">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <b-form-group
+                                label="نام :"
+                                label-for="first_name"
+                                label-align-sm="right"
+                                
+                                >
+                                    <b-form-input
+                                    v-model="detail.first_name"
+                                    class="rounded-0" id="first_name"></b-form-input>
+                                </b-form-group>
+                            </div>
+                        </div>
+                     </div>
+                    </b-form-group>
+                    <Xbutton
+                    :on_click="()=> triggerChangePassword()"
+                    text="ثبت تغییرات"
+                    variant="success"
+                    :disable="btnDisable"
+                    class="mr-3"
+                    >
+                        <template #spinner>
+                            <b-spinner v-show="laodingSpinner" small ></b-spinner>
+                        </template>            
+                    </Xbutton>
+                </b-card> -->
             </div>
         </div>
     </div>
@@ -138,7 +164,6 @@ export default {
                 province:'',
                 city:'',
                 address:'',
-                password: ''
             },
             btnDisable:false,
             laodingSpinner:false,

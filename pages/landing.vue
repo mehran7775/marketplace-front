@@ -1,6 +1,6 @@
 <template>
 <div>
-    صفحه اصلی
+    Landing Page
 </div>
 </template>
 

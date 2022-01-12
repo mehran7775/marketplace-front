@@ -229,6 +229,7 @@ export default {
         parent_id: null,
         code:'',
       },
+      mainImage:null,
       strikethroughPrice:0,
       errors: {
         title: null,
@@ -273,6 +274,8 @@ export default {
     images(value){
       if(value.length >= 1){
         value[0].selected= true
+        this.mainImage = value[0].file
+
       }
     },
   },
@@ -385,13 +388,14 @@ export default {
           
           }
         }
-     
-        this.images.forEach(element => {
-          delete element.preview
-        });
+        form_data.append('images[0]',this.mainImage)
+        this.images.forEach(( element , index) =>{
+          if(element.selected === true) return
+          form_data.append(`images[${index}]`,element.file)
+        })
+       
         form_data.append('price',this.formData.price+'0')
         form_data.append('phone_number','')
-        form_data.append('images[]', this.images)
         form_data.append("categories",this.selectedCategories)
         form_data.append('discount_percent',this.discount_percent)
         axios({
@@ -408,6 +412,10 @@ export default {
             this.$router.push(
               "/" + this.$route.params.store_slug + "/admin/products"
             );
+            this.$store.commit('open_toast',{
+                msg: response.data.message,
+                variant: 'success'
+            })
           })
           .catch(({ response }) => {
             this.error = response.data.data[Object.keys(response.data.data)[0]];
@@ -435,6 +443,7 @@ export default {
         element.selected= false
       });
       image.selected= true
+      this.mainImage = image.file
     }
   },
   destroyed(){

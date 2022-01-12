@@ -54,7 +54,7 @@
                   ><fa
                     icon="user"
                     class="mx-1 icom_bto_menu"
-                    :title="lang.svg.panel"
+                    title="پنل کاربری"
                     size="lg"
                   ></fa
                 ></span>
@@ -62,14 +62,11 @@
             </template>
             <template v-else>
               <nuxt-link :to="`/login`">
-                <span
-                  ><fa
-                    icon="user"
-                    class="mx-1 icom_bto_menu"
-                    :title="lang.svg.signin"
-                    size="lg"
-                  ></fa
-                ></span>
+                <span>
+                  <fa :icon="['fas' , 'sign-in-alt']" class="mx-1"
+                  title="ورود"
+                  size="lg"></fa>
+                </span>
               </nuxt-link>
             </template>
             <nuxt-link :to="`/${$route.params.store_slug}`">

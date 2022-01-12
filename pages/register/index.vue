@@ -8,6 +8,7 @@
             <ValidationProvider vid="phone" :name="lang.label.phone" rules="required|regPhone"  v-slot="{ valid, errors }">
               <b-form-group
               :label="lang.label.phone"
+              class="font-weight-bold"
               >
                   <b-form-input
                     v-model="form.phone"
@@ -29,6 +30,7 @@
             >
               <b-form-group
               :label="lang.label.password"
+              class="font-weight-bold"
               >
                   <b-form-input
                     v-model="form.password"
@@ -41,6 +43,8 @@
                 <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
               </b-form-group>
             </ValidationProvider>
+            <span>قبلا ثبت نام کرده اید؟</span>
+            <router-link to="/login" class="text-info">ورود</router-link>
             <Xbutton
               is_submit
               class="btn-sign mx-auto w-100 mt-3"

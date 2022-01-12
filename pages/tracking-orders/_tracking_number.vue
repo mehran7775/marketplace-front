@@ -10,7 +10,7 @@
                                     <div class="row py-1">
                                         <div class="w-100 d-flex justify-content-between align-items-center">
                                             <div class="logo">
-                                            <img class="w-100 mw-100" src="@/assets/images/logo.svg" alt="لوگو پی استار" />
+                                                <img class="w-100 mw-100" src="@/assets/images/logo.svg" alt="لوگو پی استار" />
                                             </div>
 
                                             <div>
@@ -143,23 +143,6 @@
                                             <span  class="mr-5" v-text="`${separate(detail.data.payment_price)} ریال`"></span>
                                         </div>
                                     </div>
-                                    <!-- <div class="row my-4">
-                                        <div v-if="detail.data.status != 2" class="m-auto text-danger d-flex">
-                                            <div class="d-flex align-items-center justify-content-center">
-                                                <fa icon="times" class="fa-2x"></fa>
-                                                <span class="mr-2 font-weight-bold">پرداخت ناموفق</span>
-                                            </div>
-                                            <Xbutton text="پرداخت مجدد" :on_click="() => doPayment()" class="mr-5"/>
-                                        </div>
-                                        <div v-else class="m-auto d-flex text-success">
-                                            <div class="d-flex align-items-center justify-content-center">
-                                                <fa icon="check" class="fa-2x"></fa>
-                                                <span class="mr-2 font-weight-bold">پرداخت موفق</span>
-                                            </div>
-                                            <Xbutton text="بازگشت به فروشگاه" :on_click="() => goToStore()" class="mr-5"/>
-                                        </div>
-                                    
-                                    </div>  -->
                                 </div>
                             </div>
                         </div>
@@ -191,11 +174,14 @@ export default {
     async created(){
         if(process.client){
             try{
-                const res= await orderService.getPublicOrder( this.$route.params.tracking_number )
+                const res= await orderService.getPublicOrder( this.$route.params.tracking_number)
                 this.detail= res.data
                 this.onClient= true
             }catch(e) {
-                console.log(e)
+                this.$nuxt.error({
+                    statusCode: e.response.status,
+                    message: e.response.data.message,
+                })
             }
         }
     }

@@ -66,7 +66,7 @@ export default {
           }
           this.btnDisable= false
           this.laodingSpinner= false
-          this.$router.replace("/")
+          this.$router.replace("/customers")
           this.$store.commit(
             "open_toast",
             {

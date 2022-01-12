@@ -5,7 +5,7 @@
         <b-card bg-variant="light" class="w-100 bg-info mt-0 mt-md-5">
           <div class="pt-2 mb-4"><h5 class="font-weight-bold">سفارشات</h5></div>
           <div class="px-3">
-            <div class="table-responsive">
+            <div>
               <table class="table table-borderless text-center">
                 <thead>
                   <tr>
@@ -20,6 +20,9 @@
                     </th>
                     <th scope="col" style="background-color: #eee">
                       کد پیگیری
+                    </th>
+                    <th scope="col" style="background-color: #eee">
+                      نام فروشگاه
                     </th>
                     <th scope="col" style="background-color: #eee">
                       قیمت (ریال)
@@ -43,6 +46,7 @@
                   <tr v-for="(order, index) in orders" :key="index">
                     <td>{{ order.id }}</td>
                     <td>{{ order.tracking_number }}</td>
+                    <td>{{ order.store.name }}</td>
                     <td>{{ order.payment_price }}</td>
                     <td>{{ order.created_at }}</td>
                     <td>
@@ -130,7 +134,7 @@ export default {
       const { data } = await orderService.getCustomersOrders(
         this.$cookies.get("token-buyer")
       );
-    //   this.orders = data.data
+      this.orders = data.data
     } catch (e) {
       console.log(e);
     }

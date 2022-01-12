@@ -209,6 +209,7 @@
 
 <script>
 import api from "~/services/api";
+import axios from '~/plugins/axios'
 import PageTitle from "~/components/main/pageTitle";
 import DashboardBox from "~/components/dashboard-box";
 import { validate } from 'vee-validate';
@@ -246,6 +247,7 @@ export default {
             },
             statistics : {},
             images : [],
+            mainImage:null,
             editorConfig : {
                 removePlugins: ['Title','Table','PageBreak','Subscript','Superscript','CodeBlock','Code','Strikethrough','ChemType','MathType','Specialcharacters'],
                 placeholder:"توضیحات",
@@ -299,14 +301,16 @@ export default {
     watch:{
         images(value){
             if(value.length >= 1){
-                let se=false
+                let se = false
                 value.forEach(element =>{
                     if(element.selected){
-                        se=true
+                        se = true
+                        this.mainImage = element.file
                     }
                 })
                 if(!se){
-                    value[0].selected= true
+                    value[0].selected = true
+                    this.mainImage = value[0].file
                 }
             }
         },
@@ -340,28 +344,28 @@ export default {
             let selectedFiles= event.target.files
             const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
             for(let i= 0; i< selectedFiles.length; i++){
-            if(acceptedImageTypes.includes(selectedFiles[i].type)){
-                if(selectedFiles[i].size > ((1024 * 1024) * 5)){
-                this.validation_errors.logo_size =true
-                event.target.value= ''
-                break
+                if(acceptedImageTypes.includes(selectedFiles[i].type)){
+                    if(selectedFiles[i].size > ((1024 * 1024) * 5)){
+                    this.validation_errors.logo_size =true
+                    event.target.value= ''
+                    break
+                    }
+                    let img = {
+                        file : selectedFiles[i],
+                        thumbnail: null,
+                        selected: false
+                    }
+                    let reader = new FileReader()
+                    reader.addEventListener('load',()=>{
+                        img.thumbnail= reader.result,
+                        this.images.push(img)
+                    })
+                    reader.readAsDataURL(selectedFiles[i]);
+                }else{
+                    this.validation_errors.logo_type= true
+                    event.target.value= ''
+                    break
                 }
-                let img = {
-                    file : selectedFiles[i],
-                    thumbnail: null,
-                    selected: false
-                }
-                let reader = new FileReader()
-                reader.addEventListener('load',()=>{
-                    img.thumbnail= reader.result,
-                    this.images.push(img)
-                })
-                reader.readAsDataURL(selectedFiles[i]);
-            }else{
-                this.validation_errors.logo_type= true
-                event.target.value= ''
-                break
-            }
             }
         },
          validate(){
@@ -418,24 +422,27 @@ export default {
                         }
                     }
                 }
-                const current_thumbnails = []
-                const new_thumbnails = []
                 const deepCopy = this.$lodash.cloneDeep(this.images);
-                deepCopy.forEach(element => {
-                    if(element.file){
-                        delete element.thumbnail
-                        new_thumbnails.push(element)
+                
+                for( let i = 0; i < deepCopy.length; i++ ){
+                    if(deepCopy[i].file){
+                        form_data.append('new_thumbnails['+ i +']',deepCopy[i])
                     }else{
-                    
-                        current_thumbnails.push(element)
+                        form_data.append('current_thumbnails['+ i +']',deepCopy[i])
                     }
-                })
-                form_data.set('current_thumbnails[]',current_thumbnails)
-                form_data.set('new_thumbnails[]',new_thumbnails)
+                   
+                }
+                
                 form_data.set('price',this.formData.price +'0')
                 form_data.append('discount_percent',this.discount_percent)
                 form_data.append("categories",this.selectedCategories)
-                api.post('product/update/' + this.$route.params.id, form_data, this.$cookies.get('token')).then(response => {
+                
+                axios.post('product/update/' + this.$route.params.id, form_data, {
+                    headers:{
+                        'Authorization' : 'Bearer '+ this.$cookies.get("token"),
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(response => {
                     this.message = response.data.message
                     this.$router.push(
                     "/" + this.$route.params.store_slug + "/admin/products"
@@ -478,6 +485,7 @@ export default {
                 element.selected= false
             });
             image.selected= true
+            this.mainImage = image.file
         }
     },
 }

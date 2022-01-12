@@ -4,7 +4,7 @@
       <Xform>
         <template #content>
           <div>
-               <ValidationProvider vid="outh_param" :name="lang.label.username" rules="required|min:3"   v-slot="{ valid, errors }">
+            <ValidationProvider vid="outh_param" :name="lang.label.phone" rules="required|regPhone" v-slot="{ valid, errors }">
             <b-form-group
             :label="lang.label.username"
             class="font-weight-bold"
@@ -13,43 +13,22 @@
                   v-model="outh_param"
                   ref="auth_path"
                   type="text"
-                  maxlength="35"
-                  placeholder="شماره تلفن یا ایمیل"
+                  maxlength="11"
+                  placeholder="شماره تلفن"
                   :state="errors[0] ? false : (valid ? true : null)"
                 ></b-form-input>
               <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
             </b-form-group>
-          </ValidationProvider>
-          <ValidationProvider 
-              vid="password" :name="lang.label.password"
-              rules="required|min:6|max:20"
-                v-slot="{ valid, errors }"
-            >
-              <b-form-group
-                :label="lang.label.password"
-                class="font-weight-bold"
-              >
-                
-                  <b-form-input
-                    v-model="password"
-                    ref="password"
-                    type="text"
-                    placeholder="مثال: 1234565"
-                    maxlength="25"
-                    :state="errors[0] ? false : (valid ? true : null)"
-                  ></b-form-input>
-                  <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
-              </b-form-group>
-          </ValidationProvider>
-          <nuxt-link to="login/otp" class="text-info">ورود با رمز یکبار مصرف</nuxt-link>
+            </ValidationProvider>
+        
+            <router-link to="/login" class="text-info">ورود با رمز ثابت</router-link>
           <Xbutton :disable="btnDisable" :on_click="do_login" class="w-100 mt-3" :text="lang.svg.signIn">
             <template #spinner>
               <b-spinner v-show="laodingLogin" small  class="float-left"></b-spinner>
             </template>
           </Xbutton>
           <div class="text-center mt-3">
-            <span>هنوز ثبت نام نکرده اید؟</span>
-            <router-link to="/register">کلیک کنید</router-link>
+           
           </div>
           </div>
         </template>
@@ -73,48 +52,31 @@ export default {
   data() {
     return {
       outh_param: "",
-      password: "",
       laodingLogin:false,
       btnDisable:false,
     };
   },
   methods: {
-    do_login() {
+     do_login() {
       this.$refs.validationObserver.validate().then((res) => {
         if (res) {
           this.btnDisable= true
           this.laodingLogin= true
           authService.loginCustomer({
               outh_param: this.outh_param,
-              password: this.password,
-              login_with_verification_code: false,
+              login_with_verification_code: true,
             })
             .then((res) => {
-              if (res.status === 200) {
-                this.$cookies.set("token-buyer", res.data.data.api.token);
-                authService.currentUser(res.data.data.api.token)
-                  .then((res) => {
-                     if(res.status == 200){
-                      localStorage.setItem('userDetail',JSON.stringify(res.data.data))
-                     }
-                    this.$store.commit(
-                      "user/setToState", {
-                        name: 'current_user',
-                        data: res.data.data
-                      },{ root: true }
-                    );
-                    this.$router.replace("/customers");
-                    this.$store.commit(
-                      "open_toast",{
+                console.log(res)
+                if(res.status === 200){
+                    this.$router.push({path:"/verify_login",query: { phone_number: this.outh_param }})
+                    this.$store.commit("open_toast",
+                    {
                         msg: res.data.message,
                         variant: "success",
-                      },{ root: true }
-                    );
-                  })
-                  .catch(e =>{
-                    console.log(e)
-                  })
-              }
+                    },
+                    { root: true });
+                }
             })
             .catch(e => {
               if (e.response.status === 401){

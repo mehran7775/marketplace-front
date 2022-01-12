@@ -57,8 +57,8 @@
         <div class="bg-white shadow-sm py-3 my-2" style="border-radius: 10px;" v-if="orders">
 
             <div class="px-3">
-                <div class="table-responsive">
-                    <table class="table  table-responsive table-borderless text-center">
+                <div class="">
+                    <table class="table  table-borderless text-center">
                         <thead>
                         <tr>
                             <th scope="col" style="background-color: #eee;  border-radius: 0 16px 16px 0;">#</th>

@@ -431,11 +431,18 @@ export default {
         if (success) {
           this.loadingSpinnerCategory = true;
           this.btnDisableCategory = true;
-          console.log(document.getElementById("etitle").value,this.formUpdate.parent_id)
+          let pId = null
+          if(this.formUpdate.parent_id){
+            if(this.formUpdate.parent_id.id){
+              pId = this.formUpdate.parent_id.id
+            }else{
+              pId = this.formUpdate.parent_id.parent_id
+            }
+          }
           const payload = {
             data: {
               title: document.getElementById("etitle").value,
-              parent_id: this.formUpdate.parent_id?.id
+              parent_id: pId
             },
             categoryId: this.categoryItem.id,
             token: this.$cookies.get("token"),

@@ -17,5 +17,12 @@ export default{
                 'Authorization': "Bearer " + payload
             }
         })
+    },
+    logOut( payload ){
+        return axios.get('/customer/logout', {
+            headers:{
+                'Authorization' : `Bearer ${payload}`
+            }
+        })
     }
 }

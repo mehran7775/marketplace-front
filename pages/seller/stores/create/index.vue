@@ -719,16 +719,18 @@ export default {
                 this.validation_errors.city = true
                 res = false
             }
-            if (!this.formData.logo) {
-                this.validation_errors.logo = true
-                res = false
-            }
-            if (this.formData.logo && (this.formData.logo.size > ((1024 * 1024) * 1))) {
-                this.validation_errors.logo_size = true
-                res = false
-            }
-            if (this.formData.logo && !acceptedImageTypes.includes(this.formData.logo.type)) {
-                this.validation_errors.logo_type = true
+             if(this.formData.logo){
+                const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
+                if (this.formData.logo.size > ((1024 * 1024) * 1)) {
+                    this.validation_errors.logo_size = true
+                    res = false
+                }
+                if(!acceptedImageTypes.includes(this.formData.logo.type)){
+                    this.validation_errors.logo_type = true
+                    res = false
+                }
+            }else{
+                 this.validation_errors.logo = true
                 res = false
             }
             return res

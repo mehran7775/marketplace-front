@@ -339,6 +339,11 @@ export default {
             },
         }
     },
+    computed:{
+        acceptedImageTypes(){
+            return ['image/svg+xml', 'image/jpeg', 'image/png','image/webp']
+        }
+    },
     async created() {
         if(process.client){
             await this.getData()
@@ -351,8 +356,8 @@ export default {
             this.validation_errors.logo_size=false
             const file = payload.target.files[0]; // use it in case of normal HTML input
              if (file) {
-                 const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
-                if(acceptedImageTypes.includes(file.type)){
+                
+                if(this.acceptedImageTypes.includes(file.type)){
                     if(file.size >  ((1024 * 1024) * 1)){
                         this.validation_errors.logo_size =true
                         this.urlLogo=null
@@ -373,23 +378,17 @@ export default {
                 spy[key] = null
             });
             let res = true
-            if(this.formData.logo){
-                const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
-                if (this.formData.logo && (this.formData.logo.size > ((1024 * 1024) * 1))) {
-                this.validation_errors.logo_size = true
-                res = false
-                }else if(!acceptedImageTypes.includes(this.formData.logo.size.type)){
+            if(this.formData.logo &&  this.acceptedImageTypes.includes(this.formData.logo.type)){
+                if (this.formData.logo.size > ((1024 * 1024) * 1)) {
+                    this.validation_errors.logo_size = true
+                    res = false
+                }
+                if(!this.acceptedImageTypes.includes(this.formData.logo.type)){
                     this.validation_errors.logo_type = true
                     res = false
                 }
-            }else{
-                 this.validation_errors.logo = true
-                res = false
             }
-            if (this.formData.logo && (this.formData.logo.size > ((1024 * 1024) * 1))) {
-                this.validation_errors.logo_size = true
-                res = false
-            }
+
             return res
         },
          getData() {
@@ -399,10 +398,10 @@ export default {
                     for (let key in this.formData) {
                         this.formData[key] = this.store[key]
                     }
-                    this.formData.instagram_id= res.data.data.social_page['instagram_id'] ? res.data.data.social_page['instagram_id'] : ''
-                    this.formData.whatsapp_phone= res.data.data.social_page['whatsapp_phone'] ? res.data.data.social_page['whatsapp_phone'] : '' 
-                    this.formData.telegram_id= res.data.data.social_page['telegram_id'] ? res.data.data.social_page['telegram_id'] : ''
-                    this.formData.aparat_id= res.data.data.social_page['aparat_id'] ? res.data.data.social_page['aparat_id'] : ''
+                    this.formData.instagram_id= res.data.data.social_page?.['instagram_id']
+                    this.formData.whatsapp_phone= res.data.data.social_page?.['whatsapp_phone']
+                    this.formData.telegram_id= res.data.data.social_page?.['telegram_id']
+                    this.formData.aparat_id= res.data.data.social_page?.['aparat_id']
                 })
         },
         updateSetting() {
@@ -411,7 +410,9 @@ export default {
             } else {
                 let form_data = new FormData();
                 for (let key in this.formData) {
+                      if( key == 'logo') continue
                     if (this.formData[key] === true || this.formData[key] === false) {
+                      
                         if (this.formData[key] === true) {
                             form_data.append(key, 1);
                         }
@@ -423,6 +424,9 @@ export default {
                             form_data.append(key, this.formData[key]);
                         }
                     }
+                }
+                if(this.formData.logo &&  this.acceptedImageTypes.includes(this.formData.logo.type)){
+                    form_data.append('logo',this.formData.logo)
                 }
                 this.btnDisable= true
                 this.laodingSpinner= true
