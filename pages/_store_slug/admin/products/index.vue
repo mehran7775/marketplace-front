@@ -282,7 +282,6 @@ export default {
             productUpdate:{},
             btnDisable:false,
             loadingSpinner:false,
-            productDe:{},
             tr:false,
             btnDisableAction:false,
             laodingSpinnerAction:false
@@ -368,7 +367,6 @@ export default {
                         this.productUpdate.price=this.productUpdate.price.replace(",", "")
                     }
                     this.productUpdate.store_id= this.$route.params.store_slug
-                    console.log(this.productUpdate)
                     try{
                         const res= await productService.updateProduct({
                             data:this.productUpdate,
@@ -403,7 +401,7 @@ export default {
            try{
                const res= await productService.deleteProduct(
                     {
-                        id: this.productDe.id,
+                        id: this.productUpdate.id,
                         token : this.$cookies.get('token')
                     }
                 )

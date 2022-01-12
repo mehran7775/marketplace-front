@@ -51,11 +51,15 @@ export default {
                 if(this.$cookies.get("token")){
                     const userCurrent = await userService.userCurrent(this.$cookies.get("token"));
                     localStorage.setItem('currentUser',JSON.stringify(userCurrent.data.data))
-                    const res = await storeService.getMyWaiting(this.$cookies.get('token'))
+                    userCurrent.data.data.roles.forEach( async element => {
+                        if(element.slug === 'store-manager'){
+                            const res = await storeService.getMyWaiting(this.$cookies.get('token'))
+                            this.inMyAnticipationShops = res.data.data.badge_count
+                            const { data } = await storeService.getAllWaiting(this.$cookies.get('token'))
+                            this.inAnticipationShops = data.data.badge_count
+                        }
+                    });
                     this.onClient= true
-                    this.inMyAnticipationShops = res.data.data.badge_count
-                    const { data } = await storeService.getAllWaiting(this.$cookies.get('token'))
-                    this.inAnticipationShops = data.data.badge_count
                 }else{
                     this.$router.replace('/landing')
                 }
