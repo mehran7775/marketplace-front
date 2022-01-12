@@ -388,11 +388,16 @@ export default {
           
           }
         }
+        let counter = 0
         form_data.append('images[0]',this.mainImage)
-        this.images.forEach(( element , index) =>{
-          if(element.selected === true) return
-          form_data.append(`images[${index}]`,element.file)
-        })
+        for(let i= 0; i < this.images.length ; i++){
+          if(this.images[i].selected === true){
+            continue
+          }else{
+             counter++
+            form_data.append(`images[${counter}]`,this.images[i].file)
+          }
+        }
        
         form_data.append('price',this.formData.price+'0')
         form_data.append('phone_number','')
