@@ -63,11 +63,10 @@ export default {
         }
     },
     async created() {
-        if(process.client){
-           await this.getData()
-           await this.getPorts()
-           await this.getGateways()
-        }
+       
+        await this.getData()
+        await this.getPorts()
+        await this.getGateways()
 
     },
     methods: {

@@ -345,9 +345,7 @@ export default {
         }
     },
     async created() {
-        if(process.client){
-            await this.getData()
-        }
+        await this.getData()
     },
     methods: {
           onFileChange(payload) {

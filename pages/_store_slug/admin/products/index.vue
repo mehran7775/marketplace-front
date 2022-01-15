@@ -13,7 +13,17 @@
                     <input class="form-control" placeholder="قیمت" v-model="filter_price">
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
-                    <input class="form-control" placeholder="تاریخ ایجاد" v-model="filter_created_at">
+                    <date-picker
+                    v-model="filter_created_at"
+                    color="#00c1a4"
+                    format="YYYY-MM-DD HH:mm:ss"
+                    display-format="dddd jDD jMMMM jYYYY HH:mm"
+                    type="datetime"
+                    placeholder="تاریخ ایجاد"
+                    />
+                    <div v-show="filter_created_at" class="position-relative text-left delete-filter ">
+                        <fa icon="times" class="fa-md cursor_pointer" @click="filter_created_at= null"></fa>
+                    </div>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <select class="form-control" id="selectState" v-model="filter_status">
@@ -23,25 +33,25 @@
                 </div>
                 <div class="col-sm my-2">
                     <div>
-                    <Xbutton
-                    :on_click="()=> get_data(products.first_page_url)"
-                    :class="query ? 'mr-2' : null"
-                    text="اعمال فیلتر"
-                    variant="success"
-                    :disable="btnDisableAction"
-                    >
-                        <template #spinner>
-                            <b-spinner v-show="laodingSpinnerAction" small ></b-spinner>
-                        </template>            
-                    </Xbutton>
-                    <Xbutton
-                    v-if="query"
-                    :on_click="()=> reset_and_get()"
-                    class="mr-3"
-                    text="حذف فیلتر"
-                    variant="danger"
-                    >
-                    </Xbutton>
+                        <Xbutton
+                        :on_click="()=> get_data(products.first_page_url)"
+                        :class="query ? 'mr-2' : null"
+                        text="اعمال فیلتر"
+                        variant="success"
+                        :disable="btnDisableAction"
+                        >
+                            <template #spinner>
+                                <b-spinner v-show="laodingSpinnerAction" small ></b-spinner>
+                            </template>            
+                        </Xbutton>
+                        <Xbutton
+                        v-if="query"
+                        :on_click="()=> reset_and_get()"
+                        class="mr-3"
+                        text="حذف فیلتر"
+                        variant="danger"
+                        >
+                        </Xbutton>
                     </div>
                 </div>
             </div>
@@ -252,7 +262,6 @@
 import pagination from "~/components/pagination";
 import CustomerStatus from "~/constants/CustomerStatus";
 import api from "~/services/api";
-//import datePicker from 'vue-persian-datetime-picker'
 import ProductStatus from "~/constants/ProductStatus";
 import { productService } from '~/services/apiServices'
 import { ValidationProvider, ValidationObserver } from "vee-validate";
@@ -260,7 +269,9 @@ export default {
     name: "index",
     components: {
         pagination,
-        //datePicker
+        ValidationProvider,
+        ValidationObserver,
+        DatePicker: () => import('vue-persian-datetime-picker'),
     },
     layout: "main-content",
     async created() {
@@ -287,10 +298,6 @@ export default {
             laodingSpinnerAction:false
 
         }
-    },
-    components: {
-        ValidationProvider,
-        ValidationObserver,
     },
     computed: {
         query() {

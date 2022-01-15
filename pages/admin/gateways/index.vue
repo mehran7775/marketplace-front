@@ -9,6 +9,7 @@
                 </div>
                 <div class="col-sm my-2">
                     <select class="form-control" v-model="filter_status">
+                        <option :value="null">وضعیت</option>
                         <option v-for="status in GatewayStatus.gatewayStatus" :value="status.value">
                             {{status.text}}
                         </option>

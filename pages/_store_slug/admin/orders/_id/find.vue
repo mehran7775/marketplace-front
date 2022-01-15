@@ -105,7 +105,7 @@
                                     <thead>
                                     <tr>
                                         <th scope="col" style="background-color: #eee;  border-radius: 0 16px 16px 0;">#</th>
-                                        <th scope="col" style="background-color: #eee;">نام</th>
+                                        <th scope="col" style="background-color: #eee;">عنوان</th>
                                         <th scope="col" style="background-color: #eee;">تصویر</th>
                                         <th scope="col" style="background-color: #eee;">تعداد</th>
                                         <th scope="col"  style="background-color: #eee;">قیمت (ریال)</th>

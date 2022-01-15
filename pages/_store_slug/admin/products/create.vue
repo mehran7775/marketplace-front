@@ -204,13 +204,12 @@ export default {
   },
   layout: "main-content",
   async created(){
-    if(process.client){
-      await this.getAllCategory() 
-       this.$store.commit('setToState',{
-        name:'selectedCategories',
-        data:[]
-      })
-    }
+    await this.getAllCategory() 
+      this.$store.commit('setToState',{
+      name:'selectedCategories',
+      data:[]
+    })
+    
   },
   data() {
     return {

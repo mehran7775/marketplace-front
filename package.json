@@ -26,7 +26,7 @@
         "nuxt": "^2.15.7",
         "vee-validate": "^3.4.13",
         "vue-lodash": "^2.1.2",
-        "vue-persian-datetime-picker": "^2.9.0",
+        "vue-persian-datetime-picker": "^2.10.3",
         "vue-select": "^3.16.0",
         "vue-toastification": "^1.7.14"
     },

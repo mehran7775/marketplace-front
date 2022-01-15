@@ -158,10 +158,9 @@ export default {
         },
     },
     async created() {
-        if(process.client){
-            let res = await api.get('user/get')
-            this.users = res.data.data
-        }
+        let res = await api.get('user/get')
+        this.users = res.data.data
+        
     }
 }
 </script>

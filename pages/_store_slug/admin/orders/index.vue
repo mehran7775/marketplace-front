@@ -11,10 +11,30 @@
                     <input class="form-control" placeholder="اطلاعات مشتری" v-model="filter_customer_detail">
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
-                    <input class="form-control" placeholder="از تاریخ" v-model="filter_from_date">
+                    <date-picker
+                    v-model="filter_from_date"
+                    color="#00c1a4"
+                    format="YYYY-MM-DD HH:mm:ss"
+                    display-format="dddd jDD jMMMM jYYYY HH:mm"
+                    type="datetime"
+                    placeholder="از تاریخ"
+                    />
+                    <div v-show="filter_from_date" class="position-relative text-left delete-filter ">
+                        <fa icon="times" class="fa-md cursor_pointer" @click="filter_from_date= null"></fa>
+                    </div>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
-                    <input class="form-control" placeholder="تا تاریخ" v-model="filter_to_date">
+                     <date-picker
+                    v-model="filter_to_date"
+                    color="#00c1a4"
+                    format="YYYY-MM-DD HH:mm:ss"
+                    display-format="dddd jDD jMMMM jYYYY HH:mm"
+                    type="datetime"
+                    placeholder="تا تاریخ"
+                    />
+                    <div v-show="filter_to_date" class="position-relative text-left delete-filter ">
+                        <fa icon="times" class="fa-md cursor_pointer" @click="filter_to_date= null"></fa>
+                    </div>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <select class="form-control" v-model="filter_status">
@@ -99,7 +119,6 @@
 
             <pagination v-if="orders.next_page_url || orders.prev_page_url" :data="orders" :get_data="get_data" :perpage="per_page"></pagination>
         </div>
-
     </div>
 </template>
 
@@ -107,14 +126,13 @@
 import pagination from "~/components/pagination";
 import PageTitle from "~/components/main/pageTitle";
 import api from "~/services/api";
-//import datePicker from 'vue-persian-datetime-picker'
 import OrderStatus from "~/constants/OrderStatus";
 export default {
     name: "index",
     components: {
         PageTitle,
         pagination,
-        //datePicker
+        DatePicker: () => import('vue-persian-datetime-picker'),
     },
     layout: "main-content",
     data() {
@@ -132,10 +150,9 @@ export default {
         }
     },
      async created() {
-        if(process.client){
-            let res = await api.get('order?store_id='  + this.$route.params.store_slug + '&perpage=' + this.per_page,this.$cookies.get('token'))
-            this.orders = res.data.data
-        }
+        let res = await api.get('order?store_id='  + this.$route.params.store_slug + '&perpage=' + this.per_page,this.$cookies.get('token'))
+        this.orders = res.data.data
+       
        
     },
     computed: {
@@ -186,8 +203,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 table > tbody > tr:not(:last-child) > td {
     border-bottom: 1px solid #dedede;
 }
+
 </style>
