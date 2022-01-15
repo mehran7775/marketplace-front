@@ -6,19 +6,19 @@
                     <b-form-row>
                         <b-col col="sm">
                             <b-form-group label="نام">
-                                <b-form-input disabled :value="user.first_name"></b-form-input>
+                                <b-form-input v-model="user.first_name"></b-form-input>
                             </b-form-group>
                         </b-col>
                         <b-col col="sm">
                             <b-form-group label="نام خانوادگی">
-                                <b-form-input disabled :value="user.last_name"></b-form-input>
+                                <b-form-input v-model="user.last_name"></b-form-input>
                             </b-form-group>
                         </b-col>
                     </b-form-row>
                     <b-form-row>
                         <b-col cols="sm">
                             <b-form-group label="شناسه">
-                                <b-form-input disabled :value="user.id"></b-form-input>
+                                <b-form-input v-model="user.id"></b-form-input>
                             </b-form-group>
                         </b-col>
                     </b-form-row>
@@ -26,17 +26,27 @@
 
                         <b-col col="sm">
                             <b-form-group label="ایمیل">
-                                <b-form-input disabled :value="user.email"></b-form-input>
+                                <b-form-input v-model="user.email"></b-form-input>
                             </b-form-group>
                         </b-col>
                     </b-form-row>
                     <b-form-row>
                         <b-col cols="sm">
                             <b-form-group label="شماره همراه">
-                                <b-form-input disabled :value="user.phone"></b-form-input>
+                                <b-form-input v-model="user.phone"></b-form-input>
                             </b-form-group>
                         </b-col>
                     </b-form-row>
+                    <b-form-row>
+                        <b-col cols="sm">
+                            <b-form-group label="وضعیت">
+                                <b-form-select v-model="user.status">
+                                    <option v-for="(status, index) in CustomerStatus.userStatus" :key="index" :value="status.value">{{status.text}}</option>
+                                </b-form-select>
+                            </b-form-group>
+                        </b-col>
+                    </b-form-row>
+                    
 
 
                 </div>
@@ -48,12 +58,14 @@
 <script>
 
 import api from "~/services/api";
+import CustomerStatus from '~/constants/CustomerStatus'
 
 export default {
     name: "find",
     layout: "main-content",
     data() {
         return {
+            CustomerStatus,
             user: null,
             orders : []
         }

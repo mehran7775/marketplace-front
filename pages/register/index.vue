@@ -75,14 +75,8 @@ export default {
   data() {
     return {
       form: {
-        first_name: "",
-        last_name: "",
         phone: "",
         password: "",
-        email: "",
-        city: "",
-        address: "",
-        selected:null
       },
       btnDisable: false,
       laodingLogin: false
@@ -99,14 +93,8 @@ export default {
           this.btnDisable= true
           this.laodingLogin= true
           const data = {
-            first_name: this.form.first_name,
-            last_name: this.form.last_name,
-            email: this.form.email,
             phone: this.form.phone,
-            province: this.form.selected,
-            city: this.form.city,
-            password2: this.form.password,
-            address: this.form.address,
+            password: this.form.password,
           };
             authService.registerCustomer(data)
             .then((res) => {

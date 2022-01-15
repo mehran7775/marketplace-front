@@ -100,11 +100,12 @@
                     </div>
                     <div class="card-body">
                         <div class="px-3">
-                            <div>
+                            <div class="overflow-auto">
                                 <table class="table table-borderless text-center">
                                     <thead>
                                     <tr>
                                         <th scope="col" style="background-color: #eee;  border-radius: 0 16px 16px 0;">#</th>
+                                        <th scope="col" style="background-color: #eee;">نام</th>
                                         <th scope="col" style="background-color: #eee;">تصویر</th>
                                         <th scope="col" style="background-color: #eee;">تعداد</th>
                                         <th scope="col"  style="background-color: #eee;">قیمت (ریال)</th>
@@ -114,6 +115,7 @@
                                     <tbody>
                                     <tr v-for="(product, index) in order.products" :key="index">
                                         <td>{{ product.id }}</td>
+                                        <td>{{ product.title }}</td>
                                         <td>
                                             <img :src="product.thumbnails[0]" width="30px"/>
                                         </td>

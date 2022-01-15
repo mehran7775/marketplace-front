@@ -56,9 +56,8 @@
             </div>
         </div>
         <div class="bg-white shadow-sm py-3 my-2" style="border-radius: 10px;" v-if="customers">
-
             <div class="px-3">
-                <div>
+                <div class="overflow-auto">
                     <table class="table table-borderless text-center">
                         <thead>
                         <tr>
@@ -89,9 +88,7 @@
                     </table>
                 </div>
             </div>
-
             <hr v-if="customers.next_page_url || customers.prev_page_url">
-
             <pagination :data="customers" :get_data="get_data" :perpage="per_page"></pagination>
         </div>
     </div>

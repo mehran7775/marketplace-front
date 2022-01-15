@@ -5,7 +5,7 @@
         <b-card bg-variant="light" class="w-100 bg-info mt-0 mt-md-5">
           <div class="pt-2 mb-4"><h5 class="font-weight-bold">سفارشات</h5></div>
           <div class="px-3">
-            <div>
+            <div class="overflow-auto">
               <table class="table table-borderless text-center">
                 <thead>
                   <tr>
