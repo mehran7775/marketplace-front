@@ -32,6 +32,11 @@
                                 <label>کد رهگیری</label>
                                 <div class="border rounded p-2" v-text="order.tracking_number"></div>
                             </div>
+                            <div class="col-sm mt-2">
+                                <label>نام فروشگاه</label>
+                                <div class="border rounded p-2" v-text="order.store"></div>
+                            </div>
+
                         </div>
                         <div class="row">
                             <div class="col-sm mt-2">
@@ -98,11 +103,12 @@
                     </div>
                     <div class="card-body">
                         <div class="px-3">
-                            <div>
+                            <div class="overflow-auto">
                                 <table class="table table-borderless text-center">
                                     <thead>
                                     <tr>
                                         <th scope="col" style="background-color: #eee;  border-radius: 0 16px 16px 0;">#</th>
+                                        <th scope="col" style="background-color: #eee;">نام</th>
                                         <th scope="col" style="background-color: #eee;">تصویر</th>
                                         <th scope="col" style="background-color: #eee;">تعداد</th>
                                         <th scope="col"  style="background-color: #eee; border-radius: 16px 0px 0px 16px;">قیمت (ریال)</th>
@@ -111,6 +117,7 @@
                                     <tbody>
                                     <tr v-for="(product, index) in order.products" :key="index">
                                         <td>{{ product.id }}</td>
+                                        <td>{{ product.title }}</td>
                                         <td>
                                             <img :src="product.thumbnails[0]" width="30px"/>
                                         </td>
@@ -155,6 +162,7 @@ export default {
         getOrder(){
             api.get('order/find/' + this.$route.params.id )
             .then(res => {
+                console.log(res.data.data)
                 this.order = res.data.data
                 this.form.status = res.data.data.status
             })

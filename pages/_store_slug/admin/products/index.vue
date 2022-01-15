@@ -48,7 +48,7 @@
         </div>
         <div class="bg-white shadow-sm py-3 my-2" style="border-radius: 10px;" v-if="products">
             <div class="px-3">
-                <div>
+                <div class="overflow-auto">
                     <table class="table table-borderless text-center">
                         <thead>
                         <tr>

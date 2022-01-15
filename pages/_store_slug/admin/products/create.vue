@@ -398,10 +398,13 @@ export default {
             form_data.append(`images[${counter}]`,this.images[i].file)
           }
         }
-       
+        this.selectedCategories.forEach((element , index) =>{
+          console.log(element)
+          form_data.append(`categories[${index}]`, element)
+        })
         form_data.append('price',this.formData.price+'0')
         form_data.append('phone_number','')
-        form_data.append("categories",this.selectedCategories)
+       
         form_data.append('discount_percent',this.discount_percent)
         axios({
           method: "post",

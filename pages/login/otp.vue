@@ -79,17 +79,16 @@ export default {
                 }
             })
             .catch(e => {
-              if (e.response.status === 401){
-                this.$store.commit("open_toast",{
-                    msg: e.response.data.message,
-                    variant: "error",
-                  },
-                  { root: true }
-                );
-              }
               if (e.response.status === 400) {
                 this.$refs.validationObserver.setErrors(e.response.data.data);
+                return
               }
+               this.$store.commit("open_toast",{
+                  msg: e.response.data.message,
+                  variant: "error",
+                },
+                { root: true }
+              );
             }).finally(() =>{
               this.btnDisable= false
               this.laodingLogin= false

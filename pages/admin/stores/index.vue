@@ -50,7 +50,7 @@
         </div>
         <div class="bg-white shadow-sm py-3 my-2" style="border-radius: 10px;" v-if="stores">
             <div class="px-3">
-                <div>
+                <div class="overflow-auto">
                     <table class="table table-borderless text-center">
                         <thead>
                         <tr>
@@ -147,7 +147,7 @@ export default {
             if (this.filter_to_date) {
                 res = res + '&query[to_date]=' + this.filter_to_date;
             }
-            if (this.filter_status) {
+            if (this.filter_status != null) {
                 res = res + '&query[status]=' + this.filter_status;
             }
             return res;
