@@ -66,7 +66,7 @@
                             <th scope="col" style="background-color: #eee;">عنوان</th>
                             <th scope="col" style="background-color: #eee;">تصویر</th>
                             <th scope="col" style="background-color: #eee;">تعداد</th>
-                            <th scope="col" style="background-color: #eee;">قیمت (ریال)</th>
+                            <th scope="col" style="background-color: #eee;">قیمت (تومان)</th>
                             <th scope="col" style="background-color: #eee;">تاریخ ایجاد</th>
                             <th scope="col" style="background-color: #eee;">وضعیت</th>
                             <th scope="col" style="background-color: #eee; border-radius: 16px 0px 0px 16px;">عملیات
@@ -370,9 +370,12 @@ export default {
                 if(success){
                     this.btnDisable= true
                     this.loadingSpinner= true
-                    while(this.productUpdate.price.includes(",")){
-                        this.productUpdate.price=this.productUpdate.price.replace(",", "")
+                    if(this.productUpdate.price.includes(",")){
+                        while(this.productUpdate.price.includes(",")){
+                            this.productUpdate.price=this.productUpdate.price.replace(",", "")
+                        }
                     }
+                    
                     this.productUpdate.store_id= this.$route.params.store_slug
                     try{
                         const res= await productService.updateProduct({

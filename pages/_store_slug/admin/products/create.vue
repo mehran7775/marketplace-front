@@ -1,21 +1,25 @@
 <template>
   <div>
       <page-title title_text="افزودن محصول جدید" icon="product">
-      <button
-        class="btn btn-success shadow-sm mx-2 px-4 py-2"
-        @click="createProduct"
-        variant="primary"
-        style="border-radius: 20px; border-color: #bbb"
-      >
-        ثبت محصول
-      </button>
+       <Xbutton
+          text="ثبت محصول"
+          :disable="btnDisable"
+          :on_click="() => createProduct()"
+          variant="success"
+          class="mx-2 px-4 py-2"
+        >
+          <template #spinner>
+            <b-spinner
+              v-show="loadingSpinner"
+              small
+              class="float-left"
+            ></b-spinner>
+          </template>
+        </Xbutton>
       </page-title>
       <div class="alert alert-info" role="alert" v-if="message">
         {{ message }}
       </div>
-      <!-- <div class="alert alert-danger" role="alert" v-if="error">
-        {{ error }}
-      </div> -->
       <div class="row">
         <div class="col-12">
           <div class="card">
@@ -205,7 +209,7 @@ export default {
   layout: "main-content",
   async created(){
     await this.getAllCategory() 
-      this.$store.commit('setToState',{
+    this.$store.commit('setToState',{
       name:'selectedCategories',
       data:[]
     })
@@ -266,7 +270,8 @@ export default {
 
       },
       images: [],
-      // defaultSelectedImage: 0
+      btnDisable: false , 
+      loadingSpinner: false
     };
   },
   watch:{
@@ -398,13 +403,14 @@ export default {
           }
         }
         this.selectedCategories.forEach((element , index) =>{
-          console.log(element)
           form_data.append(`categories[${index}]`, element)
         })
         form_data.append('price',this.formData.price+'0')
         form_data.append('phone_number','')
        
         form_data.append('discount_percent',this.discount_percent)
+        this.btnDisable = true
+        this.loadingSpinner = true
         axios({
           method: "post",
           url: "product/create",
@@ -415,18 +421,22 @@ export default {
           },
       })
        .then((response) => {
-            this.message = response.data.message;
-            this.$router.push(
-              "/" + this.$route.params.store_slug + "/admin/products"
-            );
-            this.$store.commit('open_toast',{
-                msg: response.data.message,
-                variant: 'success'
-            })
+          this.message = response.data.message;
+          this.$router.push(
+            "/" + this.$route.params.store_slug + "/admin/products"
+          );
+          this.$store.commit('open_toast',{
+              msg: response.data.message,
+              variant: 'success'
           })
-          .catch(({ response }) => {
-            this.error = response.data.data[Object.keys(response.data.data)[0]];
-          });
+        })
+        .catch(({ response }) => {
+          this.error = response.data.data[Object.keys(response.data.data)[0]];
+        })
+        .finally(()=>{
+          this.btnDisable = false
+          this.loadingSpinner = false
+        })
          
       }
     },

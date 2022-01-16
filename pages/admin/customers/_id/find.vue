@@ -119,7 +119,7 @@ export default {
                             status: this.user.status,
                             userId: this.user.id
                         },
-                        token: this.$cookies.get('token')
+                        token: this.$cookies.get('token-buyer')
                     }
                     try{
                         this.btnDisable = true

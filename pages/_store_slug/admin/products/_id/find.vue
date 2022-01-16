@@ -1,11 +1,21 @@
 <template>
     <div >
         <page-title title_text="جزییات محصول" icon="product">
-        <button class="btn btn-success shadow-sm mx-2 px-4 py-2" @click="updateProduct" variant="primary"
-                style="border-radius: 20px; border-color: #bbb;"
-        >
-            ذخیره تغییرات
-        </button>
+            <Xbutton
+                text="ذخیره تغییرات"
+                :disable="btnDisable"
+                :on_click="() => updateProduct()"
+                variant="success"
+                class="mx-2 px-4 py-2"
+              >
+                <template #spinner>
+                  <b-spinner
+                    v-show="loadingSpinner"
+                    small
+                    class="float-left"
+                  ></b-spinner>
+                </template>
+             </Xbutton>
         </page-title>
         <div class="alert alert-info" role="alert" v-if="message">
             {{ message }}
@@ -247,7 +257,7 @@ export default {
             },
             statistics : {},
             images : [],
-            mainImage:null,
+            main_image:null,
             editorConfig : {
                 removePlugins: ['Title','Table','PageBreak','Subscript','Superscript','CodeBlock','Code','Strikethrough','ChemType','MathType','Specialcharacters'],
                 placeholder:"توضیحات",
@@ -271,6 +281,8 @@ export default {
                 smiley_columns : 6
 
              },
+            btnDisable: false,
+            loadingSpinner: false
         }
     },
     computed:{
@@ -305,12 +317,12 @@ export default {
                 value.forEach(element =>{
                     if(element.selected){
                         se = true
-                        this.mainImage = element.file
+                        this.main_image = element.file || null
                     }
                 })
                 if(!se){
                     value[0].selected = true
-                    this.mainImage = value[0].file
+                    this.main_image = value[0].file || null
                 }
             }
         },
@@ -387,6 +399,8 @@ export default {
                     this.formData.title = res.data.data.title
                     this.formData.price = res.data.data.price
                     this.formData.quantity = res.data.data.quantity
+                    this.formData.description = res.data.data.description
+                    this.formData.code = res.data.data.code
                     this.formData.is_multiple = res.data.data.is_multiple == 1 ? true : false
                     this.formData.unlimited = res.data.data.unlimited == 1 ? true : false
                     this.$store.commit('setToState', {
@@ -397,10 +411,11 @@ export default {
                     res.data.data.thumbnails.forEach(element =>{
                         this.images.push(
                             {
-                                thumbnail:element.thumbnail,
-                                selected:element.selected
+                                thumbnail:element,
+                                selected:false
                             }
                         )
+                        this.images[0].selected = true
                     })
                 })
         },
@@ -423,20 +438,38 @@ export default {
                     }
                 }
                 const deepCopy = this.$lodash.cloneDeep(this.images);
-                
-                for( let i = 0; i < deepCopy.length; i++ ){
-                    if(deepCopy[i].file){
-                        form_data.append('new_thumbnails['+ i +']',deepCopy[i])
-                    }else{
-                        form_data.append('current_thumbnails['+ i +']',deepCopy[i])
-                    }
-                   
+                const se = deepCopy.find(({selected})=> {
+                    return selected === true
+                })
+                if(!this.main_image){
+                    form_data.append('current_images[0]', se.thumbnail)
                 }
-                
+
+                let counter = !this.main_image ? 1 : 0
+                let counter2 = 0
+
+                for(let i= 0; i < deepCopy.length; i++){
+                    if(deepCopy[i].selected === true){
+                        continue
+                    }else{
+                        if(!deepCopy[i].file){
+                            form_data.append(`current_images[${counter}]`,deepCopy[i].thumbnail)
+                            counter++
+                        }else{
+                            form_data.append(`new_images[${counter2}]`,deepCopy[i].file)
+                            counter2++
+                        }
+                    }
+                }
+           
+                form_data.append('main_image', this.main_image)
                 form_data.set('price',this.formData.price +'0')
                 form_data.append('discount_percent',this.discount_percent)
-                form_data.append("categories",this.selectedCategories)
-                
+                this.selectedCategories.forEach((element, index) =>{
+                    form_data.append(`categories[${ index }]`, element)
+                })
+                this.btnDisable= true
+                this.loadingSpinner= true
                 axios.post('product/update/' + this.$route.params.id, form_data, {
                     headers:{
                         'Authorization' : 'Bearer '+ this.$cookies.get("token"),
@@ -453,6 +486,13 @@ export default {
                     })
                 }).catch(({response}) => {
                     this.error = response.data.data[Object.keys(response.data.data)[0]]
+                    this.$store.commit('open_toast',{
+                        msg: response.data.message,
+                        variant: 'error'
+                    })
+                }).finally(()=>{
+                    this.btnDisable= false
+                    this.loadingSpinner= false
                 })
             }
             
@@ -485,7 +525,7 @@ export default {
                 element.selected= false
             });
             image.selected= true
-            this.mainImage = image.file
+            this.main_image = image.file || null
         }
     },
 }

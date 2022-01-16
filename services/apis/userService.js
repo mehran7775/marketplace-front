@@ -10,7 +10,7 @@ export default{
         })
     },
     updateCustomer(payload){
-        return axios.put(`customer/update/${payload.data.userId}`,payload.data,{
+        return axios.put(`customer/update/${payload.data.id}`,payload.data,{
             headers:{
                 'Authorization': "Bearer " + payload.token
             }

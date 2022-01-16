@@ -176,6 +176,7 @@ export default {
             this.detail.last_name = info.last_name
             this.detail.phone = info.phone
             this.detail.email = info.email
+            this.detail.id = info.id
             this.detail.province = info.addresses[0].province
             this.detail.city = info.addresses[0].city
             this.detail.address = info.addresses[0].address

@@ -23,7 +23,7 @@ export const fa = {
         no_icon: 'بدون آیکن',
         test: 'تست',
     },
-    price: 'ریال',
+    price: 'تومان',
     svg: {
         basket: 'سبدخرید',
         home:'خانه',
