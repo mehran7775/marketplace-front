@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="Object.keys(store).length > 1">
     <div id="edit_store">
         <page-title title_text="ویرایش فروشگاه" icon="product">
             <div @click="updateSetting">
@@ -370,6 +370,17 @@ export default {
                
             }
         },
+         moneyFormat(price) {
+            if (!price) {
+                return 0
+            }
+            const pieces = parseFloat(price).toFixed(0).split("");
+            let ii = pieces.length;
+            while ((ii -= 3) > 0) {
+                pieces.splice(ii, 0, ",");
+            }
+            return pieces.join("");
+        },
         validate(){
             let spy = this.validation_errors
             Object.keys(spy).forEach(function (key) {
@@ -393,13 +404,12 @@ export default {
              api.get('store/find/' + this.$route.params.store_slug, this.$cookies.get('token'))
                 .then(res => {
                     this.store = res.data.data
-                    for (let key in this.formData) {
-                        this.formData[key] = this.store[key]
-                    }
+                    this.formData = res.data.data
                     this.formData.instagram_id= res.data.data.social_page?.['instagram_id']
                     this.formData.whatsapp_phone= res.data.data.social_page?.['whatsapp_phone']
                     this.formData.telegram_id= res.data.data.social_page?.['telegram_id']
                     this.formData.aparat_id= res.data.data.social_page?.['aparat_id']
+                    delete this.formData.social_page
                 })
         },
         updateSetting() {

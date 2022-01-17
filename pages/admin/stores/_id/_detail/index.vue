@@ -1,13 +1,10 @@
 <template>
-   <div>
-        <MoleculesXproductsPanel :store_slug="$route.params.store_slug"/>
-   </div>
+   <MoleculesXupdateProductsPanel :store_slug="$route.params.id" admin_panel/>
 </template>
 
 <script>
     export default {
         layout: "main-content",
-        
     }
 </script>
 
