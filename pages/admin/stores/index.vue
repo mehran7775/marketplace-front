@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div  v-if="stores">
         <page-title title_text="فروشگاه ها" icon="store">
         </page-title>
         <div class="row">
@@ -10,13 +10,43 @@
                 <input class="form-control" placeholder="نام انگلیسی فروشگاه" v-model="filter_slug">
             </div>
             <div class="col-12 col-sm-6 col-lg-3 my-2">
-                <input class="form-control" placeholder="تاریخ ایجاد" v-model="filter_created_at">
+                <date-picker
+                v-model="filter_created_at"
+                color="#00c1a4"
+                format="YYYY-MM-DD HH:mm:ss"
+                display-format="dddd jDD jMMMM jYYYY HH:mm"
+                type="datetime"
+                placeholder="تاریخ ایجاد"
+                />
+                <div v-show="filter_created_at" class="position-relative text-left delete-filter ">
+                    <fa icon="times" class="fa-md cursor_pointer" @click="filter_created_at= null"></fa>
+                </div>
             </div>
             <div class="col-12 col-sm-6 col-lg-3 my-2">
-                <input class="form-control" placeholder="از تاریخ" v-model="filter_from_date">
+                <date-picker
+                v-model="filter_from_date"
+                color="#00c1a4"
+                format="YYYY-MM-DD HH:mm:ss"
+                display-format="dddd jDD jMMMM jYYYY HH:mm"
+                type="datetime"
+                placeholder="از تاریخ"
+                />
+                <div v-show="filter_from_date" class="position-relative text-left delete-filter ">
+                    <fa icon="times" class="fa-md cursor_pointer" @click="filter_from_date= null"></fa>
+                </div>
             </div>
             <div class="col-12 col-sm-6 col-lg-3 my-2">
-                <input class="form-control" placeholder="تا تاریخ" v-model="filter_to_date">
+                <date-picker
+                v-model="filter_to_date"
+                color="#00c1a4"
+                format="YYYY-MM-DD HH:mm:ss"
+                display-format="dddd jDD jMMMM jYYYY HH:mm"
+                type="datetime"
+                placeholder="تا تاریخ"
+                />
+                 <div v-show="filter_to_date" class="position-relative text-left delete-filter ">
+                    <fa icon="times" class="fa-md cursor_pointer" @click="filter_to_date= null"></fa>
+                </div>
             </div>
             <div class="col-12 col-sm-6 col-lg-3 my-2">
                 <select class="form-control" id="selectState" v-model="filter_status">
@@ -48,7 +78,7 @@
                     </div>
                 </div>
         </div>
-        <div class="bg-white shadow-sm py-3 my-2" style="border-radius: 10px;" v-if="stores">
+        <div class="bg-white shadow-sm py-3 my-2" style="border-radius: 10px;">
             <div class="px-3">
                 <div class="overflow-auto">
                     <table class="table table-borderless text-center">
@@ -102,14 +132,13 @@
 import pagination from "~/components/pagination";
 import PageTitle from "~/components/main/pageTitle";
 import api from "~/services/api";
-//import datePicker from 'vue-persian-datetime-picker'
 import StoreStatus from "~/constants/StoreStatus";
 export default {
     name: "index",
     components: {
         PageTitle,
         pagination,
-        //datePicker
+        DatePicker: () => import('vue-persian-datetime-picker'),
     },
     layout: "main-content",
     data() {
@@ -178,13 +207,14 @@ export default {
         },
     },
     async created() {
-       if(process.client){
-            await api.get('store/all' + '?perpage=' + this.per_page)
-            .then(res => {
-                this.stores = res.data.data
-            })
-       }
-
+        try{
+            const { data } = await api.get('store/all' + '?perpage=' + this.per_page)
+            this.stores = data.data
+        }catch(e){
+            console.log(e)
+        }
+       
+       
     }
 }
 </script>
@@ -194,5 +224,6 @@ table > tbody > tr:not(:last-child) > td {
     border-bottom: 1px solid #dedede;
     
 }
+
 
 </style>

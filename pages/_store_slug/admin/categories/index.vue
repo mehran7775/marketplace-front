@@ -282,13 +282,12 @@ export default {
   },
   layout: "main-content",
   async created() {
-    if (process.client) {
-      try {
-        await this.getAllCategory();
-      } catch (e) {
-        console.log(e);
-      }
-      this.$nuxt.$on("actionCategory", async (payload) => {
+    try {
+      await this.getAllCategory();
+    } catch (e) {
+      console.log(e);
+    }
+    this.$nuxt.$on("actionCategory", async (payload) => {
         if (payload.type === "edit") {
           Object.assign(this.categoryItem, payload.item);
           this.optionUpdate = [];
@@ -321,7 +320,6 @@ export default {
           this.$bvModal.show("deleteCatagoryModal");
         }
       });
-    }
   },
   methods: {
     async getAllCategory() {

@@ -11,7 +11,7 @@
               </div>
               <div class="mr-4" v-if="setDetail">
                 <div class="row">
-                    <div  v-if="!detail.store_option.show_province_option" class="col-5">
+                    <div v-if="!detail.store_option.show_province_option && detail.province && calProvince" class="col-5">
                         <fa icon="map-marker"></fa>
                         <span class="mr-1" v-text="calProvince"></span>
                    </div>
@@ -91,6 +91,7 @@
 import { tr } from "@/services/lang";
 import { mapGetters } from 'vuex'
 import {provinces} from "~/constants/Provinces";
+import { fa } from '~/lang/fa';
 export default {
   props:{
       setDetail:{
@@ -110,10 +111,13 @@ export default {
     },
     ...mapGetters(["detail"]),
     calProvince(){  
-      const p=this.provinces.find(({id}) =>{
+      const p = this.provinces.find(({id}) =>{
         return id == this.detail.province
       })
-      return p.value
+      if(p){
+        return p.value
+      }
+      return false
     }
   },
 

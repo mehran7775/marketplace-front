@@ -19,12 +19,12 @@
                     type="datetime"
                     placeholder="از تاریخ"
                     />
-                     <div v-show="filter_from_date" class="position-relative text-left delete-filter ">
+                    <div v-show="filter_from_date" class="position-relative text-left delete-filter ">
                         <fa icon="times" class="fa-md cursor_pointer" @click="filter_from_date= null"></fa>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
-                    <date-picker
+                     <date-picker
                     v-model="filter_to_date"
                     color="#00c1a4"
                     format="YYYY-MM-DD HH:mm:ss"
@@ -32,7 +32,7 @@
                     type="datetime"
                     placeholder="تا تاریخ"
                     />
-                     <div v-show="filter_to_date" class="position-relative text-left delete-filter ">
+                    <div v-show="filter_to_date" class="position-relative text-left delete-filter ">
                         <fa icon="times" class="fa-md cursor_pointer" @click="filter_to_date= null"></fa>
                     </div>
                 </div>
@@ -44,8 +44,8 @@
                         </option>
                     </select>
                 </div>
-                <div class="col my-2">
-                    <div>
+                <div class="col-sm my-2">
+                        <div>
                         <Xbutton
                         :on_click="()=> get_data(orders.first_page_url)"
                         :class="[query ? 'mr-2' : null,'px-3']"
@@ -78,12 +78,11 @@
 
             <div class="px-3">
                 <div class="overflow-auto">
-                    <table class="table table-borderless text-center">
+                    <table class="table  table-borderless text-center">
                         <thead>
                         <tr>
                             <th scope="col" style="background-color: #eee;  border-radius: 0 16px 16px 0;">#</th>
                             <th scope="col" style="background-color: #eee;">مشتری</th>
-                            <th scope="col" style="background-color: #eee;">نام فروشگاه</th>
                             <th scope="col" style="background-color: #eee;">کد پیگیری</th>
                             <th scope="col" style="background-color: #eee;">قیمت (ریال)</th>
                             <th scope="col" style="background-color: #eee;">تاریخ ثبت</th>
@@ -94,17 +93,7 @@
                         <tbody>
                         <tr v-for="(order, index) in orders.data" :key="index">
                             <td>{{ order.id }}</td>
-                            <td>
-                                <nuxt-link v-show="order.customer.id" :to="`/admin/customers/${ order.customer.id }/find`" v-text="order.customer_info"
-                                class="text-info"
-                                ></nuxt-link>
-                                <span v-show="!order.customer.id" v-text="order.customer_info"></span>
-                            </td>
-                            <td>
-                                <nuxt-link :to="`/admin/stores/${ order.store_id }/find`" v-text="order.store_name"
-                                class="text-info"
-                                ></nuxt-link>
-                            </td>
+                            <td >{{ order.customer_info }}</td>
                             <td>{{ order.tracking_number }}</td>
                             <td>{{ order.payment_price }}</td>
                             <td>{{ order.created_at }}</td>
@@ -114,9 +103,14 @@
                                 </b-badge>
                                 </td>
                             <td>
-                                <nuxt-link class="btn p-0 m-0 text-danger" :to="'orders/' + order.id + '/find'">
-                                <span class="special-tooltip btn btn-sm btn-clean btn-icon btn-icon-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" fill="#bbb"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M12 4C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
+                                <nuxt-link v-if="!admin_panel" class="btn p-0 m-0 text-danger" :to="`/${store_slug}/admin/orders/${order.id}/find`">
+                                    <span class="special-tooltip btn btn-sm btn-clean btn-icon btn-icon-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" fill="#bbb"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M12 4C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
+                                </span>
+                                </nuxt-link>
+                                <nuxt-link v-else class="btn p-0 m-0 text-danger" :to="`/admin/stores/${store_slug}/${order.id}/order`">
+                                    <span class="special-tooltip btn btn-sm btn-clean btn-icon btn-icon-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" fill="#bbb"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M12 4C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
                                 </span>
                                 </nuxt-link>
                             </td>
@@ -135,34 +129,44 @@
 
 <script>
 import pagination from "~/components/pagination";
-import CustomerStatus from "~/constants/CustomerStatus";
 import PageTitle from "~/components/main/pageTitle";
 import api from "~/services/api";
 import OrderStatus from "~/constants/OrderStatus";
 export default {
-    name: "index",
+    props:{
+        store_slug:{
+            type: Number | String,
+            required: true
+        },
+        admin_panel:{
+            default: false,
+            type: Boolean
+        }
+    },
     components: {
         PageTitle,
         pagination,
-        DatePicker: () => import('vue-persian-datetime-picker')
+        DatePicker: () => import('vue-persian-datetime-picker'),
     },
-    layout: "main-content",
     data() {
         return {
             OrderStatus,
-            filter_tracking_number: null,
+              filter_tracking_number: null,
             filter_status : null,
             filter_customer_detail: null,
             filter_from_date: null,
             filter_to_date: null,
             orders: null,
             per_page: 15,
-            tnDisableAction: false,
-            laodingSpinnerAction: false,
-            btnDisableRemove: false,
-            laodingSpinnerRemove: false,
-            btnDisableAction:false
+            btnDisableAction:false,
+            laodingSpinnerAction:false
         }
+    },
+     async created() {
+        let res = await api.get('order?store_id='  + this.store_slug + '&perpage=' + this.per_page,this.$cookies.get('token'))
+        this.orders = res.data.data
+       
+       
     },
     computed: {
         query() {
@@ -193,37 +197,28 @@ export default {
             this.filter_from_date = null;
             this.filter_to_date = null;
         },
-        async get_data(url, removeFilter= null) {
-             if(removeFilter){
-                this.btnDisableRemove= true
-                this.laodingSpinnerRemove= true
-            }else{
-                this.btnDisableAction= true
-                this.laodingSpinnerAction= true
-            }
+        async get_data(url) {
+            this.btnDisableAction = true
+            this.laodingSpinnerAction = true
             let res = await api.getUrl(url + this.query + '&perpage=' + this.per_page,this.$cookies.get('token'))
-            .finally(()=>{
-                this.btnDisableAction= false
-                this.laodingSpinnerAction= false
-                this.btnDisableRemove= false
-                this.laodingSpinnerRemove= false
+            .finally(() => {
+                this.btnDisableAction = false
+                this.laodingSpinnerAction = false
             })
             this.orders = res.data.data
         },
         reset_and_get() {
             this.resetQuery();
-            this.get_data(this.orders.path + '?page=1', 'removeFilter');
+            this.get_data(this.orders.path + '?page=1');
         },
     },
-    async created() {
-        let res = await api.get('order' + '?perpage=' + this.per_page,this.$cookies.get('token'))
-        this.orders = res.data.data
-    }
+   
 }
 </script>
 
-<style>
+<style lang="scss">
 table > tbody > tr:not(:last-child) > td {
     border-bottom: 1px solid #dedede;
 }
+
 </style>

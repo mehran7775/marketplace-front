@@ -1,11 +1,8 @@
 <template>
-<div>
-   <page-title title_text="مشتریان" icon="customer"></page-title>
-   <div class="row px-0 px-md-4">
+  <div class="row px-0 px-md-4">
     <div class="col">
-         
       <div class="row pt-0 pt-md-2 ">
-        <b-card bg-variant="light" class="w-100 bg-info mt-0 mt-md-5">
+        <b-card bg-variant="white" class="w-100 bg-info mt-0 mt-md-5">
           <div class="pt-2 mb-4"><h5 class="font-weight-bold">سفارشات</h5></div>
           <div class="px-3">
             <div class="overflow-auto">
@@ -103,45 +100,32 @@
       </div>
     </div>
   </div>
-</div>
-  
 </template>
 
 <script>
 import { orderService } from "~/services/apiServices";
 import pagination from "~/components/pagination";
 import OrderStatus from "~/constants/OrderStatus";
-import PageTitle from "~/components/main/pageTitle";
 export default {
-  layout: "panel-customer",
+  layout: "main-content",
   data() {
     return {
       OrderStatus,
-      orders: [
-        {
-          id: "j862r",
-          store: {
-            name: "aa",
-            id: "eroxr",
-          },
-          tracking_number: "381632031264",
-          payment_price: 103370,
-          status: 3,
-          created_at: "1400/06/28",
-        },
-      ],
+      orders:[]
     };
   },
   components: {
     pagination,
-    PageTitle
   },
   async created() {
     try {
-      const { data } = await orderService.getCustomersOrders(
-        this.$cookies.get("token-buyer")
+      const { data } = await orderService.getOrders(
+        {
+            userId : this.$route.params.id,
+            token : this.$cookies.get('token')
+        }
       );
-      this.orders = data.data
+      this.orders = data.data.data
     } catch (e) {
       console.log(e);
     }

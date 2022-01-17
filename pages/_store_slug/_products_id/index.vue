@@ -12,7 +12,7 @@
                 :disabled="product.quantity >= 1 || product.quantity == 'نامحدود' ? false : true"
               ></Xbutton>
             </div>
-            <div class="product w-100 mt-5" dir="ltr">
+            <div class="product w-100 mt-5">
               <client-only>
                 <carousel
                   :rtl="true"
@@ -22,8 +22,8 @@
                   pagination-padding="2"
                 >
                   <slide
-                    v-for="thumbnail in product.thumbnails"
-                    :key="thumbnail"
+                    v-for="(thumbnail, index) in product.thumbnails"
+                    :key="index"
                     class="img-wrapper text-center"
                   >
                     <img
@@ -50,7 +50,7 @@
                   </div>
                   <div v-else class="my-1"><span class="text-danger font-weight-bold">ناموجود</span></div>
               </div>
-                <p class="text-justify px-1 pt-2" v-text="product.description">
+                <p class="text-justify px-1 pt-2" v-html="product.description">
                 </p>
             </div>
           </div>
@@ -116,6 +116,7 @@ export default {
         loop: false,
         paginationEnabled: true,
         perPage: 1,
+        centerMode: true
       },
      
     };

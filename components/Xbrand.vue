@@ -35,11 +35,27 @@ export default {
   padding-top: 3.1px;
   background-color: $white;
   border-radius: 100%;
-  border: 2.9px solid $success;
+  border: 2.7px solid $success;
+  // animation: circle 2s;
+  // animation-iteration-count: infinite;
+  // animation-timing-function: ease-in-out;
+
+  //   @keyframes circle {
+  //   0%{
+  //     box-shadow: 0 0 1px 0 $success;
+  //   }
+  //   100%{
+  //       box-shadow: 0 0 15px 1px $success;
+  //     // background: red;
+  //   }
+  // }
+
   img{
    width: 100%;
    height: 100%;
    border-radius: 100%;
   }
+
 }
+
 </style>

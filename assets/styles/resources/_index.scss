@@ -117,5 +117,15 @@ body {
             display: none!important;
         }
     }
+    .delete-filter{
+        left:5px;
+        bottom:25px;
+        svg{
+            color:silver;
+            &:hover{
+                color: $svg_color;
+            }
+        }
+    }
 }
 

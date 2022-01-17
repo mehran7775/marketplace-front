@@ -16,7 +16,17 @@
                     <input class="form-control" placeholder="شماره موبایل" v-model="filter_phone_number">
                 </div>
                 <div class="col-12 col-sm-6 col-lg-4 my-2">
-                    <input class="form-control" placeholder="تاریخ عضویت" v-model="filter_registered_at">
+                    <date-picker
+                    v-model="filter_registered_at"
+                    color="#00c1a4"
+                    format="YYYY-MM-DD HH:mm:ss"
+                    display-format="dddd jDD jMMMM jYYYY HH:mm"
+                    type="datetime"
+                    placeholder="تاریخ عضویت"
+                    />
+                    <div v-show="filter_registered_at" class="position-relative text-left delete-filter ">
+                        <fa icon="times" class="fa-md cursor_pointer" @click="filter_registered_at= null"></fa>
+                    </div>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-4 my-2">
                     <select class="form-control" v-model="filter_status">
@@ -78,11 +88,16 @@
                             <td>{{customer.phone}}</td>
                             <td v-text="customer.registered_at? customer.registered_at : '-'"></td>
                             <td><b-badge :variant="CustomerStatus.getStatus(customer.status).variant">{{CustomerStatus.getStatus(customer.status).text}}</b-badge></td>
-                            <td><nuxt-link :to="'/admin/customers/' + customer.id + '/find'">
-                                <span class="special-tooltip btn btn-sm btn-clean btn-icon btn-icon-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" fill="#bbb"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M12 4C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
-                                </span>
-                            </nuxt-link></td>
+                            <td>
+                                <nuxt-link :to="'/admin/customers/' + customer.id + '/find'">
+                                    <span class="special-tooltip btn btn-sm btn-clean btn-icon btn-icon-sm" v-b-tooltip.hover title="جزئیات">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" fill="#bbb"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M12 4C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
+                                    </span>
+                                </nuxt-link>
+                                <nuxt-link :to="`/admin/customers/${customer.id}/orders`">
+                                    <span v-b-tooltip.hover title="سفارشات"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#a0a0a0"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 7h6v2h-6zm0 4h6v2h-6zm0 4h6v2h-6zM7 7h2v2H7zm0 4h2v2H7zm0 4h2v2H7zM20.1 3H3.9c-.5 0-.9.4-.9.9v16.2c0 .4.4.9.9.9h16.2c.4 0 .9-.5.9-.9V3.9c0-.5-.5-.9-.9-.9zM19 19H5V5h14v14z"/></svg></span>
+                                </nuxt-link>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -102,7 +117,7 @@ import PageTitle from "~/components/main/pageTitle";
 import api from "~/services/api";
 export default {
     name: "index",
-    components: {PageTitle},
+    components: {PageTitle, DatePicker: () => import('vue-persian-datetime-picker')},
     layout : "main-content",
     data(){
         return {
@@ -174,10 +189,9 @@ export default {
         },
     },
     async created(){
-        if(process.client){
-            let res = await api.get('customer/all' + '?perpage=' + this.per_page)
-            this.customers = res.data.data
-        }
+        let res = await api.get('customer/all' + '?perpage=' + this.per_page)
+        this.customers = res.data.data
+        
     }
 }
 </script>

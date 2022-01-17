@@ -1,8 +1,9 @@
 <template>
     <div>
-        <div class="w-100">
         <page-title title_text="جزییات سفارش">
-            <Xbutton
+        <div @click="updateOrder">
+            <!-- <Xbutton class="px-4" text="ذخیره تغییرات"></Xbutton> -->
+                <Xbutton
                 :on_click="()=> updateOrder()"
                 class="px-4"
                 text="ذخیره تغییرات"
@@ -12,6 +13,7 @@
                         <b-spinner v-show="laodingSpinner" small ></b-spinner>
                     </template>            
             </Xbutton>
+        </div>
         </page-title>
         <div class="alert alert-info" role="alert" v-if="message">
             {{ message }}
@@ -32,11 +34,6 @@
                                 <label>کد رهگیری</label>
                                 <div class="border rounded p-2" v-text="order.tracking_number"></div>
                             </div>
-                            <div class="col-sm mt-2">
-                                <label>نام فروشگاه</label>
-                                <div class="border rounded p-2" v-text="order.store"></div>
-                            </div>
-
                         </div>
                         <div class="row">
                             <div class="col-sm mt-2">
@@ -72,11 +69,11 @@
                         <div class="row">
                             <div class="col-sm mt-2" v-if="order.customer_data.name">
                                 <label>نام</label>
-                                <div class="border rounded p-2" v-text="order.customer_data.name"/>
+                                <div class="border rounded p-2" v-text="order.customer_data.name"></div>
                             </div>
                             <div class="col-sm mt-2" v-if="order.customer_data.phone">
                                 <label>موبایل</label>
-                                <div class="border rounded p-2" v-text="order.customer_data.phone"/>
+                                <div class="border rounded p-2" v-text="order.customer_data.phone"></div>
                             </div>
                         </div>
                         <div class="row">
@@ -111,7 +108,8 @@
                                         <th scope="col" style="background-color: #eee;">عنوان</th>
                                         <th scope="col" style="background-color: #eee;">تصویر</th>
                                         <th scope="col" style="background-color: #eee;">تعداد</th>
-                                        <th scope="col"  style="background-color: #eee; border-radius: 16px 0px 0px 16px;">قیمت (ریال)</th>
+                                        <th scope="col"  style="background-color: #eee;">قیمت (ریال)</th>
+                                        <th scope="col"  style="background-color: #eee; border-radius: 16px 0px 0px 16px;">جزییات</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -123,6 +121,15 @@
                                         </td>
                                         <td>{{ product.quantity }}</td>
                                         <td>{{ product.price }}</td>
+                                        <td>
+                                            <nuxt-link class="btn p-0 m-0 text-danger" :to="'/' + store_slug + '/admin/products/' + product.id + '/find'">
+                                <span class="special-tooltip btn btn-sm btn-clean btn-icon btn-icon-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"
+                                    fill="#bbb"><path d="M0 0h24v24H0V0z" fill="none"></path><path
+                                    d="M12 4C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
+                                </span>
+                                            </nuxt-link>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -132,9 +139,8 @@
                 </div>
             </div>
         </div>
-        </div>
-    
     </div>
+
 </template>
 
 <script>
@@ -143,8 +149,13 @@ import PageTitle from "~/components/main/pageTitle";
 import api from "~/services/api";
 export default {
     name: "find",
+    props:{
+        store_slug:{
+            type: Number | String,
+            required: true
+        }
+    },
     components: {PageTitle},
-    layout : "main-content",
     data(){
         return {
             message: null,
@@ -154,22 +165,22 @@ export default {
             form : {
                 status : null
             },
-            btnDisable: false,
-            laodingSpinner: false
+            btnDisable:false,
+            laodingSpinner:false
+
         }
     },
     methods : {
         getOrder(){
             api.get('order/find/' + this.$route.params.id )
             .then(res => {
-                console.log(res.data.data)
                 this.order = res.data.data
                 this.form.status = res.data.data.status
             })
         },
         updateOrder(){
-            this.btnDisable= true
-            this.laodingSpinner= true
+            this.btnDisable = true
+            this.laodingSpinner = true
             api.put('order/change-status/' + this.$route.params.id , {
                 status : this.form.status
             })
@@ -177,9 +188,9 @@ export default {
                 this.message = response.data.message
             }).catch(({response}) => {
             this.error = response.data.data[Object.keys(response.data.data)[0]]
-            }).finally(()=>{
-                this.btnDisable= false
-                this.laodingSpinner= false
+            }).finally(() => {
+                this.btnDisable = false
+                this.laodingSpinner = false
             })
         }
     },
