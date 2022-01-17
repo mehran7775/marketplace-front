@@ -117,9 +117,9 @@ export default {
                             first_name: this.user.first_name,
                             last_name: this.user.last_name,
                             status: this.user.status,
-                            userId: this.user.id
+                            userId: this.$route.params.id
                         },
-                        token: this.$cookies.get('token-buyer')
+                        token: this.$cookies.get('token')
                     }
                     try{
                         this.btnDisable = true

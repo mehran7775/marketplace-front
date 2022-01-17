@@ -9,8 +9,21 @@ export default{
             }
         })
     },
+
+
+    update(payload){
+        return axios.put(`customer/update`, payload.data, {
+            headers:{
+                'Authorization': "Bearer " + payload.token
+            }
+        })
+    },
+
+
+    // ************************* Admin Panel ********************
+    
     updateCustomer(payload){
-        return axios.put(`customer/update/${payload.data.id}`,payload.data,{
+        return axios.put(`customer/update/${payload.data.userId}`,payload.data,{
             headers:{
                 'Authorization': "Bearer " + payload.token
             }
