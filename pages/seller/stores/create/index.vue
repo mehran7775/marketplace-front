@@ -80,7 +80,7 @@
                                                 class="form-control"
                                                 id="name"
                                                 ref="name"
-                                                placeholder="نام انگلیسی"
+                                                placeholder="عنوان انگلیسی"
                                                 v-model="formData.en_name"
                                             />
                                             <small v-if="validation_errors.en_name" class="text-danger px-2">تکمیل این

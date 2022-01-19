@@ -9,7 +9,7 @@
             <div class="col-12 col-sm-6 col-lg-3 my-2">
                 <input class="form-control" placeholder="نام انگلیسی فروشگاه" v-model="filter_slug">
             </div>
-            <div class="col-12 col-sm-6 col-lg-3 my-2">
+            <!-- <div class="col-12 col-sm-6 col-lg-3 my-2">
                 <date-picker
                 v-model="filter_created_at"
                 color="#00c1a4"
@@ -21,7 +21,7 @@
                 <div v-show="filter_created_at" class="position-relative text-left delete-filter ">
                     <fa icon="times" class="fa-md cursor_pointer" @click="filter_created_at= null"></fa>
                 </div>
-            </div>
+            </div> -->
             <div class="col-12 col-sm-6 col-lg-3 my-2">
                 <date-picker
                 v-model="filter_from_date"
@@ -146,7 +146,7 @@ export default {
             StoreStatus,
             filter_title : null,
             filter_slug : null,
-            filter_created_at : null,
+            // filter_created_at : null,
             filter_from_date : null,
             filter_to_date : null,
             filter_status : null,
@@ -166,9 +166,6 @@ export default {
             if (this.filter_slug) {
                 res = res + '&query[slug]=' + this.filter_slug;
             }
-            if (this.filter_created_at) {
-                res = res + '&query[created_at]=' + this.filter_created_at;
-            }
             
             if (this.filter_from_date) {
                 res = res + '&query[from_date]=' + this.filter_from_date;
@@ -186,7 +183,7 @@ export default {
         resetQuery() {
             this.filter_title = null;
             this.filter_slug = null;
-            this.filter_created_at = null;
+            // this.filter_created_at = null;
             this.filter_from_date = null;
             this.filter_to_date = null;
             this.filter_status = null;

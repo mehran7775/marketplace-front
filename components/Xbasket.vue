@@ -32,11 +32,7 @@ export default {
     setCount() {
       const cart = JSON.parse(localStorage.getItem("cart"))
       if (cart && cart[this.$nuxt.$route.params.store_slug]) {
-        if (cart[this.$nuxt.$route.params.store_slug].length > 0) {
-          this.count = cart[this.$nuxt.$route.params.store_slug].length;
-        }else{
-          this.count= 0
-        }
+         this.count = cart[this.$nuxt.$route.params.store_slug].length
         return;
       }
       this.count = 0;

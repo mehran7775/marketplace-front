@@ -153,6 +153,10 @@ export default {
         store_slug:{
             type: Number | String,
             required: true
+        },
+        admin_panel:{
+            type: Boolean,
+            default: false
         }
     },
     components: {PageTitle},
@@ -172,7 +176,13 @@ export default {
     },
     methods : {
         getOrder(){
-            api.get('order/find/' + this.$route.params.id )
+            let orderId= null
+             if(this.admin_panel){
+                 orderId= this.$route.params.detail
+             }else{
+                 orderId= this.$route.params.id
+             }
+            api.get('order/find/' + orderId )
             .then(res => {
                 this.order = res.data.data
                 this.form.status = res.data.data.status
@@ -181,7 +191,13 @@ export default {
         updateOrder(){
             this.btnDisable = true
             this.laodingSpinner = true
-            api.put('order/change-status/' + this.$route.params.id , {
+             let orderId= null
+             if(this.admin_panel){
+                 orderId= this.$route.params.detail
+             }else{
+                 orderId= this.$route.params.id
+             }
+            api.put('order/change-status/' + orderId , {
                 status : this.form.status
             })
             .then(response => {

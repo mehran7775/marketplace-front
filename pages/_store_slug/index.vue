@@ -36,6 +36,7 @@ export default {
   async asyncData({ route, error }) {
     try {
       const { data } = await productService.getProducts(route.params.store_slug)
+      console.log(data.data.data)
       return {
         products: data.data.data,
       };

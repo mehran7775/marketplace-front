@@ -283,6 +283,9 @@ export default {
   },
   watch:{
     images(value){
+      value.forEach(element => {
+        element.selected= false
+      });
       if(value.length >= 1){
         value[0].selected= true
         this.mainImage = value[0].file
@@ -315,6 +318,7 @@ export default {
       try {
         const res = await categoryService.getAllCategory({
           userId: this.user.id,
+          store_id: this.store_slug,
           token: this.$cookies.get("token"),
         });
         this.categories = res.data.data;
@@ -418,6 +422,7 @@ export default {
         form_data.append('discount_percent',this.discount_percent)
         this.btnDisable = true
         this.loadingSpinner = true
+        console.log(this.form_data)
         axios({
           method: "post",
           url: "product/create",

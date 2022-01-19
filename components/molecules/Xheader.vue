@@ -11,7 +11,7 @@
               </div>
               <div class="mr-4" v-if="setDetail">
                 <div class="row">
-                    <div v-if="!detail.store_option.show_province_option && detail.province && calProvince" class="col-5">
+                    <div v-if="!detail.store_option.show_province_option && detail.province && calProvince" class="col-7">
                         <fa icon="map-marker"></fa>
                         <span class="mr-1" v-text="calProvince"></span>
                    </div>

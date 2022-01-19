@@ -36,7 +36,7 @@
                         class="form-control"
                         id="name"
                         ref="name"
-                        placeholder="نام انگلیسی"
+                        placeholder="عنوان انگلیسی"
                         v-model="formData.en_name"
                     />
                 </div>
@@ -95,9 +95,9 @@
                             </div>
                                 <div class="m-auto pt-2 pr-2">
                                     <img width="80" height="50"
-                                :src="urlLogo ? urlLogo :formData.logo"
-                                class="rounded"
-                                style="max-width:80px;max-height:50px"/>
+                                    :src="urlLogo ? urlLogo :formData.logo"
+                                    class="rounded"
+                                    style="max-width:80px;max-height:50px"/>
                                 </div>
                         </div>
                     </div>
@@ -405,10 +405,13 @@ export default {
                 .then(res => {
                     this.store = res.data.data
                     this.formData = res.data.data
-                    this.formData.instagram_id= res.data.data.social_page?.['instagram_id']
-                    this.formData.whatsapp_phone= res.data.data.social_page?.['whatsapp_phone']
-                    this.formData.telegram_id= res.data.data.social_page?.['telegram_id']
-                    this.formData.aparat_id= res.data.data.social_page?.['aparat_id']
+                    this.formData.whatsapp_phone= res.data.data.meta.social_page?.whatsapp
+                    this.formData.instagram_id= res.data.data.meta.social_page?.instagram
+                    this.formData.telegram_id= res.data.data.meta.social_page?.telegram
+                    this.formData.aparat_id= res.data.data.meta.social_page?.aparat
+                    this.formData.show_email_option= res.data.data.meta.store_option?.show_email_option
+                    this.formData.show_phone_option= res.data.data.meta.store_option?.show_phone_option
+                    this.formData.show_province_option= res.data.data.meta.store_option?.show_province_option
                     delete this.formData.social_page
                 })
         },
@@ -418,7 +421,7 @@ export default {
             } else {
                 let form_data = new FormData();
                 for (let key in this.formData) {
-                      if( key == 'logo') continue
+                    if(key === 'logo') continue
                     if (this.formData[key] === true || this.formData[key] === false) {
                       
                         if (this.formData[key] === true) {
@@ -434,11 +437,15 @@ export default {
                     }
                 }
                 if(this.formData.logo &&  this.acceptedImageTypes.includes(this.formData.logo.type)){
-                    form_data.append('logo',this.formData.logo)
+                    form_data.set('logo',this.formData.logo)
                 }
                 this.btnDisable= true
                 this.laodingSpinner= true
-                api.post('store/update/' + this.$route.params.store_slug, form_data)
+                api.post('store/update/' + this.$route.params.store_slug, form_data,{
+                    headers:{
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
                     .then(response => {
                         this.message = response.data.message
                         this.getData()
