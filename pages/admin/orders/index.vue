@@ -170,7 +170,7 @@ export default {
             if (this.filter_tracking_number) {
                 res = res + '&query[tracking_number]=' + this.filter_tracking_number;
             }
-            if (this.filter_status) {
+            if (this.filter_status != null) {
                 res = res + '&query[status]=' + this.filter_status;
             }
              if (this.filter_customer_detail) {

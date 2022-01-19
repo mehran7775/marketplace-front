@@ -19,7 +19,7 @@
                     <date-picker
                     v-model="filter_registered_at"
                     color="#00c1a4"
-                    format="YYYY-MM-DD HH:mm:ss"
+                    format="YYYY-MM-DD"
                     display-format="dddd jDD jMMMM jYYYY HH:mm"
                     type="datetime"
                     placeholder="تاریخ عضویت"

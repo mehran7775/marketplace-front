@@ -124,9 +124,12 @@ export default {
     compute_whole_price(items) {
       let sum = 0;
       items.forEach((element) => {
-        while(element.price.includes(",")){
-          element.price=element.price.replace(",", "")
+        if(typeof element.price == "string"){
+          while(element.price.includes(",")){
+            element.price= element.price.replace(",", "")
+          }
         }
+        
         sum += parseInt(element.price) * element.count
         
       });
@@ -199,7 +202,7 @@ export default {
     width: 53%;
   }
   .price_item_cart {
-    width: 23%;
+    width: 21%;
     color: $success;
     text-align: right;
   }

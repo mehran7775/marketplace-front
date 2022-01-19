@@ -70,7 +70,7 @@
                 <div class="col-12 col-md my-2">
                     <dashboard-box
                         title="فروش کل"
-                        :number="statistics.price_sum"
+                        :number="statistics.total_sell_price"
                         color="#FF8D8D"
                         :has_rail="true"
                     >

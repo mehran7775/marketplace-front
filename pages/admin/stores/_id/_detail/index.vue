@@ -1,5 +1,7 @@
 <template>
+<div>
    <MoleculesXupdateProductsPanel :store_slug="$route.params.id" admin_panel/>
+</div>
 </template>
 
 <script>

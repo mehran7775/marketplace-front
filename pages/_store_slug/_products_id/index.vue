@@ -13,7 +13,7 @@
               ></Xbutton>
             </div>
             <div class="product w-100 mt-5">
-              <client-only>
+              <client-only placeholder="loading">
                 <carousel
                   :rtl="true"
                   v-bind="options"
@@ -44,7 +44,7 @@
                 <h2 v-text="product.title" class="h4 font-weight-bold"></h2>
                   <div v-if="product.quantity >= 1 || product.quantity == 'نامحدود'">
                     <span id="price" class="font-weight-bold">
-                      <span v-text="product.price"></span>
+                      <span v-text="separate(product.price)"></span>
                       <span v-text="lang.price"></span>
                     </span>
                   </div>
@@ -69,9 +69,10 @@
 import { tr } from "@/services/lang";
 import { productService } from "@/services/apiServices"
 import { mapGetters } from 'vuex'
-
+import separatePrice from '@/mixins/separatePrice'
 export default {
   layout: "index",
+  mixins:[separatePrice],
   head() {
     return {
       title: `فروشگاه ${this.detail.fa_name} - ${this.product.title}`,

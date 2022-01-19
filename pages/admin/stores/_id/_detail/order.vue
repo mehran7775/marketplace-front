@@ -1,5 +1,5 @@
 <template>
-   <MoleculesXupdateOrderPanel :store_slug="$route.params.detail" />
+   <MoleculesXupdateOrderPanel :store_slug="$route.params.detail" admin_panel />
 </template>
 
 <script>

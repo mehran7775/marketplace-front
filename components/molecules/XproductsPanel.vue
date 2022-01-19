@@ -18,15 +18,28 @@
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <date-picker
-                    v-model="filter_created_at"
+                    v-model="filter_from_date"
                     color="#00c1a4"
                     format="YYYY-MM-DD HH:mm:ss"
                     display-format="dddd jDD jMMMM jYYYY HH:mm"
                     type="datetime"
-                    placeholder="تاریخ ایجاد"
+                    placeholder="از تاریخ"
                     />
-                    <div v-show="filter_created_at" class="position-relative text-left delete-filter ">
-                        <fa icon="times" class="fa-md cursor_pointer" @click="filter_created_at= null"></fa>
+                    <div v-show="filter_from_date" class="position-relative text-left delete-filter ">
+                        <fa icon="times" class="fa-md cursor_pointer" @click="filter_from_date= null"></fa>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <date-picker
+                    v-model="filter_to_date"
+                    color="#00c1a4"
+                    format="YYYY-MM-DD HH:mm:ss"
+                    display-format="dddd jDD jMMMM jYYYY HH:mm"
+                    type="datetime"
+                    placeholder="تا تاریخ"
+                    />
+                    <div v-show="filter_to_date" class="position-relative text-left delete-filter ">
+                        <fa icon="times" class="fa-md cursor_pointer" @click="filter_to_date= null"></fa>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
@@ -70,7 +83,7 @@
                             <th scope="col" style="background-color: #eee;">عنوان</th>
                             <th scope="col" style="background-color: #eee;">تصویر</th>
                             <th scope="col" style="background-color: #eee;">تعداد</th>
-                            <th scope="col" style="background-color: #eee;">قیمت (تومان)</th>
+                            <th scope="col" style="background-color: #eee;">قیمت فروش (تومان)</th>
                             <th scope="col" style="background-color: #eee;">تاریخ ایجاد</th>
                             <th scope="col" style="background-color: #eee;">وضعیت</th>
                             <th scope="col" style="background-color: #eee; border-radius: 16px 0px 0px 16px;">عملیات
@@ -85,7 +98,7 @@
                                 <img :src="product.thumbnail" width="30px" height="30"/>
                             </td>
                             <td>{{ product.quantity }}</td>
-                            <td>{{ product.price }}</td>
+                            <td v-text="separate(product.sell_price)"></td>
                             <td v-text="product.created_at">-</td>
                             <td>
                                 <b-badge :variant="ProductStatus.getStatus(product.status).variant">
@@ -140,97 +153,120 @@
             hide-footer
         >
             <ValidationObserver ref="formUpdateProduct">
-            <b-form @submit.prevent="updateProduct()">
-                <ValidationProvider
-                    vid="title"
-                    v-slot="{ valid, errors }"
-                    rules="required"
-                    name="عنوان"
-                >
-                    <b-form-group
-                    id="gTitle"
-                    class="font-weight-bold"
-                    label="نام دسته"
-                    label-for="utitle"
+                <b-form @submit.prevent="updateProduct()">
+                    <ValidationProvider
+                        vid="title"
+                        v-slot="{ valid, errors }"
+                        rules="required"
+                        name="عنوان"
                     >
-                    <b-form-input
-                        id="utitle"
-                        v-model="productUpdate.title"
-                        placeholder="عنوان را وارد کنید"
-                        :state="errors[0] ? false : valid ? true : null"
-                    ></b-form-input>
-                    <b-form-invalid-feedback
-                        class="pr-2"
-                        id="inputLiveFeedback"
-                        >{{ errors[0] }}</b-form-invalid-feedback
+                        <b-form-group
+                        id="gTitle"
+                        class="font-weight-bold"
+                        label="نام دسته"
+                        label-for="utitle"
+                        >
+                        <b-form-input
+                            id="utitle"
+                            v-model="productUpdate.title"
+                            placeholder="عنوان را وارد کنید"
+                            :state="errors[0] ? false : valid ? true : null"
+                        ></b-form-input>
+                        <b-form-invalid-feedback
+                            class="pr-2"
+                            id="inputLiveFeedback"
+                            >{{ errors[0] }}</b-form-invalid-feedback
+                        >
+                        </b-form-group>
+                    </ValidationProvider>
+                    <ValidationProvider
+                        vid="price"
+                        v-slot="{ valid, errors }"
+                        rules="required"
+                        name="قیمت"
                     >
-                    </b-form-group>
-                </ValidationProvider>
-                <ValidationProvider
-                    vid="price"
-                    v-slot="{ valid, errors }"
-                    rules="required"
-                    name="قیمت"
-                >
-                    <b-form-group
-                    id="gPrice"
-                    class="font-weight-bold"
-                    label="قیمت     (ریال)"
-                    label-for="uprice"
+                        <b-form-group
+                        id="price"
+                        class="font-weight-bold"
+                        label="قیمت خط خورده (تومان)"
+                        >
+                        <b-form-input
+                            id="price"
+                            v-model="productUpdate.price"
+                            placeholder="قیمت را وارد کنید"
+                            :state="errors[0] ? false : valid ? true : null"
+                        ></b-form-input>
+                        <b-form-invalid-feedback
+                            class="pr-2"
+                            id="inputLiveFeedback"
+                            >{{ errors[0] }}</b-form-invalid-feedback
+                        >
+                        </b-form-group>
+                    </ValidationProvider>
+                     <ValidationProvider
+                        vid="sell_price"
+                        v-slot="{ valid, errors }"
+                        rules="required"
+                        name="قیمت فروش"
                     >
-                    <b-form-input
-                        id="uprice"
-                        v-model="productUpdate.price"
-                        placeholder="قیمت را وارد کنید"
-                        :state="errors[0] ? false : valid ? true : null"
-                    ></b-form-input>
-                    <b-form-invalid-feedback
-                        class="pr-2"
-                        id="inputLiveFeedback"
-                        >{{ errors[0] }}</b-form-invalid-feedback
+                        <b-form-group
+                        id="sell_price"
+                        class="font-weight-bold"
+                        label="قیمت فروش (تومان)"
+                        >
+                        <b-form-input
+                            id="sell_price"
+                            v-model="strikethroughPrice"
+                            placeholder="قیمت فروش را وارد کنید"
+                            :state="errors[0] ? false : valid ? true : null"
+                        ></b-form-input>
+                        <b-form-invalid-feedback
+                            class="pr-2"
+                            id="inputLiveFeedback"
+                            >{{ errors[0] }}</b-form-invalid-feedback
+                        >
+                        </b-form-group>
+                    </ValidationProvider>
+                    <ValidationProvider
+                        vid="quantity"
+                        v-slot="{ valid, errors }"
+                        rules="required"
+                        name="تعداد"
                     >
-                    </b-form-group>
-                </ValidationProvider>
-                <ValidationProvider
-                    vid="quantity"
-                    v-slot="{ valid, errors }"
-                    rules="required"
-                    name="تعداد"
-                >
-                    <b-form-group
-                    id="gQuantity"
-                    class="font-weight-bold"
-                    label="تعداد"
-                    label-for="uquantity"
-                    >
-                    <b-form-input
-                        id="uquantity"
-                        v-model="productUpdate.quantity"
-                        placeholder="تعداد را وارد کنید"
-                        :state="errors[0] ? false : valid ? true : null"
-                    ></b-form-input>
-                    <b-form-invalid-feedback
-                        class="pr-2"
-                        id="inputLiveFeedback"
-                        >{{ errors[0] }}</b-form-invalid-feedback
-                    >
-                    </b-form-group>
-                </ValidationProvider>
-                <Xbutton
-                    is_submit
-                    class="px-5 w-100"
-                    text="ثبت"
-                    :disable="btnDisable"
-                    >
-                    <template #spinner>
-                        <b-spinner
-                        v-show="loadingSpinner"
-                        small
-                        class="float-left"
-                        ></b-spinner>
-                    </template>
-                    </Xbutton>
-            </b-form>
+                        <b-form-group
+                        id="gQuantity"
+                        class="font-weight-bold"
+                        label="تعداد"
+                        label-for="uquantity"
+                        >
+                        <b-form-input
+                            id="uquantity"
+                            v-model="productUpdate.quantity"
+                            placeholder="تعداد را وارد کنید"
+                            :state="errors[0] ? false : valid ? true : null"
+                        ></b-form-input>
+                        <b-form-invalid-feedback
+                            class="pr-2"
+                            id="inputLiveFeedback"
+                            >{{ errors[0] }}</b-form-invalid-feedback
+                        >
+                        </b-form-group>
+                    </ValidationProvider>
+                    <Xbutton
+                        is_submit
+                        class="px-5 w-100"
+                        text="ثبت"
+                        :disable="btnDisable"
+                        >
+                        <template #spinner>
+                            <b-spinner
+                            v-show="loadingSpinner"
+                            small
+                            class="float-left"
+                            ></b-spinner>
+                        </template>
+                        </Xbutton>
+                </b-form>
             </ValidationObserver>
         </b-modal>
         <b-modal
@@ -278,7 +314,9 @@ import api from "~/services/api";
 import ProductStatus from "~/constants/ProductStatus";
 import { productService } from '~/services/apiServices'
 import { ValidationProvider, ValidationObserver } from "vee-validate";
+import separatePrice from '~/mixins/separatePrice'
 export default {
+    mixins: [ separatePrice ],
     props:{
         store_slug:{
             type: String | Number,
@@ -304,7 +342,8 @@ export default {
             filter_title: null,
             filter_price : null,
             filter_status: null,
-            filter_created_at: null,
+            filter_from_date: null,
+            filter_to_date: null,
             products: null,
             per_page: 15,
             product_status : null,
@@ -313,7 +352,8 @@ export default {
             loadingSpinner:false,
             tr:false,
             btnDisableAction:false,
-            laodingSpinnerAction:false
+            laodingSpinnerAction:false,
+            strikethroughPrice:0,
 
         }
     },
@@ -323,23 +363,25 @@ export default {
             if (this.filter_title) {
                 res = res + '&query[title]=' + this.filter_title;
             }
-            if (this.filter_status) {
+            if (this.filter_status != null) {
                 res = res + '&query[status]=' + this.filter_status;
             }
             if (this.filter_price) {
                 res = res + '&query[price]=' + this.filter_price;
             }
-            if (this.filter_created_at) {
-                res = res + '&query[created_at]=' + this.filter_created_at;
+            if (this.filter_from_date) {
+                res = res + '&query[from_date]=' + this.filter_from_date;
+            }
+            if (this.filter_from_at) {
+                res = res + '&query[from_at]=' + this.filter_from_at;
             }
             return res;
         },
         titleDelete(){
             return this.productUpdate.title 
-        }
+        },
     },
-   
-    methods: {
+    methods: { 
         async getProduct(){
             let res = await api.get('product/' + this.store_slug + '?perpage=' + this.per_page, this.$cookies.get('token'))
             this.products = res.data.data
@@ -348,7 +390,8 @@ export default {
             this.filter_title = null;
             this.filter_status = null;
             this.filter_price = null
-            this.filter_created_at = null
+            this.filter_from_date = null
+            this.filter_to_date = null
         },
         async get_data(url) {
             this.btnDisableAction= true
@@ -372,15 +415,13 @@ export default {
                     return 1
                 }
             }
-            console.log(changeStatus())
             let res = await api.post('product/change-status/' + product , {status : changeStatus()})
             await this.get_data(this.products.path + '?page=1');
         },
         triggerEditProduct(product){
             Object.assign(this.productUpdate,product)
-            setTimeout(() => {
-                 this.$bvModal.show('updateProduct')
-            }, 500);
+            this.strikethroughPrice = this.separate(this.productUpdate.sell_price)
+            this.$bvModal.show('updateProduct')          
            
         },
         async updateProduct(){
@@ -388,14 +429,41 @@ export default {
                 if(success){
                     this.btnDisable= true
                     this.loadingSpinner= true
-                    if(this.productUpdate.price.includes(",")){
+                    if(typeof this.productUpdate.price === 'string'){
                         while(this.productUpdate.price.includes(",")){
-                            this.productUpdate.price=this.productUpdate.price.replace(",", "")
+                            this.productUpdate.price= this.productUpdate.price.replace(",", "")
                         }
+                    }
+                    if(typeof this.strikethroughPrice === 'string'){
+                        while(this.strikethroughPrice.includes(",")){
+                            this.strikethroughPrice=this.strikethroughPrice.replace(",", "")
+                        }
+                    }
+                    let discount_percent= null
+
+                    if(this.strikethroughPrice == ''){
+                        discount_percent = 0
+                    }
+                    let x= (this.productUpdate.price - this.strikethroughPrice)
+                    if(this.strikethroughPrice!==0 || !isNaN(this.strikethroughPrice)){
+                        const p= (x/ this.productUpdate.price)* 100
+                        let rounded = Math.round((p + Number.EPSILON) * 100) / 100;
+                        discount_percent= rounded
+                    }else{
+                        discount_percent = 0
                     }
                     
                     this.productUpdate.store_id= this.store_slug
+                    this.productUpdate.price*=10
+                    this.productUpdate['discount_percent']= discount_percent
+                    
                     try{
+                        if(isNaN(this.productUpdate.quantity)){
+                            this.productUpdate.quantity = 0
+                        }
+                        this.productUpdate['current_images'] = this.productUpdate.thumbnails
+                        delete this.productUpdate.thumbnails
+
                         const res= await productService.updateProduct({
                             data:this.productUpdate,
                             token:this.$cookies.get('token')

@@ -174,7 +174,7 @@ export default {
             if (this.filter_tracking_number) {
                 res = res + '&query[tracking_number]=' + this.filter_tracking_number;
             }
-            if (this.filter_status) {
+            if (this.filter_status != null) {
                 res = res + '&query[status]=' + this.filter_status;
             }
              if (this.filter_customer_detail) {
@@ -200,7 +200,8 @@ export default {
         async get_data(url) {
             this.btnDisableAction = true
             this.laodingSpinnerAction = true
-            let res = await api.getUrl(url + this.query + '&perpage=' + this.per_page,this.$cookies.get('token'))
+          
+            let res = await api.get('order?store_id=' +this.store_slug + this.query + '&perpage=' + this.per_page,this.$cookies.get('token'))
             .finally(() => {
                 this.btnDisableAction = false
                 this.laodingSpinnerAction = false

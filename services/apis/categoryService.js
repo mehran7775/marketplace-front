@@ -2,7 +2,7 @@ import axios from "~/plugins/axios"
 
 export default {
     getAllCategory(payload){
-        return axios.get(`category/${payload.userId}`, {
+        return axios.get(`category/${payload.userId +'/'+ payload.store_id}`, {
             headers: {
                 'Authorization': "Bearer " + payload.token
             }
@@ -12,7 +12,8 @@ export default {
         return axios.post(`category/create`,
         { 
             title:payload.title,
-            parent_id:payload.parent_id
+            parent_id: payload.parent_id,
+            store_id: payload.store_id
         }, {
             headers: {
                 'Authorization': "Bearer " + payload.token
@@ -42,7 +43,7 @@ export default {
     },
 
     searchCategory(payload){
-        return axios.get(`category/${payload.userId}/search?q=${payload.search}`,{
+        return axios.get(`category/${payload.userId+'/'+payload.store_id}/search?q=${payload.search}`,{
             headers: {
                 'Authorization': "Bearer " + payload.token
             }

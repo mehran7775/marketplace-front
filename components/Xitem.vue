@@ -75,7 +75,7 @@ export default {
       default: 0,
     },
     quantity: {
-      type: Number,
+      type: Number | String,
       default: 0,
     },
     is_multiple:{

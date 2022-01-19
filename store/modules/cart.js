@@ -13,7 +13,7 @@ const actions = {
     addProductToCart({ commit }, product) {
         let cart = JSON.parse(localStorage.getItem("cart")) || {}
         cart[$nuxt.$route.params.store_slug] = cart[$nuxt.$route.params.store_slug] || []
-        if (product.quantity > 0 ) {
+        if (product.quantity > 0 || product.quantity == 'نامحدود') {
             if (!cart[$nuxt.$route.params.store_slug].some((el) => el.id == product.id)) {
               cart[$nuxt.$route.params.store_slug].push( product )
             } else {
@@ -28,7 +28,7 @@ const actions = {
               return
             }
             localStorage.setItem("cart", JSON.stringify(cart))
-            $nuxt.$emit('refresh_basket', null, { once : true})
+            $nuxt.$emit('refresh_basket', null)
             commit(
               "open_toast",
               {
@@ -62,8 +62,8 @@ const actions = {
         { root: true }
       )
   
-      $nuxt.$emit('refresh-cart', null, { once:true })
-      $nuxt.$emit('refresh_basket', null, { once : true})
+      $nuxt.$emit('refresh-cart', null)
+      $nuxt.$emit('refresh_basket', null)
     },
     minusProduct({commit}, pid){
       let cart = JSON.parse(localStorage.getItem("cart"))
@@ -71,7 +71,7 @@ const actions = {
       if(p.count > 1) {
         p.count--
         localStorage.setItem('cart',JSON.stringify(cart))
-        $nuxt.$emit('refresh-cart',null, { once:true })
+        $nuxt.$emit('refresh-cart',null)
       }
     },
     plusProduct({commit}, pid){
@@ -91,7 +91,7 @@ const actions = {
           }
           p.count++
           localStorage.setItem('cart',JSON.stringify(cart))
-          $nuxt.$emit('refresh-cart',null, { once:true })
+          $nuxt.$emit('refresh-cart')
         }else{
           commit(
             "open_toast",

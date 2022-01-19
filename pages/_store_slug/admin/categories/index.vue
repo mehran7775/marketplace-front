@@ -4,96 +4,98 @@
         <MainPageTitle title_text="دسته بندی ها" icon="dashboard" />
       </div>
       <div class="col-12">
-        <div class="row">
-          <div id="form" class="py-3 px-4 w-100">
-            <ValidationObserver ref="createFormCategory">
-              <b-form @submit.prevent="createCategory()">
-                <legend class="h5 font-weight-bold">
-                  ایجاد دسته بندی
-                </legend>
-                <div class="px-5 pt-3 d-flex flex-wrap">
-                  <ValidationProvider
-                    vid="title"
-                    v-slot="{ valid, errors }"
-                    rules="required"
-                    name="نام دسته"
-                    class="feild-form"
-                  >
-                    <b-form-group
-                      id="gTitle"
-                      class="font-weight-bold"
-                      label="نام دسته"
-                      label-for="title"
-                    >
-                      <b-form-input
-                        id="title"
-                        v-model="form.title"
-                        placeholder="نام دسته را وارد کنید"
-                        :state="errors[0] ? false : valid ? true : null"
-                      ></b-form-input>
-                      <b-form-invalid-feedback
-                        class="pr-2"
-                        id="inputLiveFeedback"
-                        >{{ errors[0] }}</b-form-invalid-feedback
+        <div class="row p-5">
+          <b-card bg-variant="white" class="w-100 m-auto">
+                <div id="form" class="py-3 px-4 w-100">
+                <ValidationObserver ref="createFormCategory">
+                  <b-form @submit.prevent="createCategory()">
+                    <legend class="h5 font-weight-bold">
+                      ایجاد دسته بندی
+                    </legend>
+                    <div class="px-5 pt-3 d-flex flex-wrap">
+                      <ValidationProvider
+                        vid="title"
+                        v-slot="{ valid, errors }"
+                        rules="required"
+                        name="نام دسته"
+                        class="feild-form"
                       >
-                    </b-form-group>
-                  </ValidationProvider>
-                  <b-form-group
-                    id="gParent_id"
-                    class="font-weight-bold mr-0 mr-md-2 feild-form"
-                    label="دسته اصلی"
-                    label-for="parent_id"
-                  >
-                    <v-select
-                      :filterable="false"
-                      dir="rtl"
-                      placeholder="دسته اصلی را وارد کنید"
-                      :options="option"
-                      v-model="form.parent_id"
-                      @search="onSearch"
-                      class="vueSelect"
-                      label="categories"
-                    >
-                      <template slot="no-options">
-                        دسته مورد نظر را وارد کنید
-                      </template>
-                      <template slot="option" slot-scope="option">
-                        <div class="d-flex align-items-center">
-                          {{ option.title }}
-                        </div>
-                      </template>
-                      <template
-                        slot="selected-option"
-                        slot-scope="option"
+                        <b-form-group
+                          id="gTitle"
+                          class="font-weight-bold"
+                          label="نام دسته"
+                          label-for="title"
+                        >
+                          <b-form-input
+                            id="title"
+                            v-model="form.title"
+                            placeholder="نام دسته را وارد کنید"
+                            :state="errors[0] ? false : valid ? true : null"
+                          ></b-form-input>
+                          <b-form-invalid-feedback
+                            class="pr-2"
+                            id="inputLiveFeedback"
+                            >{{ errors[0] }}</b-form-invalid-feedback
+                          >
+                        </b-form-group>
+                      </ValidationProvider>
+                      <b-form-group
+                        id="gParent_id"
+                        class="font-weight-bold mr-0 mr-md-2 feild-form"
+                        label="دسته اصلی"
+                        label-for="parent_id"
                       >
-                        <div class="selected d-flex align-items-center">
-                          {{ option.title }}
-                        </div>
-                      </template>
-                    </v-select>
-                  </b-form-group>
+                        <v-select
+                          :filterable="false"
+                          dir="rtl"
+                          placeholder="دسته اصلی را وارد کنید"
+                          :options="option"
+                          v-model="form.parent_id"
+                          @search="onSearch"
+                          class="vueSelect"
+                          label="categories"
+                        >
+                          <template slot="no-options">
+                            دسته مورد نظر را وارد کنید
+                          </template>
+                          <template slot="option" slot-scope="option">
+                            <div class="d-flex align-items-center">
+                              {{ option.title }}
+                            </div>
+                          </template>
+                          <template
+                            slot="selected-option"
+                            slot-scope="option"
+                          >
+                            <div class="selected d-flex align-items-center">
+                              {{ option.title }}
+                            </div>
+                          </template>
+                        </v-select>
+                      </b-form-group>
 
-                  <div class="mx-auto mt-0 mt-md-3 pt-4">
-                    <Xbutton
-                      is_submit
-                      class="px-5"
-                      style="width: 120px"
-                      text="ثبت"
-                      :disable="btnDisable"
-                    >
-                      <template #spinner>
-                        <b-spinner
-                          v-show="laodingRegister"
-                          small
-                          class="float-left"
-                        ></b-spinner>
-                      </template>
-                    </Xbutton>
-                  </div>
-                </div>
-              </b-form>
-            </ValidationObserver>
-          </div>
+                      <div class="mx-auto mt-0 mt-md-3 pt-4">
+                        <Xbutton
+                          is_submit
+                          class="px-5"
+                          style="width: 120px"
+                          text="ثبت"
+                          :disable="btnDisable"
+                        >
+                          <template #spinner>
+                            <b-spinner
+                              v-show="laodingRegister"
+                              small
+                              class="float-left"
+                            ></b-spinner>
+                          </template>
+                        </Xbutton>
+                      </div>
+                    </div>
+                  </b-form>
+                </ValidationObserver>
+              </div>
+          </b-card>
         </div>
       </div>
       <div class="col-12">
@@ -253,6 +255,7 @@ export default {
       form: {
         title: "",
         parent_id: null,
+        store_id:this.$route.params.store_slug
       },
       formUpdate: {
         title: "",
@@ -326,6 +329,7 @@ export default {
       try {
         const res = await categoryService.getAllCategory({
           userId: this.user.id,
+          store_id:this.$route.params.store_slug,
           token: this.$cookies.get("token"),
         });
         this.categories = res.data.data;
@@ -341,6 +345,7 @@ export default {
           const data = {
             title: this.form.title,
             parent_id: this.form.parent_id ? this.form.parent_id.id : null,
+            store_id: this.form.store_id,
             token: this.$cookies.get("token"),
           };
           categoryService.createCategory(data)
@@ -383,6 +388,7 @@ export default {
         .searchCategory({
           userId: vm.user.id,
           search: search,
+          store_id: vm.$route.params.store_slug,
           token: vm.$cookies.get("token"),
         })
         .then((res) => {

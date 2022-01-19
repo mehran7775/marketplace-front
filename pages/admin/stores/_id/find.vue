@@ -9,7 +9,7 @@
             {{ error }}
         </div>
         <div class="row">
-            <div class="col  shadow-sm bg-white rounded p-3">
+            <div class="col shadow-sm bg-white rounded p-3">
                 <div>
                     <b-tabs content-class="mt-3">
                         <b-tab title="اطلاعات فروشگاه" active>
@@ -396,7 +396,7 @@
                         <b-tab title="تنظیمات ارسال" >
                             <div class="bg-white  py-4 my-2 px-5" style="border-radius: 10px;">
                                 <b-form-row>
-                                    <b-col col="sm">
+                                    <b-col>
                                         <b-form-group label="منطقه ارسال">
                                             <select class="form-control" v-model="store.shipping_setting.shipping_region">
                                                 <option :value="zero">استان خودم</option>
@@ -406,13 +406,13 @@
                                     </b-col>
                                 </b-form-row>
                                 <b-form-row>
-                                    <b-col col="sm">
+                                    <b-col>
                                         <b-form-group label="زمان ارسال شهر خود (روز)">
                                             <b-form-input type="number"
                                                         v-model="store.shipping_setting.own_city_delivery_time"></b-form-input>
                                         </b-form-group>
                                     </b-col>
-                                    <b-col col="sm">
+                                    <b-col>
                                         <b-form-group label="زمان ارسال سایر شهر ها (روز)">
                                             <b-form-input type="number"
                                                         v-model="store.shipping_setting.other_cities_delivery_time"></b-form-input>
@@ -420,13 +420,13 @@
                                     </b-col>
                                 </b-form-row>
                                 <b-form-row>
-                                    <b-col col="sm">
+                                    <b-col>
                                         <b-form-group label="هزینه ارسال شهر خود (تومان)">
                                             <b-form-input type="number"
                                                         v-model="store.shipping_setting.own_city_shipping_cost"></b-form-input>
                                         </b-form-group>
                                     </b-col>
-                                    <b-col col="sm">
+                                    <b-col>
                                         <b-form-group label="هزینه ارسال سایر شهر ها (تومان)">
                                             <b-form-input type="number"
                                                         v-model="store.shipping_setting.other_cities_shipping_cost"></b-form-input>
@@ -535,6 +535,11 @@ export default {
     components:{
         PageTitle, Chart,
         'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
+    },
+     computed:{
+        acceptedImageTypes(){
+            return ['image/svg+xml', 'image/jpeg', 'image/png','image/webp']
+        }
     },
     data() {
         return {
@@ -653,8 +658,7 @@ export default {
             this.validation_errors.logo_size=false
             const file = payload.target.files[0]; // use it in case of normal HTML input
              if (file) {
-                 const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
-                if(acceptedImageTypes.includes(file.type)){
+                if(this.acceptedImageTypes.includes(file.type)){
                     if(file.size >  ((1024 * 1024) * 1)){
                         this.validation_errors.logo_size =true
                         this.urlLogo=null
@@ -675,19 +679,15 @@ export default {
                 spy[key] = null
             });
             let res = true
-            if(this.formData.logo){
+             if(this.formData.logo &&  this.acceptedImageTypes.includes(this.formData.logo.type)){
                 if (this.formData.logo.size > ((1024 * 1024) * 1)) {
                     this.validation_errors.logo_size = true
                     res = false
                 }
-                 const acceptedImageTypes = ['image/svg+xml', 'image/jpeg', 'image/png','image/webp'];
-                 if(!acceptedImageTypes.includes(this.formData.logo.type)){
+                if(!this.acceptedImageTypes.includes(this.formData.logo.type)){
                     this.validation_errors.logo_type = true
                     res = false
                 }
-            }else{
-                 this.validation_errors.logo= true
-                res = false
             }
          
             return res
@@ -751,10 +751,15 @@ export default {
                 })
         },
         updateShippingSetting() {
+           
+            if(this.store.shipping_setting.own_city_shipping_cost !== null ){
+                this.store.shipping_setting.own_city_shipping_cost= parseInt(this.store.shipping_setting.own_city_shipping_cost)*10
+            }
+            if(this.store.shipping_setting.other_cities_shipping_cost){
+                this.store.shipping_setting.other_cities_shipping_cost= parseInt(this.store.shipping_setting.other_cities_shipping_cost)*10
+            }
             this.btnDisable= true
             this.laodingSpinner= true
-            this.store.shipping_setting.own_city_shipping_cost= store.shipping_setting.own_city_shipping_cost + '0'
-            this.store.shipping_setting.other_cities_shipping_cost= store.shipping_setting.other_cities_shipping_cost + '0'
             api.post('store/update-shipping/' + this.$route.params.id, this.store.shipping_setting)
                 .then(response => {
                     this.message = response.data.message
@@ -837,11 +842,15 @@ export default {
                         this.formData[key] = this.store[key]
                         this.status = this.store.status
                     }
-                    this.formData.instagram_id= res.data.data.social_page?.['instagram_id']
-                    this.formData.whatsapp_phone= res.data.data.social_page?.['whatsapp_phone']
-                    this.formData.telegram_id= res.data.data.social_page?.['telegram_id']
-                    this.formData.aparat_id= res.data.data.social_page?.['aparat_id']
-                    this.selected_gateways = this.store.gateways
+                    
+                    this.formData.whatsapp_phone= res.data.data.meta.social_page?.whatsapp
+                    this.formData.instagram_id= res.data.data.meta.social_page?.instagram
+                    this.formData.telegram_id= res.data.data.meta.social_page?.telegram
+                    this.formData.aparat_id= res.data.data.meta.social_page?.aparat
+                    this.formData.show_email_option= res.data.data.meta.store_option?.show_email_option
+                    this.formData.show_phone_option= res.data.data.meta.store_option?.show_phone_option
+                    this.formData.show_province_option= res.data.data.meta.store_option?.show_province_option
+                    delete this.formData.social_page
 
                 })
         },
@@ -851,6 +860,7 @@ export default {
             }else{
                  let form_data = new FormData();
                 for (let key in this.formData) {
+                     if(key === 'logo') continue
                     if (this.formData[key] === true || this.formData[key] === false) {
                         if (this.formData[key] === true) {
                             form_data.append(key, 1);
@@ -863,6 +873,9 @@ export default {
                             form_data.append(key, this.formData[key]);
                         }
                     }
+                }
+                 if(this.formData.logo &&  this.acceptedImageTypes.includes(this.formData.logo.type)){
+                    form_data.set('logo',this.formData.logo)
                 }
                 this.btnDisable= true
                 this.laodingSpinner= true

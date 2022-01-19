@@ -203,7 +203,7 @@
                                             </dashboard-box>
                                         </div>
                                         <div class="col-md-4 col-sm my-3">
-                                            <dashboard-box :number="statistics.conversion_rates" title="نرخ تبدیل">
+                                            <dashboard-box :number="statistics.conversion_rates_visits" title="نرخ تبدیل">
                                             </dashboard-box>
                                         </div>
                                     </div>
@@ -321,6 +321,9 @@ export default {
     },
     watch:{
         images(value){
+             value.forEach(element => {
+                element.selected= false
+            });
             if(value.length >= 1){
                 let se = false
                 value.forEach(element =>{
@@ -343,8 +346,9 @@ export default {
         async getAllCategory() {
             try {
                 const res = await categoryService.getAllCategory({
-                userId: this.user.id,
-                token: this.$cookies.get("token"),
+                    userId: this.user.id,
+                    store_id: this.store_slug,
+                    token: this.$cookies.get("token"),
                 });
                 this.categories = res.data.data;
             } catch (e) {
@@ -403,7 +407,13 @@ export default {
             return res
         },
          async getProduct() {
-            await api.get('product/find/' + this.$route.params.id, this.$cookies.get('token'))
+             let productId= null
+             if(this.admin_panel){
+                 productId= this.$route.params.detail
+             }else{
+                 productId= this.$route.params.id
+             }
+            await api.get('product/find/' + productId, this.$cookies.get('token'))
                 .then(res => {
                     this.formData.title = res.data.data.title
                     this.formData.price = res.data.data.price
@@ -480,12 +490,19 @@ export default {
                 })
                 this.btnDisable= true
                 this.loadingSpinner= true
-                axios.post('product/update/' + this.$route.params.id, form_data, {
+                let productId= null
+                if(this.admin_panel){
+                    productId= this.$route.params.detail
+                }else{
+                    productId= this.$route.params.id
+                }
+                axios.post('product/update/' + productId, form_data, {
                     headers:{
                         'Authorization' : 'Bearer '+ this.$cookies.get("token"),
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(response => {
+                    console.log(response.data)
                     this.message = response.data.message
                     if(this.admin_panel){
                         this.$router.push(`/admin/stores/${this.store_slug}/find`);
@@ -512,7 +529,13 @@ export default {
         },
        
         getStatistics() {
-            api.get('product/statistics/' + this.$route.params.id)
+             let productId= null
+             if(this.admin_panel){
+                 productId= this.$route.params.detail
+             }else{
+                 productId= this.$route.params.id
+             }
+            api.get('product/statistics/' + productId)
                 .then(res => {
                     this.statistics = res.data.data
                 })

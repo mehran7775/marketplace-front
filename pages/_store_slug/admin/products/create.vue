@@ -1,5 +1,5 @@
 <template>
-  <MoleculesXcreateProductsPanel />
+  <MoleculesXcreateProductsPanel :store_slug="$route.params.store_slug" />
 </template>
 
 <script>

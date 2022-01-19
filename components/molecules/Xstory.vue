@@ -26,7 +26,7 @@
                         <h2 class="h4">توضیحات فروشگاه</h2>
                       </div>
                       <div class="row">
-                        <p class="py-2 px-5 mt-2" v-text="detail.description"></p>
+                        <p class="py-2 px-5 mt-2" v-html="detail.description"></p>
                       </div>
                     </div>
                   </div>
@@ -39,7 +39,7 @@
                         <h2 class="h4">قوانین فروشگاه</h2>
                       </div>
                       <div class="row">
-                        <p class="py-2 px-5 mt-2" v-text="'قوانین'"></p>
+                        <p class="py-2 px-5 mt-2" v-html="detail.terms"></p>
                       </div>
                     </div>
                   </div>
