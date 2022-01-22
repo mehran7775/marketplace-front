@@ -391,7 +391,7 @@ export default {
         },
         triggerEditProduct(product){
             Object.assign(this.productUpdate,product)
-            this.strikethroughPrice = this.separate(this.productUpdate.sell_price)
+            this.strikethroughPrice = this.productUpdate.sell_price
             this.$bvModal.show('updateProduct')          
            
         },

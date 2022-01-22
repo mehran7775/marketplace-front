@@ -72,7 +72,7 @@ export default {
   },
   watch:{
     '$route'(){
-      this.closeMenu()
+      // this.closeMenu()
     }
   },
   data() {
