@@ -17,15 +17,28 @@
                 </div>
                 <div class="col-12 col-sm-6 col-lg-4 my-2">
                     <date-picker
-                    v-model="filter_registered_at"
+                    v-model="filter_from_date"
                     color="#00c1a4"
                     format="YYYY-MM-DD"
                     display-format="dddd jDD jMMMM jYYYY HH:mm"
                     type="datetime"
-                    placeholder="تاریخ عضویت"
+                    placeholder="از تاریخ"
                     />
-                    <div v-show="filter_registered_at" class="position-relative text-left delete-filter ">
-                        <fa icon="times" class="fa-md cursor_pointer" @click="filter_registered_at= null"></fa>
+                    <div v-show="filter_from_date" class="position-relative text-left delete-filter ">
+                        <fa icon="times" class="fa-md cursor_pointer" @click="filter_from_date= null"></fa>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-4 my-2">
+                    <date-picker
+                    v-model="filter_to_date"
+                    color="#00c1a4"
+                    format="YYYY-MM-DD"
+                    display-format="dddd jDD jMMMM jYYYY HH:mm"
+                    type="datetime"
+                    placeholder="تا تاریخ"
+                    />
+                    <div v-show="filter_to_date" class="position-relative text-left delete-filter ">
+                        <fa icon="times" class="fa-md cursor_pointer" @click="filter_to_date= null"></fa>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-4 my-2">
@@ -40,7 +53,7 @@
                     <div>
                         <Xbutton
                         :on_click="()=> get_data(customers.first_page_url)"
-                        :class="query ? 'mr-2' : 'btn-block'"
+                        :class="query ? 'mr-2' : null"
                         text="اعمال فیلتر"
                         variant="success"
                         :disable="btnDisableAction"
@@ -128,7 +141,8 @@ export default {
             filter_first_name : null,
             filter_last_name : null,
             filter_phone_number : null,
-            filter_registered_at : null,
+            filter_from_date : null,
+            filter_to_date : null,
             btnDisableAction: false,
             laodingSpinnerAction: false,
             btnDisableRemove: false,
@@ -147,8 +161,11 @@ export default {
             if (this.filter_status != null) {
                 res = res + '&query[status]=' + this.filter_status;
             }
-              if (this.filter_registered_at != null) {
-                res = res + '&query[registered_at]=' + this.filter_registered_at
+            if (this.filter_from_date) {
+                res = res + '&query[from_date]=' + this.filter_from_date
+            }
+            if (this.filter_to_date) {
+                res = res + '&query[to_date]=' + this.filter_to_date
             }
               if (this.filter_phone_number != null) {
                 res = res + '&query[phone_number]=' + this.filter_phone_number;
@@ -162,7 +179,8 @@ export default {
             this.filter_last_name = null;
             this.filter_status = null;
             this.filter_phone_number = null;
-            this.filter_registered_at = null;
+            this.filter_from_date = null;
+            this.filter_to_date = null;
         },
         async get_data(url, removeFilter= null) {
             if(removeFilter){

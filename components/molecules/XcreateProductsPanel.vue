@@ -283,9 +283,6 @@ export default {
   },
   watch:{
     images(value){
-      value.forEach(element => {
-        element.selected= false
-      });
       if(value.length >= 1){
         value[0].selected= true
         this.mainImage = value[0].file

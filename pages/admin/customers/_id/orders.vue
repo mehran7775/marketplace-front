@@ -25,7 +25,7 @@
                       نام فروشگاه
                     </th>
                     <th scope="col" style="background-color: #eee">
-                      قیمت (ریال)
+                      قیمت (تومان)
                     </th>
                     <th scope="col" style="background-color: #eee">
                       تاریخ ثبت

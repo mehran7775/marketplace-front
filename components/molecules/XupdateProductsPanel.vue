@@ -321,9 +321,6 @@ export default {
     },
     watch:{
         images(value){
-             value.forEach(element => {
-                element.selected= false
-            });
             if(value.length >= 1){
                 let se = false
                 value.forEach(element =>{
@@ -553,7 +550,6 @@ export default {
         },
         removeImage(image){
             this.images.splice(this.images.indexOf(image),1)
-            // this.$refs.inputFileUpdate.value=''
             document.getElementById('inputFileUpdate').value = ''
         },
         selectMainPicture(image){

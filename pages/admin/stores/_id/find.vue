@@ -424,12 +424,14 @@
                                         <b-form-group label="هزینه ارسال شهر خود (تومان)">
                                             <b-form-input type="number"
                                                         v-model="store.shipping_setting.own_city_shipping_cost"></b-form-input>
+                                                        <small v-text="separate(store.shipping_setting.own_city_shipping_cost)+ ' تومان'" class="mr-2 text-success"></small>
                                         </b-form-group>
                                     </b-col>
                                     <b-col>
                                         <b-form-group label="هزینه ارسال سایر شهر ها (تومان)">
                                             <b-form-input type="number"
                                                         v-model="store.shipping_setting.other_cities_shipping_cost"></b-form-input>
+                                                        <small v-text="separate(store.shipping_setting.other_cities_shipping_cost)+ ' تومان'" class="mr-2 text-success"></small>
                                         </b-form-group>
                                     </b-col>
                                 </b-form-row>
@@ -530,8 +532,10 @@ import PageTitle from "~/components/main/pageTitle";
 import StoreStatus from "~/constants/StoreStatus";
 import axios from '~/plugins/axios'
 import Chart from '@/components/chart_empty'
+import separatePrice from '~/mixins/separatePrice' 
 export default {
     layout: "main-content",
+    mixins:[ separatePrice ],
     components:{
         PageTitle, Chart,
         'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
