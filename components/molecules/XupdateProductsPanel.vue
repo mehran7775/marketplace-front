@@ -320,17 +320,18 @@ export default {
         this.getStatistics()
     },
     watch:{
-        images(value){
+        images( value ){
             if(value.length >= 1){
-                let se = false
-                value.forEach(element =>{
-                    if(element.selected){
-                        se = true
-                        this.main_image = element.file || null
+                let isSelected = false
+                for( let i = 0; i < value.length; i++ ){
+                    if(value[i].selected) {
+                        isSelected = true
+                        break
                     }
-                })
-                if(!se){
-                    value[0].selected = true
+                    continue
+                }
+                if(!isSelected){
+                    value[0].selected= true
                     this.main_image = value[0].file || null
                 }
             }

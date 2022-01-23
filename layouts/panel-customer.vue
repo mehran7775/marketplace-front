@@ -63,7 +63,7 @@
                   </div>
                 </div>
                 <div class="logo d-none d-md-block">
-                  <a href="https://my.paystar.ir/"
+                  <a href="https://shop.paystar.ir/"
                     ><img width="100"
                       src="https://paystar.ir/homepage/image/logo.svg"
                     />

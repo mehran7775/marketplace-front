@@ -132,7 +132,6 @@ export default {
         async setDetail(){
         try{
             const {data}= await authService.currentUser( this.$cookies.get('token-buyer'))
-            console.log(data)
             this.detail.first_name = data.data.first_name
             this.detail.last_name = data.data.last_name
             this.detail.phone = data.data.phone

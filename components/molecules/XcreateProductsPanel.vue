@@ -283,10 +283,19 @@ export default {
   },
   watch:{
     images(value){
-      if(value.length >= 1){
-        value[0].selected= true
-        this.mainImage = value[0].file
-
+       if(value.length >= 1){
+        let isSelected = false
+        for( let i = 0; i < value.length; i++ ){
+          if(value[i].selected) {
+            isSelected = true
+            break
+          }
+          continue
+        }
+        if(!isSelected){
+          value[0].selected= true
+          this.mainImage = value[0].file
+        }
       }
     },
   },
@@ -419,7 +428,7 @@ export default {
         form_data.append('discount_percent',this.discount_percent)
         this.btnDisable = true
         this.loadingSpinner = true
-        console.log(this.form_data)
+
         axios({
           method: "post",
           url: "product/create",

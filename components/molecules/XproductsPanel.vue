@@ -14,7 +14,7 @@
                     <input class="form-control" placeholder="عنوان محصول" v-model="filter_title">
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
-                    <input class="form-control" placeholder="قیمت(تومان)" v-model="filter_price">
+                    <input class="form-control" placeholder="قیمت(تومان)" v-model="filterPrice">
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <input class="form-control" placeholder="کد محصول" v-model="filter_code">
@@ -169,7 +169,7 @@
                         >
                         <b-form-input
                             id="price"
-                            v-model="productUpdate.price"
+                            v-model="priceProductUpdate"
                             placeholder="قیمت را وارد کنید"
                             :state="errors[0] ? false : valid ? true : null"
                         ></b-form-input>
@@ -192,7 +192,7 @@
                         >
                         <b-form-input
                             id="sell_price"
-                            v-model="strikethroughPrice"
+                            v-model="sellPriceProductUpdate"
                             placeholder="قیمت فروش را وارد کنید"
                         ></b-form-input>
                         <small v-text="separate(strikethroughPrice)+ ' تومان'" class="mr-2 text-success"></small>
@@ -352,6 +352,30 @@ export default {
         titleDelete(){
             return this.productUpdate.title 
         },
+        filterPrice:{
+            get(){
+                return this.filter_price
+            },
+            set(value){
+                this.filter_price = this.changetoEnNumber( value )
+            }
+        },
+        priceProductUpdate:{
+            get(){
+                return this.productUpdate.price
+            },
+            set(value){
+                this.productUpdate.price = this.changetoEnNumber( value )
+            }
+        },
+        sellPriceProductUpdate:{
+              get(){
+                return this.strikethroughPrice
+            },
+            set(value){
+                this.strikethroughPrice = this.changetoEnNumber( value )
+            }
+        }
     },
     methods: { 
         async getProduct(){

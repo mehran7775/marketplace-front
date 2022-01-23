@@ -19,7 +19,7 @@
               <Xitem
                 :title="product.title"
                 :image="product.thumbnail"
-                :price="product.price"
+                :price="product.sell_price"
                 :id="product.id"
                 :quantity="product.quantity"
                 :is_multiple="product.is_multiple"

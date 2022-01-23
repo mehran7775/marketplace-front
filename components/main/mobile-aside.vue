@@ -72,7 +72,7 @@ export default {
   },
   watch:{
     '$route'(){
-      // this.closeMenu()
+      $("#app_mobile_aside").hide()
     }
   },
   data() {
