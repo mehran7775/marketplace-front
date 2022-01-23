@@ -132,21 +132,30 @@ export default {
       onClient: false,
     };
   },
-  computed: {
-    user_data() {
-      if (localStorage.getItem("userDetail")) {
-        return JSON.parse(localStorage.getItem("userDetail"));
-      } else {
-        return null;
-      }
-    },
-  },
-  created() {
+
+  async created() {
     if (process.client) {
+      this.setDetail()
       this.onClient = true;
     }
   },
+  computed:{
+    user_data(){
+      return JSON.parse(localStorage.getItem('detail_user'))
+    }
+  },
   methods:{
+    async setDetail(){
+      try{
+          const {data}= await authService.currentUser( this.$cookies.get('token-buyer'))
+          localStorage.setItem('detail_user',JSON.stringify( data.data ))
+      }catch(e){
+          this.$store.commit('open_toast',{
+              msg: e.response.data.message,
+              variant:'error'
+          })
+      }
+    },
     logOut(){ 
       try{
         const res = authService.logOut(this.$cookies.get('token-buyer'))

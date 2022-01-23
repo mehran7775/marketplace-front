@@ -46,19 +46,19 @@
                       maxlength="15"
                       type="text"
                       class="form-control"
-                      v-model="formData.price"
+                      v-model="enPrice"
                     />
-                    <small class="text-success px-2">
-                      {{ moneyFormat(formData.price) }}
+                    <small v-show="enPrice" class="text-success px-2">
+                      {{ moneyFormat(enPrice) }}
                       تومان
                     </small>
                   </b-form-group>
                 </div>
                       <div class="col-sm">
                   <b-form-group label="قیمت فروش">     
-                      <b-form-input maxlength="15" type="text" v-model="strikethroughPrice" />
-                        <small class="text-success px-2">
-                      {{ moneyFormat(strikethroughPrice) }}
+                      <b-form-input maxlength="15" type="text" v-model="enSellPrice" />
+                      <small v-show="enSellPrice" class="text-success px-2">
+                        {{ moneyFormat( enSellPrice ) }}
                       تومان
                     </small>
                   </b-form-group>
@@ -198,18 +198,20 @@ import api from "~/services/api";
 import { mapState } from 'vuex'
 import { image } from 'vee-validate/dist/rules';
 import axios from '~/plugins/axios'
+import separatePrice from '~/mixins/separatePrice'
 export default {
   name: "create",
-   props:{
-        store_slug:{
-            type: Number | String,
-            required: true
-        },
-        admin_panel:{
-            default: false,
-            type: Boolean
-        }
-    },
+  mixins:[ separatePrice ],
+  props:{
+      store_slug:{
+          type: Number | String,
+          required: true
+      },
+      admin_panel:{
+          default: false,
+          type: Boolean
+      }
+  },
   components: { 
     PageTitle ,
     'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
@@ -240,7 +242,7 @@ export default {
         code:'',
       },
       mainImage:null,
-      strikethroughPrice:0,
+      strikethroughPrice: 0,
       errors: {
         title: null,
         image: null,
@@ -317,7 +319,24 @@ export default {
     },
     ...mapState({
        selectedCategories: state => state.selectedCategories
-    })
+    }),
+    enPrice:{
+      get(){
+        return this.formData.price
+      },
+      set(value){
+        this.formData.price = this.changetoEnNumber( value )
+      }
+    },
+    enSellPrice:{
+      get(){
+        return this.strikethroughPrice
+      },
+      set( value ){
+        this.strikethroughPrice = this.changetoEnNumber( value )
+      }
+    }
+
   },
   methods: {
     async getAllCategory() {

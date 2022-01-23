@@ -169,11 +169,11 @@
                         >
                         <b-form-input
                             id="price"
-                            v-model="priceProductUpdate"
+                            v-model="enPriceProductUpdate"
                             placeholder="قیمت را وارد کنید"
                             :state="errors[0] ? false : valid ? true : null"
                         ></b-form-input>
-                        <small v-text="separate(productUpdate.price)+ ' تومان'" class="mr-2 text-success"></small>
+                        <small v-show="enPriceProductUpdate" v-text="separate( enPriceProductUpdate )+ ' تومان'" class="mr-2 text-success"></small>
                         <b-form-invalid-feedback
                             class="pr-2"
                             id="inputLiveFeedback"
@@ -192,10 +192,10 @@
                         >
                         <b-form-input
                             id="sell_price"
-                            v-model="sellPriceProductUpdate"
+                            v-model="enSellPriceProductUpdate"
                             placeholder="قیمت فروش را وارد کنید"
                         ></b-form-input>
-                        <small v-text="separate(strikethroughPrice)+ ' تومان'" class="mr-2 text-success"></small>
+                        <small v-show="enSellPriceProductUpdate" v-text="separate(enSellPriceProductUpdate)+ ' تومان'" class="mr-2 text-success"></small>
                         </b-form-group>
                     </ValidationProvider>
                     <ValidationProvider
@@ -318,6 +318,7 @@ export default {
             per_page: 15,
             product_status : null,
             productUpdate:{},
+            productUpdatePrice: 0,
             btnDisable:false,
             loadingSpinner:false,
             tr:false,
@@ -360,16 +361,16 @@ export default {
                 this.filter_price = this.changetoEnNumber( value )
             }
         },
-        priceProductUpdate:{
+        enPriceProductUpdate:{
             get(){
-                return this.productUpdate.price
+                return this.productUpdatePrice
             },
             set(value){
-                this.productUpdate.price = this.changetoEnNumber( value )
+                this.productUpdatePrice = this.changetoEnNumber( value )
             }
         },
-        sellPriceProductUpdate:{
-              get(){
+        enSellPriceProductUpdate:{
+            get(){
                 return this.strikethroughPrice
             },
             set(value){
@@ -415,7 +416,18 @@ export default {
         },
         triggerEditProduct(product){
             Object.assign(this.productUpdate,product)
-            this.strikethroughPrice = this.productUpdate.sell_price
+            if (typeof this.productUpdate.price === 'string'){
+                while(this.productUpdate.price.includes(",")){
+                    this.productUpdate.price= this.productUpdate.price.replace(",", "")
+                }
+                this.productUpdatePrice= parseInt( this.productUpdate.price )
+            }
+            if (typeof this.productUpdate.sell_price === 'string'){
+                while(this.productUpdate.sell_price.includes(",")){
+                    this.productUpdate.sell_price= this.productUpdate.sell_price.replace(",", "")
+                }
+                this.strikethroughPrice= parseInt( this.productUpdate.sell_price )
+            }
             this.$bvModal.show('updateProduct')          
            
         },
@@ -424,24 +436,15 @@ export default {
                 if(success){
                     this.btnDisable= true
                     this.loadingSpinner= true
-                    if(typeof this.productUpdate.price === 'string'){
-                        while(this.productUpdate.price.includes(",")){
-                            this.productUpdate.price= this.productUpdate.price.replace(",", "")
-                        }
-                    }
-                    if(typeof this.strikethroughPrice === 'string'){
-                        while(this.strikethroughPrice.includes(",")){
-                            this.strikethroughPrice=this.strikethroughPrice.replace(",", "")
-                        }
-                    }
+                   
                     let discount_percent= null
 
                     if(this.strikethroughPrice == ''){
                         discount_percent = 0
                     }
-                    let x= (this.productUpdate.price - this.strikethroughPrice)
+                    let x= (this.productUpdatePrice - this.strikethroughPrice)
                     if(this.strikethroughPrice!==0 || !isNaN(this.strikethroughPrice)){
-                        const p= (x/ this.productUpdate.price)* 100
+                        const p= (x/ this.productUpdatePrice)* 100
                         let rounded = Math.round((p + Number.EPSILON) * 100) / 100;
                         discount_percent= rounded
                     }else{
@@ -449,7 +452,8 @@ export default {
                     }
                     
                     this.productUpdate.store_id= this.store_slug
-                    this.productUpdate.price*=10
+                    this.productUpdatePrice*=10
+                    this.productUpdate['price']= this.productUpdatePrice
                     this.productUpdate['discount_percent']= discount_percent
                     
                     try{

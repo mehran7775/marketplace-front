@@ -45,9 +45,9 @@
                                     <div class="row">
                                         <div class="col-sm">
                                             <b-form-group label="قیمت خط خورده">
-                                                <input type="number" class="form-control" v-model="formData.price"/>
-                                                <small class="text-success px-2">
-                                                    {{moneyFormat(formData.price)}}
+                                                <input type="number" class="form-control" v-model=" enPrice "/>
+                                                <small class="text-success px-2" v-show="enPrice">
+                                                    {{moneyFormat( enPrice )}}
                                                     تومان
                                                 </small>
                                             </b-form-group>
@@ -55,7 +55,7 @@
                                         <div class="col-sm">
                                             <b-form-group label="قیمت فروش">
                                                 <input type="number" class="form-control" v-model="strikethroughPrice"/>
-                                                <small class="text-success px-2">
+                                                <small class="text-success px-2" v-show="strikethroughPrice">
                                                     {{ moneyFormat(strikethroughPrice) }}
                                                     تومان
                                                 </small>
@@ -225,8 +225,10 @@ import DashboardBox from "~/components/dashboard-box";
 import { validate } from 'vee-validate';
 import { categoryService } from "@/services/apiServices";
 import { mapState } from 'vuex'
+import separatePrice from '~/mixins/separatePrice'
 
 export default {
+    mixins: [ separatePrice ],
     components: {
         DashboardBox, PageTitle,
         'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
@@ -312,7 +314,23 @@ export default {
         },
         ...mapState({
             selectedCategories : state => state.selectedCategories
-        })
+        }),
+        enPrice: {
+            get(){
+                return this.formData.price
+            },
+            set( value ){
+                this.formData.price = this.changetoEnNumber( value )
+            }
+        },
+        enSellPrice: {
+            get(){
+                return this.strikethroughPrice
+            },
+            set( value ){
+                this.strikethroughPrice = this.changetoEnNumber( value )
+            }
+        }
     },
     async mounted() {
         await this.getProduct()

@@ -1,5 +1,8 @@
 <template>
   <div class="sign-up text-right">
+     <div class="text-center mb-3">
+      <img width="130" src="@/assets/images/logo.svg" alt="لوگوی پی استار">
+    </div>
     <div dir="rtl">
       <ValidationObserver ref="validationObserver" >
         <Xform :sub_form="do_register">
@@ -23,13 +26,13 @@
             </ValidationProvider>
         
             <ValidationProvider
-              rules="required|min:6|max:20"
+              rules="min:6|max:20"
                 v-slot="{ valid, errors }"
               vid="password"
               :name="lang.label.password"
             >
               <b-form-group
-              :label="lang.label.password"
+              :label="lang.label.password + ' (اختیاری)'"
               class="font-weight-bold"
               >
                   <b-form-input
@@ -37,14 +40,13 @@
                     ref="city"
                     type="password"
                     maxlength="25"
-                    placeholder="مثال: 123456"
-                    :state="errors[0] ? false : (valid ? true : null)"
+                    :state="errors[0] ? false : (valid && form.password != '' ? true : null)"
                   ></b-form-input>
                 <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
               </b-form-group>
             </ValidationProvider>
             <span>قبلا ثبت نام کرده اید؟</span>
-            <router-link to="/login" class="text-info">ورود</router-link>
+            <router-link to="/customer-login" class="text-info">ورود</router-link>
             <Xbutton
               is_submit
               class="btn-sign mx-auto w-100 mt-3"
@@ -72,6 +74,11 @@ import { tr } from "@/services/lang";
 export default {
   middleware: "guest",
   layout: "sign",
+  head(){
+    return{
+      title: 'صفحه ثبت نام مشتری'
+    }
+  },
   data() {
     return {
       form: {

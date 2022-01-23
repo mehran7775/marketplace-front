@@ -108,43 +108,18 @@ export default {
         },
         lang(){
         return tr()
+        },
+        detail(){
+            return JSON.parse(localStorage.getItem('detail_user'))
         }
     },
     data() {
         return {
-            detail: {
-                first_name:'',
-                last_name:'',
-                phone:'',
-                email:'',
-                // province:'',
-                // city:'',
-                // address:'',
-            },
             btnDisable:false,
             laodingSpinner:false,
         }
     },
-    async mounted () {
-        this.setDetail()
-    },
     methods:{
-        async setDetail(){
-        try{
-            const {data}= await authService.currentUser( this.$cookies.get('token-buyer'))
-            this.detail.first_name = data.data.first_name
-            this.detail.last_name = data.data.last_name
-            this.detail.phone = data.data.phone
-            this.detail.email = data.data.email
-            this.detail.id = data.data.id
-        }catch(e){
-            this.$store.commit('open_toast',{
-                msg: e.response.data.message,
-                variant:'error'
-            })
-        }
-          
-        },
         async updateDetail(){
             const payload = {
                 data: this.detail,

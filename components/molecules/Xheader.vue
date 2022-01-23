@@ -61,7 +61,7 @@
               </nuxt-link>
             </template>
             <template v-else>
-              <nuxt-link :to="`/login`">
+              <nuxt-link to="/customer-login">
                 <span>
                   <fa :icon="['fas' , 'sign-in-alt']" class="mx-1"
                   title="ورود"

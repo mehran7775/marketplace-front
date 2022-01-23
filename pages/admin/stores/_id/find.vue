@@ -423,15 +423,15 @@
                                     <b-col>
                                         <b-form-group label="هزینه ارسال شهر خود (تومان)">
                                             <b-form-input type="number"
-                                                        v-model="store.shipping_setting.own_city_shipping_cost"></b-form-input>
-                                                        <small v-text="separate(store.shipping_setting.own_city_shipping_cost)+ ' تومان'" class="mr-2 text-success"></small>
+                                                        v-model="enOwnPrice"></b-form-input>
+                                                        <small v-show="enOwnPrice" v-text="separate(enOwnPrice)+ ' تومان'" class="mr-2 text-success"></small>
                                         </b-form-group>
                                     </b-col>
                                     <b-col>
                                         <b-form-group label="هزینه ارسال سایر شهر ها (تومان)">
                                             <b-form-input type="number"
-                                                        v-model="store.shipping_setting.other_cities_shipping_cost"></b-form-input>
-                                                        <small v-text="separate(store.shipping_setting.other_cities_shipping_cost)+ ' تومان'" class="mr-2 text-success"></small>
+                                                        v-model="enOtherPrice"></b-form-input>
+                                                        <small v-show="enOtherPrice" v-text="separate(enOtherPrice)+ ' تومان'" class="mr-2 text-success"></small>
                                         </b-form-group>
                                     </b-col>
                                 </b-form-row>
@@ -543,7 +543,23 @@ export default {
      computed:{
         acceptedImageTypes(){
             return ['image/svg+xml', 'image/jpeg', 'image/png','image/webp']
-        }
+        },
+        enOtherPrice:{
+            get(){
+                return this.store.shipping_setting.other_cities_shipping_cost
+            },
+            set(value){
+                this.store.shipping_setting.other_cities_shipping_cost = this.changetoEnNumber( value )
+            }
+        },
+        enOwnPrice:{
+            get(){
+                return this.store.shipping_setting.own_city_shipping_cost
+            },
+            set(value){
+                this.store.shipping_setting.own_city_shipping_cost = this.changetoEnNumber( value )
+            }
+        },
     },
     data() {
         return {
