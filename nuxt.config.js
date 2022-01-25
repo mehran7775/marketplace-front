@@ -122,4 +122,7 @@ export default {
         color: '#00c1a4',
         height: '2px'
     },
+    toast: {
+        cssFile: "@/assets/styles/resources/toast.scss",
+    }
 }

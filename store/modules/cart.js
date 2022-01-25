@@ -13,25 +13,50 @@ const actions = {
     addProductToCart({ commit }, product) {
         let cart = JSON.parse(localStorage.getItem("cart")) || {}
         cart[$nuxt.$route.params.store_slug] = cart[$nuxt.$route.params.store_slug] || []
-        if (product.quantity > 0 || product.quantity == 'نامحدود') {
+        if ( product.quantity > 0 || product.quantity == 'نامحدود' ) {
             if (!cart[$nuxt.$route.params.store_slug].some((el) => el.id == product.id)) {
               cart[$nuxt.$route.params.store_slug].push( product )
-            } else {
-              let item = cart[$nuxt.$route.params.store_slug].find(element => {
+            }else {
+              let item = cart[ $nuxt.$route.params.store_slug ].find(element => {
                 return element.id === product.id
               })
-              item.count = item.count + product.count
-              localStorage.setItem('cart',JSON.stringify(cart))
-              commit(
-                "open_toast",
-                {
-                  msg: "محصول به سبد خرید اضافه شد",
-                  variant: "success",
-                },
-                { root: true }
-              )
-              return
+              if ( item.is_multiple ) {
+                if( parseInt(item.count + product.count) > product.quantity ){
+                  commit(
+                    "open_toast",
+                    {
+                      msg: "تعداد محصول برابر با حداکثر موجودی است",
+                      variant: "warning",
+                    },
+                    { root: true }
+                  )
+                  return
+                }
+                
+                item.count = item.count + product.count
+                localStorage.setItem('cart',JSON.stringify(cart))
+                commit(
+                  "open_toast",
+                  {
+                    msg: "محصول به سبد خرید اضافه شد",
+                    variant: "success",
+                  },
+                  { root: true }
+                )
+                return
+              }else {
+                commit(
+                  "open_toast",
+                  {
+                    msg: "بیشتراز یک عدد ازاین محصول قابل خرید نیست",
+                    variant: "warning",
+                  },
+                  { root: true }
+                )
+                return
+              }
             }
+
             localStorage.setItem("cart", JSON.stringify(cart))
             $nuxt.$emit('refresh_basket', null)
             commit(

@@ -10,7 +10,8 @@ export default{
         $nuxt.$toast(payload.msg,{
             position:'top-center',
             type:payload.variant,
-            toastClassName:"toast-body"
+            toastClassName:"toast-body",
+            timeout: 2000
         });
     },
 }
