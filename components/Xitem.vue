@@ -25,7 +25,7 @@
         <Xbutton
           :on_click="
             () => {
-              $router.push(`${$route.params.store_slug}/${id}`);
+              $router.push(`/${$route.params.store_slug}/${id}`);
             }
           "
           variant="outline-success"

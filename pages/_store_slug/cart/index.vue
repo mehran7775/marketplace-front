@@ -249,9 +249,6 @@ export default {
       text-align: right;
       width: 30%;
     }
-    // .cost {
-    //   text-align: left;
-    // }
   }
   @include medium {
     div {
@@ -280,7 +277,7 @@ export default {
     }
     span{
       background-color: #C5C5C5;
-      padding: 4px 8px
+      padding: 4px 6px
     }
   }
 </style>
