@@ -7,7 +7,7 @@
             <Xbrand :logo="detail.logo" :showStory="() => triggerStory = true"></Xbrand>
             <div class="d-flex flex-column" id="detailStore">
               <div id="name_brand">
-                <h1 class="mr-4 h4 text-dark font-weight-bold" v-text="detail.fa_name ? detail.fa_name : 'فروشگاه من'"></h1>
+                <h1 class="mr-4 h4 text-dark font-weight-bold" v-text="detail.fa_name ? `فروشگاه ${detail.fa_name}` : 'فروشگاه من'"></h1>
               </div>
               <div class="mr-4" v-if="setDetail">
                 <div class="row">

@@ -17,11 +17,16 @@ const actions = {
             if (!cart[$nuxt.$route.params.store_slug].some((el) => el.id == product.id)) {
               cart[$nuxt.$route.params.store_slug].push( product )
             } else {
+              let item = cart[$nuxt.$route.params.store_slug].find(element => {
+                return element.id === product.id
+              })
+              item.count = item.count + product.count
+              localStorage.setItem('cart',JSON.stringify(cart))
               commit(
                 "open_toast",
                 {
-                  msg: "محصول به سبد خرید اضافه شده است",
-                  variant: "warning",
+                  msg: "محصول به سبد خرید اضافه شد",
+                  variant: "success",
                 },
                 { root: true }
               )
@@ -67,18 +72,18 @@ const actions = {
     },
     minusProduct({commit}, pid){
       let cart = JSON.parse(localStorage.getItem("cart"))
-      const p = cart[$nuxt.$route.params.store_slug].find(({ id }) => id === pid)
-      if(p.count > 1) {
-        p.count--
+      let product = cart[$nuxt.$route.params.store_slug].find(({ id }) => id === pid)
+      if(product.count > 1) {
+        product.count--
         localStorage.setItem('cart',JSON.stringify(cart))
         $nuxt.$emit('refresh-cart',null)
       }
     },
     plusProduct({commit}, pid){
         let cart = JSON.parse(localStorage.getItem("cart"))
-        const p = cart[$nuxt.$route.params.store_slug].find(({ id }) => id === pid)
-        if(p.is_multiple){
-          if(p.count >= p.quantity){
+        let product = cart[$nuxt.$route.params.store_slug].find(({ id }) => id === pid)
+        if(product.is_multiple){
+          if(product.count >= product.quantity){
             commit(
               "open_toast",
               {
@@ -89,7 +94,7 @@ const actions = {
             )
             return
           }
-          p.count++
+          product.count++
           localStorage.setItem('cart',JSON.stringify(cart))
           $nuxt.$emit('refresh-cart')
         }else{

@@ -1,15 +1,19 @@
 <template>
   <div
     id="item"
-    class="mx-auto"
+    class="mx-auto pb-4"
     @mouseover="item_hover()"
     @mouseleave="is_hover = false"
   >
-    <h5 v-text="title" class="d-none d-md-block font-weight-bold px-3 text-dark mb-0 mb-md-1"></h5>
-    <h6 v-text="title" class="d-md-none font-weight-bold px-3 text-dark mb-0 mb-md-1"></h6>
+    <h5 class="d-none d-md-block font-weight-bold px-3 text-dark mb-4 mx-auto ">
+      <p class="product-title" v-text="title"></p>
+    </h5>
+    <h6 class="d-md-none font-weight-bold px-3 text-dark mb-4 mx-auto ">
+      <p class="product-title" v-text="title"></p>
+    </h6>
     <nuxt-link
       :to="`/${$route.params.store_slug}/${id}`"
-      class="d-flex align-items-center justify-content-center"
+      class="d-flex align-items-center justify-content-center mt-2"
     >
       <img
         :src="image ? image : '/images/default-image.png'"
@@ -37,14 +41,20 @@
         ></Xbutton>
 
       </div>
-      <div v-if="!is_hover" class="price">
+      <div v-if="!is_hover" >
         <template v-if="quantity >= 1 || quantity == 'نامحدود' ">
-           <span>
-              <span v-text="price"></span>
+         <div class="d-flex flex-column">
+            <div v-show="discount_percent && discount_percent != 0" id="main-price">
+                <span v-text="price"></span>
+                <span class="discount-percent bg-success text-white text-center" v-text="`%${ discount_percent }`"></span>
+            </div>
+            <div class="price">
               <strong>
-                <span v-text="lang.price"></span>
+                <span v-text="sell_price"></span>
               </strong>
-           </span>
+              <span v-text="lang.price"></span>
+            </div>
+         </div>
         </template>
         <template v-else>
           <span class="text-danger font-weight-bold">ناموجود</span>
@@ -67,6 +77,14 @@ export default {
       default: "",
     },
     price: {
+      type: String | Number,
+      default: 0,
+    },
+    sell_price: {
+      type: String | Number,
+      default: 0,
+    },
+    discount_percent: {
       type: String | Number,
       default: 0,
     },
@@ -103,7 +121,7 @@ export default {
       let product = {
         id: this.id,
         name: this.title,
-        price: this.price,
+        price: this.sell_price,
         img: this.image,
         quantity: this.quantity,
         is_multiple : this.is_multiple,
@@ -123,6 +141,7 @@ export default {
   text-align: center;
   transition: border linear 0.2s;
   background-color: $white;
+  padding: 10px 0;
 
   h5,h6 {
     height: 35px;
@@ -130,7 +149,15 @@ export default {
     text-overflow: clip;
     overflow: hidden;
   }
-  padding: 10px 0;
+  .product-title{
+    max-width: 180px;
+    @include mx_medium{
+      max-width: 130px;
+    }
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   @include medium {
     padding: 15px 30px 10px 30px;
     border-radius: 10px;
@@ -174,6 +201,18 @@ export default {
     }
     .price {
       color: $success;
+    }
+    #main-price{
+      &>span:not(.discount-percent){
+        text-decoration: line-through;
+      }
+      .discount-percent{
+        display: inline-block;
+        width: 40px;
+        height: 20px;
+        padding-top: 2px;
+        border-radius: 10px;
+      }
     }
   }
 }

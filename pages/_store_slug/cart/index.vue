@@ -9,37 +9,51 @@
               :key="item.id"
               class="col-12 col-md-6 py-3 row_item_cart"
             >
-              <div class="row justify-content-between align-items-center">
+              <div class="row justify-content-between align-items-center align-items-center">
                 <div class="d-flex align-items-center detail_item_cart pr-2">
                   <div class="icon_item ml-2">
+                   <template v-if="item.img">
                     <img
                       :src="item.img"
                       width="24"
                       height="24"
-                      alt="عکس محصول"
+                      :alt="`عکس محصول ${ item.name }`"
+                      :title="`عکس محصول ${ item.name }`"
                     />
+                   </template>  
+                   <template v-else>
+                      <img
+                      src="@/assets/images/default-image.png"
+                      width="24"
+                      height="24"
+                      :alt="`عکس محصول ${ item.name }`"
+                      :title="`عکس محصول ${ item.name }`"
+                      />
+                   </template>
                   </div>
-                  <div class="name_icon"><span v-text="item.name"></span></div>
+                  <div class="title-product"><span  v-text="item.name"></span></div>
                 </div>
                 <div class="price_item_cart mr-1">
                   <span v-text="separate(item.price)"></span
                   ><span class="pr-1" v-text="lang.price"></span>
                 </div>
-                <div
-                  class="d-flex justify-content-center p-1"
-                  id="change-count-product"
-                >
-                  <span @click="minusProduct(item.id)"
-                    ><fa icon="minus" class="m-auto"></fa
-                  ></span>
-                   <strong class="mx-2 mx-md-3" v-text="item.count"></strong
-                    >
-                  <span @click="plusProduct(item.id)"
-                    ><fa icon="plus" class="m-auto"></fa
-                  ></span>
+                <div id="enums">
+                    <div class="d-flex bg-white align-items-center">
+                      <span class="d-flex align-items-center justify-content-center rounded-circle cursor_pointer"
+                      @click="minusProduct(item.id)"
+                      >
+                      <fa icon="minus" class="m-auto text-white"></fa>
+                      </span>
+                      <strong class="mx-2" v-text="item.count"></strong>
+                      <span class="d-flex align-items-center justify-content-center rounded-circle cursor_pointer"
+                      @click="plusProduct(item.id)"
+                      >
+                        <fa icon="plus" class="m-auto text-white"></fa >
+                      </span>
+                    </div>
                 </div>
                 <span @click="deleteProductFromCart(item.id)"
-                  ><fa icon="trash" class="ml-3"></fa
+                  ><fa icon="trash" class="ml-3 cursor_pointer"></fa
                 ></span>
               </div>
             </div>
@@ -199,10 +213,17 @@ export default {
   border: 1px solid $border;
 
   .detail_item_cart {
-    width: 53%;
+    width: 51%;
+
+    .title-product{
+      max-width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
   .price_item_cart {
-    width: 21%;
+    width: 19%;
     color: $success;
     text-align: right;
   }
@@ -210,10 +231,6 @@ export default {
   svg,
   strong {
     color: $text_color;
-  }
-  svg:hover {
-    color: $success;
-    cursor: pointer;
   }
 }
 .detail_price {
@@ -256,7 +273,14 @@ export default {
     margin-top: 1rem;
   }
 }
-#change-count-product {
-  border: 1px solid $border;
-}
+ #enums {
+    &>div{
+      border-radius: 215px;
+      height: 18px;
+    }
+    span{
+      background-color: #C5C5C5;
+      padding: 4px 8px
+    }
+  }
 </style>

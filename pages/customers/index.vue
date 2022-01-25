@@ -42,7 +42,7 @@
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody v-if="orders.length > 0">
                   <tr v-for="(order, index) in orders" :key="index">
                     <td>{{ order.id }}</td>
                     <td>{{ order.tracking_number }}</td>
@@ -122,9 +122,10 @@ export default {
       const { data } = await orderService.getCustomersOrders(
         this.$cookies.get("token-buyer")
       );
+
       this.orders = data.data;
     } catch (e) {
-      console.log(e);
+      console.log('eeee',e);
     }
   },
 };

@@ -76,7 +76,7 @@ export default {
   layout: "sign",
   head(){
     return{
-      title: 'صفحه ثبت نام مشتری'
+      title: 'ثبت نام'
     }
   },
   data() {

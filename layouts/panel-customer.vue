@@ -46,7 +46,7 @@
                               >
                             </li>
                             <li class="h5">
-                              <span class="text-whitesmok">خروج</span>
+                              <span  class="text-whitesmok cursor_pointer">خروج</span>
                             </li>
                           </ul>
                         </div>
@@ -58,7 +58,7 @@
                   >
                     <fa icon="user" class="fa-lg"></fa>
                     <span
-                      v-text="`${user_data.first_name} ${user_data.last_name}`"
+                      v-text="get_user_name()"
                     ></span>
                   </div>
                 </div>
@@ -165,6 +165,12 @@ export default {
       }catch(e){
         console.log(e)
       }
+    },
+    get_user_name(){
+      if(!this.user_data.first_name || !this.user_data.last_name){
+        return this.user_data.phone
+      }
+      return `${this.user_data.first_name} ${this.user_data.last_name}`
     }
   }
 };
@@ -173,6 +179,7 @@ export default {
 <style lang="scss" scoped>
 #header {
   background-color: $silver;
+   border-bottom: 1px solid $border;
 
   #info-side{
       width: auto;
@@ -189,6 +196,7 @@ export default {
 }
 .aside{
   width: 200px;
+  
 }
 .body-content{
   width: 100%;
@@ -200,6 +208,7 @@ export default {
 .asideFixed{
   border-left: 1px solid $border;
   width: 200px;
+  background-color: $silver;
 
 }
 .aside ul li,#sidebar-right ul li{
