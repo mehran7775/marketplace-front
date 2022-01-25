@@ -1,12 +1,15 @@
 <template>
   <div class="sign-in">
+     <div class="text-center mb-3">
+      <img width="130" src="@/assets/images/logo.svg" alt="لوگوی پی استار">
+    </div>
     <ValidationObserver ref="validationObserver">
       <Xform>
         <template #content>
           <div>
             <ValidationProvider vid="outh_param" :name="lang.label.phone" rules="required|regPhone" v-slot="{ valid, errors }">
             <b-form-group
-            :label="lang.label.username"
+            :label="lang.label.phone"
             class="font-weight-bold"
             >
                 <b-form-input
@@ -14,14 +17,14 @@
                   ref="auth_path"
                   type="text"
                   maxlength="11"
-                  placeholder="شماره تلفن"
+                  placeholder="شماره موبایل خود را وارد کنید"
                   :state="errors[0] ? false : (valid ? true : null)"
                 ></b-form-input>
               <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
             </b-form-group>
             </ValidationProvider>
         
-            <router-link to="/login" class="text-info">ورود با رمز ثابت</router-link>
+            <router-link to="/customer-login" class="text-info">ورود با رمز ثابت</router-link>
           <Xbutton :disable="btnDisable" :on_click="do_login" class="w-100 mt-3" :text="lang.svg.signIn">
             <template #spinner>
               <b-spinner v-show="laodingLogin" small  class="float-left"></b-spinner>
@@ -55,6 +58,11 @@ export default {
       laodingLogin:false,
       btnDisable:false,
     };
+  },
+  head(){
+    return{
+      title: 'ورود'
+    }
   },
   methods: {
      do_login() {

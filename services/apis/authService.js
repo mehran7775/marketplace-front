@@ -24,5 +24,18 @@ export default{
                 'Authorization' : `Bearer ${payload}`
             }
         })
+    },
+
+
+
+
+
+    //********************* Admin-Seller */
+    log_out_user(payload){
+        return axios.post('/logout', {
+            headers:{
+                'Authorization' : `Bearer ${payload}`
+            }
+        })
     }
 }

@@ -5,8 +5,8 @@
     </div>
 
     <div class="px-2">
-      <a href="https://my.paystar.ir/" title="خروج">
-        <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" width="24"
+      <span class="cursor_pointer" @click="log_out_user()" title="خروج">
+          <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" width="24"
              fill="#a0a0a0" viewBox="0 0 24 24">
           <g>
             <path d="M0,0h24v24H0V0z" fill="none"/>
@@ -20,17 +20,32 @@
             </g>
           </g>
         </svg>
-      </a>
+      </span>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
+
   name: "app_header",
   components: {
   },
+  methods:{
+    log_out_user(){
+      try{
+        this.$cookies.remove('token')
+        localStorage.removeItem('userDetail')
+        localStorage.removeItem('currentUser')
+        const a = document.createElement('a')
+        a.href = "https://my.paystar.ir/"
+        a.click()
+      }catch(e){
+        console.log(e)
+      }
+      
+    }
+  }
 }
 </script>
 

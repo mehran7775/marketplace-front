@@ -11,7 +11,7 @@ export const fa = {
         fname:'نام',
         lname:'نام خانوادگی',
         username:'نام کاربری',
-        phone:'شماره تلفن',
+        phone:'شماره موبایل',
         email:'ایمیل',
         province:'استان',
         city:'شهر',

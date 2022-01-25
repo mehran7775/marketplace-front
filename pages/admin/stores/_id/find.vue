@@ -423,13 +423,15 @@
                                     <b-col>
                                         <b-form-group label="هزینه ارسال شهر خود (تومان)">
                                             <b-form-input type="number"
-                                                        v-model="store.shipping_setting.own_city_shipping_cost"></b-form-input>
+                                                        v-model="enOwnPrice"></b-form-input>
+                                                        <small v-show="enOwnPrice" v-text="separate(enOwnPrice)+ ' تومان'" class="mr-2 text-success"></small>
                                         </b-form-group>
                                     </b-col>
                                     <b-col>
                                         <b-form-group label="هزینه ارسال سایر شهر ها (تومان)">
                                             <b-form-input type="number"
-                                                        v-model="store.shipping_setting.other_cities_shipping_cost"></b-form-input>
+                                                        v-model="enOtherPrice"></b-form-input>
+                                                        <small v-show="enOtherPrice" v-text="separate(enOtherPrice)+ ' تومان'" class="mr-2 text-success"></small>
                                         </b-form-group>
                                     </b-col>
                                 </b-form-row>
@@ -530,8 +532,10 @@ import PageTitle from "~/components/main/pageTitle";
 import StoreStatus from "~/constants/StoreStatus";
 import axios from '~/plugins/axios'
 import Chart from '@/components/chart_empty'
+import separatePrice from '~/mixins/separatePrice' 
 export default {
     layout: "main-content",
+    mixins:[ separatePrice ],
     components:{
         PageTitle, Chart,
         'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
@@ -539,7 +543,23 @@ export default {
      computed:{
         acceptedImageTypes(){
             return ['image/svg+xml', 'image/jpeg', 'image/png','image/webp']
-        }
+        },
+        enOtherPrice:{
+            get(){
+                return this.store.shipping_setting.other_cities_shipping_cost
+            },
+            set(value){
+                this.store.shipping_setting.other_cities_shipping_cost = this.changetoEnNumber( value )
+            }
+        },
+        enOwnPrice:{
+            get(){
+                return this.store.shipping_setting.own_city_shipping_cost
+            },
+            set(value){
+                this.store.shipping_setting.own_city_shipping_cost = this.changetoEnNumber( value )
+            }
+        },
     },
     data() {
         return {

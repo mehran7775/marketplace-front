@@ -96,7 +96,7 @@
                             <td >{{ order.customer_info }}</td>
                             <td>{{ order.tracking_number }}</td>
                             <td>{{ order.payment_price }}</td>
-                            <td>{{ order.created_at }}</td>
+                            <td dir="ltr">{{ order.register_at }}</td>
                             <td>
                                 <b-badge :variant="OrderStatus.getStatus(order.status).variant">
                                     {{ OrderStatus.getStatus(order.status).text}}

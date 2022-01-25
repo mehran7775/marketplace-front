@@ -1,48 +1,39 @@
 <template>
   <div v-if="products" class="lable h-100">
-    <!-- <div class="title text-right pt-4 pr-5 d-none d-md-block">
-        <h6>
-          <label>
-            <b>برچسب</b>
-          </label>
-        </h6>
-      </div> -->
-    <div class="body-products h-100 pb-0 pb-md-4">
-      <div class="carousel-wrapper d-none d-md-block h-100">
-        <client-only>
-          <carousel :per-page="per_page" v-bind="options" :rtl="true">
-            <slide
-              v-for="product in products"
-              :key="product.id"
-              class="img-wrapper"
-            >
-              <Xitem
+      <div v-if="!mobile" class="col d-none d-md-block py-5">
+        <div class="row justify-content-start">
+          <div class="col-4 col-lg-3 my-3" v-for="product in products" :key="product.id">
+            <div class="row">
+                <Xitem
                 :title="product.title"
                 :image="product.thumbnail"
                 :price="product.price"
+                :sell_price="product.sell_price"
                 :id="product.id"
                 :quantity="product.quantity"
                 :is_multiple="product.is_multiple"
+                :discount_percent="product.discount_percent"
               ></Xitem>
-            </slide>
-          </carousel>
-        </client-only>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="grid-container d-md-none">
+      <div v-else class="grid-container d-md-none">
         <div v-for="product in products" :key="product.id">
           <client-only>
             <Xitem
               :title="product.title"
               :image="product.thumbnail"
               :price="product.price"
+              :sell_price="product.sell_price"
               :id="product.id"
               :quantity="product.quantity"
               :is_multiple="product.is_multiple"
+              :discount_percent="product.discount_percent"
             ></Xitem>
           </client-only>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -54,6 +45,8 @@ export default {
       options: {
         paginationEnabled: false,
         loop: true,
+        spacePadding: 35,
+        spacePaddingMaxOffsetFactor	: 3,
         perPageCustom: [
           [340, 3],
           [576, 3],
@@ -63,8 +56,20 @@ export default {
         ],
       },
       per_page: 3,
+      mobile: true
     };
   },
+  mounted() {
+    this.$nextTick(function () {
+      this.onResize();
+    })
+    window.addEventListener('resize', this.onResize)
+  },
+  methods: {
+    onResize() {
+      this.mobile = innerWidth <= 768
+    }
+  }
 };
 </script>
 

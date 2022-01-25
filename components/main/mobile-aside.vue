@@ -21,7 +21,7 @@
                 <template>
                   <div>
                       <li v-if="!item.in_store && ($can('manage' , item.manager) || !item.manager)" v-for="(item, index) in menu" :key="index" :class="item.url == $route.fullPath ? 'sidebar_active_item sidebar_item' : 'sidebar_item'">
-                        <nuxt-link :to="(item.in_store) ? ('/' + $route.params.store_slug + item.url) : (item.url)" class="d-flex align-items-center justify-content-between">
+                        <nuxt-link  :to="(item.in_store) ? ('/' + $route.params.store_slug + item.url) : (item.url)" class="d-flex align-items-center justify-content-between">
                            <div>
                               <span v-html="item.icon"></span>
                               <span class="pr-2">{{ item.title }}</span>
@@ -70,6 +70,11 @@ export default {
       default: ''
     },
   },
+  watch:{
+    '$route'(){
+      $("#app_mobile_aside").hide()
+    }
+  },
   data() {
     return {
       menu : menu
@@ -79,6 +84,6 @@ export default {
     closeMenu() {
       $('#app_mobile_aside').animate({width: 'toggle'}, 100);
     }
-  }
+  },
 };
 </script>

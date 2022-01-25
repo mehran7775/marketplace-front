@@ -40,20 +40,28 @@
                         </div>
                         <div class="row">
                             <div class="col-sm mt-2">
-                                <label>مبلغ کل سفارش(ریال)</label>
+                                <label>مبلغ کل سفارش(تومان)</label>
                                 <div class="border rounded p-2" v-text="order.payment_price"></div>
                             </div>
-                            <div v-if="order.register_date" class="col-sm mt-2">
-                                <label>تاریخ ثبت سفارش</label>
-                                <div class="border rounded p-2" v-text="order.register_date"></div>
+                        
+                            <div class="col-sm mt-2">
+                                <label>وضعیت فعلی</label>
+                                <div class="border rounded p-2" v-text="current_state"></div>
                             </div>
+                         
                             <div class="col-sm mt-2">
                                 <label>
-                                    وضعیت
+                                    تغییر وضعیت
                                 </label>
                                     <b-form-select v-model="form.status">
                                         <option v-for="status in OrderStatus.sellerStatus" :value="status.value">{{status.text}}</option>
                                     </b-form-select>
+                            </div>
+                        </div>
+                        <div class="row">
+                             <div v-if="order.register_date" class="col-12 col-sm-4 mt-2">
+                                <label>تاریخ ثبت سفارش</label>
+                                <div class="border rounded p-2" v-text="order.register_date"></div>
                             </div>
                         </div>
                     </div>
@@ -111,7 +119,7 @@
                                         <th scope="col" style="background-color: #eee;">عنوان</th>
                                         <th scope="col" style="background-color: #eee;">تصویر</th>
                                         <th scope="col" style="background-color: #eee;">تعداد</th>
-                                        <th scope="col"  style="background-color: #eee; border-radius: 16px 0px 0px 16px;">قیمت (ریال)</th>
+                                        <th scope="col"  style="background-color: #eee; border-radius: 16px 0px 0px 16px;">قیمت (تومان)</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -152,19 +160,26 @@ export default {
             OrderStatus,
             order : null,
             form : {
-                status : null
+                status : 2
             },
             btnDisable: false,
             laodingSpinner: false
+        }
+    },
+    computed:{
+        current_state(){
+            let current_status = OrderStatus.sellerStatus.find(element =>{
+               return element.value === this.order.status
+            })
+            return current_status.text
         }
     },
     methods : {
         getOrder(){
             api.get('order/find/' + this.$route.params.id )
             .then(res => {
-                console.log(res.data.data)
                 this.order = res.data.data
-                this.form.status = res.data.data.status
+                // this.form.status = res.data.data.status
             })
         },
         updateOrder(){

@@ -50,9 +50,9 @@
                 <b-col col="sm">
                     <b-form-group label="هزینه ارسال شهر خود (تومان)">
                         <b-form-input type="number"
-                                    v-model="store.shipping_setting.own_city_shipping_cost"></b-form-input>
-                        <small class="text-success px-2">
-                            {{moneyFormat(store.shipping_setting.own_city_shipping_cost)}}
+                                    v-model="enOwnPrice"></b-form-input>
+                        <small v-show="enOtherPrice" class="text-success px-2">
+                            {{moneyFormat(enOtherPrice)}}
                             تومان
                         </small>
                     </b-form-group>
@@ -60,9 +60,9 @@
                 <b-col col="sm">
                     <b-form-group label="هزینه ارسال سایر شهر ها (تومان)">
                         <b-form-input type="number"
-                                    v-model="store.shipping_setting.other_cities_shipping_cost"></b-form-input>
-                        <small class="text-success px-2">
-                            {{moneyFormat(store.shipping_setting.other_cities_shipping_cost)}}
+                                    v-model="enOtherPrice"></b-form-input>
+                        <small v-show="enOtherPrice" class="text-success px-2">
+                            {{moneyFormat(enOtherPrice)}}
                             تومان
                         </small>
                     </b-form-group>
@@ -76,9 +76,11 @@
 <script>
 import api from "~/services/api";
 import PageTitle from "~/components/main/pageTitle";
+import separatePrice from '~/mixins/separatePrice'
 
 export default {
     name: "shipping",
+    mixins: [ separatePrice ],
     components: {PageTitle},
     layout: "main-content",
     data() {
@@ -98,6 +100,25 @@ export default {
         if(process.client){
          await this.getData()
         }
+    },
+    computed:{
+        enOwnPrice:{
+            get(){
+                return this.store.shipping_setting.own_city_shipping_cost
+            },
+            set(value){
+                this.store.shipping_setting.own_city_shipping_cost = this.changetoEnNumber( value )
+            }
+        },
+        enOtherPrice:{
+            get(){
+                return this.store.shipping_setting.other_cities_shipping_cost
+            },
+            set(value){
+                this.store.shipping_setting.other_cities_shipping_cost = this.changetoEnNumber( value )
+            }
+        },
+
     },
     methods: {
         getData(){

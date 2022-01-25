@@ -45,7 +45,7 @@
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody v-if="orders.length > 0">
                   <tr v-for="(order, index) in orders" :key="index">
                     <td>{{ order.id }}</td>
                     <td>{{ order.tracking_number }}</td>
@@ -117,19 +117,7 @@ export default {
   data() {
     return {
       OrderStatus,
-      orders: [
-        {
-          id: "j862r",
-          store: {
-            name: "aa",
-            id: "eroxr",
-          },
-          tracking_number: "381632031264",
-          payment_price: 103370,
-          status: 3,
-          created_at: "1400/06/28",
-        },
-      ],
+      orders: [],
     };
   },
   components: {

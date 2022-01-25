@@ -46,7 +46,7 @@
                               >
                             </li>
                             <li class="h5">
-                              <span class="text-whitesmok">خروج</span>
+                              <span  class="text-whitesmok cursor_pointer">خروج</span>
                             </li>
                           </ul>
                         </div>
@@ -58,12 +58,12 @@
                   >
                     <fa icon="user" class="fa-lg"></fa>
                     <span
-                      v-text="`${user_data.first_name} ${user_data.last_name}`"
+                      v-text="get_user_name()"
                     ></span>
                   </div>
                 </div>
                 <div class="logo d-none d-md-block">
-                  <a href="https://my.paystar.ir/"
+                  <a href="https://shop.paystar.ir/"
                     ><img width="100"
                       src="https://paystar.ir/homepage/image/logo.svg"
                     />
@@ -132,21 +132,30 @@ export default {
       onClient: false,
     };
   },
-  computed: {
-    user_data() {
-      if (localStorage.getItem("userDetail")) {
-        return JSON.parse(localStorage.getItem("userDetail"));
-      } else {
-        return null;
-      }
-    },
-  },
-  created() {
+
+  async created() {
     if (process.client) {
+      this.setDetail()
       this.onClient = true;
     }
   },
+  computed:{
+    user_data(){
+      return JSON.parse(localStorage.getItem('detail_user'))
+    }
+  },
   methods:{
+    async setDetail(){
+      try{
+          const {data}= await authService.currentUser( this.$cookies.get('token-buyer'))
+          localStorage.setItem('detail_user',JSON.stringify( data.data ))
+      }catch(e){
+          this.$store.commit('open_toast',{
+              msg: e.response.data.message,
+              variant:'error'
+          })
+      }
+    },
     logOut(){ 
       try{
         const res = authService.logOut(this.$cookies.get('token-buyer'))
@@ -156,6 +165,12 @@ export default {
       }catch(e){
         console.log(e)
       }
+    },
+    get_user_name(){
+      if(!this.user_data.first_name || !this.user_data.last_name){
+        return this.user_data.phone
+      }
+      return `${this.user_data.first_name} ${this.user_data.last_name}`
     }
   }
 };
@@ -164,6 +179,7 @@ export default {
 <style lang="scss" scoped>
 #header {
   background-color: $silver;
+   border-bottom: 1px solid $border;
 
   #info-side{
       width: auto;
@@ -180,6 +196,7 @@ export default {
 }
 .aside{
   width: 200px;
+  
 }
 .body-content{
   width: 100%;
@@ -191,6 +208,7 @@ export default {
 .asideFixed{
   border-left: 1px solid $border;
   width: 200px;
+  background-color: $silver;
 
 }
 .aside ul li,#sidebar-right ul li{

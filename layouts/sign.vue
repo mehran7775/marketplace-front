@@ -12,7 +12,7 @@
 export default {
   head() {
     return {
-      title: `فروشگاه ساز پی استار`,
+       titleTemplate: "پی استار -%s",
     }
   },
 }

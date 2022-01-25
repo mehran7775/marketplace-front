@@ -14,33 +14,10 @@
                     <input class="form-control" placeholder="عنوان محصول" v-model="filter_title">
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
-                    <input class="form-control" placeholder="قیمت" v-model="filter_price">
+                    <input class="form-control" placeholder="قیمت(تومان)" v-model="filterPrice">
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
-                    <date-picker
-                    v-model="filter_from_date"
-                    color="#00c1a4"
-                    format="YYYY-MM-DD HH:mm:ss"
-                    display-format="dddd jDD jMMMM jYYYY HH:mm"
-                    type="datetime"
-                    placeholder="از تاریخ"
-                    />
-                    <div v-show="filter_from_date" class="position-relative text-left delete-filter ">
-                        <fa icon="times" class="fa-md cursor_pointer" @click="filter_from_date= null"></fa>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-3 my-2">
-                    <date-picker
-                    v-model="filter_to_date"
-                    color="#00c1a4"
-                    format="YYYY-MM-DD HH:mm:ss"
-                    display-format="dddd jDD jMMMM jYYYY HH:mm"
-                    type="datetime"
-                    placeholder="تا تاریخ"
-                    />
-                    <div v-show="filter_to_date" class="position-relative text-left delete-filter ">
-                        <fa icon="times" class="fa-md cursor_pointer" @click="filter_to_date= null"></fa>
-                    </div>
+                    <input class="form-control" placeholder="کد محصول" v-model="filter_code">
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3 my-2">
                     <select class="form-control" id="selectState" v-model="filter_status">
@@ -84,7 +61,7 @@
                             <th scope="col" style="background-color: #eee;">تصویر</th>
                             <th scope="col" style="background-color: #eee;">تعداد</th>
                             <th scope="col" style="background-color: #eee;">قیمت فروش (تومان)</th>
-                            <th scope="col" style="background-color: #eee;">تاریخ ایجاد</th>
+                            <th scope="col" style="background-color: #eee;">کد محصول</th>
                             <th scope="col" style="background-color: #eee;">وضعیت</th>
                             <th scope="col" style="background-color: #eee; border-radius: 16px 0px 0px 16px;">عملیات
                             </th>
@@ -93,13 +70,13 @@
                         <tbody>
                         <tr v-for="(product, index) in products.data" :key="index">
                             <td>{{ product.id }}</td>
-                            <td>{{ product.title }}</td>
+                            <td class="product-title-cel">{{ product.title }}</td>
                             <td>
                                 <img :src="product.thumbnail" width="30px" height="30"/>
                             </td>
                             <td>{{ product.quantity }}</td>
                             <td v-text="separate(product.sell_price)"></td>
-                            <td v-text="product.created_at">-</td>
+                            <td v-text="product.code? product.code : '-'"></td>
                             <td>
                                 <b-badge :variant="ProductStatus.getStatus(product.status).variant">
                                         {{ProductStatus.getStatus(product.status).text}}
@@ -152,7 +129,7 @@
             title="ویرایش محصول"
             hide-footer
         >
-            <ValidationObserver ref="formUpdateProduct">
+            <ValidationObserver ref="formUpdateProductMe">
                 <b-form @submit.prevent="updateProduct()">
                     <ValidationProvider
                         vid="title"
@@ -192,10 +169,11 @@
                         >
                         <b-form-input
                             id="price"
-                            v-model="productUpdate.price"
+                            v-model="enPriceProductUpdate"
                             placeholder="قیمت را وارد کنید"
                             :state="errors[0] ? false : valid ? true : null"
                         ></b-form-input>
+                        <small v-show="enPriceProductUpdate" v-text="separate( enPriceProductUpdate )+ ' تومان'" class="mr-2 text-success"></small>
                         <b-form-invalid-feedback
                             class="pr-2"
                             id="inputLiveFeedback"
@@ -205,8 +183,6 @@
                     </ValidationProvider>
                      <ValidationProvider
                         vid="sell_price"
-                        v-slot="{ valid, errors }"
-                        rules="required"
                         name="قیمت فروش"
                     >
                         <b-form-group
@@ -216,15 +192,10 @@
                         >
                         <b-form-input
                             id="sell_price"
-                            v-model="strikethroughPrice"
+                            v-model="enSellPriceProductUpdate"
                             placeholder="قیمت فروش را وارد کنید"
-                            :state="errors[0] ? false : valid ? true : null"
                         ></b-form-input>
-                        <b-form-invalid-feedback
-                            class="pr-2"
-                            id="inputLiveFeedback"
-                            >{{ errors[0] }}</b-form-invalid-feedback
-                        >
+                        <small v-show="enSellPriceProductUpdate" v-text="separate(enSellPriceProductUpdate)+ ' تومان'" class="mr-2 text-success"></small>
                         </b-form-group>
                     </ValidationProvider>
                     <ValidationProvider
@@ -342,12 +313,12 @@ export default {
             filter_title: null,
             filter_price : null,
             filter_status: null,
-            filter_from_date: null,
-            filter_to_date: null,
+            filter_code: null,
             products: null,
             per_page: 15,
             product_status : null,
             productUpdate:{},
+            productUpdatePrice: 0,
             btnDisable:false,
             loadingSpinner:false,
             tr:false,
@@ -367,19 +338,45 @@ export default {
                 res = res + '&query[status]=' + this.filter_status;
             }
             if (this.filter_price) {
-                res = res + '&query[price]=' + this.filter_price;
+                if(typeof this.filter_price === 'string'){
+                    while(this.filter_price.includes(",")){
+                        this.filter_price= this.filter_price.replace(",", "")
+                    }
+                }
+                res = res + '&query[price]=' + this.filter_price*10;
             }
-            if (this.filter_from_date) {
-                res = res + '&query[from_date]=' + this.filter_from_date;
-            }
-            if (this.filter_from_at) {
-                res = res + '&query[from_at]=' + this.filter_from_at;
+            if (this.filter_code) {
+                res = res + '&query[code]=' + this.filter_code;
             }
             return res;
         },
         titleDelete(){
             return this.productUpdate.title 
         },
+        filterPrice:{
+            get(){
+                return this.filter_price
+            },
+            set(value){
+                this.filter_price = this.changetoEnNumber( value )
+            }
+        },
+        enPriceProductUpdate:{
+            get(){
+                return this.productUpdatePrice
+            },
+            set(value){
+                this.productUpdatePrice = this.changetoEnNumber( value )
+            }
+        },
+        enSellPriceProductUpdate:{
+            get(){
+                return this.strikethroughPrice
+            },
+            set(value){
+                this.strikethroughPrice = this.changetoEnNumber( value )
+            }
+        }
     },
     methods: { 
         async getProduct(){
@@ -390,8 +387,7 @@ export default {
             this.filter_title = null;
             this.filter_status = null;
             this.filter_price = null
-            this.filter_from_date = null
-            this.filter_to_date = null
+            this.filter_code = null
         },
         async get_data(url) {
             this.btnDisableAction= true
@@ -420,33 +416,35 @@ export default {
         },
         triggerEditProduct(product){
             Object.assign(this.productUpdate,product)
-            this.strikethroughPrice = this.separate(this.productUpdate.sell_price)
+            if (typeof this.productUpdate.price === 'string'){
+                while(this.productUpdate.price.includes(",")){
+                    this.productUpdate.price= this.productUpdate.price.replace(",", "")
+                }
+                this.productUpdatePrice= parseInt( this.productUpdate.price )
+            }
+            if (typeof this.productUpdate.sell_price === 'string'){
+                while(this.productUpdate.sell_price.includes(",")){
+                    this.productUpdate.sell_price= this.productUpdate.sell_price.replace(",", "")
+                }
+                this.strikethroughPrice= parseInt( this.productUpdate.sell_price )
+            }
             this.$bvModal.show('updateProduct')          
            
         },
-        async updateProduct(){
-            this.$refs.formUpdateProduct.validate().then(async (success) =>{
+        updateProduct(){
+            this.$refs.formUpdateProductMe.validate().then(async (success) =>{
                 if(success){
                     this.btnDisable= true
                     this.loadingSpinner= true
-                    if(typeof this.productUpdate.price === 'string'){
-                        while(this.productUpdate.price.includes(",")){
-                            this.productUpdate.price= this.productUpdate.price.replace(",", "")
-                        }
-                    }
-                    if(typeof this.strikethroughPrice === 'string'){
-                        while(this.strikethroughPrice.includes(",")){
-                            this.strikethroughPrice=this.strikethroughPrice.replace(",", "")
-                        }
-                    }
+                   
                     let discount_percent= null
 
                     if(this.strikethroughPrice == ''){
                         discount_percent = 0
                     }
-                    let x= (this.productUpdate.price - this.strikethroughPrice)
+                    let x= (this.productUpdatePrice - this.strikethroughPrice)
                     if(this.strikethroughPrice!==0 || !isNaN(this.strikethroughPrice)){
-                        const p= (x/ this.productUpdate.price)* 100
+                        const p= (x/ this.productUpdatePrice)* 100
                         let rounded = Math.round((p + Number.EPSILON) * 100) / 100;
                         discount_percent= rounded
                     }else{
@@ -454,7 +452,8 @@ export default {
                     }
                     
                     this.productUpdate.store_id= this.store_slug
-                    this.productUpdate.price*=10
+                    this.productUpdatePrice*=10
+                    this.productUpdate['price']= this.productUpdatePrice
                     this.productUpdate['discount_percent']= discount_percent
                     
                     try{
@@ -483,7 +482,7 @@ export default {
                             msg:e.response.data.message,
                             variant:'error'
                         })
-                        this.$refs.formUpdateProduct.setErrors(e.response.data.data);
+                        this.$refs.formUpdateProductMe.setErrors(e.response.data.data);
                     }   
                 }
             })
@@ -528,4 +527,11 @@ table > tbody > tr:not(:last-child) > td {
     color: rgb(144, 146, 150)!important;
     
 }
+.product-title-cel{
+    max-width: 160px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 </style>
