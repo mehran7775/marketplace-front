@@ -95,13 +95,13 @@
                         <tr v-for="(order, index) in orders.data" :key="index">
                             <td>{{ order.id }}</td>
                             <td>
-                                <nuxt-link v-show="order.customer.id" :to="`/admin/customers/${ order.customer.id }/find`" v-text="order.customer_info"
+                                <nuxt-link v-show="order.customer.id" :to="`/panel/admin/customers/${ order.customer.id }/find`" v-text="order.customer_info"
                                 class="text-info"
                                 ></nuxt-link>
                                 <span v-show="!order.customer.id" v-text="order.customer_info"></span>
                             </td>
                             <td>
-                                <nuxt-link :to="`/admin/stores/${ order.store_id }/find`" v-text="order.store_name"
+                                <nuxt-link :to="`/panel/admin/stores/${ order.store_id }/find`" v-text="order.store_name"
                                 class="text-info"
                                 ></nuxt-link>
                             </td>

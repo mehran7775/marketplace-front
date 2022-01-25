@@ -19,7 +19,9 @@ export default {
           this.$router.push('/')
       }
     } catch (e) {
-        console.log(e)
+      this.$nuxt.error({
+        statusCode: e.response.status
+      })
     }
   },
 };

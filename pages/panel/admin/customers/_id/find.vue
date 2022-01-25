@@ -129,7 +129,7 @@ export default {
                             msg: data.message,
                             variant: "success",
                         });
-                        this.$router.push('/admin/customers')
+                        this.$router.push('/panel/admin/customers')
                     }catch(e){
                         if(e.response.status === 400){
                             this.$refs.formCustomer.setErrors(e.response.data.data);

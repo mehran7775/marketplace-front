@@ -3,7 +3,7 @@
         <div class="d-flex align-items-center">
             <div class="px-4 ml-auto">سفارش ‌های اخیر</div>
             <div class="px-4">
-                <router-link class="text-success" :to="'/'+ $route.params.store_slug +'/admin/orders'">مشاهده کل</router-link>
+                <router-link class="text-success" :to="'/panel/'+ $route.params.store_slug +'/admin/orders'">مشاهده کل</router-link>
             </div>
         </div>
         <hr>

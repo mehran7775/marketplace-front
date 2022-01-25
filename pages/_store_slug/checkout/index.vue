@@ -119,6 +119,11 @@ import separatePrice from '@/mixins/separatePrice'
 import { tr } from '@/services/lang'
 export default {
     layout: "index",
+    head(){
+        return {
+            title : ' نهایی کردن سفارش'
+        }
+    },
     middleware({ route, redirect }) {
       if (!route.query.data.order_id) {
         return redirect(`/${route.params.store_slug}/complete-info`)

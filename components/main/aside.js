@@ -1,6 +1,6 @@
 export default [
     {
-        url: '/admin/',
+        url: '/panel/admin/',
         title: 'پیشخوان',
         in_store: false,
         manager : 'store-manager',
@@ -12,7 +12,7 @@ export default [
             '            \'            </svg>'
     },
     {
-        url: '/admin/ports',
+        url: '/panel/admin/ports',
         title: 'پورت ها',
         manager : 'manage-port',
         need_auth: false,
@@ -21,7 +21,7 @@ export default [
 
     },
     {
-        url: '/admin/gateways',
+        url: '/panel/admin/gateways',
         title: 'درگاه ها',
         manager : 'gateway-manager',
         need_auth: false,
@@ -30,7 +30,7 @@ export default [
 
     },
     {
-        url: '/admin/users',
+        url: '/panel/admin/users',
         title: 'فروشندگان',
         manager : 'user-manager',
         need_auth: false,
@@ -39,7 +39,7 @@ export default [
 
     },
     {
-        url: '/admin/stores',
+        url: '/panel/admin/stores',
         title: 'فروشگاه ها',
         need_auth: false,
         manager : 'store-manager',
@@ -48,7 +48,7 @@ export default [
             '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#a0a0a0"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M18.36 9l.6 3H5.04l.6-3h12.72M20 4H4v2h16V4zm0 3H4l-1 5v2h1v6h10v-6h4v6h2v-6h1v-2l-1-5zM6 18v-4h6v4H6z"/></svg>'
     },
     {
-        url: '/admin/customers',
+        url: '/panel/admin/customers',
         title: 'مشتریان',
         need_auth: false,
         manager : 'customer-manager',
@@ -57,7 +57,7 @@ export default [
 
     },
     {
-        url: '/admin/orders',
+        url: '/panel/admin/orders',
         title: 'سفارشات',
         manager : 'order-manager',
         need_auth: false,
@@ -66,7 +66,7 @@ export default [
             '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#a0a0a0"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 7h6v2h-6zm0 4h6v2h-6zm0 4h6v2h-6zM7 7h2v2H7zm0 4h2v2H7zm0 4h2v2H7zM20.1 3H3.9c-.5 0-.9.4-.9.9v16.2c0 .4.4.9.9.9h16.2c.4 0 .9-.5.9-.9V3.9c0-.5-.5-.9-.9-.9zM19 19H5V5h14v14z"/></svg>'
     },
     {
-        url: '/',
+        url: '/panel',
         title: 'فروشگاه های من',
         in_store: false,
         need_auth: false,
@@ -75,7 +75,7 @@ export default [
 
     },
     {
-        url: '/admin',
+        url: '/',
         title: 'پیشخوان',
         in_store: true,
         need_auth: false,
@@ -86,7 +86,7 @@ export default [
             '            \'            </svg>'
     },
     {
-        url: '/admin/products',
+        url: '/products',
         title: 'محصولات',
         in_store: true,
         need_auth: false,
@@ -95,7 +95,7 @@ export default [
 
     },
     {
-        url: '/admin/categories',
+        url: '/categories',
         title: 'دسته بندی ها',
         in_store: true,
         need_auth: false,
@@ -106,7 +106,7 @@ export default [
             '            \'            </svg>'
     },
     {
-        url: '/admin/setting/shipping',
+        url: '/setting/shipping',
         title: 'تنظیمات ارسال',
         in_store: true,
         need_auth: false,
@@ -115,7 +115,7 @@ export default [
 
     },
     {
-        url: '/admin/setting/gateway',
+        url: '/setting/gateway',
         title: 'تنظیمات درگاه پرداخت',
         in_store: true,
         need_auth: false,
@@ -125,7 +125,7 @@ export default [
 
     },
     {
-        url: '/admin/orders',
+        url: '/orders',
         title: 'سفارشات',
         in_store: true,
         need_auth: false,
@@ -134,7 +134,7 @@ export default [
             '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#a0a0a0"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 9h2V6h3V4h-3V1h-2v3H8v2h3v3zm-4 9c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm-8.9-5h7.45c.75 0 1.41-.41 1.75-1.03l3.86-7.01L19.42 4l-3.87 7H8.53L4.27 2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2z"/></svg>'
     },
     {
-        url: '/admin/setting/store',
+        url: '/setting/store',
         title: 'ویرایش فروشگاه',
         in_store: true,
         need_auth: false,

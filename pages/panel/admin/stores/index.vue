@@ -98,7 +98,7 @@
                             <td>{{ store.fa_name }}</td>
                             <td>
                                 <!-- admin/users/pq93n/find -->
-                                <nuxt-link :to="`/admin/users/${ store.seller_id }/find`" class="text-info">{{ store.seller_name }}</nuxt-link>
+                                <nuxt-link :to="`/panel/admin/users/${ store.seller_id }/find`" class="text-info">{{ store.seller_name }}</nuxt-link>
                             </td>
                             <td>{{ store.create_at }}</td>
                             <td>

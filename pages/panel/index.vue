@@ -4,7 +4,7 @@
             <div>
                 <span class="h4 font-weight-bold">فروشگاه های من</span>
             </div>
-            <nuxt-link to="/seller/stores/create">
+            <nuxt-link to="/panel/seller/stores/create">
                 <Xbutton variant="success" class="px-4" text="فروشگاه جدید"></Xbutton>
             </nuxt-link>
         </div>
@@ -38,7 +38,7 @@
                                 صفحه اصلی فروشگاه
                             </a>
 
-                            <nuxt-link :to="'/' + store.id + '/admin'" class="btn btn-block m-2"
+                            <nuxt-link :to="'/panel/' + store.id + '/admin'" class="btn btn-block m-2"
                                        style="border-radius: 10px; color: gray; border: 1px solid darkgray;">
                                 مدیریت فروشگاه
                             </nuxt-link>

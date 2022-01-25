@@ -71,7 +71,7 @@
                                 </td>
                                 <td>
                                     <nuxt-link class="btn p-0 m-0 text-danger"
-                                            :to="'/admin/users/' + user.id + '/find'">
+                                            :to="'/panel/admin/users/' + user.id + '/find'">
                                 <span class="special-tooltip btn btn-sm btn-clean btn-icon btn-icon-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"
                                     fill="#bbb"><path d="M0 0h24v24H0V0z" fill="none"></path><path

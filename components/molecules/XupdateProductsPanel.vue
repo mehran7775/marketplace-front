@@ -521,9 +521,9 @@ export default {
                     console.log(response.data)
                     this.message = response.data.message
                     if(this.admin_panel){
-                        this.$router.push(`/admin/stores/${this.store_slug}/find`);
+                        this.$router.push(`/panel/admin/stores/${this.store_slug}/find`);
                     }else{
-                        this.$router.push("/" + this.store_slug + "/admin/products");
+                        this.$router.push("/panel/" + this.store_slug + "/admin/products");
                     }
                    
                     this.$store.commit('open_toast',{
