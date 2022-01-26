@@ -51,8 +51,8 @@
                     <b-form-group label="هزینه ارسال شهر خود (تومان)">
                         <b-form-input type="number"
                                     v-model="enOwnPrice"></b-form-input>
-                        <small v-show="enOtherPrice" class="text-success px-2">
-                            {{moneyFormat(enOtherPrice)}}
+                        <small v-show="enOwnPrice" class="text-success px-2">
+                            {{moneyFormat(enOwnPrice)}}
                             تومان
                         </small>
                     </b-form-group>
@@ -135,7 +135,7 @@ export default {
             api.post('store/update-shipping/' + this.$route.params.store_slug, this.store.shipping_setting, this.$cookies.get('token'))
                 .then(response => {
                     this.message = response.data.message
-                    //this.getData()
+                    this.getData()
                 }).catch(({response}) => {
                 this.error = response.data.data[Object.keys(response.data.data)[0]]
             })

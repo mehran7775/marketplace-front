@@ -236,7 +236,7 @@
                             class="float-left"
                             ></b-spinner>
                         </template>
-                        </Xbutton>
+                    </Xbutton>
                 </b-form>
             </ValidationObserver>
         </b-modal>
@@ -445,8 +445,8 @@ export default {
                     let x= (this.productUpdatePrice - this.strikethroughPrice)
                     if(this.strikethroughPrice!==0 || !isNaN(this.strikethroughPrice)){
                         const p= (x/ this.productUpdatePrice)* 100
-                        let rounded = Math.round((p + Number.EPSILON) * 100) / 100;
-                        discount_percent= rounded
+                        // let rounded = Math.round((p + Number.EPSILON) * 100) / 100;
+                        discount_percent= p
                     }else{
                         discount_percent = 0
                     }

@@ -248,6 +248,7 @@ export default {
         image: null,
         quantity: null,
       },
+      discount_percent2: 0,
       validation_errors:{
           logo: null,
           logo_size: null,
@@ -312,6 +313,7 @@ export default {
       let x= (this.formData.price - this.strikethroughPrice)
       if(this.strikethroughPrice!==0 || !isNaN(this.strikethroughPrice)){
         const p= (x/ this.formData.price)* 100
+        this.discount_percent2= p
         let rounded = Math.round((p + Number.EPSILON) * 100) / 100;
         return rounded
       }
@@ -444,7 +446,7 @@ export default {
         form_data.append('price',this.formData.price+'0')
         form_data.append('phone_number','')
        
-        form_data.append('discount_percent',this.discount_percent)
+        form_data.append('discount_percent',this.discount_percent2)
         this.btnDisable = true
         this.loadingSpinner = true
 

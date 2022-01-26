@@ -193,11 +193,12 @@ export default {
             this.detail= res.data
             this.onClient= true
         } catch (e) {
-            this.$nuxt.error({
-                statusCode: e.response.status,
-                message: e.response.data.message,
+            console.log(55)
+            // this.$nuxt.error({
+            //     statusCode: e.response.status,
+            //     message: e.response.data.message,
 
-            })
+            // })
         }
       }
   },

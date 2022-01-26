@@ -57,7 +57,6 @@ export default {
         this.btnDisable= true
         this.laodingSpinner= true
         const res= await authService.verifyLogin(data)
-        console.log(res)
         if (res.status === 200) {
           this.$cookies.set("token-buyer", res.data.data.api.token);
           const res_current= await authService.currentUser( res.data.data.api.token )

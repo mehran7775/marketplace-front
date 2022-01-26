@@ -22,6 +22,8 @@ export const fa = {
         warning: 'هشدار',
         no_icon: 'بدون آیکن',
         test: 'تست',
+        postal_code: 'کد پستی',
+        code_verify: 'کد اعتبارسنجی'
     },
     price: 'تومان',
     svg: {
