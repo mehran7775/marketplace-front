@@ -46,7 +46,7 @@ export default {
             mode: 'client',
             ssr: false
         },
-        '~/plugins/lodash',
+        '~/plugins/lodash'
        
     ],
 
