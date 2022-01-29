@@ -190,7 +190,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row">
+                    <div v-if="!$cookies.get('token-buyer')" class="row">
                       <div class="col-12">
                        
                      <div class="d-flex align-items-center">

@@ -105,7 +105,7 @@
                                                             <td class="pt-1" v-text="product.title"></td>
                                                             <td class="pt-1" v-text="`${separate(product.price)} ریال`"></td>
                                                             <td class="pt-1" v-text="product.quantity"></td>
-                                                            <td class="pt-1">-</td>
+                                                            <td class="pt-1" v-text="product.discount_price">-</td>
                                                             <td class="pt-1" v-text="`${separate(product.total_price)} ریال`"> </td>
                                                         </tr>
                                                     </table>
@@ -259,6 +259,5 @@ export default {
         background: $success; 
     }
 }
-
 
 </style>
