@@ -4,13 +4,19 @@ import {
 import {
     required,
     alpha,
-    email
+    email,numeric,digits
 } from "vee-validate/dist/rules";
 
 extend("required", {
     ...required,
     message: "{_field_} الزامیست"
 });
+
+extend("numeric",{
+    ...numeric,
+    message: "{_field_} باید عدد باشد"
+});
+
 
 extend("alpha", {
     ...alpha,
@@ -31,11 +37,18 @@ extend("email", {
 });
 extend("length", {
     validate(value, { length }) {
-        return value.length === length;
+        return value.length == length;
     },
     params: ['length'],
     message: '{_field_} باید {length} کاراکتر باشد',
 });
+
+extend("digits",{
+   ...digits,
+    params: ['length'],
+    message: '{_field_} باید عدد ودقیقا {length} کاراکتر باشد',
+});
+
 
 
 extend('min', {
