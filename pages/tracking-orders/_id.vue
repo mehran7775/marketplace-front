@@ -11,7 +11,7 @@
                   <div class="row">
                     <div class="w-100 d-flex justify-content-between align-items-center">
                       <div>
-                        <a :href="`${address.shop_paysar}/@${detail.store.slug}`">
+                        <a :href="`${addresses.shop_paystar}/@${detail.store.slug}`">
                           <img v-if="detail.store.logo" :src="detail.store.logo"
                           width="150"
                           :alt="`لوگوی فروشگاه ${detail.store.fa_name ? detail.store.fa_name : detail.store.en_name}`"
@@ -28,8 +28,8 @@
                         />
                         </a>
                       </div>
-                      <div class="d-md-block pl-3">
-                        <a :href="addresses.shop_paysar">
+                      <div class="pl-3">
+                        <a :href="addresses.shop_paystar">
                             <img id="logo_paystar" width="200" class="m-auto" src="@/assets/images/logo.svg" alt="لوگویپی استار">
                         </a>
                       </div>
@@ -353,7 +353,7 @@ export default {
     },
     goToStore() {
       const a = document.createElement("a");
-      a.href = `${addresses.shop_paystar}/@${this.detail.store.slug}`;
+      a.href = `${this.addresses.shop_paystar}/@${this.detail.store.slug}`;
       document.body.appendChild(a);
       a.click();
     },

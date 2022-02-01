@@ -55,6 +55,7 @@
 <script>
 import StoreStatus from "@/constants/StoreStatus";
 import api from "~/services/api";
+import addresses from '~/constants/addresses'
 
 export default {
     layout: "main-content",
@@ -70,6 +71,11 @@ export default {
                 this.stores = res.data.data.data
             })
     },
+    computed:{
+        addresses(){
+            return addresses
+        }
+    }
 };
 </script>
 

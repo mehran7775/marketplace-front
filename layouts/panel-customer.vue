@@ -63,7 +63,7 @@
                   </div>
                 </div>
                 <div class="logo d-none d-md-block">
-                  <a :href="address.paystar"
+                  <a :href="addresses.paystar"
                     ><img width="100"
                       :src="`${addresses.paystar}/homepage/image/logo.svg`"
                     />

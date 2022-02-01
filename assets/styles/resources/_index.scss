@@ -104,6 +104,14 @@ body {
         .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
             opacity: 0;
         }
+        .right-enter-active{
+            transition: width .5s;
+            width: 200px;
+        }
+        .right-enter-leave{
+            transition: width .5s;
+            width: 0;
+        }
         .ck-editor__editable {
             min-height: 100px;
         }
