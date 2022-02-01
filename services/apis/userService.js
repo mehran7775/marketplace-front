@@ -9,20 +9,6 @@ export default{
             }
         })
     },
-    get_addresses(payload) {
-        return axios.get('customer/address',{
-            headers: {
-                'Authorization' : `Bearer ${ payload }`
-            }
-        })
-    },
-    create_address(payload) {
-        return axios.post('customer/address/create', payload.data, {
-            headers:{
-                'Authorization': "Bearer " + payload.token
-            }
-        })
-    },
     update(payload){
         return axios.put(`customer/update`, payload.data, {
             headers:{

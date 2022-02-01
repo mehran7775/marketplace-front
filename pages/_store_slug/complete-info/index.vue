@@ -153,9 +153,7 @@
                             v-if="detail.options.address === 1"
                             vid="address"
                             :name="lang.label.address"
-                            :rules="`${
-                              detail.options.address === 1 ? 'required' : ''
-                            }`"
+                            rules="required"
                             v-slot="{ valid, errors }"
                           >
                             <b-form-group id="address">
@@ -466,11 +464,7 @@
                             id="rovince"
                             ref="province"
                             :state="
-                              errors[0]
-                                ? false
-                                : valid && adressForm.selected != null
-                                ? true
-                                : null
+                              errors[0]? false: valid && adressForm.selected != null? true: null
                             "
                             :class="[
                               'form-control',
@@ -531,11 +525,7 @@
                       v-model="adressForm.address"
                       :placeholder="lang.label.address"
                       :state="
-                        errors[0]
-                          ? false
-                          : valid && adressForm.address != ''
-                          ? true
-                          : null
+                        errors[0]? false: valid && adressForm.address != ''? true: null
                       "
                     />
                     <b-form-invalid-feedback id="inputLiveFeedback">{{
@@ -558,11 +548,7 @@
                       v-model="adressForm.postal_code"
                       :placeholder="lang.label.postal_code"
                       :state="
-                        errors[0]
-                          ? false
-                          : valid && adressForm.postal_code != ''
-                          ? true
-                          : null
+                        errors[0]? false: valid && adressForm.postal_code != ''? true: null
                       "
                     />
                     <b-form-invalid-feedback id="inputLiveFeedback">{{
@@ -601,6 +587,7 @@ import { tr } from "@/services/lang";
 import { mapGetters } from "vuex";
 import { authService } from "@/services/apiServices";
 import { userService } from "@/services/apiServices"
+import { addressService } from "@/services/apiServices"
 export default {
   layout: "index",
   head() {
@@ -652,6 +639,11 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
+  mounted(){
+    if(this.form.addresses.length>0){
+      this.form.selected = this.form.addresses[0]
+    }
+  },
   created() {
     if (process.client) {
       this.set_user_detail()
@@ -676,7 +668,7 @@ export default {
     async get_addresses() {
       if(this.$cookies.get('token-buyer')){
         try{
-          const {data}= await userService.get_addresses(this.$cookies.get('token-buyer'))
+          const {data}= await addressService.get_addresses(this.$cookies.get('token-buyer'))
           this.form.addresses = data.data
             
         }catch(e){
@@ -922,7 +914,7 @@ export default {
                },
                token: this.$cookies.get('token-buyer')
              }
-            const { data }= await userService.create_address(payload)
+            const { data }= await addressService.create_address(payload)
             await this.get_addresses()
              this.$store.commit('open_toast',{
                 msg: data.message,
@@ -968,6 +960,8 @@ export default {
           }
           try{
             await userService.update(payload)
+            const res= await authService.currentUser( this.$cookies.get('token-buyer'))
+            localStorage.setItem('userDetail', JSON.stringify( res.data.data ))
             this.do_select_payment(payment)      
           }catch(e){
             this.$store.commit("open_toast", {

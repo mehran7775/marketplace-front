@@ -11,7 +11,7 @@
                   <div class="row">
                     <div class="w-100 d-flex justify-content-between align-items-center">
                       <div>
-                        <a :href="`${addresses.shop_paysar}/@${detail.store.slug}`">
+                        <a :href="`${address.shop_paysar}/@${detail.store.slug}`">
                           <img v-if="detail.store.logo" :src="detail.store.logo"
                           width="150"
                           :alt="`لوگوی فروشگاه ${detail.store.fa_name ? detail.store.fa_name : detail.store.en_name}`"
@@ -30,7 +30,7 @@
                       </div>
                       <div class="d-md-block pl-3">
                         <a :href="addresses.shop_paysar">
-                          <img id="logo_paystar" width="200" class="m-auto" src="@/assets/images/logo.svg" alt="لوگویپی استار">
+                            <img id="logo_paystar" width="200" class="m-auto" src="@/assets/images/logo.svg" alt="لوگویپی استار">
                         </a>
                       </div>
                     </div>
@@ -146,46 +146,42 @@
                             <td v-text="`${separate(product.price)} تومان`" class="pt-3"></td>
                             <td v-text="product.quantity" class="pt-3"></td>
                             <td v-text="`${product.total_price} تومان`" class="pt-3"></td>
-                            
-                           
                           </tr>
                         </tbody>
                       </table>
                     </div>
-                    <div v-if="detail.products.length > 0" class="d-md-none w-100" style="max-height:295px;overflow:auto;">
+                    <div v-if="detail.products.length>0" class="d-md-none w-100" style="max-height:260px;overflow:auto;">
                       <div class="info-mobile w-100" v-for="product in detail.products" :key="product.id">
-                       <template>
-                          <div class="border-bottom border-white font-weight-bold p-3 text-center">
-                              <img width="48" height="48" :src="product.thumbnails[0]" :alt="`عکس محصول ${product.title}`">
-                          </div>
-                          <div class="border-bottom border-white d-flex justify-content-between p-3">
-                            <span>نام محصول</span>
-                            <span class="font-weight-bold" v-text="product.title"></span>
-                          </div>
-                          <div class="border-bottom border-white d-flex justify-content-between p-3">
-                            <span>قیمت واحد</span>
-                            <span class="font-weight-bold"  v-text="`${separate(product.price)} ریال`" ></span>
-                          </div>
-                          <div class="border-bottom border-white d-flex justify-content-between p-3">
-                            <span>تعداد</span>
-                            <span class="font-weight-bold"  v-text="product.quantity" ></span>
-                          </div>
-                          <div class="border-bottom border-white d-flex justify-content-between p-3">
-                            <span>تخفیف</span>
-                            <span class="font-weight-bold" v-text="`${product.discount_price == 0  ?  product.discount_price : '%' +product.discount_price}`"></span>
-                          </div>
-                          <div class="d-flex justify-content-between p-3">
-                            <span>قیمت کل</span>
-                            <span class="font-weight-bold" v-text="`${separate(product.total_price)} ریال`"></span>
-                          </div>
-                       </template>
+                        <div class="border-bottom border-white font-weight-bold p-3 text-center">
+                            <img width="48" height="48" :src="product.thumbnails[0]" :alt="`عکس محصول ${product.title}`">
+                        </div>
+                        <div class="border-bottom border-white d-flex justify-content-between p-3">
+                          <span>نام محصول</span>
+                          <span class="font-weight-bold" v-text="product.title"></span>
+                        </div>
+                        <div class="border-bottom border-white d-flex justify-content-between p-3">
+                          <span>قیمت واحد</span>
+                          <span class="font-weight-bold"  v-text="`${separate(product.price)} ریال`" ></span>
+                        </div>
+                        <div class="border-bottom border-white d-flex justify-content-between p-3">
+                          <span>تعداد</span>
+                          <span class="font-weight-bold"  v-text="product.quantity" ></span>
+                        </div>
+                        <div class="border-bottom border-white d-flex justify-content-between p-3">
+                          <span>تخفیف</span>
+                          <span class="font-weight-bold" v-text="`${product.discount_price == 0  ?  product.discount_price : '%' +product.discount_price}`"></span>
+                        </div>
+                        <div class="d-flex justify-content-between p-3">
+                          <span>قیمت کل</span>
+                          <span class="font-weight-bold" v-text="`${separate(product.total_price)} ریال`"></span>
+                        </div>
                       </div>
                     </div>
                     <div class="w-100 d-flex justify-content-end">
                       <div class="d-flex flex-column" id="calculate">
                         <div class="w-100 d-flex flex-column flex-md-row justify-content-between p-3 text-center">
-                          <span>جمع کل</span>
-                          <span class="mt-3 mt-md-0" v-text="`${detail.total_price} تومان`"></span>
+                            <span>جمع کل</span>
+                            <span class="mt-3 mt-md-0" v-text="`${detail.total_price} تومان`"></span>
                         </div>
                         <div class="w-100 d-flex flex-column flex-md-row justify-content-between p-3 text-center">
                           <span>هزینه ارسال</span>
@@ -272,7 +268,6 @@
                   </div>
                   <div class="row text-center mt-5">
                    <div class="mx-auto">
-                    <Xbutton v-if="detail.payment_status !== 2" text="پرداخت مجدد" :on_click="() => doPayment()"/>
                     <Xbutton class="" text="بازگشت به فروشگاه" :on_click="() => goToStore()"/>
                    </div>
                   </div>
@@ -297,7 +292,6 @@ import addresses from '@/constants/addresses'
 
 export default {
   mixins: [ separatePrice] ,
-
   head() {
     return {
       title: "صفحه رسید",
@@ -322,8 +316,8 @@ export default {
        }
     },
      addresses(){
-            return addresses
-        }
+        return addresses
+      }
   },
   mounted(){
    
@@ -359,7 +353,7 @@ export default {
     },
     goToStore() {
       const a = document.createElement("a");
-      a.href = `${this.addresses.shop_paysar}/@${this.detail.store.slug}`;
+      a.href = `${addresses.shop_paystar}/@${this.detail.store.slug}`;
       document.body.appendChild(a);
       a.click();
     },

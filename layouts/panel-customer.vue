@@ -63,9 +63,9 @@
                   </div>
                 </div>
                 <div class="logo d-none d-md-block">
-                  <a href="https://shop.paystar.ir/"
+                  <a :href="address.paystar"
                     ><img width="100"
-                      src="https://paystar.ir/homepage/image/logo.svg"
+                      :src="`${addresses.paystar}/homepage/image/logo.svg`"
                     />
                   </a>
                 </div>
@@ -120,6 +120,7 @@
 
 <script>
 import { authService } from '~/services/apiServices'
+import addresses from '@/constants/addresses'
 export default {
   middleware:'checkAuth',
   head() {
@@ -142,6 +143,9 @@ export default {
   computed:{
     user_data(){
       return JSON.parse(localStorage.getItem('userDetail'))
+    },
+    addresses(){
+      return addresses
     }
   },
   methods:{

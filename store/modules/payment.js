@@ -64,8 +64,9 @@ const actions = {
     async doPayment({ commit }, payload) {
         try {
             const {data} = await orderService.orderPayment({
-                oId:payload.oId.order_id,
-                data:payload.gId
+                oId: payload.oId.order_id,
+                data: payload.gId,
+                token: payload.token
             })
             const form = document.createElement("form");
             const input = document.createElement("input"); 

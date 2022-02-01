@@ -41,10 +41,15 @@ import api from "~/services/api";
 import PageTitle from "~/components/main/pageTitle";
 import GatewayTypes from "~/constants/GatewayTypes";
 import PortTypes from "~/constants/PortTypes";
-
+import addresses from '@/constants/addresses'
 export default {
     components: {PageTitle},
     layout: "main-content",
+    computed:{
+        addresses(){
+            return addresses
+        }
+    },
     data() {
         return {
             port_types : [
@@ -119,7 +124,7 @@ export default {
             }
         },
         getGateways() {
-            api.getUrl('https://core.paystar.ir/api/gateway/user-gateways-data', this.$cookies.get('token'))
+            api.getUrl(`${addresses.core_paystar}/api/gateway/user-gateways-data`, this.$cookies.get('token'))
                 .then(res => {
                     this.gateways = res.data.data
                     for (let key in this.gateways){

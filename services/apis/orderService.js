@@ -14,13 +14,21 @@ export default{
         })
     },
     orderPayment(payload){
-        return axios.post(`pay/order/${payload.oId}`, payload.data)
+        return axios.post(`pay/order/${payload.oId}`, payload.data, {
+            headers:{
+                'Authorization' : `Bearer ${payload.token}`
+            }
+        })
     },
     getPaymentReceipt(payload){
         return axios.get(`pay/receipt/${ payload }`)
     },
     getPublicOrder(payload){
-        return axios.get(`/pay/public-receipt/${payload}`)
+        return axios.get(`/pay/public-receipt/${payload.id}`,{
+            headers:{
+                'Authorization' : `Bearer ${payload.token}`
+            }
+        })
     },
 
     //*******************************************************************

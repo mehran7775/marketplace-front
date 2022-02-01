@@ -499,6 +499,7 @@ import PageTitle from "~/components/main/pageTitle";
 import GatewayTypes from "~/constants/GatewayTypes";
 import PortTypes from "~/constants/PortTypes";
 import {provinces} from '~/constants/Provinces'
+import addresses from '@/constants/addresses'
 
 export default {
     layout: "main-content",
@@ -648,7 +649,7 @@ export default {
             
         },
         getGateways() {
-            api.getUrl('https://core.paystar.ir/api/gateway/user-gateways-data', this.$cookies.get('token'))
+            api.getUrl(`${addresses.core_paystar}/api/gateway/user-gateways-data`, this.$cookies.get('token'))
                 .then(res => {
                     this.gateways = res.data.data
                     for (let key in this.gateways) {
@@ -662,7 +663,7 @@ export default {
         getCardGateways() {
             api.get('user/current').then(res => {
                 let phone = res.data.data.phone
-                api.getUrl('https://card.paystar.ir/api/acceptor/' + '09386516983',)
+                api.getUrl( `${addresses.card_paystar}/api/acceptor/` + '09386516983',)
                     .then(json => {
                         console.log(json)
                     })

@@ -158,7 +158,8 @@ export default {
                         },
                         oId:{
                             order_id: this.dataPayment.order_id
-                        }
+                        },
+                        token: this.$cookies.get('token-buyer')
                     })
                 }
             }else{
@@ -168,7 +169,8 @@ export default {
                     },
                     oId:{
                         order_id: this.dataPayment.order_id
-                    }
+                    },
+                    token: this.$cookies.get('token-buyer')
                 });
             }
         },

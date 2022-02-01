@@ -17,6 +17,7 @@
 
 <script>
 import { tr } from "@/services/lang";
+import addresses from '@/constants/addresses'
 export default {
   data() {
     return {
@@ -25,8 +26,8 @@ export default {
         "@type": "HardwareStore",
         name: "فروشگاه ساز رایگان",
         image: "",
-        "@id": "https://www.shop.paystar.com",
-        url: "https://www.shop.paystar.com",
+        "@id": addresses.paystar,
+        url: addresses.paystar,
         telephone: "021-91300818",
         address: {
           "@type": "PostalAddress",

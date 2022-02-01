@@ -3,6 +3,7 @@ import storeService from "./apis/storeService"
 import productService from "./apis/productService"
 import orderService from "./apis/orderService"
 import userService from "./apis/userService"
+import addressService from "./apis/addressService"
 import categoryService from "./apis/categoryService"
 
 export {
@@ -11,5 +12,6 @@ export {
     productService,
     orderService,
     userService,
+    addressService,
     categoryService,
 }

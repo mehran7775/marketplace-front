@@ -19,7 +19,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="rounded-circle border border-secondary p-2 bg-light"
                                         style="width: 40px; height: 40px;"><img
-                                        :src="'https://coreshop.paystar.ir/storage/' + store.logo"
+                                        :src="`${addresses.coreshop_paystar}/${store.logo}`"
                                         alt="logo" class="mw-100 mh-100"></div>
                                     <div class="mx-auto">
                                         <div class="text-dark bg-white text-center">{{ store.fa_name }}</div>

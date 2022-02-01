@@ -19,7 +19,7 @@
                             <div class="rounded-circle border border-whitesmoke bg-white d-flex justify-content-center p-1"
                                  style="width: 40px; height: 40px;">
                                 <img
-                                :src="`https://coreshop.paystar.ir/storage/${store.logo}`"
+                                :src="`${ addresses.coreshop_paystar }/storage/${store.logo}`"
                                 alt="logo" class="mw-100 mh-100 rounded-circle">
                             </div>
                             <div class="mx-auto">
@@ -56,6 +56,7 @@
 <script>
 import StoreStatus from "@/constants/StoreStatus";
 import api from "~/services/api";
+import addresses from '@/constants/addresses'
 
 export default {
     layout: "main-content",
@@ -75,6 +76,11 @@ export default {
             this.$router.push('/');
         })
     },
+    computed:{
+        addresses(){
+            return addresses
+        }
+    }
 };
 </script>
 

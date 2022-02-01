@@ -533,6 +533,7 @@ import StoreStatus from "~/constants/StoreStatus";
 import axios from '~/plugins/axios'
 import Chart from '@/components/chart_empty'
 import separatePrice from '~/mixins/separatePrice' 
+import addresses from '~/constants/addresses';
 export default {
     layout: "main-content",
     mixins:[ separatePrice ],
@@ -795,7 +796,7 @@ export default {
             })
         },
         async getGateways() {
-            await api.getUrl('https://core.paystar.ir/api/gateway/user-gateways-data', this.$cookies.get('token'))
+            await api.getUrl(`${addresses.coreshop_paystar}/api/gateway/user-gateways-data`, this.$cookies.get('token'))
                 .then(res => {
                     this.gateways = res.data.data
                     for (let key in this.gateways){

@@ -165,11 +165,13 @@ import separatePrice from '@/mixins/separatePrice'
         },
         async created(){
              try{
-                const res= await orderService.getPublicOrder( this.$route.params.id )
+                const res= await orderService.getPublicOrder( {
+                    id: this.$route.params.id,
+                    token: this.$cookies.get('token-buyer')
+                } )
                 this.detail= res.data
             }catch(e) {
                 this.detail = null
-                console.log(e)
             }
         }
     }

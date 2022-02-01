@@ -1,7 +1,8 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import addresses from '@/constants/addresses'
 let api = {
-    BaseUrl: 'https://coreshop.paystar.ir/api/',
+    BaseUrl: addresses.coreshop_paystar+'/api/',
 
     get: function (path, token) {
         return axios({

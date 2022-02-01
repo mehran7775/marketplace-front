@@ -4,7 +4,7 @@
       <img width="130" src="@/assets/images/logo.svg" alt="لوگوی پی استار">
     </div>
     <ValidationObserver ref="validationObserver">
-      <Xform>
+      <Xform :sub_form="() => do_login()">
         <template #content>
           <div>
             <ValidationProvider vid="outh_param" :name="lang.label.phone" rules="required|regPhone"   v-slot="{ valid, errors }">
@@ -36,7 +36,7 @@
                   <b-form-input
                     v-model="password"
                     ref="password"
-                    type="text"
+                    type="password"
                     maxlength="25"
                     :state="errors[0] ? false : (valid ? true : null)"
                   ></b-form-input>
@@ -44,7 +44,7 @@
               </b-form-group>
           </ValidationProvider>
           <nuxt-link to="/customer-login/otp" class="text-info">ورود با رمز یکبار مصرف</nuxt-link>
-          <Xbutton :disable="btnDisable" :on_click="do_login" class="w-100 mt-3" :text="lang.svg.signIn">
+          <Xbutton :disable="btnDisable" is_submit class="w-100 mt-3" :text="lang.svg.signIn">
             <template #spinner>
               <b-spinner v-show="laodingLogin" small  class="float-left"></b-spinner>
             </template>

@@ -90,12 +90,14 @@
 
           <hr v-if="orders.next_page_url || orders.prev_page_url" />
 
-          <pagination
+         <template v-if="orders.length > 0">
+            <pagination
             v-if="orders.next_page_url || orders.prev_page_url"
             :data="orders"
             :get_data="get_data"
             :perpage="per_page"
           ></pagination>
+         </template>
         </b-card>
       </div>
     </div>
@@ -122,8 +124,7 @@ export default {
       const { data } = await orderService.getCustomersOrders(
         this.$cookies.get("token-buyer")
       );
-
-      this.orders = data.data;
+      this.orders = data.data.data
     } catch (e) {
       console.log('eeee',e);
     }
