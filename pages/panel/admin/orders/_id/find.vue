@@ -168,10 +168,12 @@ export default {
     },
     computed:{
         current_state(){
-            let current_status = OrderStatus.sellerStatus.find(element =>{
-               return element.value === this.order.status
+            let current_status = this.OrderStatus.orderStatus.find(element =>{
+               return element.value == this.order.status
             })
-            return current_status.text
+            if(current_status){
+                return current_status.text
+            }
         }
     },
     methods : {

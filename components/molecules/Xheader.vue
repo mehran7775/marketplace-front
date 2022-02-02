@@ -24,7 +24,7 @@
       
             </div>
           </div>
-          <div class="d-flex align-items-center flex-wrap">
+          <div class="d-flex align-items-center flex-nowrap">
             <a v-if="detail.social_page.instagram" :href="detail.social_page.instagram ? detail.social_page.instagram : '#'" class="mx-2"  v-b-tooltip.hover.top title="اینستاگرام"
             target="_blank" rel="noopener noreferrer"
             >

@@ -1,22 +1,22 @@
 <template>
     <div class="node my-4" :style="nodeMargin">
-       <div class="row">
+       <div class="row ">
            <div class="col-10 m-auto">
                <div class="row">
-                    <div class="w-100 d-flex align-items-center justify-content-between px-2">
+                    <div class="w-100 d-flex justify-content-between justify-content-md-start">
                         <div class="d-flex align-items-center">
                             <input type="checkbox" class="checkout-button" checked :value="node.id" name="categories_products[]" v-model="categories">
-                            <span v-b-toggle="`collapse-${node.id}`" class="mr-1 title" v-text="node.title"></span>  
+                            <span class="mr-1 title" v-text="node.title"></span>  
                         </div>
-                        <div class=" text-left" v-b-toggle="`collapse-${node.id}`">
-                            <fa v-if="!visible" icon="plus" class="fa-lg cursor_pointer" ></fa>
-                            <fa v-else icon="minus" class="fa-lg cursor_pointer" ></fa>
+                        <div class="mr-md-1" >
+                            <fa v-if="!visible && node.children_recursive.length > 0" icon="plus" class="fa-lg cursor_pointer" @click="toggleCollapse(node.id)"></fa>
+                            <fa v-else-if="visible" icon="minus" class="fa-lg cursor_pointer" @click="toggleCollapse(node.id)"></fa>
                         </div>
                     </div>
                </div>
            </div>
        </div>
-        <b-collapse  v-model="visible" :id="`collapse-${node.id}`">
+        <b-collapse :id="`collapse-${node.id}`" class="sub-categories">
             <TreeNode
                 v-for="category in node.children_recursive"
                 :key="category.id"
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
     export default {
         name:'TreeNode',
         props:{
@@ -60,29 +61,52 @@
             categories: {
                 get () { return this.$store.state.categories_products },
                 set (value) {
-                    // console.log(value)
                     this.$store.commit('setToState', {
                     name: 'categories_products',
                     data: value
                 })} 
-            }
+            },
+            ...mapGetters([
+                'mainCategories_pruducts'
+            ])
         },
         methods:{
-            // this.$root.$emit('bv::toggle::collapse', 'my-collapse-id')
+            toggleCollapse(id){
+            // for(let i= 0; i< this.mainCategories_pruducts.length; i++){
+            //     document.getElementById(`collapse-${this.mainCategories_pruducts[i]}`).classList.remove('show')
+            //     document.getElementById(`collapse-${this.mainCategories_pruducts[i]}`).style.display= "none"
+            //     console.log(document.getElementById(`collapse-${this.mainCategories_pruducts[i]}`))
+            // }
+            this.visible=!this.visible
+            this.$root.$emit(`bv::toggle::collapse`, `collapse-${id}`)
+                            
+            }
         }
     }
 </script>
 
 <style lang="scss" scoped>
 .node{
+    @include medium{
+        width: 160px;
+    }
     .checkout-button{
         width: 17px;
         height: 17px;
     }
     .title{
-        width: max-content;
+        max-width: 130px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
-
+    .sub-categories{
+        min-width: 200px;
+        @include medium {
+            width: 100%;
+            z-index: 999;
+        }
+    }
 }
 
 </style>
