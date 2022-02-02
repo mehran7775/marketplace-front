@@ -76,7 +76,11 @@ export default {
     ])
 
   },
-  async asyncData({ route, error }) {
+  async asyncData({ route, error, store }) {
+      store.commit('setToState', {
+            name: 'categories_products',
+            data: []
+      })  
     try {
       const { data } = await productService.getProducts(
         {

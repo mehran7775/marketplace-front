@@ -62,9 +62,10 @@ import { mapGetters } from 'vuex'
                 get () { return this.$store.state.categories_products },
                 set (value) {
                     this.$store.commit('setToState', {
-                    name: 'categories_products',
-                    data: value
-                })} 
+                        name: 'categories_products',
+                        data: value
+                    }
+                )} 
             },
             ...mapGetters([
                 'mainCategories_pruducts'
