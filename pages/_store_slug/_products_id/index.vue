@@ -126,7 +126,6 @@ export default {
           products_id: route.params.products_id
         }
       )
-      console.log(res.data.data)
       return {
         product: res.data.data,
       };

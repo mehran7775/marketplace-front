@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import addresses from '@/constants/addresses'
 import $ from 'jquery'
 export default {
   name: "mobile-header",
@@ -46,7 +47,7 @@ export default {
         localStorage.removeItem('userDetail')
         localStorage.removeItem('currentUser')
         const a = document.createElement('a')
-        a.href = "https://my.paystar.ir/"
+        a.href = addresses.paystar
         a.click()
       }catch(e){
         console.log(e)

@@ -159,34 +159,8 @@ export default {
       this.$store.dispatch("cart/plusProduct", id);
     },
     continue_buy() {
-      if (this.$cookies.get("token-buyer") && this.user_data) {
-        const data = {
-          store_id: this.$store.state.store.id,
-          name: this.user_data.first_name + " " + this.user_data.last_name,
-          email: this.user_data.email,
-          phone: this.user_data.phone,
-          address: {
-            province: this.user_data.addresses[0].province,
-            city: this.user_data.addresses[0].city,
-            address: this.user_data.addresses[0].address,
-          },
-        };
+      this.$router.push(`/${ this.$route.params.store_slug }/complete-info`)
 
-        if(this.detail.options.address === 1){
-          if(this.detail.shipping_settings.shipping_region === 1 || data.address.province == this.detail.province){
-            this.$store.dispatch("payment/select_payment", data)
-            return
-          }
-          this.$store.commit('open_toast',{
-            msg: ' محصول در منطقه شما قابل ارسال نمی باشد',
-            variant: 'error'
-          })
-          return
-        }
-        this.$store.dispatch("payment/select_payment", data);
-      } else {
-        this.$router.push(`/${this.$route.params.store_slug}/complete-info`);
-      }
     },
   },
   computed: {

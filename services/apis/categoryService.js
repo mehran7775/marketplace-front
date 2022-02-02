@@ -1,6 +1,13 @@
 import axios from "~/plugins/axios"
 
 export default {
+
+    get_shop_categories(payload) {
+        return axios.get(`category/${payload}`)
+    },
+
+    // *************************** Panel ***************************
+
     getAllCategory(payload){
         return axios.get(`category/${payload.userId +'/'+ payload.store_id}`, {
             headers: {

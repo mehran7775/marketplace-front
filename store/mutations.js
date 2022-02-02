@@ -11,7 +11,7 @@ export default{
             position:'top-center',
             type:payload.variant,
             toastClassName:"toast-body",
-            timeout: 2000
+            timeout: 2500
         });
     },
 }

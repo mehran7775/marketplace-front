@@ -9,8 +9,6 @@ export default{
             }
         })
     },
-
-
     update(payload){
         return axios.put(`customer/update`, payload.data, {
             headers:{

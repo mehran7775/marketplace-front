@@ -24,6 +24,7 @@
         "js-cookie": "^3.0.1",
         "lodash": "^4.17.21",
         "nuxt": "^2.15.7",
+        "qr-code-with-logo": "^1.1.0",
         "vee-validate": "^3.4.13",
         "vue-lodash": "^2.1.2",
         "vue-persian-datetime-picker": "^2.10.3",

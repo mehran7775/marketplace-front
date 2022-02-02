@@ -3,16 +3,32 @@ import axios from "~/plugins/axios"
 export default{
 
     orderCreate(payload){
-        return axios.post('/order/create',payload)
+        let config = {}
+        if(payload.token){
+            config ={
+                'Authorization' : `Bearer ${payload.token}`
+            }
+        }
+        return axios.post('/order/create',payload,{
+            headers: config
+        })
     },
     orderPayment(payload){
-        return axios.post(`pay/order/${payload.oId}`, payload.data)
+        return axios.post(`pay/order/${payload.oId}`, payload.data, {
+            headers:{
+                'Authorization' : `Bearer ${payload.token}`
+            }
+        })
     },
     getPaymentReceipt(payload){
         return axios.get(`pay/receipt/${ payload }`)
     },
     getPublicOrder(payload){
-        return axios.get(`/pay/public-receipt/${payload}`)
+        return axios.get(`/pay/public-receipt/${payload.id}`,{
+            headers:{
+                'Authorization' : `Bearer ${payload.token}`
+            }
+        })
     },
 
     //*******************************************************************

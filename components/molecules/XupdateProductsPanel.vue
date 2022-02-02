@@ -260,6 +260,7 @@ export default {
                 code:''
                 
             },
+            discount_percent2: 0,
             strikethroughPrice : 0,
             validation_errors: {
                 logo: null,
@@ -304,6 +305,7 @@ export default {
             let x= (this.formData.price - this.strikethroughPrice)
             if(this.strikethroughPrice!==0 || !isNaN(this.strikethroughPrice)){
                 const p= (x/ this.formData.price)* 100
+                this.discount_percent2 = p
                 let rounded = Math.round((p + Number.EPSILON) * 100) / 100;
                 return rounded
             }
@@ -409,7 +411,7 @@ export default {
                 }
             }
         },
-         validate(){
+        validate(){
             let spy = this.validation_errors
             Object.keys(spy).forEach(function (key) {
                 spy[key] = null
@@ -500,7 +502,7 @@ export default {
            
                 form_data.append('main_image', this.main_image)
                 form_data.set('price',this.formData.price +'0')
-                form_data.append('discount_percent',this.discount_percent)
+                form_data.append('discount_percent',this.discount_percent2)
                 this.selectedCategories.forEach((element, index) =>{
                     form_data.append(`categories[${ index }]`, element)
                 })
@@ -521,9 +523,9 @@ export default {
                     console.log(response.data)
                     this.message = response.data.message
                     if(this.admin_panel){
-                        this.$router.push(`/admin/stores/${this.store_slug}/find`);
+                        this.$router.push(`/panel/admin/stores/${this.store_slug}/find`);
                     }else{
-                        this.$router.push("/" + this.store_slug + "/admin/products");
+                        this.$router.push("/panel/" + this.store_slug + "/admin/products");
                     }
                    
                     this.$store.commit('open_toast',{

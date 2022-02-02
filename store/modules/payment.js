@@ -32,8 +32,8 @@ const actions = {
             });
             payload["products"] = items_second
             try {
-                const {data} = await orderService.orderCreate(payload)
-                if(data.data.order_id){
+                const { data } = await orderService.orderCreate(payload)
+                if( data.data.order_id ){
                     $nuxt.$router.push({path:`checkout`, query:{
                         data:data.data
                     }})
@@ -54,7 +54,7 @@ const actions = {
                 }, { root: true })
 
             }
-        }else{
+        }else {
             commit('open_toast', {
                 msg: 'درگاه یا محصولی برای پرداخت وجود ندارد',
                 variant: 'error'
@@ -64,8 +64,9 @@ const actions = {
     async doPayment({ commit }, payload) {
         try {
             const {data} = await orderService.orderPayment({
-                oId:payload.oId.order_id,
-                data:payload.gId
+                oId: payload.oId.order_id,
+                data: payload.gId,
+                token: payload.token
             })
             const form = document.createElement("form");
             const input = document.createElement("input"); 

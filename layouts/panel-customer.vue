@@ -46,7 +46,7 @@
                               >
                             </li>
                             <li class="h5">
-                              <span  class="text-whitesmok cursor_pointer">خروج</span>
+                              <span @click="logOut()" class="text-whitesmok cursor_pointer">خروج</span>
                             </li>
                           </ul>
                         </div>
@@ -63,9 +63,9 @@
                   </div>
                 </div>
                 <div class="logo d-none d-md-block">
-                  <a href="https://shop.paystar.ir/"
+                  <a :href="addresses.paystar"
                     ><img width="100"
-                      src="https://paystar.ir/homepage/image/logo.svg"
+                      :src="`${addresses.paystar}/homepage/image/logo.svg`"
                     />
                   </a>
                 </div>
@@ -120,6 +120,7 @@
 
 <script>
 import { authService } from '~/services/apiServices'
+import addresses from '@/constants/addresses'
 export default {
   middleware:'checkAuth',
   head() {
@@ -141,14 +142,17 @@ export default {
   },
   computed:{
     user_data(){
-      return JSON.parse(localStorage.getItem('detail_user'))
+      return JSON.parse(localStorage.getItem('userDetail'))
+    },
+    addresses(){
+      return addresses
     }
   },
   methods:{
     async setDetail(){
       try{
           const {data}= await authService.currentUser( this.$cookies.get('token-buyer'))
-          localStorage.setItem('detail_user',JSON.stringify( data.data ))
+          localStorage.setItem('userDetail',JSON.stringify( data.data ))
       }catch(e){
           this.$store.commit('open_toast',{
               msg: e.response.data.message,

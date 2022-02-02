@@ -5,7 +5,7 @@
     </div>
     <div dir="rtl">
       <ValidationObserver ref="validationObserver" >
-        <Xform :sub_form="do_register">
+        <Xform :sub_form="()=> do_register()">
           <template #content>
             <div>
             <ValidationProvider vid="phone" :name="lang.label.phone" rules="required|regPhone"  v-slot="{ valid, errors }">
@@ -27,7 +27,7 @@
         
             <ValidationProvider
               rules="min:6|max:20"
-                v-slot="{ valid, errors }"
+              v-slot="{ valid, errors }"
               vid="password"
               :name="lang.label.password"
             >

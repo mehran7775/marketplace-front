@@ -119,6 +119,11 @@ import separatePrice from '@/mixins/separatePrice'
 import { tr } from '@/services/lang'
 export default {
     layout: "index",
+    head(){
+        return {
+            title : ' نهایی کردن سفارش'
+        }
+    },
     middleware({ route, redirect }) {
       if (!route.query.data.order_id) {
         return redirect(`/${route.params.store_slug}/complete-info`)
@@ -153,7 +158,8 @@ export default {
                         },
                         oId:{
                             order_id: this.dataPayment.order_id
-                        }
+                        },
+                        token: this.$cookies.get('token-buyer')
                     })
                 }
             }else{
@@ -163,7 +169,8 @@ export default {
                     },
                     oId:{
                         order_id: this.dataPayment.order_id
-                    }
+                    },
+                    token: this.$cookies.get('token-buyer')
                 });
             }
         },

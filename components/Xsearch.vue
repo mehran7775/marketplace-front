@@ -133,7 +133,7 @@ export default {
   max-height: 380px;
   margin: auto;
   top: 25px;
-  z-index: 999;
+  z-index: 99999;
   overflow-x: hidden;
   overflow-y: auto;
    ul,div{
