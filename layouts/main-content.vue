@@ -60,7 +60,7 @@ export default {
                     });
                     this.onClient= true
                 }else{
-                    this.$router.replace('/landing')
+                    this.$router.replace('/')
                 }
             }catch(e){
                 console.log(e)
