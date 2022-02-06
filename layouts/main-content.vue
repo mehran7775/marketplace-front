@@ -4,7 +4,7 @@
        <div v-if="onClient">
         <app-header></app-header>
         <mobile-header></mobile-header>
-        
+
         <sidebar :inAnticipationShops="inAnticipationShops" :inMyAnticipationShops="inMyAnticipationShops"></sidebar>
         <mobile-aside :inAnticipationShops="inAnticipationShops" :inMyAnticipationShops="inMyAnticipationShops"></mobile-aside>
         <div id="app_content">
@@ -29,7 +29,7 @@ export default {
            onClient:false,
            inMyAnticipationShops:null,
            inAnticipationShops:null,
-       } 
+       }
     },
     head() {
         return {
@@ -46,7 +46,6 @@ export default {
 
     async created(){
          if(process.client){
-             console.log(this.$cookies.get("token"))
             try{
                 if(this.$cookies.get("token")){
                     const userCurrent = await userService.userCurrent(this.$cookies.get("token"));
@@ -66,9 +65,9 @@ export default {
             }catch(e){
                 console.log(e)
             }
-           
+
         }
-       
+
     }
 
 }
