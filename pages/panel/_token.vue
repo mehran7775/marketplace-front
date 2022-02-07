@@ -16,7 +16,7 @@ export default {
       if(data.status==="ok"){
           this.$cookies.set("token", this.$route.params.token);
           roles();
-          this.$router.push('/')
+          this.$router.push('/panel')
       }
     } catch (e) {
       this.$nuxt.error({
