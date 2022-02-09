@@ -165,7 +165,7 @@ export default {
         const res = authService.logOut(this.$cookies.get('token-buyer'))
         this.$cookies.remove('token-buyer')
         localStorage.removeItem('userDetail')
-        this.$router.replace('/landing')
+        this.$router.replace('/')
       }catch(e){
         console.log(e)
       }

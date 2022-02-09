@@ -171,8 +171,8 @@
                               >
                                 <option :value="null">انتخاب آدرس</option>
                                 <option
-                                  v-for="address in form.addresses"
-                                  :key="address.id"
+                                  v-for="(address, index) in form.addresses"
+                                  :key="index"
                                   :value="address.id"
                                 >
                                   {{
@@ -700,12 +700,14 @@ export default {
                 city: this.form.city,
                 province: this.form.selected,
               },
-              address_id: this.address,
               phone: this.form.phone,
               postal_code: this.form.postal_code
             };
             if (this.$cookies.get("token-buyer")) {
               data["token"] = this.$cookies.get("token-buyer");
+            }
+            if(this.address){
+              data['address_id']= this.address
             }
             this.showCheckout(data);
           }
@@ -834,9 +836,11 @@ export default {
                   city: this.form.city,
                   province: this.form.selected,
                 },
-                address_id: this.address,
                 postal_code: this.form.postal_code,
                 token: this.$cookies.get("token-buyer")
+              }
+              if(this.address){
+                data['address_id']= this.address
               }
               this.showCheckout(data);
             }
@@ -864,7 +868,6 @@ export default {
       if(this.detail.options.address === 1){
         let canBuy = false
         if(data.address_id){
-         
           const address =this.form.addresses.find(element =>{
             return (element.id === data.address_id)
           })

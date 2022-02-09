@@ -7,20 +7,20 @@
                     <ValidationObserver ref="formCustomer">
                         <b-form-row>
                             <b-col sm="12" md="6">
-                                <ValidationProvider vid="first_name" name="نام" rules="required"  v-slot="{ valid, errors }">
+                                <ValidationProvider vid="first_name" name="نام" rules=""  v-slot="{ valid, errors }">
                                     <b-form-group label="نام">
                                         <b-form-input v-model="user.first_name"
-                                        :state="errors[0] ? false : (valid ? true : null)"
+                                        :state="errors[0] ? false : (valid && user.first_name ? true : null)"
                                         ></b-form-input>
                                         <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
                                     </b-form-group>
                                 </ValidationProvider> 
                             </b-col>
                             <b-col sm="12" md="6">
-                                <ValidationProvider vid="last_name" name="نام خانوادگی" rules="required"  v-slot="{ valid, errors }">
+                                <ValidationProvider vid="last_name" name="نام خانوادگی" rules=""  v-slot="{ valid, errors }">
                                     <b-form-group label="نام خانوادگی">
                                         <b-form-input v-model="user.last_name"
-                                        :state="errors[0] ? false : (valid ? true : null)"
+                                        :state="errors[0] ? false : (valid && user.last_name ? true : null)"
                                         ></b-form-input>
                                         <b-form-invalid-feedback class="mt-2" id="inputLiveFeedback">{{ errors[0] }}</b-form-invalid-feedback>
                                     </b-form-group>

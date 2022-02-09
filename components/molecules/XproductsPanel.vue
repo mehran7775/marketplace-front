@@ -99,12 +99,13 @@
                                 </nuxt-link>
                                 <Xswitches :value="product.status === 0 ? false : true"  @input="()=> changeProductStatus(product.status,product.id)"
                                     v-b-tooltip.hover title="تغییر وضعیت"
+                                    class="ml-2"
                                 />
-                                <span class="mx-1" v-b-tooltip.hover title="ویرایش سریع">
+                                <!-- <span class="mx-1" v-b-tooltip.hover title="ویرایش سریع">
                                     <fa icon="pencil-alt" class="ficon cursor_pointer fa-lg" 
                                     @click="triggerEditProduct(product)"
                                     ></fa>
-                                </span>
+                                </span> -->
                                 <span v-b-tooltip.hover title="حذف">
                                     <fa icon="trash" class="ficon cursor_pointer fa-lg" 
                                     @click="triggerDeleteProduct(product)"
@@ -450,10 +451,10 @@ export default {
                     }else{
                         discount_percent = 0
                     }
-                    
+                    let endPrice= this.productUpdatePrice
                     this.productUpdate.store_id= this.store_slug
-                    this.productUpdatePrice*=10
-                    this.productUpdate['price']= this.productUpdatePrice
+                    endPrice*=10
+                    this.productUpdate['price']= endPrice
                     this.productUpdate['discount_percent']= discount_percent
                     
                     try{

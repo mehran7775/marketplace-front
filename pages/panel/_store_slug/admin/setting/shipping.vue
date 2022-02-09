@@ -7,7 +7,7 @@
                 :class="query ? 'mr-2' : null"
                 text="بروزرسانی تنظیمات"
                 variant="success"
-                :disable="btnDisable"
+                :disabled="btnDisabled"
                 >
                 <template #spinner>
                     <b-spinner v-show="laodingSpinner" small ></b-spinner>
@@ -92,7 +92,7 @@ export default {
             store: {
                 shipping_setting: {}
             },
-            btnDisable: false,
+            btnDisabled: false,
             laodingSpinner: false
         }
     },
@@ -128,11 +128,12 @@ export default {
                 })
         },
         updateSetting() {
-            this.btnDisable= true
+            this.btnDisabled= true
             this.laodingSpinner= true
-            this.store.shipping_setting.own_city_shipping_cost += '0'
-            this.store.shipping_setting.other_cities_shipping_cost +='0'
-            api.post('store/update-shipping/' + this.$route.params.store_slug, this.store.shipping_setting, this.$cookies.get('token'))
+            let store= Object.assign({},this.store.shipping_setting)
+            store.own_city_shipping_cost *= 10
+            store.other_cities_shipping_cost *=10
+            api.post('store/update-shipping/' + this.$route.params.store_slug, store, this.$cookies.get('token'))
                 .then(response => {
                     this.message = response.data.message
                     this.getData()
@@ -140,7 +141,7 @@ export default {
                 this.error = response.data.data[Object.keys(response.data.data)[0]]
             })
             .finally(()=> {
-                this.btnDisable= false
+                this.btnDisabled= false
                 this.laodingSpinner= false
             })
         },
