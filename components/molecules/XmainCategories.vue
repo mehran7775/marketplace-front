@@ -1,20 +1,18 @@
 <template>
-    <div class="node my-4" :style="nodeMargin" :id="`node-${node.id}`">
-       <div class="row ">
+    <div class="node my-4" :style="nodeMargin">
+       <div class="row">
            <div class="col-10 m-auto">
                <div class="row">
-                    <div class="w-100 d-flex justify-content-between justify-content-md-start">
-                        <div class="d-flex align-items-center">
-                            <input type="checkbox" class="checkout-button" checked :value="node.id" 
-                                name="categories_products[]" v-model="categories">
-                            <span class="mr-1 title" v-text="node.title" @click="toggleCollapse(node.id)"></span>  
-                        </div>
-                        <div class="mr-md-1" >
-                            <fa v-if="!visible && node.children_recursive.length > 0" icon="plus" 
-                                class="fa-lg cursor_pointer" @click="toggleCollapse(node.id)">
+                    <div class="w-100 d-flex align-items-center">
+                        <input type="checkbox" class="checkout-button" checked :value="node.id" 
+                        name="categories_products[]" v-model="categories">       
+                        <div class="mr-md-1 d-flex align-items-center justify-content-between justify-content-md-start
+                         cursor_pointer node-toggle" @click="toggleCollapse(node.id)" :id="`toggleCollapse-${node.id}`"
+                        >
+                            <span class="mr-1 title" v-text="node.title"></span>  
+                            <fa v-if="!visible && node.children_recursive.length > 0" icon="plus" class="fa-lg mr-1">
                             </fa>
-                            <fa v-else-if="visible && node.children_recursive.length > 0" icon="minus"
-                                class="fa-lg cursor_pointer" @click="toggleCollapse(node.id)">
+                            <fa v-else-if="visible && node.children_recursive.length > 0" icon="minus" class="fa-lg mr-1">
                             </fa>
                         </div>
                     </div>
@@ -77,31 +75,24 @@ import { mapGetters } from 'vuex'
             ])
         },
         mounted(){
-            // let self =this
-            window.addEventListener('click', function(event) {
-                console.log(this)
-                // if (!document.getElementById(`node-${this.node.id}`).contains(event.target)) {
-                //     this.visible= false
-                // }
-            }.bind(this))
+            if(!this.child){
+                window.addEventListener('click', function(event) {
+                    this.mainCategories_pruducts.forEach(element => {
+                        if (
+                            !document.getElementById(`toggleCollapse-${this.node.id}`).contains(event.target)
+                            && document.getElementById(`toggleCollapse-${element}`).contains(event.target)
+                        ) {
+                            this.visible= false
+                            return
+                        }    
+                    });
+                }.bind(this))
+            }
         },
         methods:{
             toggleCollapse(id){
-                // console.log(this.mainCategories_pruducts)
-                // console.log(id)
-                // if(this.mainCategories_pruducts.includes(id)){
-                //     this.visible= false
-                // }else {
-                //     }
-                    this.visible=!this.visible
-                this.$root.$emit(`bv::toggle::collapse`, `collapse-${id}`)
-                
-                // console.log(document.getElementById(`collapse-${id}`).hasChildNodes())
-                // console.log(document.getElementById(`collapse-${id}`).querySelector('.sub-categories').getAttribute('id'))
-                // if(!this.child){
-                     
-                // }
-                            
+                this.visible=!this.visible
+                this.$root.$emit(`bv::toggle::collapse`, `collapse-${id}`)                            
             }
         }
     }
@@ -111,6 +102,12 @@ import { mapGetters } from 'vuex'
 .node{
     @include medium{
         width: 160px;
+    }
+    .node-toggle{
+        width: calc(100% - 17px);
+        @include medium{
+           width: max-content;     
+        }
     }
     .checkout-button{
         width: 17px;

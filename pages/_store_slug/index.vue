@@ -2,7 +2,7 @@
   <div class="row">
     <div class="container-fluid">
       <div class="row mt-1" id="my-categories">
-       <div id="categories" class="w-100 d-flex flex-start py-2 bg-white">
+       <div id="categories" class="w-100 d-flex flex-start py-2 bg-white border-bottom">
           <div class="pr-4 d-md-none">
             <div id="menu-categories" class="d-flex align-items-center position-relative ">
               <div v-show="categories_products.length > 0" class="position-absolute bg-success rounded-circle" id="check-selected-category"></div>
@@ -13,7 +13,7 @@
           <div class="d-none d-md-block w-100">
             <div class="accordion d-flex py-2 px-3" role="tablist">
               <div v-for="category in categories" :key="category.id" class="mr-3 pr-2" >
-                  <b-card no-body class="mb-1 border-0">
+                  <b-card no-body class="border-0">
                     <MoleculesXmainCategories
                     :node="category"
                     />
@@ -28,11 +28,15 @@
       <div class="row">
         <div class="w-100 body-hv-fit">
           <div class="position-absolute bg-white border-left border-top py-3" id="sidebar-categories">
-           <div>
-              <MoleculesXmainCategories v-for="category in categories" :key="category.id"
-                :node="category"
-              />
-           </div>
+            <div class="accordion" role="tablist">
+              <div v-for="category in categories" :key="category.id">
+                <b-card no-body class="border-0">
+                  <MoleculesXmainCategories
+                  :node="category"
+                  />
+                </b-card>
+              </div>
+            </div>
           </div>
           <MoleculesXlables class="mt-md-5 pt-md-4" v-if="products" :products="products">
           </MoleculesXlables>
@@ -112,27 +116,20 @@ export default {
     }
   },
   mounted(){
-    let self =this
     window.addEventListener('click', function(event) {
-        const sidebar_categories = document.getElementById("sidebar-categories")
         if (!document.getElementById('sidebar-categories').contains(event.target)
           && !document.getElementById('btn-categories').contains(event.target)
         ) {
-          self.show_categories = !self.show_categories
-          sidebar_categories.style.overflow= "hidden"
-          sidebar_categories.style.width= 0
-          document.body.style.overflow= 'visible'
-          setTimeout(()=>{
-            sidebar_categories.style.height= 0
-          },300)
+          this.show_sidebar_categories(false)
         }
-      });
+        
+      }.bind(this));
    
   },
   methods:{
-    show_sidebar_categories(){
+    show_sidebar_categories(vBoolean= true){
       const sidebar_categories = document.getElementById("sidebar-categories")
-      this.show_categories = !this.show_categories
+      !vBoolean ? this.show_categories = vBoolean :  this.show_categories = !this.show_categories
       if(this.show_categories){
         sidebar_categories.style.height= "calc(100vh - 230px)"
         sidebar_categories.style.width= "82%"
