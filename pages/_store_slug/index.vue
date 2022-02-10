@@ -11,13 +11,15 @@
             </div>
           </div>
           <div class="d-none d-md-block w-100">
-            <div class="d-flex py-2 px-3">
+            <div class="accordion d-flex py-2 px-3" role="tablist">
               <div v-for="category in categories" :key="category.id" class="mr-3 pr-2" >
-                <MoleculesXmainCategories
-                :node="category"
-                />
+                  <b-card no-body class="mb-1 border-0">
+                    <MoleculesXmainCategories
+                    :node="category"
+                    />
+                  </b-card>
               </div>
-            </div>  
+            </div>
           </div>
        </div>
       </div>

@@ -1,22 +1,27 @@
 <template>
-    <div class="node my-4" :style="nodeMargin">
+    <div class="node my-4" :style="nodeMargin" :id="`node-${node.id}`">
        <div class="row ">
            <div class="col-10 m-auto">
                <div class="row">
                     <div class="w-100 d-flex justify-content-between justify-content-md-start">
                         <div class="d-flex align-items-center">
-                            <input type="checkbox" class="checkout-button" checked :value="node.id" name="categories_products[]" v-model="categories">
-                            <span class="mr-1 title" v-text="node.title"></span>  
+                            <input type="checkbox" class="checkout-button" checked :value="node.id" 
+                                name="categories_products[]" v-model="categories">
+                            <span class="mr-1 title" v-text="node.title" @click="toggleCollapse(node.id)"></span>  
                         </div>
                         <div class="mr-md-1" >
-                            <fa v-if="!visible && node.children_recursive.length > 0" icon="plus" class="fa-lg cursor_pointer" @click="toggleCollapse(node.id)"></fa>
-                            <fa v-else-if="visible" icon="minus" class="fa-lg cursor_pointer" @click="toggleCollapse(node.id)"></fa>
+                            <fa v-if="!visible && node.children_recursive.length > 0" icon="plus" 
+                                class="fa-lg cursor_pointer" @click="toggleCollapse(node.id)">
+                            </fa>
+                            <fa v-else-if="visible && node.children_recursive.length > 0" icon="minus"
+                                class="fa-lg cursor_pointer" @click="toggleCollapse(node.id)">
+                            </fa>
                         </div>
                     </div>
                </div>
            </div>
        </div>
-        <b-collapse :id="`collapse-${node.id}`" class="sub-categories">
+        <b-collapse :id="`collapse-${node.id}`" :accordion="`${child ? 'my-accordion': null}`" role="tabpanel" class="sub-categories">
             <TreeNode
                 v-for="category in node.children_recursive"
                 :key="category.id"
@@ -71,15 +76,31 @@ import { mapGetters } from 'vuex'
                 'mainCategories_pruducts'
             ])
         },
+        mounted(){
+            // let self =this
+            window.addEventListener('click', function(event) {
+                console.log(this)
+                // if (!document.getElementById(`node-${this.node.id}`).contains(event.target)) {
+                //     this.visible= false
+                // }
+            }.bind(this))
+        },
         methods:{
             toggleCollapse(id){
-            // for(let i= 0; i< this.mainCategories_pruducts.length; i++){
-            //     document.getElementById(`collapse-${this.mainCategories_pruducts[i]}`).classList.remove('show')
-            //     document.getElementById(`collapse-${this.mainCategories_pruducts[i]}`).style.display= "none"
-            //     console.log(document.getElementById(`collapse-${this.mainCategories_pruducts[i]}`))
-            // }
-            this.visible=!this.visible
-            this.$root.$emit(`bv::toggle::collapse`, `collapse-${id}`)
+                // console.log(this.mainCategories_pruducts)
+                // console.log(id)
+                // if(this.mainCategories_pruducts.includes(id)){
+                //     this.visible= false
+                // }else {
+                //     }
+                    this.visible=!this.visible
+                this.$root.$emit(`bv::toggle::collapse`, `collapse-${id}`)
+                
+                // console.log(document.getElementById(`collapse-${id}`).hasChildNodes())
+                // console.log(document.getElementById(`collapse-${id}`).querySelector('.sub-categories').getAttribute('id'))
+                // if(!this.child){
+                     
+                // }
                             
             }
         }

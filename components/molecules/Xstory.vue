@@ -1,57 +1,55 @@
 <template>
-    <transition name="fade">
-      <div v-if="triggerStory" id="story">
-        <div class="float-left mt-3 ml-5">
-          <span class="text-white">
-            <fa  @click="hideStory()" :icon="['fa', 'times']" class="text-muted fa-2x closeStory"/>
-          </span>
-        </div>
-        <div class="position-fixed te-story">
-          <div class="story rounded">
-            <div class="col h-100">
-               <div class="row justify-content-center h-100">
-                  <div class="w-50">
-                        <div @click="changeStory('first')"><b-progress height="4px" :value="counterTime.first" variant="success"  class="mb-3 cursor_pointer" :striped="false"></b-progress></div>
-                   </div>
-                  <div class="w-50 pr-1">
-                      <div @click="changeStory('second')"><b-progress height="4px" :value="counterTime.second" variant="success" class="mb-3 cursor_pointer" :striped="false"></b-progress></div>
+    
+    <div v-if="triggerStory" id="story">
+      <div class="float-left mt-3 ml-5">
+        <span class="text-white">
+          <fa  @click="hideStory()" :icon="['fa', 'times']" class="text-muted fa-2x closeStory"/>
+        </span>
+      </div>
+      <div class="position-fixed te-story">
+        <div class="story rounded">
+          <div class="col h-100">
+              <div class="row justify-content-center h-100">
+                <div class="w-50">
+                      <div @click="changeStory('first')"><b-progress height="4px" :value="counterTime.first" variant="success"  class="mb-3 cursor_pointer" :striped="false"></b-progress></div>
                   </div>
-                  <div class="col h-100">
-                    <div v-show="counterTime.first >= 0 && counterTime.first <= 100 && showStory.first" @mousedown="stopCounterTime('first')" @mouseup="continueCounterTime('first')" class="row h-100"
-                        @touchstart="stopCounterTime('first')" @touchend="continueCounterTime('first')"
-                    >
-                    <div class="col">
-                      <div class="row align-items-center">
-                        <Xbrand class="mx-3" :logo="detail.logo" :alt="detail.fa_name"></Xbrand>
-                        <h2 class="h4">توضیحات فروشگاه</h2>
-                      </div>
-                      <div class="row">
-                        <p class="py-2 px-5 mt-2" v-html="detail.description"></p>
-                      </div>
-                    </div>
-                  </div>
-                  <div v-show="counterTime.second >= 0 && counterTime.second <= 100 && showStory.second" @mousedown="stopCounterTime('second')" @mouseup="continueCounterTime('second')" class="row h-100"
-                     @touchstart="stopCounterTime('second')" @touchend="continueCounterTime('second')"
+                <div class="w-50 pr-1">
+                    <div @click="changeStory('second')"><b-progress height="4px" :value="counterTime.second" variant="success" class="mb-3 cursor_pointer" :striped="false"></b-progress></div>
+                </div>
+                <div class="col h-100">
+                  <div v-show="counterTime.first >= 0 && counterTime.first <= 100 && showStory.first" @mousedown="stopCounterTime('first')" @mouseup="continueCounterTime('first')" class="row h-100"
+                      @touchstart="stopCounterTime('first')" @touchend="continueCounterTime('first')"
                   >
-                    <div class="col">
-                      <div class="row align-items-center">
-                        <Xbrand class="mx-3" :logo="detail.logo" :alt="detail.fa_name"></Xbrand>
-                        <h2 class="h4">قوانین فروشگاه</h2>
-                      </div>
-                      <div class="row">
-                        <p class="py-2 px-5 mt-2" v-html="detail.terms"></p>
-                      </div>
+                  <div class="col">
+                    <div class="row align-items-center">
+                      <Xbrand class="mx-3" :logo="detail.logo" :alt="detail.fa_name"></Xbrand>
+                      <h2 class="h4">توضیحات فروشگاه</h2>
+                    </div>
+                    <div class="row">
+                      <p class="py-2 px-5 mt-2" v-html="detail.description"></p>
                     </div>
                   </div>
+                </div>
+                <div v-show="counterTime.second >= 0 && counterTime.second <= 100 && showStory.second" @mousedown="stopCounterTime('second')" @mouseup="continueCounterTime('second')" class="row h-100"
+                    @touchstart="stopCounterTime('second')" @touchend="continueCounterTime('second')"
+                >
+                  <div class="col">
+                    <div class="row align-items-center">
+                      <Xbrand class="mx-3" :logo="detail.logo" :alt="detail.fa_name"></Xbrand>
+                      <h2 class="h4">قوانین فروشگاه</h2>
+                    </div>
+                    <div class="row">
+                      <p class="py-2 px-5 mt-2" v-html="detail.terms"></p>
+                    </div>
                   </div>
-              </div>
+                </div>
+                </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-
-    </transition>
 </template>
 
 <script>
@@ -83,8 +81,10 @@ export default{
     }
   },
   created(){
-      document.body.style.overflowY = "hidden"
-      this.startStory()
+    const nuxt= document.getElementById('__nuxt')
+    nuxt.style.height='100vh'
+    nuxt.style.overflow='hidden'
+    this.startStory()
   },
    methods:{
     startStory(){
@@ -128,7 +128,9 @@ export default{
       clearInterval(this.story.first)
       clearInterval(this.story.second)
       fade ? this.destroy(false) : null
-      document.body.style.overflowY = "auto"
+      const nuxt= document.getElementById('__nuxt')
+      nuxt.style.height='auto'
+      nuxt.style.overflow='auto'
 
     },
     changeStory(name){
