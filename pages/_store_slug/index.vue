@@ -15,7 +15,8 @@
               <div v-for="category in categories" :key="category.id" class="mr-3 pr-2" >
                   <b-card no-body class="border-0">
                     <MoleculesXmainCategories
-                    :node="category"
+                    :category="category"
+                    :key="category.id"
                     />
                   </b-card>
               </div>
@@ -32,7 +33,8 @@
               <div v-for="category in categories" :key="category.id">
                 <b-card no-body class="border-0">
                   <MoleculesXmainCategories
-                  :node="category"
+                  :category="category"
+                  :key="category.id"
                   />
                 </b-card>
               </div>
@@ -131,11 +133,13 @@ export default {
       const sidebar_categories = document.getElementById("sidebar-categories")
       !vBoolean ? this.show_categories = vBoolean :  this.show_categories = !this.show_categories
       if(this.show_categories){
-        sidebar_categories.style.height= "calc(100vh - 230px)"
+        const height_body= document.body.scrollHeight
+        sidebar_categories.style.height= 'calc(100vh - 206px)'
         sidebar_categories.style.width= "82%"
+        sidebar_categories.style.overflowY= "auto"
         document.body.style.overflow= 'hidden'
       }else{
-        sidebar_categories.style.overflow= "hidden"
+        sidebar_categories.style.overflowX= "hidden"
         sidebar_categories.style.width= 0
         document.body.style.overflow= 'visible'
         setTimeout(()=>{
@@ -190,6 +194,7 @@ export default {
     max-width: 1400px;
   }
   #sidebar-categories{
+    overflow-x: hidden;
     width: 0;
     transition: width .3s;
     box-shadow: 0 10px 5px 0  darken($svg_color, 100%);
@@ -198,7 +203,6 @@ export default {
     }
     > div{
       height: 100%;
-      overflow: auto;
     }
   }
 }
